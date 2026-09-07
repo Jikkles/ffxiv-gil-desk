@@ -84,8 +84,9 @@ to NQ often reveals the real bulk market.
 
 ### Flips
 
-No crafting involved — pure arbitrage. Scans mounts, minions, hairstyles and outfit coffers
-across every world on the data centre, finds the cheapest listing anywhere, and compares it to
+No crafting involved — pure arbitrage. Scans mounts, minions, hairstyles, outfit coffers and
+emotes (the tradeable `Ballroom Etiquette` manuals) across every world on the data centre, finds
+the cheapest listing anywhere, and compares it to
 the 30-day average sale price on your home world. The world name is colour-coded: orange means a
 world hop is required, teal means it's already on your world.
 
@@ -116,6 +117,13 @@ Vendor costs are read from the game's `SpecialShop` and `GCScripShopItem` tables
 7.55**, filtered to items actually sellable on the market board. Where the same item is sold by
 multiple vendors for the same currency, the cheapest is used. Some shop rows belong to vendors
 that no longer exist in-game, so the vendor name is shown on every row.
+
+Alongside the tomestones, scrips and seals there's a **Variant & Deep Dungeons** group: the four
+variant dungeon potsherds (Sil'dihn, Rokkon, Aloalo, Corvosi), all traded to Trisassant in Old
+Sharlayan for glamour, emotes, hairstyles and orchestrion rolls, plus the two deep dungeon
+potsherds (Gelmorran from Palace of the Dead, Empyrean from Heaven-on-High), which mostly buy
+grade V and VI materia. These drop slowly and their rewards are thin on the market board, so set
+**min sales/day** to `Any` to see the whole shop.
 
 ### Vendors — work in progress
 
