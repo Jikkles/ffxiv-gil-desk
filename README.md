@@ -58,6 +58,7 @@ Two deliberate choices run through the whole thing:
 | **Vendors** | *Work in progress* — NPC vendor arbitrage |
 | **Consistent** | Your known consistent sellers, with full crafting trees |
 | **Gear & Materials** | Crested crafting/gathering gear and Master-recipe intermediates |
+| **List 1 / List 2** | Your own saved items, renameable, kept in your browser |
 
 ### Dashboard
 
@@ -130,6 +131,25 @@ Two curated lists rather than full-game scans. **Consistent** holds known consis
 that feed it. Both give the same recursive crafting tree as the Dashboard, showing buy-vs-craft
 at every node so you can see exactly where precrafting saves.
 
+These two are personal to the repo owner. If you're using the desk yourself, build your own
+picks on **List 1** and **List 2** instead.
+
+### List 1 / List 2
+
+Two lists you fill yourself. The 📋 button on any row of the **Dashboard** or **Precrafts**
+tab — on the item, and on any material inside its crafting tree — offers both lists; pick one
+and the item lands there.
+
+Each list shows the same columns as Consistent and Gear & Materials (sell now, 30-day average,
+material cost, profit, margin, sales/day, gil/day) and gives the same recursive crafting tree.
+✎ **Rename** lets you call a list whatever you want — *Consumables*, *Weekly craft*, *Watchlist*
+— and the tab label follows immediately.
+
+Lists live in your browser's `localStorage`, so they survive closing the tab and are never
+uploaded anywhere. Each saved item carries its own recipe tree with it, which is what lets the
+list price a full craft without loading the source tab's 9,000-item catalogue. Items saved
+without a recipe (a raw material, say) are still priced — they just show no crafting cost.
+
 ## Shared features
 
 **Shopping list.** The 🛒 button on any row adds that item's materials to a list shared across
@@ -152,7 +172,8 @@ CORS-open. Item and recipe metadata is baked into the file.
 
 The network layer batches 100 item IDs per request, runs 5 requests concurrently, retries twice
 with backoff on rate limits and server errors, and caches responses in `localStorage` for 12
-minutes (world lists for 24 hours). Shift-clicking **Refresh** forces a fresh pull.
+minutes (world lists for 24 hours). Shift-clicking **Refresh** forces a fresh pull; it clears
+only cached prices, never your saved lists, shopping list or settings.
 
 Universalis rate-limits heavy scans, and its rate-limit responses don't carry CORS headers, so a
 large refresh will log some `blocked by CORS policy` errors in the browser console. These are
@@ -169,9 +190,10 @@ The whole desk is one ~4MB `index.html` with no build step.
 - A thin shell holds the tab bar and one `<iframe>` per tab.
 - `BLOBS` maps each tab key to a complete, standalone HTML document.
 - On first visit to a tab, its document is injected via `srcdoc`. Tabs never auto-load data.
-- Three shared code chunks are spliced into each document at render time via placeholder
-  comments: `SHARED_A` (fetch/retry/cache layer), `SHARED_B` (multi-DC market helpers) and
-  `SHARED_SHOP` (the shopping list).
+- Four shared code chunks are spliced into each document at render time via placeholder
+  comments: `SHARED_A` (fetch/retry/cache layer), `SHARED_B` (multi-DC market helpers),
+  `SHARED_SHOP` (the shopping list) and `SHARED_LIST` (the saved lists).
+- Both list tabs are the same document: `LIST_TPL` is rendered twice, once per list.
 
 Isolating each tab in an iframe means they can't collide on globals or CSS, at the cost of
 duplicating some code — which is why the shared chunks exist.
