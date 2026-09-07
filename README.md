@@ -157,10 +157,14 @@ opens during an event (46 items, mostly Starlight, Valentione's and Heavensturn 
 
 ### Lists
 
-Up to five lists you fill yourself. The 📋 button on any row of the **Dashboard** or
-**Precrafts** tab — on the item, and on any material inside its crafting tree — opens a picker
-with your lists on it; choose one and the item lands there. Clicking the same list again takes
-it back off.
+Up to five lists you fill yourself. The 📋 button on any row of any tab — **Dashboard**,
+**Precrafts**, **Flips**, **Scrips**, **Currencies** and **Vendors**, and on any material inside
+a crafting tree — opens a picker with your lists on it; choose one and the item lands there.
+Clicking the same list again takes it back off.
+
+Each tab hands over what it knows: a precraft or a Scrips collectable brings its whole recipe
+tree so the list can price the materials, a flip brings the world it was cheapest on, a vendor
+item brings the NPC and zone, and a currency item brings the currency and shop it came from.
 
 Each list is a full tab: sell now, 30-day average, material cost, profit, margin, sales/day and
 gil/day, plus the same recursive crafting tree as the Dashboard. An item saved without a recipe
