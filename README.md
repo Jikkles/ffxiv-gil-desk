@@ -55,7 +55,7 @@ Two deliberate choices run through the whole thing:
 | **Flips** | Cross-world flips on mounts, minions, hairstyles and outfit coffers |
 | **Scrips** | The two collectible → scrip → materia loops, valued live |
 | **Currencies** | Which marketable item each currency buys at the best gil rate |
-| **Vendors** | *Work in progress* — NPC vendor arbitrage |
+| **Vendors** | Every gil-priced NPC item, and what it resells for on your server |
 | **Lists** | Up to five lists you fill yourself, renameable, kept in your browser |
 
 ### Dashboard
@@ -125,10 +125,35 @@ potsherds (Gelmorran from Palace of the Dead, Empyrean from Heaven-on-High), whi
 grade V and VI materia. These drop slowly and their rewards are thin on the market board, so set
 **min sales/day** to `Any` to see the whole shop.
 
-### Vendors — work in progress
+### Vendors
 
-A stub. The intent is items worth buying from NPC vendors and reselling on the market board, and
-market items cheaper to buy from a vendor than to craft. Nothing is wired up yet.
+Every marketable item an NPC will sell you for plain gil — **4,943** of them — priced against
+the market board on the server you pick. Vendor prices are fixed and never move, so unlike the
+crafting tabs the only variable is what the board pays, which makes anything here a repeatable
+run rather than a one-off snipe.
+
+By default the tab shows **only what is turning a profit right now**. That is still around
+1,200 rows on a busy server, so the default sort is **profit/day** (profit per unit × sales per
+day) rather than raw margin — a 40M margin on something that sells twice a year is worth less
+than a 5k margin on something that shifts thirty a day, and sorting this way sinks the dead
+stock on its own. Tick **Show ALL vendor items** to see the whole 4,943 including the losers;
+it's off by default because most vendor stock never sells for more than it costs.
+
+**Sell price** has three bases. *Realistic* (the default) takes the lower of the cheapest
+current listing and the 30-day average — you have to undercut the board to sell, but a lone
+silly listing is not a real price. *Cheapest listing* and *30-day average* are also available.
+
+A ⚠ chip means the price is not backed by real sales: either nothing has sold on that server in
+30 days, or the listing sits far from the average that did. Most vendor stock hits one of those,
+so the chip is common — the headline figures at the top of the tab ignore those rows entirely,
+and **Hide ⚠ unreliable** drops them from the table. Without this the tab would happily report a
+142M profit on an interior wall that has never once sold.
+
+**Bought from** is joined out of the game's own shop tables: the NPC, the zone and the map
+coordinate, preferring a city vendor where an item is stocked in several places. *+n more* means
+there are closer options than the one shown. Two tags flag stock you may not be able to buy
+today: `locked?` where a quest or achievement gates the shop, and `seasonal` where the shop only
+opens during an event (46 items, mostly Starlight, Valentione's and Heavensturn furnishings).
 
 ### Lists
 
@@ -173,6 +198,13 @@ so you know whether you're acting on a live market or yesterday's.
 All market data comes from the [Universalis](https://universalis.app) API — free, keyless and
 CORS-open. Item and recipe metadata is baked into the file.
 
+The **Vendors** dataset is built from the game's own `GilShopItem`, `GilShop`, `Item`,
+`ENpcBase`, `ENpcResident`, `Level` and `Map` tables (via the public
+[ffxiv-datamining](https://github.com/xivapi/ffxiv-datamining) CSVs), filtered to items that are
+tradable, listed in a gil shop, and sellable on the market board. Map coordinates are the usual
+`SizeFactor`/offset transform; 2,842 of the 4,943 items resolve to a coordinate and 4,568 to a
+named NPC.
+
 The network layer batches 100 item IDs per request, runs 5 requests concurrently, retries twice
 with backoff on rate limits and server errors, and caches responses in `localStorage` for 12
 minutes (world lists for 24 hours). Shift-clicking **Refresh** forces a fresh pull; it clears
@@ -209,3 +241,7 @@ duplicating some code — which is why the shared chunks exist.
 - Daily ceilings are rankings, not forecasts.
 - Nothing accounts for crafting stats, materia, food, or whether you can actually hit HQ.
 - Vendor costs are pinned to patch 7.55 and will drift as the game updates.
+- On the **Vendors** tab, a row with a ⚠ has no real sales behind its price. Treat those profits
+  as hypothetical, not as gil you can go and collect.
+- Vendor locations come from the shop tables, which don't record seasonal availability perfectly
+  — an unflagged item can still turn out to be event-only.
