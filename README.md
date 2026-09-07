@@ -56,9 +56,7 @@ Two deliberate choices run through the whole thing:
 | **Scrips** | The two collectible → scrip → materia loops, valued live |
 | **Currencies** | Which marketable item each currency buys at the best gil rate |
 | **Vendors** | *Work in progress* — NPC vendor arbitrage |
-| **Consistent** | Your known consistent sellers, with full crafting trees |
-| **Gear & Materials** | Crested crafting/gathering gear and Master-recipe intermediates |
-| **List 1 / List 2** | Your own saved items, renameable, kept in your browser |
+| **Lists** | Up to five lists you fill yourself, renameable, kept in your browser |
 
 ### Dashboard
 
@@ -124,31 +122,28 @@ that no longer exist in-game, so the vendor name is shown on every row.
 A stub. The intent is items worth buying from NPC vendors and reselling on the market board, and
 market items cheaper to buy from a vendor than to craft. Nothing is wired up yet.
 
-### Consistent / Gear & Materials
+### Lists
 
-Two curated lists rather than full-game scans. **Consistent** holds known consistent sellers;
-**Gear & Materials** holds Crested crafting/gathering gear and the Master-recipe intermediates
-that feed it. Both give the same recursive crafting tree as the Dashboard, showing buy-vs-craft
-at every node so you can see exactly where precrafting saves.
+Up to five lists you fill yourself. The 📋 button on any row of the **Dashboard** or
+**Precrafts** tab — on the item, and on any material inside its crafting tree — opens a picker
+with your lists on it; choose one and the item lands there. Clicking the same list again takes
+it back off.
 
-These two are personal to the repo owner. If you're using the desk yourself, build your own
-picks on **List 1** and **List 2** instead.
+Each list is a full tab: sell now, 30-day average, material cost, profit, margin, sales/day and
+gil/day, plus the same recursive crafting tree as the Dashboard. An item saved without a recipe
+(a raw material, say) is still priced — it just shows no crafting cost.
 
-### List 1 / List 2
+- **＋ List** in the tab bar creates another list, up to five. **New list…** at the bottom of the
+  picker does the same thing and files the item into it in one go.
+- **✎ Rename** calls a list whatever you want — *Consumables*, *Weekly craft*, *Watchlist*. The
+  tab label follows immediately.
+- **Clear list** empties one, and **↩ Undo clear** puts it straight back. The cleared items are
+  parked in `localStorage`, so the undo still works after a reload.
+- **✕ Remove list** drops the tab entirely.
 
-Two lists you fill yourself. The 📋 button on any row of the **Dashboard** or **Precrafts**
-tab — on the item, and on any material inside its crafting tree — offers both lists; pick one
-and the item lands there.
-
-Each list shows the same columns as Consistent and Gear & Materials (sell now, 30-day average,
-material cost, profit, margin, sales/day, gil/day) and gives the same recursive crafting tree.
-✎ **Rename** lets you call a list whatever you want — *Consumables*, *Weekly craft*, *Watchlist*
-— and the tab label follows immediately.
-
-Lists live in your browser's `localStorage`, so they survive closing the tab and are never
-uploaded anywhere. Each saved item carries its own recipe tree with it, which is what lets the
-list price a full craft without loading the source tab's 9,000-item catalogue. Items saved
-without a recipe (a raw material, say) are still priced — they just show no crafting cost.
+Lists live in your browser's `localStorage` and are never uploaded anywhere. Each saved item
+carries its own recipe tree with it, which is what lets a list price a full craft without
+loading the Dashboard's 9,000-item catalogue.
 
 ## Shared features
 
@@ -193,7 +188,8 @@ The whole desk is one ~4MB `index.html` with no build step.
 - Four shared code chunks are spliced into each document at render time via placeholder
   comments: `SHARED_A` (fetch/retry/cache layer), `SHARED_B` (multi-DC market helpers),
   `SHARED_SHOP` (the shopping list) and `SHARED_LIST` (the saved lists).
-- Both list tabs are the same document: `LIST_TPL` is rendered twice, once per list.
+- Every list tab is the same document: `LIST_TPL` is rendered once per list slot, and the tab
+  bar builds its list tabs from `localStorage` at load.
 
 Isolating each tab in an iframe means they can't collide on globals or CSS, at the cost of
 duplicating some code — which is why the shared chunks exist.
