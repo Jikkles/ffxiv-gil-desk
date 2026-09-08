@@ -199,6 +199,30 @@ each line with which finished item it's for. Prices are captured at the time of 
 line is badged against the recent average so you can see whether you're buying into a dip or
 overpaying. Crystals, shards and clusters are excluded — assumed stocked.
 
+**Item search.** The search box in the top right of the tab bar looks up any item by name and
+opens the cross-world panel for it, from whichever tab you happen to be on. It matches against
+the 13,000+ items the desk carries names for, instantly and offline; anything outside that —
+gear, minions, glamour — is resolved live through XIVAPI and marked `wider`. Press `/` or
+`Ctrl`/`Cmd`+`K` from anywhere to jump into it.
+
+**Prices on other worlds.** The 🌐 button on any row opens the same panel for that item. The
+cheapest listing is only half the story — 50 gil is no use if there are only ten of them — so
+the panel answers the question that actually matters: *where do I get this many, and what does
+it cost?*
+
+Set how many you want, and each world reports its cheapest listing, how many units are actually
+on the board, how many separate lots that is, and the cheapest-first cost of filling your whole
+order from that world alone. Worlds that can fill it sort first, cheapest by real cost rather
+than by headline price. Above the table sit two answers: the cheapest split across worlds
+(`64× Omega + 25× Phantom + 10× Moogle`) and the cheapest single world that can cover the lot,
+with the gil difference between them — so you can decide whether a second trip is worth it.
+
+Click any world to see its individual listings. The scope selector covers every data centre and
+region the desk knows about, so you can look beyond the ones you are pricing materials across,
+and an HQ/NQ filter narrows the maths to one quality. Where a row already implies a quantity — a
+material in a recipe tree — the panel opens prefilled with the amount you need. The panel opens
+on whichever data centre *Mats from* is set to, or on the whole region when that spans several.
+
 **Settings.** Home world (default **Spriggan**), the data centres materials are priced across
 (default **Chaos**), and market tax (default **5%**) are set per tab and persisted. Each tab
 remembers its own filters and sort between sessions.
@@ -216,7 +240,8 @@ extra data centre is another full pass over the item list, so a wide selection s
 slower; the picker says so once you pass four.
 
 The world and data-centre list is baked in as a fallback but refreshed from Universalis on every
-load, so a new data centre appears on its own without this file changing.
+load, so a new data centre appears on its own without this file changing. The cross-world panel
+reads the same list, so it offers every data centre too.
 
 **Freshness.** Every row shows how stale its data is, from `<1h` through to a day-level warning,
 so you know whether you're acting on a live market or yesterday's.
@@ -253,10 +278,16 @@ The whole desk is one ~4MB `index.html` with no build step.
 - A thin shell holds the tab bar and one `<iframe>` per tab.
 - `BLOBS` maps each tab key to a complete, standalone HTML document.
 - On first visit to a tab, its document is injected via `srcdoc`. Tabs never auto-load data.
-- Four shared code chunks are spliced into each document at render time via placeholder
+- Five shared code chunks are spliced into each document at render time via placeholder
   comments: `SHARED_A` (fetch/retry/cache layer), `SHARED_B` (world topology, the data-centre
-  picker and the multi-DC market helpers), `SHARED_SHOP` (the shopping list) and `SHARED_LIST`
-  (the saved lists).
+  picker and the multi-DC market helpers), `SHARED_SHOP` (the shopping list), `SHARED_LIST`
+  (the saved lists) and `SHARED_XW` (the cross-world price panel and the search box).
+- `SHARED_XW` is the one chunk the shell runs itself as well, so the search box and its panel
+  work above the iframes. It has no hard dependencies: it borrows `SHARED_A`'s fetch and cache
+  and `SHARED_B`'s world topology when the page has them, and falls back to its own when it
+  doesn't — which is how the same code runs inside a tab and in the shell.
+- `ITEM_INDEX` is the search box's offline name index — every item id the desk knows a name for,
+  delta-encoded as `base36-id-delta name` to keep it compact.
 - Every list tab is the same document: `LIST_TPL` is rendered once per list slot, and the tab
   bar builds its list tabs from `localStorage` at load.
 
@@ -274,6 +305,10 @@ duplicating some code — which is why the shared chunks exist.
 - Daily ceilings are rankings, not forecasts.
 - Nothing accounts for crafting stats, materia, food, or whether you can actually hit HQ.
 - Vendor costs are pinned to patch 7.55 and will drift as the game updates.
+- The cross-world panel reads the 50 cheapest listings per scope. That is across the scope, not
+  per world, which is what sets the number: a data centre is eight worlds, so 50 leaves roughly
+  six listings each. On a heavily stocked item the units-available figure is therefore a floor,
+  and the panel says so when it hits that wall.
 - On the **Vendors** tab, a row with a ⚠ has no real sales behind its price. Treat those profits
   as hypothetical, not as gil you can go and collect.
 - Vendor locations come from the shop tables, which don't record seasonal availability perfectly
