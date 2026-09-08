@@ -29,8 +29,9 @@ Prefer it offline, or want your own copy? Download [index.html](index.html) and 
 browser. It is one self-contained file and behaves identically either way; settings and saved
 lists live in that browser, so the hosted desk and a local copy keep their own.
 
-Each tab loads on first visit and then waits — hit **Refresh** on a tab to pull live prices.
-Nothing is fetched until you ask for it, so opening the desk costs nothing.
+Each tab scans as soon as you open it, so a tab is never a blank table waiting for a click.
+Come back to one and it only rescans if its cached prices have gone cold (12 minutes), so
+flipping between tabs costs nothing; **Refresh** pulls fresh prices whenever you want them.
 
 ## The core idea
 
