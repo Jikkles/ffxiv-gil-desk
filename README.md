@@ -11,6 +11,9 @@ material, subtracts market tax, and ranks everything by what it would genuinely 
 It runs entirely in the browser from a single HTML file. No install, no build step, no
 dependencies, no API keys, no accounts, no server.
 
+It works on **every data centre in the game**: pick your world from the full list, and tick
+whichever data centres you want materials priced across.
+
 ---
 
 ## Quick start
@@ -60,9 +63,15 @@ Two deliberate choices run through the whole thing:
 
 ### Dashboard
 
-The broad sweep: consumables, furniture, intermediate materials, gear, tools and dyes. Material
-cost assumes buying every direct material off the board — craftable intermediates priced HQ,
-raw materials NQ.
+The broad sweep: consumables, furniture, intermediate materials, gear, tools and dyes.
+
+**Mat cost** has two bases and defaults to *Precraft-optimised*: every intermediate that is
+cheaper to craft than to buy is costed as crafted, recursively, all the way down the tree —
+which is what actually happens if you precraft. Switch it to *Buy all mats* to price every
+direct material straight off the board instead (craftable intermediates HQ, raw materials NQ).
+The choice flows through profit, margin and the daily ceiling, and the 🛒 button follows it too:
+on the optimised basis the shopping list holds the raw materials you'd buy rather than the
+intermediates you'd craft.
 
 Click any item to open its full crafting tree. Each craftable node inside the tree shows the
 **HQ buy price vs the cost to craft it yourself**, and a *Precraft-optimised* total showing what
@@ -85,9 +94,9 @@ to NQ often reveals the real bulk market.
 ### Flips
 
 No crafting involved — pure arbitrage. Scans mounts, minions, hairstyles, outfit coffers and
-emotes (the tradeable `Ballroom Etiquette` manuals) across every world on the data centre, finds
-the cheapest listing anywhere, and compares it to
-the 30-day average sale price on your home world. The world name is colour-coded: orange means a
+emotes (the tradeable `Ballroom Etiquette` manuals) across every world on the data centres you
+have picked, finds the cheapest listing anywhere, and compares it to the 30-day average sale
+price on your home world. The world name is colour-coded: orange means a
 world hop is required, teal means it's already on your world.
 
 Rare, slow-moving items are exactly where current listings lie most, so this tab leans hardest
@@ -190,9 +199,24 @@ each line with which finished item it's for. Prices are captured at the time of 
 line is badged against the recent average so you can see whether you're buying into a dip or
 overpaying. Crystals, shards and clusters are excluded — assumed stocked.
 
-**Settings.** Home world (default **Spriggan**), data centre (default **Chaos**, switchable to
-Light or both), and market tax (default **5%**) are set per tab and persisted. Each tab remembers
-its own filters and sort between sessions.
+**Settings.** Home world (default **Spriggan**), the data centres materials are priced across
+(default **Chaos**), and market tax (default **5%**) are set per tab and persisted. Each tab
+remembers its own filters and sort between sessions.
+
+**Worlds and data centres.** *Sell on* lists every world in the game, grouped by region and data
+centre. *Mats from* is a checklist rather than a dropdown of fixed combinations — tick any number
+of data centres and materials are priced across all of them, cheapest wins. A shortcut on each
+region ticks the whole region at once (all four of North America, all three of Europe, and so
+on), and picking a world moves the material search to that world's data centre if it isn't
+already selected.
+
+Data-centre travel only works inside your own physical region, so a selection spanning regions is
+flagged in the picker — those prices are worth watching, but you can't go and buy them. Every
+extra data centre is another full pass over the item list, so a wide selection scans noticeably
+slower; the picker says so once you pass four.
+
+The world and data-centre list is baked in as a fallback but refreshed from Universalis on every
+load, so a new data centre appears on its own without this file changing.
 
 **Freshness.** Every row shows how stale its data is, from `<1h` through to a day-level warning,
 so you know whether you're acting on a live market or yesterday's.
@@ -230,8 +254,9 @@ The whole desk is one ~4MB `index.html` with no build step.
 - `BLOBS` maps each tab key to a complete, standalone HTML document.
 - On first visit to a tab, its document is injected via `srcdoc`. Tabs never auto-load data.
 - Four shared code chunks are spliced into each document at render time via placeholder
-  comments: `SHARED_A` (fetch/retry/cache layer), `SHARED_B` (multi-DC market helpers),
-  `SHARED_SHOP` (the shopping list) and `SHARED_LIST` (the saved lists).
+  comments: `SHARED_A` (fetch/retry/cache layer), `SHARED_B` (world topology, the data-centre
+  picker and the multi-DC market helpers), `SHARED_SHOP` (the shopping list) and `SHARED_LIST`
+  (the saved lists).
 - Every list tab is the same document: `LIST_TPL` is rendered once per list slot, and the tab
   bar builds its list tabs from `localStorage` at load.
 
@@ -242,6 +267,10 @@ duplicating some code — which is why the shared chunks exist.
 
 - Profit figures assume you can buy materials at the listed price and sell at the modelled price.
   Both move, and you're competing with other crafters.
+- The default *Precraft-optimised* mat cost assumes you will actually craft the intermediates it
+  costs as crafted. If you buy them instead, switch **Mat cost** to *Buy all mats* — the optimised
+  figure is the floor, not the price you'd pay walking up to the board.
+- Prices from a data centre in another region are informational: you cannot travel there.
 - Daily ceilings are rankings, not forecasts.
 - Nothing accounts for crafting stats, materia, food, or whether you can actually hit HQ.
 - Vendor costs are pinned to patch 7.55 and will drift as the game updates.
