@@ -47,7 +47,7 @@ profit = (sell price × (1 − tax)) − acquisition cost
 What varies per tab is what "acquisition cost" means — buying materials and crafting, buying
 the finished item on a cheaper world, spending scrips, or spending a currency at a vendor.
 
-Two deliberate choices run through the whole thing:
+Three deliberate choices run through the whole thing:
 
 - **Sales history is the anchor, not listings.** A single inflated listing is not a market.
   The `Avg 30d` column is the quantity-weighted average of *actual sales* over the past month,
@@ -58,6 +58,12 @@ Two deliberate choices run through the whole thing:
   *daily profit ceiling* (profit per unit × sales per day) so you can rank by what actually
   turns over. That ceiling is a ranking device, not a promise — you capture a slice of the
   market, not all of it.
+- **Direction matters as well as level.** An average tells you where a price has been,
+  not where it is going. The `Trend` column splits the sales history in half and compares
+  the newer half against the older one, so a margin that is opening up reads differently
+  from one that is closing. It is deliberately quiet: it needs at least two days of
+  history and three sales on each side, measured on the same quality you are pricing on,
+  or it shows nothing rather than a number it cannot stand behind.
 
 ## Tabs
 
@@ -70,6 +76,10 @@ Two deliberate choices run through the whole thing:
 | **Currencies** | Which marketable item each currency buys at the best gil rate |
 | **Vendors** | Every gil-priced NPC item, and what it resells for on your server |
 | **Lists** | Up to five lists you fill yourself, renameable, kept in your browser |
+
+The **Dashboard**, **Precrafts**, **Flips** and list tabs each carry a `Trend` column, and
+it is sortable like any other — sort by it to see what is moving before you commit to a
+craft. Hover a trend for the two averages behind it and the window they cover.
 
 Two things sit outside the tabs and work from all of them: the **search box** in the top right,
 for looking up any item by name, and the **🌐** button on every row, which shows what that item
@@ -238,6 +248,15 @@ and an HQ/NQ filter narrows the maths to one quality. Where a row already implie
 material in a recipe tree — the panel opens prefilled with the amount you need. The panel opens
 on whichever data centre *Mats from* is set to, or on the whole region when that spans several.
 
+**Category tags.** Every row carries a small tag — `Gear`, `Furniture`, `Materials`,
+`Food`, `Medicine`, `Tool`, `Music`, `Minion`, `Dye`, `Misc`. The game's own categories are
+far too fine-grained to scan (`Stone`, `Cloth`, `Wall-mounted` and `Rug` are all real ones),
+so each folds into the word a player would actually use, and the same ten words mean the
+same thing on every tab. The specific game category is kept as the row's subtitle on the
+Dashboard and in the tag's tooltip on Vendors, so the detail is still there. Anything the
+game classes as `Miscellany`, `Other` or `Seasonal Miscellany` lands in `Misc`, and so does
+anything unrecognised — an unknown item is never guessed into a category it might not be in.
+
 **Settings.** Home world (default **Spriggan**), the data centres materials are priced across
 (default **Chaos**), and market tax (default **5%**) are set per tab and persisted. Each tab
 remembers its own filters and sort between sessions.
@@ -324,6 +343,11 @@ duplicating some code — which is why the shared chunks exist.
   per world, which is what sets the number: a data centre is eight worlds, so 50 leaves roughly
   six listings each. On a heavily stocked item the units-available figure is therefore a floor,
   and the panel says so when it hits that wall.
+- Universalis returns at most 200 sales per item, so on a heavily traded item the history
+  reaches back only two or three days — which is also why the `Trend` column compares the
+  window the data actually covers rather than a fixed seven days, and says which window it
+  used. For the same reason `Avg 30d` on a busy item is really the average of its last 200
+  sales, not of a full month.
 - On the **Vendors** tab, a row with a ⚠ has no real sales behind its price. Treat those profits
   as hypothetical, not as gil you can go and collect.
 - Vendor locations come from the shop tables, which don't record seasonal availability perfectly
