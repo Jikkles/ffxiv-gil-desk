@@ -13,8 +13,10 @@ material, subtracts market tax, and ranks everything by what it would genuinely 
 It runs entirely in the browser from a single HTML file. No install, no build step, no
 dependencies, no API keys, no accounts, no server.
 
-It works on **every data centre in the game**: pick your world from the full list, and tick
-whichever data centres you want materials priced across.
+It works on **every Western and Japanese data centre**: pick your world from the North
+American, European, Japanese and Oceanian list, and tick whichever data centres you want
+materials priced across. The Korean and Chinese services and Square Enix's test data centres
+are separate markets, so they are left out.
 
 ---
 
@@ -230,7 +232,7 @@ than by headline price. Above the table sit two answers: the cheapest split acro
 with the gil difference between them — so you can decide whether a second trip is worth it.
 
 Click any world to see its individual listings. The scope selector covers every data centre and
-region the desk knows about, so you can look beyond the ones you are pricing materials across,
+region the desk trades in, so you can look beyond the ones you are pricing materials across,
 and an HQ/NQ filter narrows the maths to one quality. Where a row already implies a quantity — a
 material in a recipe tree — the panel opens prefilled with the amount you need. The panel opens
 on whichever data centre *Mats from* is set to, or on the whole region when that spans several.
@@ -239,8 +241,8 @@ on whichever data centre *Mats from* is set to, or on the whole region when that
 (default **Chaos**), and market tax (default **5%**) are set per tab and persisted. Each tab
 remembers its own filters and sort between sessions.
 
-**Worlds and data centres.** *Sell on* lists every world in the game, grouped by region and data
-centre. *Mats from* is a checklist rather than a dropdown of fixed combinations — tick any number
+**Worlds and data centres.** *Sell on* lists every world across North America, Europe, Japan and
+Oceania, grouped by region and data centre. *Mats from* is a checklist rather than a dropdown of fixed combinations — tick any number
 of data centres and materials are priced across all of them, cheapest wins. A shortcut on each
 region ticks the whole region at once (all four of North America, all three of Europe, and so
 on), and picking a world moves the material search to that world's data centre if it isn't
