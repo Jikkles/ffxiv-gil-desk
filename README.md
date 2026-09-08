@@ -2,6 +2,8 @@
 
 A market-board scanner for Final Fantasy XIV.
 
+### **[→ Open the desk](https://jikkles.github.io/ffxiv-gil-desk/)**
+
 The whole idea is to scan the market board and work out, quickly and efficiently, where the
 most gil is actually available — mainly through crafting, but also through cross-world flips,
 scrip loops and currency spending. Rather than eyeballing prices item by item, the desk pulls
@@ -18,7 +20,12 @@ whichever data centres you want materials priced across.
 
 ## Quick start
 
-Open [index.html](index.html) in a browser. That's it.
+**[Open the desk](https://jikkles.github.io/ffxiv-gil-desk/)** and pick your world. That's it —
+nothing to install or sign into.
+
+Prefer it offline, or want your own copy? Download [index.html](index.html) and open it in a
+browser. It is one self-contained file and behaves identically either way; settings and saved
+lists live in that browser, so the hosted desk and a local copy keep their own.
 
 Each tab loads on first visit and then waits — hit **Refresh** on a tab to pull live prices.
 Nothing is fetched until you ask for it, so opening the desk costs nothing.
@@ -60,6 +67,11 @@ Two deliberate choices run through the whole thing:
 | **Currencies** | Which marketable item each currency buys at the best gil rate |
 | **Vendors** | Every gil-priced NPC item, and what it resells for on your server |
 | **Lists** | Up to five lists you fill yourself, renameable, kept in your browser |
+
+Two things sit outside the tabs and work from all of them: the **search box** in the top right,
+for looking up any item by name, and the **🌐** button on every row, which shows what that item
+costs and how many of it are stocked on each world. Both are described under
+[Shared features](#shared-features).
 
 ### Dashboard
 
@@ -273,7 +285,7 @@ stale or missing prices.
 
 ## Architecture
 
-The whole desk is one ~4MB `index.html` with no build step.
+The whole desk is one ~4.7MB `index.html` with no build step.
 
 - A thin shell holds the tab bar and one `<iframe>` per tab.
 - `BLOBS` maps each tab key to a complete, standalone HTML document.
