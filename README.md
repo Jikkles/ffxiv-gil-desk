@@ -274,9 +274,10 @@ duplicating some code — which is why the shared chunks exist.
 - Daily ceilings are rankings, not forecasts.
 - Nothing accounts for crafting stats, materia, food, or whether you can actually hit HQ.
 - Vendor costs are pinned to patch 7.55 and will drift as the game updates.
-- The cross-world panel reads the 20 cheapest listings per scope — enough to answer where to buy
-  from without hauling a whole market board across. On a heavily stocked item the units-available
-  figure is therefore a floor, and the panel says so when it hits that wall.
+- The cross-world panel reads the 50 cheapest listings per scope. That is across the scope, not
+  per world, which is what sets the number: a data centre is eight worlds, so 50 leaves roughly
+  six listings each. On a heavily stocked item the units-available figure is therefore a floor,
+  and the panel says so when it hits that wall.
 - On the **Vendors** tab, a row with a ⚠ has no real sales behind its price. Treat those profits
   as hypothetical, not as gil you can go and collect.
 - Vendor locations come from the shop tables, which don't record seasonal availability perfectly
