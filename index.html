@@ -78,6 +78,21 @@
   .tab[aria-selected="true"] .tabic{color:var(--aether);opacity:1}
   .tab[aria-selected="true"]{background:linear-gradient(180deg,#4de1c122,#4de1c10a);box-shadow:inset 0 -2px 0 var(--aether)}
   :root[data-theme="light"] .tab[aria-selected="true"]{background:linear-gradient(180deg,#0f9b841f,#0f9b8408)}
+  /* ===== v25 first-visit home world picker ===== */
+  .homepick-back{position:fixed;inset:0;z-index:50;background:rgba(4,8,14,.62);backdrop-filter:blur(2px);
+    display:flex;align-items:center;justify-content:center;padding:16px}
+  .homepick-panel{width:min(420px,100%);background:var(--panel);border:1px solid var(--line);border-radius:16px;
+    padding:22px 22px 18px;box-shadow:0 24px 70px #00000090;font-family:"Inter",sans-serif}
+  .homepick-panel h2{margin:0 0 8px;font-size:17px;color:var(--ink)}
+  .homepick-panel p{margin:0 0 14px;font-size:13px;color:var(--muted);line-height:1.5}
+  .homepick-panel select{width:100%;padding:9px 10px;border-radius:9px;border:1px solid var(--line2);
+    background:var(--panel2);color:var(--ink);font-family:"Inter",sans-serif;font-size:14px;margin-bottom:16px}
+  .homepick-actions{display:flex;justify-content:flex-end;gap:8px}
+  .homepick-actions button{all:unset;cursor:pointer;font-family:"Inter",sans-serif;font-size:13px;padding:9px 16px;border-radius:9px}
+  .homepick-skip{color:var(--muted);border:1px solid var(--line)}
+  .homepick-skip:hover{color:var(--ink);border-color:var(--line2)}
+  .homepick-go{color:#0b1017;background:var(--gil);font-weight:700}
+  .homepick-go:hover{filter:brightness(1.08)}
 </style>
 <script>try{var __t=localStorage.getItem("gildesk:theme:v1");document.documentElement.setAttribute("data-theme",__t==="light"?"light":"dark");}catch(e){document.documentElement.setAttribute("data-theme","dark");}</script>
 </head>
@@ -296,7 +311,74 @@ mountThemeToggle(document.getElementById("themeToggle"));
 /* "/" pressed inside a tab arrives here, since the key never reaches this document */
 addEventListener("message",e=>{if(e.data&&e.data.gildesk==="focusSearch"&&XW.focusSearch)XW.focusSearch();});
 
-activate("all");
+/* ---- first-visit home world picker ----
+   A new visitor has never told us which world to price against, so every
+   "Sell on" select would default to Spriggan. Ask once, before the first tab
+   loads, and write the answer into the same settings key every tab's own
+   restoreSettings() already reads on load — no per-tab wiring needed. */
+function pickHomeWorld(){
+  return new Promise(resolve=>{
+    const SKEY="gildesk:all:settings", PICKED="gildesk:homePicked:v1";
+    let picked=false;try{picked=!!localStorage.getItem(PICKED);}catch(e){}
+    if(picked)return resolve();
+    let saved=null;try{const s=JSON.parse(localStorage.getItem(SKEY)||"null");
+      if(s&&typeof s.home==="string"&&s.home)saved=s.home;}catch(e){}
+    if(saved){try{localStorage.setItem(PICKED,"1");}catch(e){}return resolve();}
+    const TOPO=[
+      {region:"North America",dcs:{
+        "Aether":["Adamantoise","Cactuar","Faerie","Gilgamesh","Jenova","Midgardsormr","Sargatanas","Siren"],
+        "Primal":["Behemoth","Excalibur","Exodus","Famfrit","Hyperion","Lamia","Leviathan","Ultros"],
+        "Crystal":["Balmung","Brynhildr","Coeurl","Diabolos","Goblin","Malboro","Mateus","Zalera"],
+        "Dynamis":["Cuchulainn","Golem","Halicarnassus","Kraken","Maduin","Marilith","Rafflesia","Seraph"]}},
+      {region:"Europe",dcs:{
+        "Chaos":["Cerberus","Louisoix","Moogle","Omega","Phantom","Ragnarok","Sagittarius","Spriggan"],
+        "Light":["Alpha","Lich","Odin","Phoenix","Raiden","Shiva","Twintania","Zodiark"],
+        "Shadow":["Innocence","Pixie","Titania","Tycoon"]}},
+      {region:"Japan",dcs:{
+        "Elemental":["Aegis","Atomos","Carbuncle","Garuda","Gungnir","Kujata","Tonberry","Typhon"],
+        "Gaia":["Alexander","Bahamut","Durandal","Fenrir","Ifrit","Ridill","Tiamat","Ultima"],
+        "Mana":["Anima","Asura","Chocobo","Hades","Ixion","Masamune","Pandaemonium","Titan"],
+        "Meteor":["Belias","Mandragora","Ramuh","Shinryu","Unicorn","Valefor","Yojimbo","Zeromus"]}},
+      {region:"Oceania",dcs:{
+        "Materia":["Bismarck","Ravana","Sephirot","Sophia","Zurvan"]}}
+    ];
+    const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+    const back=document.createElement("div");
+    back.className="homepick-back";
+    back.innerHTML=`<div class="homepick-panel" role="dialog" aria-modal="true" aria-label="Pick your home world">
+      <h2>Which server do you play on?</h2>
+      <p>This sets what "Sell on" defaults to everywhere on the desk, so prices already match your world. You can change it any time from any tab.</p>
+      <select id="homepickSel">
+        ${TOPO.map(r=>Object.keys(r.dcs).map(d=>
+          `<optgroup label="${esc(r.region)} · ${esc(d)}">`+
+          r.dcs[d].map(w=>`<option value="${esc(w)}">${esc(w)}</option>`).join("")+
+          `</optgroup>`).join("")).join("")}
+      </select>
+      <div class="homepick-actions">
+        <button type="button" class="homepick-skip" id="homepickSkip">Skip</button>
+        <button type="button" class="homepick-go" id="homepickGo">Continue</button>
+      </div>
+    </div>`;
+    document.body.appendChild(back);
+    const sel=back.querySelector("#homepickSel");
+    sel.value="Spriggan";
+    function dismiss(){try{localStorage.setItem(PICKED,"1");}catch(e){}back.remove();resolve();}
+    back.querySelector("#homepickGo").addEventListener("click",()=>{
+      let s={};try{s=JSON.parse(localStorage.getItem(SKEY)||"null")||{};}catch(e){}
+      s.home=sel.value;
+      /* restoreSettings() only follows a saved "dc" id to the matching data
+         centre for the "home" id, so without this the price panels would
+         load whatever DC the tab defaults to, not the one this world is in. */
+      for(const r of TOPO)for(const d in r.dcs)if(r.dcs[d].indexOf(sel.value)>=0)s.dc=d;
+      try{localStorage.setItem(SKEY,JSON.stringify(s));}catch(e){}
+      dismiss();
+    });
+    back.querySelector("#homepickSkip").addEventListener("click",dismiss);
+    back.addEventListener("click",e=>{if(e.target===back)dismiss();});
+    addEventListener("keydown",function esck(e){if(e.key==="Escape"){removeEventListener("keydown",esck);dismiss();}});
+  });
+}
+pickHomeWorld().then(()=>activate("all"));
 </script>
 </body>
 </html>
