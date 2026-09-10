@@ -54,10 +54,15 @@ Three deliberate choices run through the whole thing:
   and most tabs default to pricing against it rather than the current cheapest listing. Rows
   whose current listing sits far from that average get a ⚠ so you can spot noise.
 - **Velocity matters as much as margin.** A 500k margin on an item that sells twice a month is
-  worse than a 20k margin on something that moves 30 times a day. Tabs surface sales/day and a
-  *daily profit ceiling* (profit per unit × sales per day) so you can rank by what actually
+  worse than a 20k margin on something that moves 30 times a day. Tabs surface units/day and a
+  *daily profit ceiling* (profit per unit × units per day) so you can rank by what actually
   turns over. That ceiling is a ranking device, not a promise — you capture a slice of the
   market, not all of it.
+- **Units, not sales.** People buy caramel popcorn 99 at a time, so counting *sales* said the
+  market took four a day when it was taking four hundred. Every velocity on the desk counts
+  units: the number in `Units/day` is what a profit-per-unit is multiplied by, and the `×99`
+  beside it is the stack the item moves in. The sale count still shows next to `Avg 30d`, since
+  how many separate buyers turned up is its own useful number.
 - **Direction matters as well as level.** An average tells you where a price has been,
   not where it is going. The `Trend` column splits the sales history in half and compares
   the newer half against the older one, so a margin that is opening up reads differently
@@ -157,7 +162,7 @@ variant dungeon potsherds (Sil'dihn, Rokkon, Aloalo, Corvosi), all traded to Tri
 Sharlayan for glamour, emotes, hairstyles and orchestrion rolls, plus the two deep dungeon
 potsherds (Gelmorran from Palace of the Dead, Empyrean from Heaven-on-High), which mostly buy
 grade V and VI materia. These drop slowly and their rewards are thin on the market board, so set
-**min sales/day** to `Any` to see the whole shop.
+**min units/day** to `Any` to see the whole shop.
 
 ### Vendors
 
@@ -200,7 +205,7 @@ Each tab hands over what it knows: a precraft or a Scrips collectable brings its
 tree so the list can price the materials, a flip brings the world it was cheapest on, a vendor
 item brings the NPC and zone, and a currency item brings the currency and shop it came from.
 
-Each list is a full tab: sell now, 30-day average, material cost, profit, margin, sales/day and
+Each list is a full tab: sell now, 30-day average, material cost, profit, margin, units/day and
 gil/day, plus the same recursive crafting tree as the Dashboard. An item saved without a recipe
 (a raw material, say) is still priced — it just shows no crafting cost.
 
@@ -344,10 +349,10 @@ duplicating some code — which is why the shared chunks exist.
   six listings each. On a heavily stocked item the units-available figure is therefore a floor,
   and the panel says so when it hits that wall.
 - Universalis returns at most 200 sales per item, so on a heavily traded item the history
-  reaches back only two or three days — which is also why the `Trend` column compares the
-  window the data actually covers rather than a fixed seven days, and says which window it
-  used. For the same reason `Avg 30d` on a busy item is really the average of its last 200
-  sales, not of a full month.
+  reaches back only part of the month — which is also why the `Trend` column compares the
+  window the data actually covers rather than a fixed seven days and says which window it
+  used, and why `Units/day` divides by that window rather than by thirty. For the same reason
+  `Avg 30d` on a busy item is really the average of its last 200 sales, not of a full month.
 - On the **Vendors** tab, a row with a ⚠ has no real sales behind its price. Treat those profits
   as hypothetical, not as gil you can go and collect.
 - Vendor locations come from the shop tables, which don't record seasonal availability perfectly
