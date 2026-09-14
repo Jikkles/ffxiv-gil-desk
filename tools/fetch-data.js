@@ -12,7 +12,8 @@ const TRACKER = "https://raw.githubusercontent.com/Infiziert90/SubmarineTracker/
 
 const FILES = [
   /* the game's own tables */
-  ...["Item", "ItemUICategory", "SpecialShop",
+  ...["Item", "ItemUICategory", "SpecialShop", "TomestonesItem", "GCScripShopItem",
+    "GilShop", "GilShopItem", "ENpcBase", "ENpcResident", "Level", "Map", "PlaceName", "TerritoryType",
     "SubmarineExploration", "SubmarineMap", "SubmarinePart", "SubmarineRank",
     "CompanyCraftSequence", "CompanyCraftPart", "CompanyCraftProcess", "CompanyCraftSupplyItem",
     "CompanyCraftType", "CompanyCraftDraftCategory"].map(n => [n + ".csv", DATAMINING + n + ".csv"]),

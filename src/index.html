@@ -237,8 +237,28 @@ function tabIcon(key){
 document.querySelectorAll(".tab[data-tab]").forEach(b=>{
   if(!b.querySelector(".tabic"))b.insertAdjacentHTML("afterbegin",tabIcon(b.dataset.tab));
 });
+/* ---- tab links ----
+   Each tab has an address (#vendors, #submersibles, #list2), so a link can open
+   the desk on a tab, a bookmark comes back to it, and Back steps through the tabs
+   you visited. The internal keys are older than the tab names, hence the map. */
+const TAB_SLUGS={all:"dashboard",precraft:"precrafts",currencies:"currencies",materia:"scrips",duties:"duties",
+  flips:"flips",retainer:"retainers",submersible:"submersibles",workshop:"workshop",vendors:"vendors"};
+function slugOf(key){return TAB_SLUGS[key]||key;}
+/* the tab a hash names, or null when it names nothing on the bar right now */
+function keyFromHash(){
+  const h=decodeURIComponent(location.hash.slice(1)).toLowerCase();
+  if(!h)return null;
+  let key=Object.keys(TAB_SLUGS).find(k=>TAB_SLUGS[k]===h)||null;
+  if(!key&&/^list[1-5]$/.test(h))key=h;
+  return key&&document.querySelector('.tab[data-tab="'+key+'"]')?key:null;
+}
+let current=null;
 const loaded={};
 function activate(key){
+  current=key;
+  /* replace rather than push: a click pushes its own entry (see the tab bar
+     below), and a fallback such as a removed list should not add one */
+  if(keyFromHash()!==key)history.replaceState(null,"","#"+slugOf(key));
   document.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected", t.dataset.tab===key));
   document.querySelectorAll("iframe[data-frame]").forEach(f=>{
     const on=f.dataset.frame===key;
@@ -251,8 +271,19 @@ function activate(key){
 }
 document.querySelector(".tabbar").addEventListener("click",e=>{
   const t=e.target.closest(".tab[data-tab]");
-  if(t)activate(t.dataset.tab);
+  if(!t||t.dataset.tab===current)return;
+  history.pushState(null,"","#"+slugOf(t.dataset.tab));
+  activate(t.dataset.tab);
 });
+/* Back, Forward, or a hash typed into the address bar */
+function followHash(){
+  const k=keyFromHash();
+  if(k){if(k!==current)activate(k);}
+  /* a hash that names no tab (a removed list, a typo) is put back to the tab on screen */
+  else if(current)history.replaceState(null,"","#"+slugOf(current));
+}
+addEventListener("popstate",followHash);
+addEventListener("hashchange",followHash);
 
 /* ---- saved lists: the tabs follow whatever the user has created ----
    Storage shape is owned by SHARED_LIST; the shell only reads it, plus appends
@@ -334,7 +365,7 @@ addBtn.addEventListener("click",()=>{
   d.names=d.names||{};if(typeof d.names[n]!=="string"||!d.names[n].trim())d.names[n]="List "+n;
   d.items=d.items||{};if(!Array.isArray(d.items[n]))d.items[n]=[];
   try{localStorage.setItem(LIST_KEY,JSON.stringify(d));}catch(e){return;}
-  syncListTabs();activate("list"+n);
+  syncListTabs();history.pushState(null,"","#list"+n);activate("list"+n);
 });
 /* a list renamed, added or removed inside a tab reaches us either way */
 addEventListener("storage",e=>{if(e.key===LIST_KEY)syncListTabs();});
@@ -449,7 +480,7 @@ function seedHomeWorld(){
     try{localStorage.setItem(key,JSON.stringify(s));}catch(e){}
   }
 }
-pickHomeWorld().then(()=>{seedHomeWorld();activate("all");});
+pickHomeWorld().then(()=>{seedHomeWorld();activate(keyFromHash()||"all");});
 </script>
 </body>
 </html>

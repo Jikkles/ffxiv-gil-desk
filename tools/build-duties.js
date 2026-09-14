@@ -102,8 +102,9 @@ for (const cat of readJSON(need("ChestDropsV2.json"))) {
   }
 }
 
-/* potsherd exchanges, read from the Currencies tab so the two tabs always agree */
-const CD = JSON.parse(readSrc("data/currencies.json"));
+/* potsherd exchanges, read from the Currencies data so the two tabs always agree: this
+   rebake's build-currencies.js output when there is one, otherwise what the tab has now */
+const CD = fs.existsSync(cached("out/CURRENCIES.json")) ? readJSON(cached("out/CURRENCIES.json")) : JSON.parse(readSrc("data/currencies.json"));
 for (const c of CD.currencies) {
   if (c.group !== "Variant & Deep Dungeons") continue;
   const deep = DEEP_POTSHERDS.test(c.name);

@@ -146,10 +146,12 @@ gil-per-unit rate, then what that item sells for after tax. Each row's Item cell
 own icon and name over its vendor, with the currency icon and what one costs pinned to the right
 of the same cell, so the tab keeps the same columns as the rest of the desk.
 
-Vendor costs are read from the game's `SpecialShop` and `GCScripShopItem` tables at **patch
-7.55**, filtered to items actually sellable on the market board. Where the same item is sold by
-multiple vendors for the same currency, the cheapest is used. Some shop rows belong to vendors
-that no longer exist in-game, so the vendor name is shown on every row.
+Vendor costs are read from the game's `SpecialShop` and `GCScripShopItem` tables, filtered to
+items actually sellable on the market board, and rebaked after each patch (see
+[Keeping it current](#keeping-it-current)). Only prices in a single currency count, and the game's
+developer shops and placeholder rows are left out. Where the same item is sold by multiple vendors
+for the same currency, the cheapest is used. Some shop rows belong to vendors that no longer exist
+in-game, so the vendor name is shown on every row.
 
 Alongside the tomestones, scrips and seals there's a **Variant & Deep Dungeons** group: the four
 variant dungeon potsherds (Sil'dihn, Rokkon, Aloalo, Corvosi), all traded to Trisassant in Old
@@ -300,8 +302,9 @@ and **Hide ⚠ unreliable** drops them from the table. Without this the tab woul
 142M profit on an interior wall that has never once sold.
 
 **Bought from** is joined out of the game's own shop tables: the NPC, the zone and the map
-coordinate, preferring a city vendor where an item is stocked in several places. *+n more* means
-there are closer options than the one shown. Two tags flag stock you may not be able to buy
+coordinate. Where several NPCs stock an item, the one shown is a vendor with a map position before
+one without, then a city vendor before one out in the field or in a housing ward. *+n more* counts
+the other NPCs that stock it. Two tags flag stock you may not be able to buy
 today: `locked?` where a quest or achievement gates the shop, and `seasonal` where the shop only
 opens during an event (46 items, mostly Starlight, Valentione's and Heavensturn furnishings).
 
@@ -347,6 +350,12 @@ overpaying. Crystals, shards and clusters are excluded — assumed stocked.
 and every craftable material inside a crafting tree, including the Workshop's — has a ↗ button that opens that exact
 recipe in the [Teamcraft](https://ffxivteamcraft.com) craft simulator, so you can check a
 rotation before you commit. Rows that aren't crafted don't get one.
+
+**Tab links.** Every tab has its own address — `#dashboard`, `#precrafts`, `#currencies`,
+`#scrips`, `#duties`, `#flips`, `#retainers`, `#submersibles`, `#workshop`, `#vendors`, and
+`#list1` to `#list5` — so a link or bookmark opens the desk straight on that tab, and the browser's
+Back and Forward buttons step through the tabs you visited. An address for a list you don't have
+opens the Dashboard.
 
 **Folding sidebar.** The arrow at the top of any tab's filters panel folds it down to a narrow
 rail, giving the table the width. It is one setting for the whole desk: fold it on one tab and
@@ -429,13 +438,14 @@ The **Submersibles** and **Duties** drop rates come from
 and related plugins — baked in by `tools/rebake.js`, which a weekly job reruns after each patch. Sector positions, survey times, tanks and
 part stats come from the game's `SubmarineExploration`, `SubmarinePart` and `SubmarineRank` tables,
 and the stat breakpoints from [SubmarineTracker](https://github.com/Infiziert90/SubmarineTracker).
-Exchange costs are read from `SpecialShop`. The **Workshop** projects come from the
+Exchange costs are read from `SpecialShop`, as are the **Currencies** shops
+(`tools/build-currencies.js`). The **Workshop** projects come from the
 `CompanyCraft*` tables, and the recipes under each turn-in from Teamcraft's public data.
 
-The **Vendors** dataset is built from the game's own `GilShopItem`, `GilShop`, `Item`,
-`ENpcBase`, `ENpcResident`, `Level` and `Map` tables (via the public
-[ffxiv-datamining](https://github.com/xivapi/ffxiv-datamining) CSVs), filtered to items that are
-tradable, listed in a gil shop, and sellable on the market board. Map coordinates are the usual
+The **Vendors** dataset is built by `tools/build-vendors.js` from the game's own `GilShopItem`,
+`GilShop`, `Item`, `ENpcBase`, `ENpcResident`, `Level`, `Map`, `PlaceName` and `TerritoryType` tables
+(via the public [ffxiv-datamining](https://github.com/xivapi/ffxiv-datamining) CSVs), filtered to
+items that are tradable, listed in a gil shop, and sellable on the market board. Map coordinates are the usual
 `SizeFactor`/offset transform; 2,842 of the 4,943 items resolve to a coordinate and 4,568 to a
 named NPC.
 
@@ -454,8 +464,8 @@ stale or missing prices.
 
 ## Keeping it current
 
-Submersible routes, workshop projects and duty drops are baked into the file, so a patch that
-adds new ones needs them pulled again. That happens on its own: a free GitHub Actions job checks
+Currency shops, vendor stock, submersible routes, workshop projects and duty drops are baked into
+the file, so a patch that adds new ones needs them pulled again. That happens on its own: a free GitHub Actions job checks
 every Monday, and from 10 to 38 days after a patch it rebakes, checks the result and pushes it. If a
 patch needs a human, it pushes nothing and opens an issue instead. By hand it is one command — see
 [tools/README.md](tools/README.md):
@@ -464,13 +474,12 @@ patch needs a human, it pushes nothing and opens an issue instead. By hand it is
 node tools/rebake.js
 ```
 
-It downloads the latest public game data and crowd-sourced loot rates, rebuilds the three
+It downloads the latest public game data and crowd-sourced loot rates, rebuilds the five
 datasets and writes them into `src/data/` and `index.html`. It needs only Node.js, and nothing it touches needs a
 key or an account.
 
-The **Vendors** and **Currencies** data, and the Dashboard and Precrafts recipe lists, are not
-covered. The scripts that built them were not kept, so they stay on patch 7.55 until those scripts
-are rewritten.
+The Dashboard and Precrafts recipe lists are not covered yet: the script that built them was not
+kept, so they stay on patch 7.55 until it is rewritten.
 
 ## Architecture
 
@@ -527,8 +536,9 @@ duplicating some code — which is why the shared chunks exist.
 - Prices from a data centre in another region are informational: you cannot travel there.
 - Daily ceilings are rankings, not forecasts.
 - Nothing accounts for crafting stats, materia, food, or whether you can actually hit HQ.
-- Vendor costs are pinned to patch 7.55 and will drift as the game updates. The Submersibles,
-  Workshop and Duties data are rebaked automatically after each patch.
+- The Currencies, Vendors, Submersibles, Workshop and Duties data are rebaked automatically after
+  each patch, but only from 10 days after it, so a brand-new shop or vendor can be missing until then.
+  The Dashboard and Precrafts recipe lists are still pinned to patch 7.55.
 - Submersible and duty drop rates are crowd-sourced averages. They describe a lot of voyages and
   coffers, not your next one, and a rate on a thin sample (a few hundred coffers) can move a long way.
 - The cross-world panel reads the 50 cheapest listings per scope. That is across the scope, not
@@ -567,6 +577,8 @@ duplicating some code — which is why the shared chunks exist.
   Teamcraft simulator.
 - The filters panel folds down to a rail, and the whole desk remembers the choice.
 - The tab bar stays on one row as the window narrows, and the list tabs carry on along it.
+- Every tab has its own link (`…/ffxiv-gil-desk/#vendors`), and Back and Forward move between
+  tabs.
 
 **Dashboard and Refresh**
 - Until it has prices, the Dashboard shows a big **Load live prices** button in place of an empty table.
@@ -574,6 +586,17 @@ duplicating some code — which is why the shared chunks exist.
   an *Updating…* label and a progress bar while it works.
 - **Shift-click Refresh** on the Dashboard now rescans the items *Skip dead items* leaves out, as
   its tooltip always said. Before, it only cleared the price cache.
+
+**Currencies and Vendors kept current**
+- **Currencies** and **Vendors** are now rebuilt from the game tables by `tools/build-currencies.js`
+  and `tools/build-vendors.js`, and the weekly job rebakes them after each patch along with the
+  other three. Both were stuck on patch 7.55.
+- Currencies drops a few rows that were never really for sale: six MGP items from a developer
+  shop called "Currency Test", and Potions listed at 999 scrips, which the game uses to pad empty
+  shop slots.
+- On Vendors, 446 items now name a different NPC. It is still one that stocks the item; the pick
+  now follows a written rule (see [Vendors](#vendors)).
+- 141 vendor and currency items that the search box couldn't find are now searchable.
 
 **Fixes**
 - The world you pick on a first visit now reaches every tab. It used to set only the Dashboard,

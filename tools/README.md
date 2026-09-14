@@ -1,9 +1,10 @@
 # Rebaking the desk after a patch
 
-The **Submersibles**, **Workshop** and **Duties** tabs carry baked game data — sectors and loot
-rates, workshop projects and recipes, duty drops and exchanges — alongside the desk's item icon,
-search-name and Teamcraft recipe indexes. A patch that adds a sea, a workshop project, a deep
-dungeon or a field operation needs that data pulled again. These scripts do it in one go.
+The **Currencies**, **Vendors**, **Submersibles**, **Workshop** and **Duties** tabs carry baked game
+data — currency shops, NPC gil shops, sectors and loot rates, workshop projects and recipes, duty
+drops and exchanges — alongside the desk's item icon, search-name and Teamcraft recipe indexes. A
+patch that adds a shop, a sea, a workshop project, a deep dungeon or a field operation needs that
+data pulled again. These scripts do it in one go.
 
 Everything they read is a public file on GitHub, plus a price check against Universalis: free,
 no key, no account. They need nothing but [Node.js](https://nodejs.org) 18 or newer — no
@@ -39,10 +40,10 @@ emails you and one click on the Actions page turns it back on.
 node tools/rebake.js
 ```
 
-That downloads fresh data into `tools/.cache/` (about 45 MB, ignored by git), rebuilds all three
+That downloads fresh data into `tools/.cache/` (about 80 MB, ignored by git), rebuilds all five
 datasets, writes them into `src/data/`, and rebuilds `index.html` from `src/`. Then:
 
-1. Open `index.html` and look at the three tabs.
+1. Open `index.html` and look at the five tabs.
 2. Read what the rebake printed — anything marked **WARNING** or **note** needs a look (below).
 3. Run `node tools/check-bake.js`, then `git diff --stat`, commit and push.
 
@@ -56,21 +57,25 @@ over the first week or two. Rebaking again later simply picks up the better numb
 | `--reprice` | Ask Universalis again for the Duties price check even if the cached prices are under a day old |
 
 Each step can also be run on its own: `fetch-data.js` (add `--missing` to fetch only files not yet
-cached), `build-subs.js`, `build-workshop.js`, `build-duties.js`, then `apply.js` to write the results.
+cached), `build-subs.js`, `build-workshop.js`, `build-currencies.js`, `build-vendors.js`, `build-duties.js`,
+then `apply.js` to write the results. Run `build-currencies.js` before `build-duties.js`, which reads its
+potsherd exchanges.
 `check-bake.js` looks the result over before you commit. It is the same check the weekly job runs.
 
 ## What each step reads
 
 | Step | Source | Gives |
 | --- | --- | --- |
-| `fetch-data.js` | [ffxiv-datamining](https://github.com/xivapi/ffxiv-datamining) `csv/en/` | `Item`, `SpecialShop`, `Submarine*` and `CompanyCraft*` game tables |
+| `fetch-data.js` | [ffxiv-datamining](https://github.com/xivapi/ffxiv-datamining) `csv/en/` | `Item`, `ItemUICategory`, `SpecialShop`, `TomestonesItem`, `GCScripShopItem`, `GilShop`, `GilShopItem`, `ENpcBase`, `ENpcResident`, `Level`, `Map`, `PlaceName`, `TerritoryType`, `Submarine*` and `CompanyCraft*` game tables |
 | | [Teamcraft](https://github.com/ffxiv-teamcraft/ffxiv-teamcraft) `libs/data/src/lib/json/` | `recipes`, `item-icons`, `submarine-parts` |
 | | [Infi's FFXIVGachaSpreadsheet](https://github.com/Infiziert90/FFXIVGachaSpreadsheet) `website/static/data/` | crowd-sourced loot: `Submarines`, `DeepDungeonSacks`, `EurekaBunnies`, `FieldOpLockboxes`, `OccultTreasuresV2`, `ChestDropsV2` |
 | | [SubmarineTracker](https://github.com/Infiziert90/SubmarineTracker) `Data/Sectors.cs` | surveillance / retrieval / favor breakpoints per sector |
 | `build-subs.js` | the above | `SUB` — seas, sectors, loot per visit, parts, rank bonuses |
 | `build-workshop.js` | the above | `WS` — every FC project, its phases, the recipes under its turn-ins |
-| `build-duties.js` | the above + the Currencies tab's potsherd shops + Universalis EU/NA prices | `DUTY` — worthwhile drops with rates or exchange costs |
-| `apply.js` | the three outputs | writes `SUB`, `WS`, `DUTY` to `src/data/submersibles.json`, `workshop.json`, `duties.json`; adds any missing icons and search names; rebuilds `RECIPE_INDEX`; runs `build.js` |
+| `build-currencies.js` | the game tables | `CURRENCIES` — each listed currency's marketable items, cost and shop |
+| `build-vendors.js` | the game tables | `VENDORS` — every marketable gil-shop item, its price, one NPC and map position |
+| `build-duties.js` | the above + `build-currencies.js`'s potsherd shops + Universalis EU/NA prices | `DUTY` — worthwhile drops with rates or exchange costs |
+| `apply.js` | the five outputs | writes `CD`, `VD`, `SUB`, `WS`, `DUTY` to `src/data/currencies.json`, `vendors.json`, `submersibles.json`, `workshop.json`, `duties.json`; adds any missing icons and search names; rebuilds `RECIPE_INDEX`; runs `build.js` |
 
 `apply.js` only replaces those files in `src/data/`. Every other tab, and all the page code, is untouched.
 
@@ -84,8 +89,14 @@ Most patches need nothing but the command. Things that do need a small edit:
 - **A new field operation currency** (like Bozjan Clusters or Occult Crescent's silver and gold
   pieces). Add its item id to `FIELD_CURRENCIES`. The id is in `tools/.cache/Item.csv`, or search the
   item on [Garland Tools](https://garlandtools.org) and use the number in its URL.
-- **A new variant dungeon.** Its potsherd arrives through the Currencies tab's shop data, which this
-  does not rebuild. Until that tab is updated its exchange will not appear.
+- **A new currency** (a tomestone, scrip, tribal currency or variant dungeon potsherd).
+  `build-currencies.js` prints `currency … buys marketable items but is not in CURRENCIES or IGNORED`.
+  Add it to `CURRENCIES` with its group, or to `IGNORED` if the tab should skip it. A new potsherd in
+  the `Variant & Deep Dungeons` group reaches the Duties tab on its own.
+- **New scrips.** When the game retires purple or orange scrips, it prints `scrip index … is not in
+  SCRIPS`. Add the index to `SCRIPS` with the new scrip's item id, and the scrip to `CURRENCIES`.
+- **A new item category on Vendors.** `build-vendors.js` prints `UI category "…" is in no group`; add it
+  to the right group in `GROUP_OF`.
 - **A whole new kind of content** (another Occult Crescent–style zone with its own coffer export).
   Add a `coffers(...)` call in `build-duties.js`, a group name to `MIN` and `GROUP_ORDER`, and the
   same group to `GROUPS` in `src/tabs/duties.html`, so it gets a sidebar entry and a card, then run
@@ -103,6 +114,5 @@ field operations).
 
 ## Not covered here
 
-The **Vendors** and **Currencies** datasets, and the Dashboard and Precrafts recipe catalogues,
-were baked by earlier one-off scripts that were not kept. They still work, but their costs and
-catalogues are pinned to the patch they were built on (7.55).
+The Dashboard and Precrafts recipe catalogues were baked by an earlier one-off script that was not
+kept. They still work, but they are pinned to the patch they were built on (7.55).

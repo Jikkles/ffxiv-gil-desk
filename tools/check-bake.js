@@ -1,6 +1,6 @@
 /* A last look at index.html after a rebake, before anything is committed:
    - every <script> in the page and in every tab still parses
-   - the Submersibles, Workshop and Duties data did not shrink by more than a quarter
+   - the Currencies, Vendors, Submersibles, Workshop and Duties data did not shrink by more than a quarter
      against the last commit (a source changing its format would show up as a collapse)
      node tools/check-bake.js
    Exits 1 with the reasons if anything looks wrong. */
@@ -30,7 +30,12 @@ const dataset = (docs, tab, name) => {
 };
 function counts(docs) {
   const SUB = dataset(docs, "submersible", "SUB"), WS = dataset(docs, "workshop", "WS"), DUTY = dataset(docs, "duties", "DUTY");
+  const CD = dataset(docs, "currencies", "CD"), VD = dataset(docs, "vendors", "VD");
   return {
+    "currencies": CD ? CD.currencies.length : 0,
+    "currency offers": CD ? CD.currencies.reduce((s, c) => s + c.items.length, 0) : 0,
+    "vendor items": VD ? VD.r.length : 0,
+    "vendor NPCs shown": VD ? VD.r.filter(r => r[5] >= 0).length : 0,
     "submarine sectors": SUB ? SUB.sectors.length : 0,
     "sectors with loot": SUB ? SUB.sectors.filter(s => s.loot.length).length : 0,
     "workshop projects": WS ? WS.projects.length : 0,
