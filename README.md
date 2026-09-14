@@ -367,7 +367,7 @@ The **Submersibles** and **Duties** drop rates come from
 [Infi's FFXIVGachaSpreadsheet](https://github.com/Infiziert90/FFXIVGachaSpreadsheet) exports
 (`Submarines.json`, `DeepDungeonSacks.json`, `EurekaBunnies.json`, `FieldOpLockboxes.json`,
 `OccultTreasuresV2.json`, `ChestDropsV2.json`) — the loot records uploaded by the SubmarineTracker
-and related plugins — baked in by `tools/rebake.js` (last run 14 September 2026). Sector positions, survey times, tanks and
+and related plugins — baked in by `tools/rebake.js`, which a weekly job reruns after each patch. Sector positions, survey times, tanks and
 part stats come from the game's `SubmarineExploration`, `SubmarinePart` and `SubmarineRank` tables,
 and the stat breakpoints from [SubmarineTracker](https://github.com/Infiziert90/SubmarineTracker).
 Exchange costs are read from `SpecialShop`. The **Workshop** projects come from the
@@ -396,7 +396,10 @@ stale or missing prices.
 ## Keeping it current
 
 Submersible routes, workshop projects and duty drops are baked into the file, so a patch that
-adds new ones needs them pulled again. One command does it — see [tools/README.md](tools/README.md):
+adds new ones needs them pulled again. That happens on its own: a free GitHub Actions job checks
+every Monday, and from 10 to 38 days after a patch it rebakes, checks the result and pushes it. If a
+patch needs a human, it pushes nothing and opens an issue instead. By hand it is one command — see
+[tools/README.md](tools/README.md):
 
 ```
 node tools/rebake.js
@@ -440,7 +443,7 @@ duplicating some code — which is why the shared chunks exist.
 - Daily ceilings are rankings, not forecasts.
 - Nothing accounts for crafting stats, materia, food, or whether you can actually hit HQ.
 - Vendor costs are pinned to patch 7.55 and will drift as the game updates. The Submersibles,
-  Workshop and Duties data can be refreshed with `node tools/rebake.js`.
+  Workshop and Duties data are rebaked automatically after each patch.
 - Submersible and duty drop rates are crowd-sourced averages. They describe a lot of voyages and
   coffers, not your next one, and a rate on a thin sample (a few hundred coffers) can move a long way.
 - The cross-world panel reads the 50 cheapest listings per scope. That is across the scope, not

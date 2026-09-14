@@ -9,7 +9,31 @@ Everything they read is a public file on GitHub, plus a price check against Univ
 no key, no account. They need nothing but [Node.js](https://nodejs.org) 18 or newer — no
 `npm install`.
 
-## After a patch
+## It runs itself
+
+A GitHub Actions job ([`.github/workflows/rebake.yml`](../.github/workflows/rebake.yml)) does all of
+this on its own. It is free for a public repo and needs no key or account.
+
+- **Every Monday** `patch-check.js` looks at when the game data last changed (a new commit to
+  ffxiv-datamining's `csv/en`, titled with the patch).
+- **From 10 to 38 days after a patch** it rebakes each week. The wait lets players' loot records
+  build up, and the repeats pick up better rates as they fill in. Outside that window it does nothing.
+- **A clean rebake is pushed to main.** Clean means no WARNING or note, and `check-bake.js` passes:
+  every script still parses, and no dataset shrank by more than a quarter. The one note it lets
+  through is sectors still waiting on SubmarineTracker's breakpoints, which sorts itself out (see below). If nothing changed, nothing
+  is committed.
+- **Anything else pushes nothing** and opens an issue labelled `rebake` with the log, which GitHub
+  emails you about. Make the fix from [When a human is needed](#when-a-human-is-needed), then either
+  run the rebake locally and push, or start the job again. Close the issue once it is sorted; while it
+  stays open, later failures are added to it as comments.
+- **To rebake now**, go to the repo's **Actions → Weekly rebake → Run workflow**. That ignores the
+  window.
+
+GitHub turns off schedules in repos with no activity for 60 days, which can happen between patches.
+The job switches itself back on each time it runs, so this should never bite. If it ever does, GitHub
+emails you and one click on the Actions page turns it back on.
+
+## After a patch, by hand
 
 ```
 node tools/rebake.js
@@ -20,7 +44,7 @@ datasets, and writes them into `index.html`. Then:
 
 1. Open `index.html` and look at the three tabs.
 2. Read what the rebake printed — anything marked **WARNING** or **note** needs a look (below).
-3. `git diff --stat`, commit, push.
+3. Run `node tools/check-bake.js`, then `git diff --stat`, commit and push.
 
 Give the community data a few days after a patch before rebaking. The loot rates come from players'
 plugins uploading what they find, so a brand-new sea or coffer starts with a thin sample and fills in
@@ -33,6 +57,7 @@ over the first week or two. Rebaking again later simply picks up the better numb
 
 Each step can also be run on its own: `fetch-data.js` (add `--missing` to fetch only files not yet
 cached), `build-subs.js`, `build-workshop.js`, `build-duties.js`, then `apply.js` to write the results.
+`check-bake.js` looks the result over before you commit. It is the same check the weekly job runs.
 
 ## What each step reads
 

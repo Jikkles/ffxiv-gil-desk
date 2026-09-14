@@ -1,0 +1,107 @@
+# Keeps the Submersibles, Workshop and Duties data current after each patch.
+# Every Monday it checks for new game data. From 10 to 38 days after a patch it rebakes,
+# checks the result and pushes it to main. If the rebake needs a human (a warning, a note
+# or a failed check) nothing is pushed and an issue labelled "rebake" says why.
+# Actions → Weekly rebake → Run workflow rebakes straight away. See tools/README.md.
+name: Weekly rebake
+
+on:
+  schedule:
+    - cron: "17 6 * * 1"   # Mondays 06:17 UTC
+  workflow_dispatch:
+    inputs:
+      force:
+        description: Rebake now, even outside the window after a patch
+        type: boolean
+        default: true
+
+permissions:
+  contents: write   # push the rebake
+  issues: write     # report a rebake that needs a human
+  actions: write    # keep this schedule switched on
+  pages: write      # rebuild the site after a push
+
+concurrency: rebake
+
+jobs:
+  rebake:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
+      # GitHub switches off schedules in repos with no activity for 60 days, and patches
+      # can be further apart than that. Re-enabling the workflow resets the count.
+      - name: Keep this schedule switched on
+        continue-on-error: true
+        run: gh api -X PUT "repos/${{ github.repository }}/actions/workflows/rebake.yml/enable"
+
+      - name: Is a patch due a rebake?
+        id: due
+        run: node tools/patch-check.js ${{ inputs.force && '--force' || '' }}
+
+      - name: Rebake
+        if: steps.due.outputs.rebake == 'true'
+        run: |
+          set -o pipefail
+          node tools/rebake.js 2>&1 | tee rebake.log
+          # sectors waiting on SubmarineTracker's breakpoints sort themselves out; every other note needs a human
+          if grep -E "WARNING|note:" rebake.log | grep -v "no breakpoints in SubmarineTracker yet" > /dev/null; then
+            echo "::error::The rebake printed a WARNING or note, so it needs a human. Nothing was pushed."
+            exit 1
+          fi
+
+      - name: Check the result
+        if: steps.due.outputs.rebake == 'true'
+        run: node tools/check-bake.js 2>&1 | tee -a rebake.log; exit ${PIPESTATUS[0]}
+
+      - name: Commit and push
+        if: steps.due.outputs.rebake == 'true'
+        env:
+          PATCH: ${{ steps.due.outputs.patch }}
+          DAYS: ${{ steps.due.outputs.days }}
+        run: |
+          if git diff --quiet -- index.html; then
+            echo "Nothing changed since the last rebake."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898292+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Rebake Submersibles, Workshop and Duties for $PATCH" \
+                     -m "Automatic weekly rebake, $DAYS days after the game data changed."
+          git pull --rebase origin main
+          git push origin HEAD:main
+          gh api -X POST "repos/${{ github.repository }}/pages/builds" || true
+
+      - name: Open an issue
+        if: failure()
+        env:
+          PATCH: ${{ steps.due.outputs.patch || 'the latest game data' }}
+          GUIDE: ${{ github.server_url }}/${{ github.repository }}/blob/main/tools/README.md#when-a-human-is-needed
+        run: |
+          RUN="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          {
+            echo "The weekly rebake for **$PATCH** stopped and pushed nothing."
+            echo
+            echo "Run: $RUN"
+            echo
+            echo "Read the WARNING or note lines below. [tools/README.md]($GUIDE) says where each fix goes. Then run \`node tools/rebake.js\` locally and push, or use **Actions → Weekly rebake → Run workflow**."
+            echo
+            echo '```'
+            tail -n 60 rebake.log 2>/dev/null || echo "(the rebake did not start; see the run log)"
+            echo '```'
+          } > issue.md
+          gh label create rebake --color D93F0B --description "The weekly rebake needs a human" --force
+          open=$(gh issue list --label rebake --state open --json number --jq '.[0].number')
+          if [ -n "$open" ]; then
+            gh issue comment "$open" --body-file issue.md
+          else
+            gh issue create --title "Weekly rebake needs a look" --label rebake --body-file issue.md
+          fi
