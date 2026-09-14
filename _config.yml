@@ -1,0 +1,2 @@
+# GitHub Pages: publish the built index.html, not the source it is built from.
+exclude: [src]
