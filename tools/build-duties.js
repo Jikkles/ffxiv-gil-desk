@@ -8,7 +8,8 @@
      node tools/build-duties.js              use cached prices if under a day old
      node tools/build-duties.js --reprice    ask Universalis again */
 const fs = require("fs");
-const { OUT, CACHE, cached, need, readJSON, writeJSON, sheet, items, marketable, openIndex } = require("./lib/common");
+const { OUT, CACHE, cached, need, readJSON, writeJSON, sheet, items, marketable } = require("./lib/common");
+const { readSrc } = require("./build");
 
 const I = items();
 const mb = id => marketable(I, id);
@@ -102,8 +103,7 @@ for (const cat of readJSON(need("ChestDropsV2.json"))) {
 }
 
 /* potsherd exchanges, read from the Currencies tab so the two tabs always agree */
-const cdLine = openIndex().getBlob("currencies").split(/\r?\n/).find(l => l.startsWith("const CD = "));
-const CD = JSON.parse(cdLine.slice("const CD = ".length).replace(/;\s*$/, ""));
+const CD = JSON.parse(readSrc("data/currencies.json"));
 for (const c of CD.currencies) {
   if (c.group !== "Variant & Deep Dungeons") continue;
   const deep = DEEP_POTSHERDS.test(c.name);

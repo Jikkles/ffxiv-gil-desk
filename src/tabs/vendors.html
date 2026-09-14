@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vendors</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/*__UI_CSS__*/
+/* ---- vendors only ---- */
+.vend{text-align:left;font-family:"Inter",sans-serif;font-size:13px;line-height:1.3;white-space:normal;min-width:190px}
+.vend .who{color:var(--ink)}
+.vend .where{color:var(--muted);font-size:11.5px;font-family:"JetBrains Mono",monospace;white-space:nowrap}
+.vend .more{color:var(--faint);font-size:10px;font-family:"JetBrains Mono",monospace;white-space:nowrap}
+.gate{font-family:"JetBrains Mono",monospace;font-size:9px;color:var(--hop);border:1px solid var(--gil-line);background:var(--hop-soft);border-radius:5px;padding:1px 5px;margin-left:5px;cursor:help;white-space:nowrap}
+.seasonal{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.04em;color:#c97edb;border:1px solid #472f52;background:var(--accent-soft);border-radius:5px;padding:2px 6px;margin-left:5px;cursor:help;white-space:nowrap;flex:none}
+.gilv{color:var(--gil)}
+.no-data{color:var(--faint);font-size:12px;font-family:"JetBrains Mono",monospace}
+.empty{margin:26px 0 0;border:1px dashed var(--line);border-radius:14px;background:var(--panel);padding:36px 28px;text-align:center;box-shadow:var(--shadow)}
+.empty .icon{font-size:28px;line-height:1;opacity:.65}
+.empty .headline{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);margin-top:12px}
+.empty .body{color:var(--muted);font-size:14px;max-width:56ch;margin:9px auto 0}
+.copy-btn{all:unset;cursor:pointer;font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--aether);
+    border:1px solid var(--line);border-radius:7px;padding:4px 10px;background:var(--panel);margin-left:8px}
+.copy-btn:hover{border-color:var(--aether)}
+.dense tbody td{padding:5px 11px!important}
+.dense .vend .where,.dense .vend .more{display:none}
+</style>
+<script>try{var __t=localStorage.getItem("gildesk:theme:v1");document.documentElement.setAttribute("data-theme",__t==="light"?"light":"dark");}catch(e){document.documentElement.setAttribute("data-theme","dark");}</script>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="sgroup">
+      <div class="slabel">Filter items</div>
+      <div class="field">
+      <label>🔍</label>
+      <input id="search" placeholder="search item or vendor…" autocomplete="off">
+    </div>
+    </div>
+    <div class="sgroup">
+      <div class="slabel">Server</div>
+      <div class="field sel">
+      <label>Sell on</label>
+      <select id="home"></select>
+    </div>
+      <button class="btn wide" id="copyList" title="Copy the visible rows as a shopping run">📋 Copy list</button>
+      <button class="btn primary wide" id="refresh">↻ Refresh</button>
+    </div>
+    <div class="sgroup">
+      <div class="slabel">Marketboard settings</div>
+      <label class="chk"><input type="checkbox" id="hideOutlier"> Hide ⚠ unreliable</label>
+      <label class="chk showall"><input type="checkbox" id="showAll"> Show ALL vendor items</label>
+      <label class="chk"><input type="checkbox" id="density"> Compact rows</label>
+    </div>
+    <div class="sgroup">
+      <div class="slabel">Filters</div>
+      <div class="field sel">
+      <label>Category</label>
+      <select id="grp"><option value="all">All categories</option></select>
+    </div>
+      <div class="field sel">
+      <label>Sell price</label>
+      <select id="basis">
+        <option value="safe" selected>Realistic</option>
+        <option value="low">Cheapest listing</option>
+        <option value="avg">30-day average</option>
+      </select>
+    </div>
+      <div class="field sel">
+      <label>Min units/day</label>
+      <select id="minVel">
+        <option value="0" selected>Any</option>
+        <option value="0.1">0.1+</option>
+        <option value="0.5">0.5+</option>
+        <option value="1">1+</option>
+        <option value="5">5+</option>
+      </select>
+    </div>
+      <div class="field sel">
+      <label>Min profit</label>
+      <select id="minProfit">
+        <option value="1" selected>Any profit</option>
+        <option value="1000">1k+</option>
+        <option value="10000">10k+</option>
+        <option value="100000">100k+</option>
+        <option value="1000000">1M+</option>
+      </select>
+    </div>
+      <div class="field sel">
+      <label>Tax</label>
+      <select id="tax"><option value="0.05" selected>5%</option><option value="0.03">3%</option><option value="0.02">2%</option></select>
+    </div>
+    </div>
+    <div class="sgroup">
+      <div class="scancard"><span class="dot"></span>Last scan<br><b id="lastScan"></b></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="hero">
+      <div class="hicon">🏪</div>
+      <div>
+        <h1><b>Vendors</b></h1>
+        <p class="sub">Every marketable item an NPC will sell you for plain gil &mdash; <b id="nItems">0</b> of them &mdash; priced against the market board on your chosen server.
+    Vendor prices are fixed and never move, so anything here is a repeatable buy-low-sell-high run rather than a one-off snipe.
+    By default you only see what turns a profit right now; sorting is by <i>gil per day</i>, so items the market actually moves rise to the top. The <b>Best profit / day</b> card above still reads what you keep rather than what the item turns over.</p>
+      </div>
+    <div class="kpis">
+    <div class="kpi"><div class="ki">🪙</div><div class="kbody"><div class="k">Best profit / day</div><div class="v gil" id="kpiDaily">—</div><div class="s" id="kpiDailyName">waiting for data…</div></div></div>
+    <div class="kpi"><div class="ki">📈</div><div class="kbody"><div class="k">Turning a profit</div><div class="v" id="kpiCount">—</div><div class="s" id="kpiCountSub">of the vendor items with market data</div></div></div>
+    <div class="kpi"><div class="ki">🌍</div><div class="kbody"><div class="k">Best margin / unit</div><div class="v cy" id="kpiUnit">—</div><div class="s" id="kpiUnitName">single-flip profit</div></div></div>
+  </div></div>
+
+
+  
+
+  <div class="status" id="status">Pricing vendor stock against the market board…</div>
+  <div id="errbox"></div>
+
+  <div class="tablewrap"><table id="tbl" hidden>
+    <thead><tr>
+      <th data-k="name" style="cursor:default">Item</th>
+      <th data-k="vendor" class="hide" style="cursor:default">Bought from</th>
+      <th data-k="cost">Vendor cost <span></span></th>
+      <th data-k="min" title="Cheapest current listing on your world, with how long ago that world last reported to Universalis">Sell now <span></span></th>
+      <th data-k="avg" class="hide">Sell avg 30d <span></span></th>
+      <th data-k="trend" title="Which way the price is moving: the newer half of the sales history against the older half">Trend <span></span></th>
+      <th data-k="profit">Profit/unit <span></span></th>
+      <th data-k="margin" class="hide">Margin <span></span></th>
+      <th data-k="vel" title="Units sold a day, which is not sales a day: a stack of 99 leaving in one transaction is 99 units">Units/day <span></span></th>
+      <th data-k="gilDay" data-sorted title="Net sale price times units sold a day: how much gil this item moves on your world, whatever your cut of it is">Gil/day <span>▾</span></th>
+    </tr></thead>
+    <tbody id="rows"></tbody>
+  </table></div>
+  <div id="emptyBox"></div>
+
+  <p class="foot">
+    <b>Vendor cost</b> is the fixed gil price the NPC charges &mdash; it never changes, so the only moving part is what the board pays.
+    <b>Sell price</b> on <i>Realistic</i> takes the lower of the cheapest current listing and the 30-day average, because you have to undercut the board to sell but a lone silly listing is not a real price.
+    <span class="warn">⚠</span> means the price is not backed by real sales &mdash; either nothing has sold in 30 days, or the listing sits far from the average that did.
+    Most vendor stock is dead stock, so expect to see it a lot; the headline figures above ignore those rows entirely, and <i>Hide&nbsp;⚠&nbsp;unreliable</i> drops them from the table.
+    A <span class="seasonal">seasonal</span> tag means the shop only opens during an event.
+    <b>Profit/unit</b> = sell &times; (1 &minus; tax) &minus; vendor cost. <b>Gil/day</b> = net sale price &times; units sold per day &mdash; a stack of 99 counts as 99, not as one sale &mdash; so a 40M margin on something that sells twice a year sinks below a 5k margin on something that shifts 30 a day. That is the market&rsquo;s pace rather than your cut; for what you actually keep, read <b>Profit/unit</b> against it, or the <b>Best profit / day</b> card.
+    Locations come from the game's own shop data; many items are stocked by several NPCs, so <i>+n more</i> means you have closer options.
+    Prices via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>, vendor data from the game files.
+  </p>
+  </main>
+</div>
+
+<script>
+const ICON_INDEX = /*__ICON_INDEX__*/;
+/*__UI_JS__*/
+
+/* id, name, vendorPrice, catIdx, groupIdx, npcIdx, zoneIdx, mapX, mapY, stack, questGated, vendorCount */
+const VD = /*@json data/vendors.json*/null;
+const V_ITEMS = VD.r.map(r => ({
+  id: r[0], name: r[1], cost: r[2],
+  cat: VD.c[r[3]] || "", grp: VD.g[r[4]] || "Other",
+  npc: VD.p[r[5]] || "", zone: VD.z[r[6]] || "",
+  x: r[7] || null, y: r[8] || null,
+  stack: r[9], gated: !!r[10], nVend: r[11], seasonal: !!r[12]
+}));
+const V_IDS = V_ITEMS.map(v => v.id);
+
+/*__SHARED_A__*/
+/*__SHARED_B__*/
+/*__SHARED_SHOP__*/
+/*__SHARED_LIST__*/
+/*__SHARED_XW__*/
+
+async function fetchAgg(scope,ids,onProgress){
+  const ck=`agg:${scope}:${hashIds(ids)}`;const hit=Cache.get(ck,NET.CACHE_TTL_MS);
+  if(hit){if(onProgress)onProgress(1,1);return{out:hit,failed:[],fromCache:true};}
+  const res=await runBatches(ids,async b=>{
+    const r=await tfetch(`https://universalis.app/api/v2/aggregated/${scope}/${b.join(",")}`);
+    if(!r.ok)throw new Error("HTTP "+r.status+" · "+scope);
+    const j=await r.json();const m={};for(const row of(j.results||[]))m[row.itemId]=compressAgg(row);return m;},onProgress);
+  if(!res.failed.length)Cache.set(ck,res.out);
+  return res;}
+
+const fmt=n=>n==null||!isFinite(n)?"—":Math.round(n).toLocaleString("en-GB");
+const fmtM=n=>{if(n==null||!isFinite(n))return"—";const a=Math.abs(n);
+  if(a>=1e9)return(n/1e9).toFixed(2)+"B";if(a>=1e6)return(n/1e6).toFixed(2)+"M";if(a>=1e4)return(n/1e3).toFixed(1)+"k";return Math.round(n).toLocaleString("en-GB");};
+const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const ago=ms=>{if(!ms)return"no uploads";const s=(Date.now()-ms)/1000;if(s<120)return"just now";if(s<3600)return Math.round(s/60)+"m ago";if(s<86400)return Math.round(s/3600)+"h ago";return Math.round(s/86400)+"d ago";};
+function agePill(ms){if(!ms)return'<span class="age-pill age-stale">no data</span>';
+  const h=(Date.now()-ms)/3600000;
+  if(h<1)return'<span class="age-pill age-fresh">&lt;1h</span>';
+  if(h<6)return`<span class="age-pill age-ok">${Math.round(h)}h</span>`;
+  return`<span class="age-pill age-stale">${h<24?Math.round(h)+'h':Math.round(h/24)+'d'}</span>`;}
+
+let state={
+  home:"Spriggan", dc:"Chaos", dcs:["Chaos"], tax:0.05, group:"all", query:"", basis:"safe",
+  minVel:0, minProfit:1, showAll:false, hideOutlier:false,
+  sortKey:"gilDay", sortDir:-1, mkt:null, hist:{}, rows:null
+};
+
+/* NQ side only — gil shops sell NQ (the single HQ entry in the game's shop table is not marketable) */
+function nq(res){return res?res.n:null;}
+function marketOf(id){
+  const q=nq(state.mkt&&state.mkt[id]);
+  if(!q)return{min:null,avg:null,vel:0,upload:0};
+  return{min:q.mw&&q.mw[0]!=null?q.mw[0]:null, avg:q.aw!=null?q.aw:null,
+    vel:q.vw!=null?q.vw:0, upload:(state.mkt[id]&&state.mkt[id].u)||0};}
+
+function compute(){
+  const rows=[];
+  for(const v of V_ITEMS){
+    const m=marketOf(v.id);
+    /* Two ways a sell price lies to you, and most vendor stock hits one of them:
+       nothing has actually sold in 30 days (so the lone listing is a wish, not a price),
+       or the listing sits miles from the average it does have. Same 2.5x/0.4x test the
+       rest of the desk uses, widened to cover the no-history case. */
+    const noHist=m.avg==null;
+    const outlier=noHist||m.min==null||m.min>m.avg*2.5||m.min<m.avg*0.4;
+    let sell=null;
+    if(state.basis==="low")sell=m.min!=null?m.min:m.avg;
+    else if(state.basis==="avg")sell=m.avg!=null?m.avg:m.min;
+    else sell=(m.min!=null&&m.avg!=null)?Math.min(m.min,m.avg):(m.avg!=null?m.avg:m.min);
+    const profit=sell!=null?sell*(1-state.tax)-v.cost:null;
+    const margin=profit!=null&&sell?profit/sell:null;
+    const daily=profit!=null?profit*(m.vel||0):null;
+    const net=sell!=null?sell*(1-state.tax):null;
+    const gilDay=net!=null?net*(m.vel||0):null;
+    const trendT=trend30(state.hist[v.id]);
+    rows.push({...v,min:m.min,avg:m.avg,vel:m.vel||0,upload:m.upload,sell,profit,margin,daily,gilDay,
+      trendT,trend:trendT?trendT.pct:null,outlier,noHist});
+  }
+  state.rows=rows;
+}
+
+function visibleRows(){
+  const q=state.query.trim().toLowerCase();
+  let rows=(state.rows||[]).filter(r=>{
+    if(state.group!=="all"&&catLabel(r.cat||r.grp)!==state.group)return false;
+    if(q&&!(r.name.toLowerCase().includes(q)||r.npc.toLowerCase().includes(q)||r.zone.toLowerCase().includes(q)))return false;
+    if(state.hideOutlier&&r.outlier)return false;
+    if(!state.showAll){
+      /* the default view is only what is making money right now */
+      if(r.profit==null||r.profit<state.minProfit)return false;
+      if(r.vel<state.minVel)return false;
+    }
+    return true;
+  });
+  rows.sort((a,b)=>{
+    const k=state.sortKey;
+    if(k==="name")return a.name.localeCompare(b.name)*(state.sortDir*-1);
+    if(k==="vendor")return (a.npc||"~").localeCompare(b.npc||"~")*(state.sortDir*-1);
+    let av=a[k],bv=b[k];
+    av=(av==null||!isFinite(av))?-Infinity:av;
+    bv=(bv==null||!isFinite(bv))?-Infinity:bv;
+    if(av===bv)return b.profit-a.profit||a.name.localeCompare(b.name);
+    return(av-bv)*state.sortDir;
+  });
+  return rows;
+}
+
+const MAX_ROWS=400;
+function setStatus(h){document.getElementById("status").innerHTML=h;}
+function clearErr(){document.getElementById("errbox").innerHTML="";}
+function showErr(e){
+  document.getElementById("tbl").hidden=true;
+  setStatus("Couldn't reach the market board.");
+  document.getElementById("errbox").innerHTML=`<div class="err"><b>Live prices didn't load.</b> ${esc(e.message||e)}. Open this file directly in your browser, or check <a href="https://universalis.app" target="_blank" rel="noopener" style="color:#ffd7db">universalis.app</a>.</div>`;
+}
+function updateScanTime(){const el=document.getElementById("lastScan");if(!el)return;el._scanTime=new Date();
+  function tick(){if(!el._scanTime)return;const age=(Date.now()-el._scanTime)/1000;
+    el.textContent=el._scanTime.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit",second:"2-digit"});
+    el.style.color=age<1800?"var(--win)":"var(--loss)";}
+  tick();if(el._ticker)clearInterval(el._ticker);el._ticker=setInterval(tick,30000);}
+
+function vendorCell(r){
+  if(!r.npc)return '<span class="no-data">unknown vendor</span>';
+  const where=r.zone?(r.zone+(r.x?` (${r.x}, ${r.y})`:"")):"";
+  const more=r.nVend>1?`<span class="more"> +${r.nVend-1} more</span>`:"";
+  const gate=r.gated?'<span class="gate" title="A quest or achievement unlocks this vendor stock — if you have not done it, the item will not be on the shop list">locked?</span>':"";
+  return `<span class="who">${esc(r.npc)}</span>${gate}${more}${where?`<div class="where">${esc(where)}</div>`:""}`;
+}
+
+function render(){
+  if(!state.rows)return;
+  const all=visibleRows();
+  const rows=all.slice(0,MAX_ROWS);
+  const tb=document.getElementById("rows");
+  tb.innerHTML="";
+
+  for(const r of rows){
+    const tr=document.createElement("tr");
+    const cls=r.profit==null?"na":(r.profit>0?"win":"loss");
+    const warn=r.outlier?`<span class="warn" title="${r.noHist
+      ?"Nothing has sold on this server in 30 days — this is one person's asking price, not proof anyone will pay it."
+      :"The cheapest listing sits far from the 30-day average — an odd listing, not a real price."} Treat this row's profit as unreliable.">⚠</span>`:"";
+    /* the column says Sell now, so it shows the listing rather than whichever
+       basis the sidebar picked to work the profit out from */
+    const sellCell=r.min==null?'<span class="no-data">no listing</span>'+warn:fmt(r.min)+warn+agePill(r.upload);
+    const avgCell=r.avg!=null?fmt(r.avg):'<span class="no-data">—</span>';
+    tr.innerHTML=`
+      <td><div class="name">
+<span class="n">            <button class="shopbtn" data-shopitem="${r.id}" title="Add to shopping list">🛒</button>
+            <button class="listbtn" data-listadd="${r.id}" title="Add to a saved list">📋</button>
+            <button class="xwbtn" data-xw="${r.id}" data-xwname="${xesc(r.name)}" title="Compare this item's price and stock on every world">\ud83c\udf10</button>
+            ${iconHTML(r.id)}${esc(r.name)}<span class="pill ${catSlug(r.cat||r.grp)}" title="${esc(r.cat||r.grp)}">${esc(catLabel(r.cat||r.grp))}</span>${
+              r.seasonal?'<span class="seasonal" title="Only stocked at a seasonal event shop — you can buy this during that event and not the rest of the year">seasonal</span>':""}</span></div></td>
+      <td class="vend hide">${vendorCell(r)}</td>
+      <td class="gilv">${fmt(r.cost)}</td>
+      <td>${sellCell}</td>
+      <td class="hide">${avgCell}</td>
+      <td>${trendChip(r.trendT)}</td>
+      <td class="profit ${cls}">${r.profit!=null?fmtM(r.profit):"—"}</td>
+      <td class="hide">${r.margin!=null?Math.round(r.margin*100)+"%":"—"}</td>
+      <td>${r.vel>0?velCell(velAgg(r.vel)):'<span class="no-data">0</span>'}</td>
+      <td>${fmtM(r.gilDay)}</td>`;
+    tb.appendChild(tr);
+  }
+
+  loadTrends();
+
+  const withData=(state.rows||[]).filter(r=>r.sell!=null).length;
+  const profitable=(state.rows||[]).filter(r=>r.profit!=null&&r.profit>0);
+  document.getElementById("tbl").hidden=rows.length===0;
+
+  const eb=document.getElementById("emptyBox");
+  eb.innerHTML=rows.length?"":`<div class="empty"><div class="icon">🏪</div>
+    <div class="headline">${state.rows.some(r=>r.sell!=null)?"Nothing profitable in view":"No prices loaded yet"}</div>
+    <div class="body">${state.rows.some(r=>r.sell!=null)
+      ?"No vendor item clears a profit on <b>"+esc(state.home)+"</b> with these filters. Loosen them, or tick <b>Show ALL vendor items</b> to see the whole shop list including the losers."
+      :"Hit Refresh to price the vendor list against the market board."}</div></div>`;
+
+  /* headline numbers only ever quote a corroborated price — a 140M "margin" on an item
+     nobody has ever bought is exactly the number that should not be at the top of the page */
+  const solid=profitable.filter(r=>!r.outlier);
+  const byDaily=[...solid].sort((a,b)=>b.daily-a.daily);
+  const top=byDaily[0];
+  document.getElementById("kpiDaily").textContent=top&&top.daily?fmtM(top.daily)+" g":"—";
+  document.getElementById("kpiDailyName").textContent=top&&top.daily?`${top.name} · ${top.vel.toFixed(2)}/day`:"nothing selling at a profit";
+  document.getElementById("kpiCount").textContent=profitable.length+" / "+withData;
+  document.getElementById("kpiCountSub").textContent=`of ${withData.toLocaleString("en-GB")} vendor items with market data on ${state.home}`;
+  const byUnit=[...solid].sort((a,b)=>b.profit-a.profit);
+  document.getElementById("kpiUnit").textContent=byUnit[0]?fmtM(byUnit[0].profit)+" g":"—";
+  document.getElementById("kpiUnitName").textContent=byUnit[0]?byUnit[0].name+" · price backed by real sales":"single-flip profit";
+
+  const capped=all.length>rows.length?` · showing top ${rows.length} of ${all.length.toLocaleString("en-GB")}`:"";
+  setStatus(`Sell on <b>${esc(state.home)}</b> · ${state.showAll?"<b>all "+V_ITEMS.length.toLocaleString("en-GB")+" vendor items</b>":"<b>profitable only</b>"} · ${
+    state.basis==="safe"?"realistic price":state.basis==="low"?"cheapest listing":"30-day average"} · tax ${Math.round(state.tax*100)}% · ${all.length.toLocaleString("en-GB")} row${all.length!==1?"s":""}${capped}`);
+}
+
+async function fetchHist(scope,ids,onProgress){
+  const ck=`hist:${scope}:${hashIds(ids)}`;const hit=Cache.get(ck,NET.CACHE_TTL_MS);
+  if(hit){if(onProgress)onProgress(1,1);return{out:hit,failed:[],fromCache:true};}
+  const res=await runBatches(ids,async b=>{
+    const r=await tfetch(`https://universalis.app/api/v2/history/${scope}/${b.join(",")}?entriesToReturn=${HIST_ENTRIES}&entriesWithin=${HIST_SECS}&statsWithin=${HIST_SECS*1000}`);
+    if(!r.ok)throw new Error("HTTP "+r.status+" \u00b7 history");
+    const j=await r.json();const src=j.items||(j.itemID?{[j.itemID]:j}:{});
+    const m={};for(const k in src)m[k]=summarizeHist(src[k]);return m;},onProgress);
+  if(!res.failed.length)Cache.set(ck,res.out);
+  return res;}
+
+/* Trend needs sales history, and there are 4,943 vendor items - far too many
+   to pull history for. The table never shows more than MAX_ROWS, so ask only
+   about the rows on screen and fill their trends in once they land. Anything
+   already asked about is remembered, including the misses, so scrolling the
+   filters around does not ask twice. */
+let trendsPending=false;
+async function loadTrends(){
+  if(!state.mkt||trendsPending)return;
+  const need=visibleRows().slice(0,MAX_ROWS).map(r=>r.id).filter(id=>!(id in state.hist));
+  if(!need.length)return;
+  trendsPending=true;
+  try{
+    const res=await fetchHist(state.home,need);
+    for(const id of need)state.hist[id]=res.out[id]||null;
+    compute();render();
+  }catch(e){for(const id of need)state.hist[id]=null;}
+  finally{trendsPending=false;}
+}
+
+async function load(){
+  const btn=document.getElementById("refresh");btn.disabled=true;clearErr();
+  try{
+    setStatus("Pricing "+esc(state.home)+"…");
+    await refreshTopology();buildHomeSelect(document.getElementById("home"),state.home);
+    state.hist={};
+    const res=await fetchAgg(state.home,V_IDS,(d,t)=>setStatus(`Pricing ${esc(state.home)}… ${d}/${t} batches`));
+    state.mkt=res.out;
+    compute();render();updateScanTime();
+    finishStatus([res]);
+  }catch(e){showErr(e);}finally{btn.disabled=false;}
+}
+
+/* ---- wiring ---- */
+document.getElementById("nItems").textContent=V_ITEMS.length.toLocaleString("en-GB");
+(function(){
+  const sel=document.getElementById("grp"),seen={};
+  for(const v of V_ITEMS){const g=catLabel(v.cat||v.grp);seen[g]=(seen[g]||0)+1;}
+  for(const g of CAT_GENERAL){if(!seen[g])continue;
+    const o=document.createElement("option");o.value=g;o.textContent=g+" ("+seen[g]+")";sel.appendChild(o);}
+})();
+
+const re=(id,fn,reload)=>document.getElementById(id).addEventListener("change",e=>{fn(e.target);
+  if(reload)load();else if(state.rows){compute();render();}});
+buildHomeSelect(document.getElementById("home"),state.home);
+re("home",t=>{homeChanged(t.value);},true);
+re("grp",t=>{state.group=t.value;});
+re("basis",t=>{state.basis=t.value;});
+re("minVel",t=>{state.minVel=+t.value;});
+re("minProfit",t=>{state.minProfit=+t.value;});
+re("tax",t=>{state.tax=+t.value;});
+re("showAll",t=>{state.showAll=t.checked;});
+re("hideOutlier",t=>{state.hideOutlier=t.checked;});
+document.getElementById("search").addEventListener("input",e=>{state.query=e.target.value;if(state.rows)render();});
+document.getElementById("density").addEventListener("change",e=>{document.getElementById("tbl").classList.toggle("dense",e.target.checked);});
+document.getElementById("refresh").addEventListener("click",load);
+
+document.querySelectorAll("thead th[data-k]").forEach(th=>{
+  if(th.style.cursor==="default")return;
+  th.addEventListener("click",()=>{
+    const k=th.dataset.k;
+    if(state.sortKey===k)state.sortDir*=-1;else{state.sortKey=k;state.sortDir=-1;}
+    document.querySelectorAll("thead th").forEach(x=>{x.removeAttribute("data-sorted");const s=x.querySelector("span");if(s)s.textContent="";});
+    th.setAttribute("data-sorted","");th.querySelector("span").textContent=state.sortDir<0?"▾":"▴";
+    render();
+  });
+});
+
+document.getElementById("copyList").addEventListener("click",()=>{
+  const rows=visibleRows().filter(r=>r.profit>0).slice(0,MAX_ROWS);
+  if(!rows.length){Shop.toast("No profitable rows to copy");return;}
+  const lines=rows.map(r=>`${r.name} — ${fmt(r.cost)}g from ${r.npc||"?"}${r.zone?" ("+r.zone+(r.x?` ${r.x},${r.y}`:"")+")":""} → sell ~${fmt(r.sell)} on ${state.home} = ${fmtM(r.profit)} each, ${r.vel.toFixed(2)}/day`);
+  navigator.clipboard.writeText("VENDOR RUN · sell on "+state.home+"\n"+lines.join("\n")).then(()=>{
+    const b=document.getElementById("copyList");b.textContent="✓ Copied!";setTimeout(()=>b.textContent="📋 Copy list",2000);
+  },()=>Shop.toast("Clipboard blocked by the browser"));
+});
+
+/* ---- settings persistence + shift-click force refresh ---- */
+(function(){
+  const SKEY="gildesk:vendors:settings";
+  function collect(){const s={};document.querySelectorAll("select[id],input[id]").forEach(el=>{
+    if(el.id==="search"||el.type==="button")return;
+    s[el.id]=el.type==="checkbox"?el.checked:el.value;});return s;}
+  function save(){try{localStorage.setItem(SKEY,JSON.stringify(collect()));}catch(e){}}
+  function restore(){try{const s=JSON.parse(localStorage.getItem(SKEY)||"{}");
+    for(const[id,v]of Object.entries(s)){const el=document.getElementById(id);if(!el)continue;
+      if(el.type==="checkbox")el.checked=!!v;else el.value=v;
+      if(id==="home"){state.home=el.value;syncHomeNames();continue;}
+      el.dispatchEvent(new Event("change"));}
+  }catch(e){}}
+  document.addEventListener("change",save);
+  document.addEventListener("click",e=>{if(e.shiftKey&&e.target&&e.target.id==="refresh"){Cache.clear();setStatus("Cache cleared · pulling fresh prices…");}},true);
+  restore();
+})();
+
+/* ---- shopping list + saved lists glue ---- */
+/* the "world" a vendor item comes from is a place in the world, not a server —
+   grouping the run by zone is what makes the shopping list useful here */
+window.__shopAddItem=id=>{
+  const r=(state.rows||[]).find(x=>x.id==id);
+  if(!r)return Shop.toast("Refresh prices first");
+  Shop.add([{id:r.id,name:r.name,qty:1,unit:r.cost,worldId:null,
+    world:"Vendor"+(r.zone?" · "+r.zone:""),hq:false,avg:r.avg!=null?r.avg:r.sell}],null);
+};
+window.__listEntry=id=>{
+  const r=(state.rows||[]).find(x=>x.id==+id)||V_ITEMS.find(x=>x.id==+id);
+  if(!r)return null;
+  const where=r.npc?r.npc+(r.zone?" · "+r.zone:""):"NPC vendor";
+  return{id:+id,name:r.name,kind:"vendor",group:"vendor",q:"nq",
+    note:where+" · "+fmt(r.cost)+"g",recipes:{},src:"Vendors"};
+};
+</script>
+</body>
+</html>

@@ -406,12 +406,33 @@ node tools/rebake.js
 ```
 
 It downloads the latest public game data and crowd-sourced loot rates, rebuilds the three
-datasets and writes them into `index.html`. It needs only Node.js, and nothing it touches needs a
+datasets and writes them into `src/data/` and `index.html`. It needs only Node.js, and nothing it touches needs a
 key or an account.
 
 ## Architecture
 
-The whole desk is one ~5.6MB `index.html` with no build step.
+The whole desk ships as one ~5.4MB `index.html`, so it opens straight from disk. That file is
+**built**, not edited: the source lives in `src/`, and one command puts it back together.
+
+```
+node tools/build.js           # after editing anything in src/
+node tools/build.js --check   # does index.html match src/?
+```
+
+| In `src/` | What it is |
+| --- | --- |
+| `index.html` | The shell: tab bar, iframes, search box |
+| `tabs/*.html` | One complete page per tab (`list.html` is every saved list) |
+| `shared/*.js`, `shared/ui.css` | The code and styles every tab shares |
+| `data/*.json` | The baked datasets inside the tabs, one record per line |
+| `data/*-index.txt` | The item name, icon and recipe indexes |
+
+Two markers join them: `/*@string path*/""` drops a file in as a string (a tab, shared code, an
+index), and `/*@json path*/null` drops a dataset in. Commit `src/` and the rebuilt `index.html`
+together. To have git refuse a commit where they disagree, run this once per clone:
+`git config core.hooksPath .githooks`.
+
+Inside the built file:
 
 - A thin shell holds the tab bar and one `<iframe>` per tab.
 - `BLOBS` maps each tab key to a complete, standalone HTML document.

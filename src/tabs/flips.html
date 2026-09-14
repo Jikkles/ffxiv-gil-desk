@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flips</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/*__UI_CSS__*/
+/* ---- flips only ---- */
+.tree{padding:12px 16px 14px}
+.thead{display:grid;grid-template-columns:1fr 132px 152px 132px 112px;gap:18px;font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);padding:0 6px 6px;border-bottom:1px solid var(--line)}
+.thead .r{text-align:center}
+.node{display:grid;grid-template-columns:1fr 132px 152px 132px 112px;gap:18px;align-items:center;padding:5px 6px;border-radius:7px;font-family:"JetBrains Mono",monospace;font-size:13px}
+.node:hover{background:var(--row-hover)}
+.node.clickable{cursor:pointer}
+.nlabel{display:flex;align-items:center;gap:7px;font-family:"Inter",sans-serif}
+.ntoggle{width:14px;flex:none;display:inline-flex;justify-content:center;color:var(--faint)}
+.ntoggle .c{display:inline-block;width:0;height:0;border-left:5px solid var(--faint);border-top:3.5px solid transparent;border-bottom:3.5px solid transparent;transition:transform .15s}
+.ntoggle.open .c{transform:rotate(90deg);border-left-color:var(--aether)}
+.ntoggle.leaf{color:var(--line2)}
+.nqty{color:var(--muted);font-family:"JetBrains Mono",monospace;margin-right:4px}
+.price{text-align:center}
+.price.cheap{color:var(--win)}
+.price.dim{color:var(--faint)}
+.server{text-align:right;font-size:12px}
+.server.home{color:var(--win)}
+.server.hop{color:var(--hop)}
+.server.dim{color:var(--faint)}
+.qtag{font-size:9px;color:var(--faint)}
+.qtag.hq{color:var(--gil)}
+.badge{font-family:"JetBrains Mono",monospace;font-size:9px;color:var(--win);border:1px solid var(--win-line);border-radius:5px;padding:1px 5px;margin-left:6px}
+.line{text-align:center;font-weight:500}
+.tfoot{display:flex;flex-wrap:wrap;gap:6px 20px;margin-top:12px;padding-top:11px;border-top:1px solid var(--line);font-family:"JetBrains Mono",monospace;font-size:12.5px}
+.tfoot .lab{color:var(--faint);text-transform:uppercase;font-size:10px;letter-spacing:.1em;margin-right:6px}
+.tfoot b{font-weight:500}
+.kpi-strip{position:fixed;bottom:0;left:0;right:0;z-index:20;
+    background:rgba(13,17,22,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    border-top:1px solid var(--line);display:flex;gap:0;overflow-x:auto}
+.ks-cell{flex:1;min-width:140px;padding:7px 14px;border-right:1px solid var(--line)}
+.ks-cell:last-child{border-right:none}
+.ks-k{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.ks-v{font-family:"JetBrains Mono",monospace;font-size:15px;font-weight:500;margin-top:1px}
+.ks-v.gil{color:var(--gil)}
+.ks-v.cy{color:var(--aether)}
+.dense tbody td{padding:6px 11px!important}
+.dense tbody .name{gap:0}
+.dense .bar{display:none}
+.copy-btn{all:unset;cursor:pointer;font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--aether);
+    border:1px solid var(--line);border-radius:7px;padding:4px 10px;background:var(--panel);margin-left:8px}
+.copy-btn:hover{border-color:var(--aether)}
+.stale-warn{display:inline-block;color:var(--loss);font-size:13px;line-height:1;font-family:"JetBrains Mono",monospace;padding:2px 5px;margin-left:5px;border:1px solid var(--loss-line);border-radius:7px;background:var(--loss-soft);vertical-align:middle;cursor:help}
+.lvl-range{display:flex;align-items:center;gap:6px}
+.lvl-range input[type=range]{accent-color:var(--aether);width:90px}
+@media(max-width:820px){.thead{grid-template-columns:1fr 78px 84px 72px;gap:8px}
+.thead .hcraft,.node .ncraft{display:none}
+.node{grid-template-columns:1fr 78px 84px 72px;gap:8px}}
+.buy-world{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--hop);font-weight:500}
+.buy-world.home{color:var(--aether)}
+.row{cursor:default;border-bottom:1px solid var(--line)}
+.row:hover td{background:var(--row-hover)}
+.no-data{color:var(--faint);font-size:13px;font-family:"JetBrains Mono",monospace}
+.tag-home{font-size:10px;font-family:"JetBrains Mono",monospace;color:var(--aether);background:var(--accent-soft);border:1px solid var(--aether-line);padding:1px 5px;border-radius:4px;margin-left:4px}
+.minprice-note{font-size:11px;color:var(--faint);font-family:"JetBrains Mono",monospace}
+</style>
+<script>try{var __t=localStorage.getItem("gildesk:theme:v1");document.documentElement.setAttribute("data-theme",__t==="light"?"light":"dark");}catch(e){document.documentElement.setAttribute("data-theme","dark");}</script>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="sgroup">
+      <div class="slabel">Filter items</div>
+      <div class="field">
+      <label>🔍</label>
+      <input id="search" placeholder="search name…" autocomplete="off">
+    </div>
+    </div>
+    <div class="sgroup">
+      <div class="slabel">Server</div>
+      <div class="field sel">
+      <label>Sell on</label>
+      <select id="home"></select>
+    </div>
+      <div class="field dcwrap">
+      <label>Buy from</label>
+      <input type="hidden" id="dc" value="Chaos">
+      <button type="button" class="dcbtn" id="dcBtn" title="Choose which data centres to scan for cheap listings">Chaos <span class="dccar">&#9662;</span></button>
+      <div class="dcmenu" id="dcMenu" hidden></div>
+    </div>
+      <button class="btn wide" id="copyList" title="Copy visible items as shopping list">📋 Copy list</button>
+      <button class="btn primary wide" id="refresh">↻ Refresh</button>
+    </div>
+    <div class="sgroup">
+      <div class="slabel">Marketboard settings</div>
+      <label class="chk"><input type="checkbox" id="hideHome"> Hide same-world deals</label>
+      <label class="chk"><input type="checkbox" id="density"> Compact rows</label>
+    </div>
+    <div class="sgroup">
+      <div class="slabel">Filters</div>
+      <div class="field sel">
+      <label>Category</label>
+      <select id="grp">
+        <option value="all">All categories</option>
+        <option value="Mount">Mounts</option>
+        <option value="Minion">Minions</option>
+        <option value="Hairstyle">Hairstyles</option>
+        <option value="Outfit Coffer">Outfit Coffers</option>
+        <option value="Emote">Emotes</option>
+      </select>
+    </div>
+      <div class="field sel">
+      <label>Min profit</label>
+      <select id="minProfit">
+        <option value="0">Any profit</option>
+        <option value="500000">500k+</option>
+        <option value="1000000" selected>1M+</option>
+        <option value="2000000">2M+</option>
+        <option value="5000000">5M+</option>
+        <option value="10000000">10M+</option>
+      </select>
+    </div>
+      <div class="field sel">
+      <label>Min avg price</label>
+      <select id="minAvg">
+        <option value="0">Any price</option>
+        <option value="500000">500k+</option>
+        <option value="1000000">1M+</option>
+        <option value="2000000" selected>2M+</option>
+        <option value="5000000">5M+</option>
+      </select>
+    </div>
+      <div class="field sel">
+      <label>Tax</label>
+      <select id="tax">
+        <option value="0.05" selected>5%</option>
+        <option value="0.03">3%</option>
+        <option value="0.02">2%</option>
+      </select>
+    </div>
+    </div>
+    <div class="sgroup">
+      <div class="scancard"><span class="dot"></span>Last scan<br><b id="lastScan"></b></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="hero">
+      <div class="hicon">🔀</div>
+      <div>
+        <h1><b>Flips</b></h1>
+        <p class="sub">Scans mounts, minions, hairstyles, outfit coffers and emotes across every world on the data centres you pick — <span class="dcname">Chaos</span> by default. Buy cheap on another world, sell high on <span class="homename">Spriggan</span>.</p>
+      </div>
+    <div class="kpis">
+    <div class="kpi"><div class="ki">🪙</div><div class="kbody"><div class="k">Best flip profit</div><div class="v gil" id="kpiBest">—</div><div class="s" id="kpiBestName">waiting for data…</div></div></div>
+    <div class="kpi"><div class="ki">📈</div><div class="kbody"><div class="k">Flips available</div><div class="v" id="kpiCount">—</div><div class="s">items with positive profit after tax</div></div></div>
+    <div class="kpi"><div class="ki">🌍</div><div class="kbody"><div class="k">Cheapest buy world</div><div class="v" id="kpiWorld">—</div><div class="s" id="kpiWorldSub">most frequent cheap source</div></div></div>
+  </div></div>
+
+
+  
+
+  <div class="status" id="status">Scanning for flips…</div>
+  <div id="errbox"></div>
+
+  <div class="tablewrap"><table id="tbl" hidden>
+    <thead><tr>
+      <th data-k="name" style="cursor:default">Item</th>
+      <th data-k="buyPrice">Buy (cheapest) <span></span></th>
+      <th data-k="sellNow" title="Cheapest listing on your home world, with how long ago that world last reported to Universalis">Sell now <span></span></th>
+      <th data-k="sellAvg">Sell avg 30d <span></span></th>
+      <th data-k="trend" title="Which way the price is moving: the newer half of the sales history against the older half">Trend <span></span></th>
+      <th data-k="profit" data-sorted>Profit/flip <span>▾</span></th>
+      <th data-k="margin">Margin <span></span></th>
+      <th data-k="vel" title="Units sold a day, which is not sales a day: a stack of 99 leaving in one transaction is 99 units">Units/day <span></span></th>
+      <th data-k="gilDay" title="Net sale price times units sold a day: how much gil this item moves on your world, whatever your cut of it is">Gil/day <span></span></th>
+    </tr></thead>
+    <tbody id="rows"></tbody>
+  </table></div>
+
+  <p class="foot">
+    Buy = cheapest NQ listing anywhere on <span class="dcname">Chaos</span> (world shown in orange = hop required, teal = already on your world).
+    Sell avg 30d = 30-day average sale price on your home world — more reliable than current listings for rare items.
+    Profit = Sell avg × (1 − tax) − Buy. Margin = Profit ÷ Sell avg.
+    Units/day = how many units actually sell a day on your home world over 30 days — a stack of 99 counts as 99, not as one sale.
+    Gil/day = net sale price × units/day — how much gil the item moves on your world, which is the market’s pace rather than your cut of it.
+    Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>.
+  </p>
+  </main>
+</div>
+
+<script>
+const ICON_INDEX = /*__ICON_INDEX__*/;
+/*__UI_JS__*/
+
+const FLIP_ITEMS = /*@json data/flips.json*/null;
+const FLIP_IDS = FLIP_ITEMS.map(f => f.id);
+
+/*__SHARED_A__*/
+/*__SHARED_B__*/
+/*__SHARED_SHOP__*/
+/*__SHARED_LIST__*/
+/*__SHARED_XW__*/
+
+async function fetchAgg(scope,ids,onProgress){
+  const ck=`agg:${scope}:${hashIds(ids)}`;const hit=Cache.get(ck,NET.CACHE_TTL_MS);
+  if(hit){if(onProgress)onProgress(1,1);return{out:hit,failed:[],fromCache:true};}
+  const res=await runBatches(ids,async b=>{
+    const r=await tfetch(`https://universalis.app/api/v2/aggregated/${scope}/${b.join(",")}`);
+    if(!r.ok)throw new Error("HTTP "+r.status+" \u00b7 "+scope);
+    const j=await r.json();const m={};for(const row of(j.results||[]))m[row.itemId]=compressAgg(row);return m;},onProgress);
+  if(!res.failed.length)Cache.set(ck,res.out);
+  return res;}
+async function fetchHist(scope,ids,onProgress){
+  const ck=`hist:${scope}:${hashIds(ids)}`;const hit=Cache.get(ck,NET.CACHE_TTL_MS);
+  if(hit){if(onProgress)onProgress(1,1);return{out:hit,failed:[],fromCache:true};}
+  const res=await runBatches(ids,async b=>{
+    const r=await tfetch(`https://universalis.app/api/v2/history/${scope}/${b.join(",")}?entriesToReturn=${HIST_ENTRIES}&entriesWithin=${HIST_SECS}&statsWithin=${HIST_SECS*1000}`);
+    if(!r.ok)throw new Error("HTTP "+r.status+" \u00b7 history");
+    const j=await r.json();const src=j.items||(j.itemID?{[j.itemID]:j}:{});
+    const m={};for(const k in src)m[k]=summarizeHist(src[k]);return m;},onProgress);
+  if(!res.failed.length)Cache.set(ck,res.out);
+  return res;}
+async function fetchWorlds(){
+  const hit=Cache.get("worlds",NET.WORLDS_TTL_MS);if(hit)return hit;
+  try{const r=await tfetch("https://universalis.app/api/v2/worlds");const a=await r.json();
+    const m={};for(const w of a)m[w.id]=w.name;Cache.set("worlds",m);return m;
+  }catch(e){return{...CHAOS_FALLBACK};}}
+
+const CHAOS_FALLBACK={39:"Omega",71:"Moogle",80:"Cerberus",83:"Louisoix",85:"Spriggan",97:"Ragnarok",400:"Sagittarius",401:"Phantom"};
+const LIGHT_FALLBACK={36:"Lich",33:"Twintania",56:"Phoenix",66:"Odin",67:"Shiva",402:"Zodiark",43:"Raiden",79:"Alpha"};
+const ALL_WORLDS_FALLBACK={...CHAOS_FALLBACK,...LIGHT_FALLBACK};
+const fmt=n=>n==null||!isFinite(n)?"—":Math.round(n).toLocaleString("en-GB");
+const fmtM=n=>{if(n==null||!isFinite(n))return"—";if(Math.abs(n)>=1e6)return(n/1e6).toFixed(2)+"M";if(Math.abs(n)>=1e3)return(n/1e3).toFixed(1)+"k";return Math.round(n).toString();};
+const ago=ms=>{if(!ms)return"no uploads";const s=(Date.now()-ms)/1000;if(s<120)return"just now";if(s<3600)return Math.round(s/60)+"m ago";if(s<86400)return Math.round(s/3600)+"h ago";return Math.round(s/86400)+"d ago";};
+
+let state = {
+  home: "Spriggan", homeId: 85, tax: 0.05,
+  group: "all", query: "", minProfit: 1000000, minAvg: 2000000,
+  hideHome: false, sortKey: "profit", sortDir: -1,
+  dc: "Chaos", dcs: ["Chaos"],
+  worlds: null, chaos: null, hist: null, sell: null, rows: null
+};
+
+function side(res,hq){return res?(hq?res.h:res.n):null;}
+function aggPrice(res,hq,scope){const q=side(res,hq);const m=q&&(scope==="world"?q.mw:q.md);return m&&m[0]!=null?{price:m[0],worldId:m[1]!=null?m[1]:null}:{price:null,worldId:null};}
+function aggUpload(res){return(res&&res.u)||0;}
+function wname(id){return(state.worlds&&state.worlds[id])||ALL_WORLDS_FALLBACK[id]||(id?("world "+id):"—");}
+function avg30(s){return s&&s.p&&s.p[0]!=null?{avg:s.p[0],n:s.p[1]}:{avg:null,n:0};}
+
+function compute(){
+  const rows=[];
+  for(const item of FLIP_ITEMS){
+    const id=item.id;
+    const chaosData=state.chaos?.[id];
+    const histData=state.hist?.[id];
+    const sellData=state.sell?.[id];
+
+    // Buy: cheapest NQ listing across every selected data centre (already merged)
+    const buy=aggPrice(chaosData,false,"dc");
+    const buyPrice=buy.price,buyWorldId=buy.worldId;
+    const buyWorld=buyPrice!=null?wname(buyWorldId):null;
+    const isHome=buyWorldId!=null&&buyWorldId===state.homeId;
+
+    // Sell: 30d avg on home world (most realistic for rare items)
+    const h=avg30(histData);const tr30=trend30(histData);
+    const sellAvg=h.avg;
+    /* units a day, not sales a day: one sale of a stack of 99 is 99 units */
+    const v30=vel30(histData);const vel=v30.perDay;
+
+    // Sell now: cheapest listing on home world
+    const sellNow=aggPrice(sellData,false,"world").price;
+
+    // Use avg as sell basis if available, else listing
+    const sellBasis=sellAvg!=null?sellAvg:(sellNow!=null?sellNow:null);
+
+    const net=sellBasis!=null?sellBasis*(1-state.tax):null;
+    const profit=net!=null&&buyPrice!=null?net-buyPrice:null;
+    const margin=profit!=null&&sellBasis?profit/sellBasis:null;
+    const gilDay=net!=null?net*vel:null;
+    const upload=aggUpload(chaosData);
+    /* the age that belongs next to Sell now is the home world’s own report,
+       not the cheapest-on-Chaos one the buy price came from */
+    const uploadSell=aggUpload(sellData);
+
+    // Outlier check: buy price suspiciously higher than sell avg
+    const outlier=buyPrice!=null&&sellAvg!=null&&buyPrice>sellAvg*1.2;
+
+    rows.push({
+      id, name:item.name, cat:item.cat,
+      buyPrice, buyWorld, buyWorldId, isHome,
+      sellAvg, sellNow, vel, velI:v30, profit, margin, gilDay, upload, uploadSell, outlier,
+      trendT:tr30, trend:tr30?tr30.pct:null
+    });
+  }
+  state.rows=rows;
+}
+
+function visibleRows(){
+  const q=state.query.trim().toLowerCase();
+  let rows=(state.rows||[]).filter(r=>{
+    if(state.group!=="all"&&r.cat!==state.group)return false;
+    if(q&&!r.name.toLowerCase().includes(q))return false;
+    if(state.hideHome&&r.isHome)return false;
+    if(r.profit==null||r.profit<state.minProfit)return false;
+    const avg=r.sellAvg??r.sellNow??0;
+    if(avg<state.minAvg)return false;
+    return true;
+  });
+  rows.sort((a,b)=>{
+    const k=state.sortKey;
+    if(k==="name")return a.name.localeCompare(b.name)*(state.sortDir*-1);
+    let av=a[k],bv=b[k];
+    av=(av==null||!isFinite(av))?-Infinity:av;
+    bv=(bv==null||!isFinite(bv))?-Infinity:bv;
+    return(av-bv)*state.sortDir;
+  });
+  return rows;
+}
+
+const CAT_CLASS={
+  'Mount':'mount','Minion':'minion','Hairstyle':'hairstyle',
+  'Outfit Coffer':'outfit',"Framer's Kit":'framer','Emote':'emote'
+};
+
+function updateScanTime(){const el=document.getElementById("lastScan");if(!el)return;const now=new Date();el._scanTime=now;function tick(){if(!el._scanTime)return;const age=(Date.now()-el._scanTime)/1000;el.textContent=el._scanTime.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit",second:"2-digit"});el.style.color=age<1800?"var(--win)":"var(--loss)";}tick();if(el._ticker)clearInterval(el._ticker);el._ticker=setInterval(tick,30000);}
+function render(){
+  if(!state.rows)return;
+  const rows=visibleRows();
+  const tb=document.getElementById("rows");
+  tb.innerHTML="";
+  const maxP=Math.max(1,...rows.map(r=>r.profit||0));
+
+  for(const r of rows){
+    const tr=document.createElement("tr");tr.className="row";
+    const cls=r.profit==null?"na":(r.profit>=0?"win":"loss");
+    const catCls=CAT_CLASS[r.cat]||"";
+    const worldTag=r.buyWorld==null
+      ?'<span class="no-data">no listing</span>'
+      :`<span class="buy-world${r.isHome?' home':''}">${r.buyWorld}${r.isHome?' <span class="tag-home">home</span>':''}</span>`;
+    const warnTag=r.outlier?'<span class="warn" title="Buy price is close to or above sell average — margin may be thin or listing is stale"> ⚠</span>':'';
+    const sellAvgTag=r.sellAvg!=null
+      ?`${fmt(Math.round(r.sellAvg))} <span class="q">${velNum(r.vel)}/day</span>`
+      :'<span class="no-data">no history</span>';
+    const sellNowTag=r.sellNow!=null?fmt(r.sellNow)+agePill(r.uploadSell):'<span class="no-data">—</span>';
+
+    tr.innerHTML=`
+      <td><div class="name"><span class="n"><button class="shopbtn" data-shopitem="${r.id}" title="Add this item to shopping list">🛒</button><button class="listbtn" data-listadd="${r.id}" title="Add to a saved list">📋</button><button class="xwbtn" data-xw="${r.id}" data-xwname="${xesc(r.name)}" title="Compare this item's price and stock on every world">\ud83c\udf10</button>${iconHTML(r.id)}${r.name}<span class="pill ${catCls}">${r.cat}</span></span></div>
+          <div class="sub">Buy data: ${ago(r.upload)}</div></td>
+      <td>${r.buyPrice!=null?fmt(r.buyPrice):'<span class="no-data">—</span>'} ${worldTag}${warnTag}</td>
+      <td>${sellNowTag}</td>
+      <td>${sellAvgTag}</td>
+      <td>${trendChip(r.trendT)}</td>
+      <td class="profit ${cls}">${r.profit!=null?fmtM(r.profit):"—"}</td>
+      <td>${r.margin!=null?Math.round(r.margin*100)+"%":"—"}</td>
+      <td>${velCell(r.velI)}</td>
+      <td>${fmtM(r.gilDay)}</td>`;
+    tb.appendChild(tr);
+  }
+
+  document.getElementById("tbl").hidden=false;
+
+  const profitable=rows.filter(r=>r.profit!=null&&r.profit>0).sort((a,b)=>b.profit-a.profit);
+  const best=profitable[0];
+  document.getElementById("kpiBest").textContent=best?fmtM(best.profit)+" g":"—";
+  document.getElementById("kpiBestName").textContent=best?best.name:"nothing profitable in view";
+  document.getElementById("kpiCount").textContent=profitable.length+" / "+rows.length+" shown";
+
+  // Most common buy world
+  const worldCounts={};
+  for(const r of profitable)if(r.buyWorld&&!r.isHome)worldCounts[r.buyWorld]=(worldCounts[r.buyWorld]||0)+1;
+  const topWorld=Object.entries(worldCounts).sort((a,b)=>b[1]-a[1])[0];
+  document.getElementById("kpiWorld").textContent=topWorld?topWorld[0]:"—";
+  document.getElementById("kpiWorldSub").textContent=topWorld?`${topWorld[1]} cheap deal${topWorld[1]!==1?"s":""} there`:"no cross-world flips";
+
+setStatus(`Sell on <b>${state.home}</b> · buy cheapest on <b>${dcLabel()}</b> · tax ${Math.round(state.tax*100)}% · ${rows.length} item${rows.length!==1?"s":""} shown · data fresh as of last Universalis upload`);
+
+// update sticky strip
+const strip=document.getElementById("kpiStrip");if(strip){strip.style.display="";}
+const ksBest=document.getElementById("ks-best");if(ksBest)ksBest.textContent=best?fmtM(best.profit)+" g":"—";
+const ksCount=document.getElementById("ks-count");if(ksCount)ksCount.textContent=profitable.length+" / "+rows.length;
+const ksWorld=document.getElementById("ks-world");if(ksWorld)ksWorld.textContent=topWorld?topWorld[0]:"—";
+const avgVel=profitable.length?profitable.reduce((s,r)=>s+(r.vel||0),0)/profitable.length:0;
+const ksVel=document.getElementById("ks-vel");if(ksVel)ksVel.textContent=avgVel?velNum(avgVel)+"/d":"—";
+}
+
+function setStatus(h){document.getElementById("status").innerHTML=h;}
+function clearErr(){document.getElementById("errbox").innerHTML="";}
+function showErr(e){
+  document.getElementById("tbl").hidden=true;
+  setStatus("Couldn't reach the market board.");
+  document.getElementById("errbox").innerHTML=`<div class="err"><b>Live prices didn't load.</b> ${e.message||e}. Open this file directly in your browser, or check <a href="https://universalis.app" target="_blank" rel="noopener" style="color:#ffd7db">universalis.app</a>.</div>`;
+}
+
+async function load(){
+  const btn=document.getElementById("refresh");btn.disabled=true;clearErr();
+  try{
+    setStatus("Fetching world list\u2026");
+    await refreshTopology();buildHomeSelect(document.getElementById("home"),state.home);setDcs(state.dcs);
+    state.worlds=await fetchWorlds();
+    for(const[id,nmw]of Object.entries(state.worlds))if(nmw===state.home)state.homeId=+id;
+    const prog=l=>(d,t)=>setStatus(`${l}\u2026 ${d}/${t} batches`);
+    const[market,hist,sell]=await Promise.all([
+      fetchMarket(FLIP_IDS,prog("Scanning "+dcLabel())),
+      fetchHist(state.home,FLIP_IDS,prog("Reading 30-day history")),
+      fetchAgg(state.home,FLIP_IDS,prog("Pricing "+state.home))]);
+    state.chaos=market.out;
+    state.hist=hist.out;state.sell=sell.out;
+    compute();render();updateScanTime();
+    finishStatus([market,hist,sell]);
+  }catch(e){showErr(e);}finally{btn.disabled=false;}
+}
+
+initDcPicker(()=>load());
+document.getElementById("grp").addEventListener("change",e=>{state.group=e.target.value;render();});
+document.getElementById("search").addEventListener("input",e=>{state.query=e.target.value;render();});
+document.getElementById("minProfit").addEventListener("change",e=>{state.minProfit=+e.target.value;render();});
+document.getElementById("minAvg").addEventListener("change",e=>{state.minAvg=+e.target.value;render();});
+document.getElementById("hideHome").addEventListener("change",e=>{state.hideHome=e.target.checked;render();});
+document.getElementById("tax").addEventListener("change",e=>{state.tax=+e.target.value;if(state.rows){compute();render();}} );
+buildHomeSelect(document.getElementById("home"),state.home);
+document.getElementById("home").addEventListener("change",e=>{homeChanged(e.target.value);load();});
+document.getElementById("refresh").addEventListener("click",load);
+
+document.querySelectorAll("thead th[data-k]").forEach(th=>{
+  if(th.style.cursor==="default")return;
+  th.addEventListener("click",()=>{
+    const k=th.dataset.k;
+    if(state.sortKey===k)state.sortDir*=-1;else{state.sortKey=k;state.sortDir=-1;}
+    document.querySelectorAll("thead th").forEach(x=>{x.removeAttribute("data-sorted");const s=x.querySelector("span");if(s)s.textContent="";});
+    th.setAttribute("data-sorted","");th.querySelector("span").textContent=state.sortDir<0?"▾":"▴";
+    render();
+  });
+});
+
+document.getElementById("density").addEventListener("change",e=>{
+  document.getElementById("tbl").classList.toggle("dense",e.target.checked);
+});
+
+document.getElementById("copyList").addEventListener("click",()=>{
+  const rows=visibleRows().filter(r=>r.profit>0);
+  if(!rows.length){alert("No profitable flips to copy.");return;}
+  const lines=rows.map(r=>`${r.name} — buy ${fmt(r.buyPrice)} on ${r.buyWorld||"?"} → sell ~${fmtM(r.sellAvg||r.sellNow||0)} on ${state.home} (${fmtM(r.profit)} profit, ${velNum(r.vel)} units/day)`);
+  navigator.clipboard.writeText("FLIP LIST\n"+lines.join("\n")).then(()=>{
+    const b=document.getElementById("copyList");b.textContent="✓ Copied!";setTimeout(()=>b.textContent="📋 Copy list",2000);
+  });
+});
+
+
+function agePill(ms){
+  if(!ms)return'<span class="age-pill age-stale">no data</span>';
+  const h=(Date.now()-ms)/3600000;
+  if(h<1)return'<span class="age-pill age-fresh">&lt;1h</span>';
+  if(h<6)return`<span class="age-pill age-ok">${Math.round(h)}h</span>`;
+  return`<span class="age-pill age-stale">${h<24?Math.round(h)+'h':Math.round(h/24)+'d'}</span>`;
+}
+
+
+/* ===== v12: settings persistence + force-refresh ===== */
+(function(){
+  const SKEY="gildesk:flips:settings";
+  function collect(){const s={};document.querySelectorAll("select[id],input[id]").forEach(el=>{
+    if(el.id==="search"||el.type==="button")return;
+    s[el.id]=el.type==="checkbox"?el.checked:el.value;});return s;}
+  function saveSettings(){try{localStorage.setItem(SKEY,JSON.stringify(collect()));}catch(e){}}
+  function restoreSettings(){try{const s=JSON.parse(localStorage.getItem(SKEY)||"{}");
+    for(const[id,v]of Object.entries(s)){const el=document.getElementById(id);if(!el)continue;
+      if(el.type==="checkbox")el.checked=!!v;else el.value=v;
+      if(id==="home"){state.home=el.value;syncHomeNames();continue;}
+      if(id==="dc"){setDcs(el.value);continue;}
+      el.dispatchEvent(new Event("change"));}
+  }catch(e){}}
+  document.addEventListener("change",()=>saveSettings());
+  document.addEventListener("click",e=>{if(e.shiftKey&&e.target&&e.target.id==="refresh"){Cache.clear();setStatus("Cache cleared \u00b7 pulling fresh prices\u2026");}},true);
+  restoreSettings();syncDcNames();syncHomeNames();
+})();
+
+/* ===== v14: shopping list glue ===== */
+window.__shopAddItem=id=>{const r=(state.rows||[]).find(x=>x.id==id);
+  if(!r)return Shop.toast("Refresh prices first");
+  if(r.buyPrice==null)return Shop.toast("No listing to buy");
+  const av=Shop.avgFrom(state.chaos&&state.chaos[r.id],false)
+    ??(r.sellAvg!=null?r.sellAvg:null);
+  Shop.add([{id:r.id,name:r.name,qty:1,unit:r.buyPrice,worldId:r.buyWorldId,world:r.buyWorld,hq:false,avg:av}],null);};
+
+/* ===== saved-list glue ===== */
+window.__listEntry=id=>{
+  const r=(state.rows||[]).find(x=>x.id==+id)||FLIP_ITEMS.find(x=>x.id==+id);
+  if(!r)return null;
+  const where=r.buyWorld?" · cheapest on "+r.buyWorld:"";
+  return{id:+id,name:r.name,kind:"flip",group:"flip",q:"nq",
+    note:(r.cat||"Flip")+where,recipes:{},src:"Flips"};
+};
+</script>
+</body>
+</html>

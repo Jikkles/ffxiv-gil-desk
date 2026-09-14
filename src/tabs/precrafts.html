@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Precrafts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/*__UI_CSS__*/
+/* ---- precraft only ---- */
+.tree{padding:12px 16px 14px}
+.thead{display:grid;grid-template-columns:1fr 142px 158px 118px;gap:18px;font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);padding:0 6px 6px;border-bottom:1px solid var(--line)}
+.thead .r{text-align:center}
+.node{display:grid;grid-template-columns:1fr 142px 158px 118px;gap:18px;align-items:center;padding:5px 6px;border-radius:7px;font-family:"JetBrains Mono",monospace;font-size:13px}
+.node:hover{background:var(--row-hover)}
+.nlabel{display:flex;align-items:center;gap:7px;font-family:"Inter",sans-serif;min-width:0}
+.nlabel .iconbox{width:22px;height:22px;border-radius:6px}
+.nlabel .iconbox img{width:22px;height:22px}
+.nlabel .iconbox .fallback{font-size:11px}
+.nqty{color:var(--muted);font-family:"JetBrains Mono",monospace;margin-right:6px}
+.price{text-align:center}
+.price.dim{color:var(--faint)}
+.server{text-align:right;font-size:12px}
+.server.home{color:var(--win)}
+.server.hop{color:var(--hop)}
+.server.dim{color:var(--faint)}
+.line{text-align:center;font-weight:500}
+.tfoot{display:flex;flex-wrap:wrap;gap:6px 20px;margin-top:12px;padding-top:11px;border-top:1px solid var(--line);font-family:"JetBrains Mono",monospace;font-size:12.5px}
+.tfoot .lab{color:var(--faint);text-transform:uppercase;font-size:10px;letter-spacing:.1em;margin-right:6px}
+.tfoot b{font-weight:500}
+.forecast{color:var(--muted);font-size:11px;font-family:"JetBrains Mono",monospace}
+.forecast b{color:var(--gil)}
+.kpi-strip{position:fixed;bottom:0;left:0;right:0;z-index:20;
+    background:rgba(13,17,22,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    border-top:1px solid var(--line);display:flex;gap:0;overflow-x:auto}
+.ks-cell{flex:1;min-width:130px;padding:7px 14px;border-right:1px solid var(--line)}
+.ks-cell:last-child{border-right:none}
+.ks-k{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.ks-v{font-family:"JetBrains Mono",monospace;font-size:15px;font-weight:500;margin-top:1px}
+.ks-v.gil{color:var(--gil)}
+.ks-v.cy{color:var(--aether)}
+.dense tbody td{padding:5px 11px!important}
+.dense .bar{display:none}
+.chain-badge{font-family:"JetBrains Mono",monospace;font-size:8.5px;letter-spacing:.04em;text-transform:uppercase;
+    padding:1px 5px;border-radius:5px;border:1px solid #3a3357;color:#b89cff;background:#1a1326;margin-left:5px}
+.patch-badge{font-family:"JetBrains Mono",monospace;font-size:8.5px;letter-spacing:.04em;text-transform:uppercase;
+    padding:1px 5px;border-radius:5px;border:1px solid #3f5133;color:#9fd47f;background:#141d10;margin-left:5px}
+.lvl-tag{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--faint);margin-left:4px}
+@media(max-width:820px){.thead{grid-template-columns:1fr 88px 78px;gap:8px}
+.thead .hline,.node .nline{display:none}
+.node{grid-template-columns:1fr 88px 78px;gap:8px}}
+.sell-time{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.sell-time h4{margin:0 0 8px;font-size:11px;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.1em;color:var(--faint)}
+.st-bars{display:flex;align-items:flex-end;gap:2px;height:36px;width:100%}
+.st-bar{flex:1;min-width:0;border-radius:2px 2px 0 0;background:var(--line);position:relative;transition:background .15s}
+.st-bar.peak{background:var(--acc)}
+.st-bar.ok{background:var(--aether-line)}
+.st-bar:hover::after{content:attr(title);position:absolute;bottom:calc(100% + 4px);left:50%;transform:translateX(-50%);background:#1a2530;color:#e7eef4;font-size:10px;white-space:nowrap;padding:2px 6px;border-radius:4px;pointer-events:none;z-index:10}
+.st-labels{display:flex;justify-content:space-between;margin-top:3px;font-size:9px;font-family:'JetBrains Mono',monospace;color:var(--faint)}
+.st-note{font-size:10px;color:var(--faint);margin-top:6px;font-family:'JetBrains Mono',monospace}
+</style>
+<script>try{var __t=localStorage.getItem("gildesk:theme:v1");document.documentElement.setAttribute("data-theme",__t==="light"?"light":"dark");}catch(e){document.documentElement.setAttribute("data-theme","dark");}</script>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="sgroup">
+      <div class="slabel">Filter items</div>
+      <div class="field"><label>🔍</label><input id="search" type="text" placeholder="search name…" autocomplete="off"></div>
+    </div>
+    <div class="sgroup">
+      <div class="slabel">Server</div>
+      <div class="field sel"><label for="home">Sell on</label><select id="home"></select></div>
+      <div class="field dcwrap"><label>Mats from</label>
+      <input type="hidden" id="dc" value="Chaos">
+      <button type="button" class="dcbtn" id="dcBtn" title="Choose which data centres to price materials across">Chaos <span class="dccar">▾</span></button>
+      <div class="dcmenu" id="dcMenu" hidden></div></div>
+      <button class="btn primary wide" id="refresh">↻ Refresh</button>
+    </div>
+    <div class="sgroup">
+      <div class="slabel">Marketboard settings</div>
+      <label class="chk"><input type="checkbox" id="deep"> Deep 30d</label>
+      <label class="chk"><input type="checkbox" id="hideNo" checked> Hide no-sales</label>
+      <label class="chk"><input type="checkbox" id="hideOutlier"> Hide ⚠ outliers</label>
+      <label class="chk"><input type="checkbox" id="density"> Compact</label>
+    </div>
+    <div class="sgroup">
+      <div class="slabel">Filters</div>
+      <div class="field sel"><label for="job">Class</label><select id="job"><option value="all">All crafters</option><option>CRP</option><option>BSM</option><option>ARM</option><option>GSM</option><option>LTW</option><option>WVR</option><option>ALC</option><option>CUL</option></select></div>
+      <div class="field sel"><label for="sq">Sell</label><select id="sq"><option value="hq">HQ</option><option value="nq">NQ</option></select></div>
+      <div class="field sel"><label for="basis">Profit vs</label><select id="basis"><option value="listing">Current low</option><option value="avg">Avg sale</option></select></div>
+      <div class="field sel"><label for="tax">Tax</label><select id="tax"><option value="0.05">5%</option><option value="0.03">3%</option><option value="0">0%</option></select></div>
+      <div class="field"><label>Min lvl</label><input type="number" id="minLvl" value="1" min="1" max="100" style="width:44px"></div>
+      <div class="field"><label>Max lvl</label><input type="number" id="maxLvl" value="100" min="1" max="100" style="width:44px"></div>
+    </div>
+    <div class="sgroup">
+      <div class="scancard"><span class="dot"></span>Last scan<br><b id="lastScan"></b></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="hero">
+      <div class="hicon">🔨</div>
+      <div>
+        <h1><b>Precrafts</b></h1>
+        <p class="sub">Every <b id="nItems">900+</b> craftable intermediate in the game, scanned as a one-step flip: <b>buy the materials on <span class="dcname">Chaos</span> → craft it once → sell it HQ on <span class="homename">Spriggan</span></b>. No precrafting chains, no FC workshop — just the single craft. Sorted by profit per unit. Turn on <em>Hide no-sales</em> to drop everything that doesn't actually move, pick a crafter class, and click any row to see its material shopping list.</p>
+      </div>
+    <div class="kpis">
+    <div class="kpi"><div class="ki">🪙</div><div class="kbody"><div class="k">Best profit / unit</div><div class="v gil" id="kpiBest">—</div><div class="s" id="kpiBestName">waiting…</div></div></div>
+    <div class="kpi"><div class="ki">📈</div><div class="kbody"><div class="k">Daily profit ceiling</div><div class="v cy" id="kpiDaily">—</div><div class="s">visible items, at <span class="homename">Spriggan</span> velocity</div></div></div>
+    <div class="kpi"><div class="ki">🌍</div><div class="kbody"><div class="k">Profitable / shown</div><div class="v" id="kpiCount">—</div><div class="s" id="kpiFresh">—</div></div></div>
+  </div></div>
+
+
+  
+
+  <div class="status" id="status">Loading…</div>
+  <div id="errbox"></div>
+
+  <div class="tablewrap"><table id="tbl" hidden>
+    <thead><tr>
+      <th data-k="name" style="cursor:default">Item</th>
+      <th data-k="sell">Sell now <span></span></th>
+      <th data-k="avg">Avg 30d <span></span></th>
+      <th data-k="trend" title="Which way the price is moving: the newer half of the sales history against the older half">Trend <span></span></th>
+      <th data-k="cost" class="hide">Mat cost <span></span></th>
+      <th data-k="profit" data-sorted>Profit/unit <span>▾</span></th>
+      <th data-k="margin">Margin <span></span></th>
+      <th data-k="vel" title="Units sold a day, which is not sales a day: a stack of 99 leaving in one transaction is 99 units">Units/day <span></span></th>
+      <th data-k="daily">Gil/day <span></span></th>
+
+    </tr></thead>
+    <tbody id="rows"></tbody>
+  </table></div>
+
+  <p class="foot">Gil/day = profit/unit × the <b>units</b> that sell a day on <span class="homename">Spriggan</span> — a stack of 99 is 99 units and one sale. You capture a slice of that, so it's a ranking not a promise. Sell now = cheapest current <span class="homename">Spriggan</span> listing at the chosen quality (⚠ = far from the average, likely a noise listing). Avg 30d = recent average sale (or the true 30-day average, with its sale count, if "Deep 30d" is on — slower, pulls a month of history). Mat cost = buying every material NQ at the cheapest <span class="dcname">Chaos</span> price and crafting once; sell defaults to HQ since that's what you craft. Which world each material is cheapest on is in the row's craft tree, under "Buy on". Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>. Intermediates with thin HQ markets may show no sale — switch Sell to NQ to see the bulk market.</p>
+  </main>
+</div>
+
+<script>
+const ICON_INDEX = /*__ICON_INDEX__*/;
+const RECIPE_INDEX = /*__RECIPE_INDEX__*/;
+/*__UI_JS__*/
+
+const PRE = /*@json data/precrafts.json*/null;
+const PRE_IDS = Object.keys(PRE).map(Number);
+const MAT_IDS = (()=>{const s=new Set();for(const id of PRE_IDS)for(const ing of PRE[id].ings)s.add(ing.id);return [...s];})();
+const SELL_IDS = PRE_IDS;
+const CHAOS_FALLBACK={39:"Omega",71:"Moogle",80:"Cerberus",83:"Louisoix",85:"Spriggan",97:"Ragnarok",400:"Sagittarius",401:"Phantom"};const LIGHT_FALLBACK={36:"Lich",33:"Twintania",56:"Phoenix",66:"Odin",67:"Shiva",402:"Zodiark",43:"Raiden",79:"Alpha"};
+const MAX_ROWS=300, MONTH_S=2592000;
+const fmt=n=>n==null||!isFinite(n)?"—":Math.round(n).toLocaleString("en-GB");
+const fmtK=n=>{if(n==null||!isFinite(n))return"—";if(Math.abs(n)>=1e6)return(n/1e6).toFixed(2)+"M";if(Math.abs(n)>=1e3)return(n/1e3).toFixed(1)+"k";return Math.round(n).toString();};
+const ago=ms=>{if(!ms)return"no uploads";const s=(Date.now()-ms)/1000;if(s<3600)return Math.round(s/60)+"m ago";if(s<86400)return Math.round(s/3600)+"h ago";return Math.round(s/86400)+"d ago";};
+
+let state={home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],tax:0.05,job:"all",query:"",sellQ:"hq",basis:"listing",deep:false,hideNo:true,hideOutlier:false,minLvl:1,maxLvl:100,
+  sortKey:"profit",sortDir:-1,worlds:null,sell:null,chaos:null,hist:null,rows:null,expanded:new Set()};
+
+function side(res,hq){return res?(hq?res.h:res.n):null;}
+function aggPrice(res,hq,scope){const q=side(res,hq);const m=q&&(scope==="world"?q.mw:q.md);return m&&m[0]!=null?{price:m[0],worldId:m[1]!=null?m[1]:null}:{price:null,worldId:null};}
+function aggAvg(res,hq,scope){const q=side(res,hq);const a=q?(scope==="world"?q.aw:q.ad):null;return a!=null?a:null;}
+function aggVel(res,hq,scope){const q=side(res,hq);const d=q?(scope==="world"?q.vw:q.vd):null;return d!=null?d:0;}
+function aggUpload(res){return(res&&res.u)||0;}
+function wname(id){return(state.worlds&&state.worlds[id])||CHAOS_FALLBACK[id]||LIGHT_FALLBACK[id]||(id?("world "+id):"—");}
+function avg30(s,wantHQ){if(!s)return{avg:null,n:0,fb:false};
+  const pick=wantHQ?s.h:s.n;
+  if(pick&&pick[0]!=null)return{avg:pick[0],n:pick[1],fb:false};
+  if(s.a&&s.a[0]!=null)return{avg:s.a[0],n:s.a[1],fb:true};
+  return{avg:null,n:0,fb:false};}
+
+/*__SHARED_A__*/
+/*__SHARED_B__*/
+/*__SHARED_SHOP__*/
+/*__SHARED_LIST__*/
+/*__SHARED_XW__*/
+
+
+async function fetchAgg(scope,ids,onProgress){
+  const ck=`agg:${scope}:${hashIds(ids)}`;const hit=Cache.get(ck,NET.CACHE_TTL_MS);
+  if(hit){if(onProgress)onProgress(1,1);return{out:hit,failed:[],fromCache:true};}
+  const res=await runBatches(ids,async b=>{
+    const r=await tfetch(`https://universalis.app/api/v2/aggregated/${scope}/${b.join(",")}`);
+    if(!r.ok)throw new Error("HTTP "+r.status+" \u00b7 "+scope);
+    const j=await r.json();const m={};for(const row of(j.results||[]))m[row.itemId]=compressAgg(row);return m;},onProgress);
+  if(!res.failed.length)Cache.set(ck,res.out);
+  return res;}
+async function fetchHist(scope,ids,onProgress){
+  const ck=`hist:${scope}:${hashIds(ids)}`;const hit=Cache.get(ck,NET.CACHE_TTL_MS);
+  if(hit){if(onProgress)onProgress(1,1);return{out:hit,failed:[],fromCache:true};}
+  const res=await runBatches(ids,async b=>{
+    const r=await tfetch(`https://universalis.app/api/v2/history/${scope}/${b.join(",")}?entriesToReturn=${HIST_ENTRIES}&entriesWithin=${HIST_SECS}&statsWithin=${HIST_SECS*1000}`);
+    if(!r.ok)throw new Error("HTTP "+r.status+" \u00b7 history");
+    const j=await r.json();const src=j.items||(j.itemID?{[j.itemID]:j}:{});
+    const m={};for(const k in src)m[k]=summarizeHist(src[k]);return m;},onProgress);
+  if(!res.failed.length)Cache.set(ck,res.out);
+  return res;}
+async function fetchWorlds(){
+  const hit=Cache.get("worlds",NET.WORLDS_TTL_MS);if(hit)return hit;
+  try{const r=await tfetch("https://universalis.app/api/v2/worlds");const a=await r.json();
+    const m={};for(const w of a)m[w.id]=w.name;Cache.set("worlds",m);return m;
+  }catch(e){return{...CHAOS_FALLBACK};}}
+
+async function load(){const btn=document.getElementById("refresh");btn.disabled=true;clearErr();
+  try{setStatus("Fetching world list\u2026");
+    await refreshTopology();buildHomeSelect(document.getElementById("home"),state.home);setDcs(state.dcs);
+    state.worlds=await fetchWorlds();
+    for(const[id,nmw]of Object.entries(state.worlds))if(nmw===state.home)state.homeId=+id;
+    const prog=l=>(d,t)=>setStatus(`${l}\u2026 ${d}/${t} batches`);
+    const jobs=[
+      fetchAgg(state.home,SELL_IDS,prog("Pricing "+state.home)),
+      fetchMarket(MAT_IDS,prog("Pricing mats ("+dcLabel()+")")),
+      state.deep?fetchHist(state.home,SELL_IDS,prog("Reading 30-day history")):Promise.resolve(null)];
+    const[sell,chaos,hist]=await Promise.all(jobs);
+    state.sell=sell.out;state.chaos=chaos.out;state.hist=hist?hist.out:null;
+    compute();render();updateScanTime();
+    finishStatus(hist?[sell,chaos,hist]:[sell,chaos]);
+  }catch(e){showErr(e);}finally{btn.disabled=false;}}
+
+async function ensureDeep(){ if(state.deep&&!state.hist){const btn=document.getElementById("refresh");btn.disabled=true;
+    try{const hist=await fetchHist(state.home,SELL_IDS,(d,t)=>setStatus(`Reading 30-day history\u2026 ${d}/${t} batches`));state.hist=hist.out;finishStatus([hist]);}catch(e){showErr(e);return;}finally{btn.disabled=false;} } compute();render(); }
+
+function sellInfo(id){const wantHQ=state.sellQ==="hq",res=state.sell[id];
+  const listing=aggPrice(res,wantHQ,"world").price;
+  let avg,vel,tr=null,vi=null,n30=0,avgFb=false;
+  /* both branches are units a day: deep measures them over 30 days of history,
+     shallow takes the aggregate's own rolling few-day figure */
+  if(state.deep&&state.hist){const a=avg30(state.hist[id],wantHQ);avg=a.avg;n30=a.n;avgFb=!!a.fb;vi=vel30(state.hist[id],wantHQ);vel=vi.perDay;tr=trend30(state.hist[id],wantHQ);}
+  else{avg=aggAvg(res,wantHQ,"world");vel=aggVel(res,wantHQ,"world");vi=velAgg(vel);}
+  return {listing,avg,n30,avgFb,vel,velI:vi,trend:tr,upload:aggUpload(res)};
+}
+
+function compute(){const rows=[];
+  for(const id of PRE_IDS){const p=PRE[id];
+    const s=sellInfo(id);
+    const basis=state.basis==="avg"?(s.avg!=null?s.avg:s.listing):(s.listing!=null?s.listing:s.avg);
+    const outlier=s.avg!=null&&(s.listing==null||s.listing>s.avg*2.5||s.listing<s.avg*0.4);
+    let mat=0,missing=false,fresh=s.upload,hop=0;const ings=[];
+    for(const ing of p.ings){const m=aggPrice(state.chaos[ing.id],false,"dc");const line=m.price!=null?m.price*ing.amount:null;
+      if(m.price==null)missing=true;else{mat+=line;if(m.worldId!=null&&m.worldId!==state.homeId)hop++;}
+      fresh=Math.max(fresh,aggUpload(state.chaos[ing.id]));
+      const iav=buyAvg(state.chaos[ing.id],false);ings.push({id:ing.id,name:ing.name,amount:ing.amount,unit:m.price,avg:iav,stk:stockBadge(m.price,iav),world:m.price!=null?wname(m.worldId):null,hop:(m.worldId!=null&&m.worldId!==state.homeId),line,missing:m.price==null});}
+    const costUnit=mat/p.yields;
+    const net=basis!=null?basis*(1-state.tax):null;
+    const profit=(net!=null&&!missing)?net-costUnit:null;
+    const margin=(profit!=null&&basis)?profit/basis:null;
+    const daily=(profit!=null)?profit*s.vel:null;
+    rows.push({id,name:p.name,job:p.job,jobs:p.jobs||null,patch:p.patch||null,cat:p.cat,lvl:p.lvl,yields:p.yields,sell:s.listing,avg:s.avg,n30:s.n30,avgFb:s.avgFb,trendT:s.trend,trend:s.trend?s.trend.pct:null,outlier,
+      cost:costUnit,matTotal:mat,profit,margin,vel:s.vel,velI:s.velI,daily,ings,hop,missing,upload:fresh});}
+  state.rows=rows;}
+
+/* v15: some recipes can be made by several crafters — show them all */
+function jobLabel(r){return r.jobs&&r.jobs.length?r.jobs.join("/"):r.job;}
+/* the row pill speaks the same language here as on the Dashboard and the lists:
+   the shared kind palette, read off the item's own category. The class it wants
+   crafting stays on the row, one line down, next to the category and level. */
+const KIND_BY_CAT={"Meal":"food","Medicine":"medicine","Dye":"dye","Orchestrion Roll":"misc"};
+function kindOf(r){const c=r.cat||"";
+  if(KIND_BY_CAT[c])return KIND_BY_CAT[c];
+  if(/(Tool|Tackle)$/.test(c))return "tool";
+  if(/(Arm|Grimoire|Shield)$/.test(c)||/^(Head|Body|Hands|Legs|Feet|Waist|Earrings|Necklace|Bracelets|Ring)$/.test(c))return "gear";
+  if(/^(Tabletop|Table|Rug|Wall-mounted|Ceiling Light|Furnishing|Outdoor Furnishing|Chair|Bed|Flooring|Wallpaper|Window|Placard)$/.test(c))return "furniture";
+  return "materials";}
+function visibleRows(){const q=state.query.trim().toLowerCase();
+  let rows=state.rows.filter(r=>{if(state.job!=="all"&&!(r.jobs?r.jobs.includes(state.job):r.job===state.job))return false;if(state.hideNo&&!(r.vel>0))return false;if(state.hideOutlier&&r.outlier)return false;if(q&&!r.name.toLowerCase().includes(q))return false;if(r.lvl<state.minLvl||r.lvl>state.maxLvl)return false;return true;});
+  rows.sort((a,b)=>{const k=state.sortKey;let av=a[k],bv=b[k];if(k==="name")return a.name.localeCompare(b.name)*(state.sortDir*-1);av=(av==null||!isFinite(av))?-Infinity:av;bv=(bv==null||!isFinite(bv))?-Infinity:bv;return(av-bv)*state.sortDir;});
+  return rows;}
+
+
+function sellTimeHTML(s, wantHQ) {
+  if (!s) {
+    return '<div class="sell-time"><h4>Best time to sell</h4><span class="st-note">Not enough history data.</span></div>';
+  }
+  const buckets = new Array(24).fill(0);
+  let total = 0;
+  const add = (b, c) => { for (const h in b) buckets[+h] += b[h]; total += c; };
+  if (wantHQ == null) { add(s.bh || {}, s.ch || 0); add(s.bn || {}, s.cn || 0); }
+  else if (wantHQ) add(s.bh || {}, s.ch || 0);
+  else add(s.bn || {}, s.cn || 0);
+  if (total < 3) return '<div class="sell-time"><h4>Best time to sell</h4><span class="st-note">Not enough sales to determine a pattern.</span></div>';
+  const maxB = Math.max(...buckets, 1);
+  const sorted = buckets.map((v,i)=>({h:i,v})).sort((a,b)=>b.v-a.v);
+  const topHours = sorted.slice(0,3).map(x=>x.h).sort((a,b)=>a-b);
+  const bars = buckets.map((v, h) => {
+    const pct = Math.max(4, Math.round(v / maxB * 100));
+    const isPeak = topHours.includes(h);
+    const isOk = !isPeak && sorted.slice(3,8).map(x=>x.h).includes(h);
+    const cls = isPeak ? 'peak' : isOk ? 'ok' : '';
+    const label = String(h).padStart(2,'0') + ':00 \u2014 ' + v + ' sale' + (v!==1?'s':'');
+    return '<div class="st-bar ' + cls + '" style="height:' + pct + '%" title="' + label + '"></div>';
+  }).join('');
+  const topLabel = topHours.map(h=>String(h).padStart(2,'0')+':00').join(', ');
+  const labels = ['00','06','12','18','23'].map(h=>'<span>'+h+'h</span>').join('');
+  return '<div class="sell-time"><h4>Best time to sell <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--acc)">' + topLabel + ' UK</span></h4><div class="st-bars">' + bars + '</div><div class="st-labels">' + labels + '</div><span class="st-note">Based on ' + total + ' sales in last 30 days \u00b7 teal = top 3 peak hours \u00b7 hover for details</span></div>';
+}
+function treeHTML(r){let body="";
+  r.ings.forEach((i,ix)=>{const where=i.missing?`<span class="muted">no listings</span>`:`<span class="server ${i.hop?'hop':'home'}" style="text-align:left">${i.world}${i.hop?' · hop':''}</span>`;
+    body+=`<div class="node"><div class="nlabel"><button class="shopbtn sm" data-shopmat="${r.id}|${ix}" title="Add ${i.amount}× to shopping list">+</button><button class="listbtn sm" data-listadd="${i.id}" title="Add to a saved list">📋</button><button class="xwbtn sm" data-xw="${i.id}" data-xwname="${xesc(i.name)}" data-xwqty="${i.amount}" title="Compare this item's price and stock on every world">\ud83c\udf10</button>${teamcraftHTML(i.id,'sm')}${iconHTML(i.id)}<span><span class="nqty">${i.amount}×</span>${i.name}${i.stk||''}</span></div>
+      <div class="price ${i.unit==null?'dim':''}">${fmt(i.unit)} <span class="q">NQ</span>${i.avg!=null?'<span class="navg">avg '+fmtK(i.avg)+'</span>':''}</div>
+      <div style="text-align:left">${where}</div><div class="line nline">${fmt(i.line)}</div></div>`;});
+  const sq=state.sellQ.toUpperCase();
+  return `<div class="tree">
+    <div class="thead"><div>Buy these on ${dcLabel()}, craft once → ${r.yields}× ${r.name}</div><div class="r">Unit (${dcLabel()})</div><div class="r">Buy on</div><div class="r hline">Line</div></div>
+    ${body}
+    <div class="tfoot">
+      <span><span class="lab">Mat/craft</span><b>${fmt(r.matTotal)}</b></span>
+      <span><span class="lab">Cost/unit</span><b>${fmt(r.cost)}</b></span>
+      <span><span class="lab">Sell ${sq}·${state.home}</span><b>${r.sell==null?'—':fmt(r.sell)}</b></span>
+      <span><span class="lab">Avg</span><b>${fmt(r.avg)}</b></span>
+      <span><span class="lab">Trend</span><b>${trendChip(r.trendT)}</b></span>
+      <span><span class="lab">Profit/unit</span><b class="${r.profit==null?'':(r.profit>=0?'profit win':'profit loss')}">${r.profit==null?'—':fmt(r.profit)}</b></span>
+      <span><span class="lab">Class / lvl</span><b>${jobLabel(r)} · ${r.lvl}</b></span>
+    </div>
+    ${sellTimeHTML(state.hist ? state.hist[r.id] : null, state.sellQ === 'hq')}
+    </div>`;
+}
+
+function updateScanTime(){const el=document.getElementById("lastScan");if(!el)return;const now=new Date();el._scanTime=now;function tick(){if(!el._scanTime)return;const age=(Date.now()-el._scanTime)/1000;el.textContent=el._scanTime.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit",second:"2-digit"});el.style.color=age<1800?"var(--win)":"var(--loss)";}tick();if(el._ticker)clearInterval(el._ticker);el._ticker=setInterval(tick,30000);}
+function render(){if(!state.rows)return;let rows=visibleRows();const total=rows.length;const trunc=total>MAX_ROWS;if(trunc)rows=rows.slice(0,MAX_ROWS);
+  const maxP=Math.max(1,...rows.map(r=>r.profit||0));const tb=document.getElementById("rows");tb.innerHTML="";
+  for(const r of rows){const open=state.expanded.has(r.id);
+    const tr=document.createElement("tr");tr.className="row"+(open?" open":"");
+    const cls=r.profit==null?"":(r.profit>=0?"win":"loss");const barW=r.profit>0?Math.round(r.profit/maxP*100):0;
+    const src=r.missing?`<span class="muted">missing</span>`:r.hop===0?`<span class="src-ok">${state.home} ✓</span>`:`<span class="src-hop">hop ×${r.hop}</span>`;
+    const yieldTag=r.yields>1?` <span class="q">×${r.yields}</span>`:"";
+    const warn=r.outlier?` <span class="warn" title="No current listing, or the listing sits far from the 30-day average — treat this price as unreliable.">⚠</span>`:"";
+    const kind=kindOf(r);
+    const chainBadge = r.ings.some(i=>Object.keys(PRE).includes(String(i.id)))?'<span class="chain-badge">deep chain</span>':"";
+    const patchBadge = r.patch?'<span class="patch-badge">new '+r.patch+'</span>':"";
+    tr.innerHTML=`<td><div class="name"><span class="n"><button class="shopbtn" data-shopitem="${r.id}" title="Add all materials to shopping list">🛒</button><button class="listbtn" data-listadd="${r.id}" title="Add to a saved list">📋</button><button class="xwbtn" data-xw="${r.id}" data-xwname="${xesc(r.name)}" title="Compare this item's price and stock on every world">\ud83c\udf10</button>${teamcraftHTML(r.id)}<span class="caret"></span>${iconHTML(r.id)}${r.name} <span class="pill ${kind}">${kind}</span>${patchBadge}${chainBadge}</span>
+        <span class="t">${jobLabel(r)} · ${r.cat} · lvl ${r.lvl}</span></div></td>
+      <td>${fmt(r.sell)} <span class="q">${state.sellQ.toUpperCase()}</span>${warn}${agePill(r.upload)}</td>
+      <td>${fmt(r.avg)}${r.avg!=null&&r.n30?` <span class="q">${r.n30}×</span>`:''}${r.avgFb?' <span class=\"q\" title=\"No sales of the requested quality in the last 30 days — average includes both NQ and HQ\">mixed</span>':''}</td>
+      <td>${trendChip(r.trendT)}</td>
+      <td class="hide">${fmt(r.cost)}${yieldTag}</td>
+      <td class="profit ${cls}">${r.profit==null?'—':fmt(r.profit)}</td>
+      <td>${r.margin==null?'—':Math.round(r.margin*100)+'%'}</td>
+      <td>${velCell(r.velI)}</td>
+      <td class="forecast">${r.daily==null?'—':'<b>'+fmtK(Math.round(r.daily))+'</b>/day'}</td>
+`;
+    tr.addEventListener("click",()=>{if(state.expanded.has(r.id))state.expanded.delete(r.id);else state.expanded.add(r.id);render();});
+    tb.appendChild(tr);
+    if(open){const dr=document.createElement("tr");dr.className="detail";const td=document.createElement("td");td.colSpan=9;td.innerHTML=treeHTML(r);dr.appendChild(td);tb.appendChild(dr);}}
+  document.getElementById("tbl").hidden=false;
+  const prof=rows.filter(r=>r.profit!=null&&r.profit>0).sort((a,b)=>b.profit-a.profit);const best=prof[0];
+  document.getElementById("kpiBest").textContent=best?fmt(best.profit)+" g":"—";
+  document.getElementById("kpiBestName").textContent=best?best.name:"nothing profitable in view";
+  const ds=prof.reduce((s,r)=>s+(r.daily||0),0);document.getElementById("kpiDaily").textContent=ds?fmtK(ds)+" g":"—";
+  document.getElementById("kpiCount").textContent=prof.length+" / "+total;
+  document.getElementById("kpiFresh").textContent="freshest data "+ago(Math.max(0,...rows.map(r=>r.upload||0)));
+  setStatus(`Sell ${state.sellQ.toUpperCase()} vs <b>${state.home}</b> · mats NQ cheapest on ${dcLabel()} · ${state.deep?'30-day':'recent'} avg · ${total} match${trunc?` (top ${MAX_ROWS})`:""} · tax ${Math.round(state.tax*100)}% · click a row for its materials`);
+  updateStrip();
+}
+function setStatus(h){document.getElementById("status").innerHTML=h;}
+function clearErr(){document.getElementById("errbox").innerHTML="";}
+function showErr(e){document.getElementById("tbl").hidden=true;setStatus("Couldn't reach the market board.");
+  document.getElementById("errbox").innerHTML=`<div class="err"><b>Live prices didn't load.</b> ${e.message||e}. The sandbox may have blocked universalis.app, or it's briefly down. Open this file directly in your browser, or check <a href="https://universalis.app" target="_blank" rel="noopener" style="color:#ffd7db">universalis.app</a>.</div>`;}
+
+document.getElementById("nItems").textContent=PRE_IDS.length;
+document.getElementById("job").addEventListener("change",e=>{state.job=e.target.value;render();});
+document.getElementById("search").addEventListener("input",e=>{state.query=e.target.value;render();});
+document.getElementById("sq").addEventListener("change",e=>{state.sellQ=e.target.value;if(state.rows){compute();render();}});
+document.getElementById("basis").addEventListener("change",e=>{state.basis=e.target.value;if(state.rows){compute();render();}});
+buildHomeSelect(document.getElementById("home"),state.home);
+document.getElementById("home").addEventListener("change",e=>{homeChanged(e.target.value);load();});
+initDcPicker(()=>load());
+document.getElementById("tax").addEventListener("change",e=>{state.tax=parseFloat(e.target.value);if(state.rows){compute();render();}});
+document.getElementById("deep").addEventListener("change",e=>{state.deep=e.target.checked;if(state.rows)ensureDeep();});
+document.getElementById("hideNo").addEventListener("change",e=>{state.hideNo=e.target.checked;render();});
+document.getElementById("hideOutlier").addEventListener("change",e=>{state.hideOutlier=e.target.checked;render();});
+document.getElementById("refresh").addEventListener("click",load);
+document.querySelectorAll("thead th[data-k]").forEach(th=>{if(th.style.cursor==="default")return;
+  th.addEventListener("click",()=>{const k=th.dataset.k;if(state.sortKey===k)state.sortDir*=-1;else{state.sortKey=k;state.sortDir=-1;}
+    document.querySelectorAll("thead th").forEach(x=>{x.removeAttribute("data-sorted");const s=x.querySelector("span");if(s)s.textContent="";});
+    th.setAttribute("data-sorted","");th.querySelector("span").textContent=state.sortDir<0?"▾":"▴";render();});});
+
+document.getElementById("density").addEventListener("change",e=>{
+  document.getElementById("tbl").classList.toggle("dense",e.target.checked);
+});
+document.getElementById("minLvl").addEventListener("change",e=>{state.minLvl=+e.target.value||1;render();});
+document.getElementById("maxLvl").addEventListener("change",e=>{state.maxLvl=+e.target.value||100;render();});
+
+
+function agePill(ms){
+  if(!ms)return'<span class="age-pill age-stale">no data</span>';
+  const h=(Date.now()-ms)/3600000;
+  if(h<1)return'<span class="age-pill age-fresh">&lt;1h</span>';
+  if(h<6)return`<span class="age-pill age-ok">${Math.round(h)}h</span>`;
+  return`<span class="age-pill age-stale">${h<24?Math.round(h)+'h':Math.round(h/24)+'d'}</span>`;
+}
+
+function updateStrip(){
+  if(!document.getElementById("kpiStrip"))return;
+  if(!state.rows)return;
+  const strip=document.getElementById("kpiStrip");
+  if(strip)strip.style.display="";
+  const rows=visibleRows();
+  const profitRows=[...rows].filter(r=>r.profit!=null&&r.profit>0).sort((a,b)=>b.profit-a.profit);
+  const best=profitRows[0];
+  document.getElementById("ks-best").textContent=best?fmt(best.profit)+" g":"—";
+  document.getElementById("ks-count").textContent=profitRows.length+" / "+rows.length;
+  const totalDaily=profitRows.reduce((s,r)=>s+(r.daily||0),0);
+  document.getElementById("ks-daily").textContent=totalDaily?fmtK(Math.round(totalDaily))+" g":"—";
+  const chains=rows.filter(r=>r.ings.some(i=>Object.keys(PRE).includes(String(i.id)))).length;
+  document.getElementById("ks-chains").textContent=chains;
+}
+
+/* ===== v12: settings persistence + force-refresh ===== */
+(function(){
+  const SKEY="gildesk:precraft:settings";
+  function collect(){const s={};document.querySelectorAll("select[id],input[id]").forEach(el=>{
+    if(el.id==="search"||el.type==="button")return;
+    s[el.id]=el.type==="checkbox"?el.checked:el.value;});return s;}
+  function saveSettings(){try{localStorage.setItem(SKEY,JSON.stringify(collect()));}catch(e){}}
+  function restoreSettings(){try{const s=JSON.parse(localStorage.getItem(SKEY)||"{}");
+    for(const[id,v]of Object.entries(s)){const el=document.getElementById(id);if(!el)continue;
+      if(el.type==="checkbox")el.checked=!!v;else el.value=v;
+      if(id==="home"){state.home=el.value;syncHomeNames();continue;}
+      if(id==="dc"){setDcs(el.value);continue;}
+      el.dispatchEvent(new Event("change"));}
+  }catch(e){}}
+  document.addEventListener("change",()=>saveSettings());
+  document.addEventListener("click",e=>{if(e.shiftKey&&e.target&&e.target.id==="refresh"){Cache.clear();setStatus("Cache cleared \u00b7 pulling fresh prices\u2026");}},true);
+  restoreSettings();syncDcNames();syncHomeNames();
+})();
+
+/* ===== v14: shopping list glue ===== */
+window.__shopMatEntry=ing=>{const m=aggPrice(state.chaos[ing.id],false,"dc");
+  return{id:ing.id,name:ing.name,qty:ing.amount,unit:m.price,worldId:m.worldId,world:m.price!=null?wname(m.worldId):null,hq:false,avg:Shop.avgFrom(state.chaos[ing.id],false)};};
+/* v16: build a self-contained entry (name, quality, whole recipe subtree) for the saved lists */
+function matName(id){for(const k in PRE)for(const g of PRE[k].ings)if(+g.id===+id)return g.name;return "#"+id;}
+window.__listEntry=id=>{
+  id=+id;
+  const rec={},walk=i=>{const p=PRE[i];if(!p||rec[i])return;
+    rec[i]={name:p.name,yields:p.yields||1,ingredients:p.ings.map(g=>({id:g.id,name:g.name,amount:g.amount}))};
+    for(const g of p.ings)walk(g.id);};
+  walk(id);
+  const p=PRE[id];
+  if(p)return{id,name:p.name,kind:"precraft",group:"precraft",q:state.sellQ||"hq",
+    note:(p.cat||"Precraft")+(p.lvl?" · lvl "+p.lvl:""),recipes:rec,src:"Precrafts"};
+  return{id,name:matName(id),kind:"material",group:"material",q:"nq",note:"Material",recipes:rec,src:"Precrafts"};
+};
+window.__shopAddItem=id=>{if(!state.chaos)return Shop.toast("Refresh prices first");const p=PRE[id];if(!p)return;
+  Shop.add(p.ings.map(__shopMatEntry),p.name+(p.yields>1?" \u00d7"+p.yields:""));};
+window.__shopAddMat=s=>{if(!state.chaos)return Shop.toast("Refresh prices first");const i=s.lastIndexOf("|");
+  const p=PRE[s.slice(0,i)];const ing=p&&p.ings[+s.slice(i+1)];if(ing)Shop.add([__shopMatEntry(ing)],null);};
+</script>
+</body>
+</html>

@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTUiIGZpbGw9IiNjODk2MmEiIHN0cm9rZT0iIzhhNjAwMCIgc3Ryb2tlLXdpZHRoPSIxIi8+CiAgPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTMiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2YwYzg0YSIgc3Ryb2tlLXdpZHRoPSIxLjIiIG9wYWNpdHk9IjAuNiIvPgogIDxjaXJjbGUgY3g9IjE2IiBjeT0iMTYiIHI9IjEyIiBmaWxsPSIjZThiMzQxIi8+CiAgPGVsbGlwc2UgY3g9IjEzIiBjeT0iMTEiIHJ4PSI0IiByeT0iMi41IiBmaWxsPSIjZmRlODhhIiBvcGFjaXR5PSIwLjUiLz4KICA8cGF0aCBkPSJNMTYgOCBDMTEuNSA4IDguNSAxMS41IDguNSAxNiBDOC41IDIwLjUgMTEuNSAyNCAxNiAyNCBDMTguNSAyNCAyMC41IDIzIDIyIDIxLjUgTDIyIDE1LjUgTDE2LjUgMTUuNSBMMTYuNSAxNy41IEwyMCAxNy41IEwyMCAyMC41IEMxOSAyMS41IDE3LjUgMjIgMTYgMjIgQzEyLjcgMjIgMTAuNSAxOS41IDEwLjUgMTYgQzEwLjUgMTIuNSAxMi43IDEwIDE2IDEwIEMxNy44IDEwIDE5LjMgMTAuOCAyMC4yIDEyIEwyMi4yIDEwLjUgQzIwLjggOC45IDE4LjUgOCAxNiA4WiIgZmlsbD0iIzdhNGYwMCIvPgogIDxyZWN0IHg9IjE0IiB5PSIxNSIgd2lkdGg9IjguNSIgaGVpZ2h0PSIxLjUiIHJ4PSIwLjc1IiBmaWxsPSIjN2E0ZjAwIi8+Cjwvc3ZnPg==">
+<title>Jikky's Gil Factory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  /* the shell owns only the top bar; every tab styles itself from UI_CSS.
+     Tokens are repeated here so the bar paints correctly before any script runs. */
+  :root{
+    --sidebar-w:238px;
+    color-scheme:dark;
+    --bg:#0b1017; --bg2:#0e141c; --panel:#141b25; --panel2:#1a2330;
+    --line:#243040; --line2:#2e3c4e; --ink:#e7eef4; --muted:#8ea0b2; --faint:#63748a;
+    --aether:#4de1c1; --gil:#e8b341; --accent-soft:#4de1c118;
+  }
+  :root[data-theme="light"]{
+    color-scheme:light;
+    --bg:#eef1f5; --bg2:#ffffff; --panel:#ffffff; --panel2:#f3f6f9;
+    --line:#d8e0e9; --line2:#c4d0dd; --ink:#16202b; --muted:#4d5f6f; --faint:#57697b;
+    --aether:#0a7361; --gil:#855b13; --accent-soft:#0f9b8416;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;background:var(--bg);font-family:"Inter",system-ui,sans-serif;display:flex;flex-direction:column}
+  .tabbar{
+    display:flex;gap:7px;align-items:center;flex-wrap:wrap;background:var(--bg2);
+    border-bottom:1px solid var(--line);padding:0 16px 0 0;position:sticky;top:0;z-index:5;min-height:66px;flex:none;
+  }
+  /* the brand block sits over the tab sidebars, so the two columns line up */
+  .brand{
+    display:flex;align-items:center;gap:10px;width:var(--sidebar-w);flex:none;align-self:stretch;
+    padding:0 13px;border-right:1px solid var(--line);transition:width .18s ease;
+  }
+  /* folded, the brand keeps its coin and drops the words */
+  :root[data-side="collapsed"]{--sidebar-w:46px}
+  :root[data-side="collapsed"] .brand{padding:0 6px;justify-content:center;gap:0}
+  :root[data-side="collapsed"] .brand .bt{display:none}
+  .brand .logo{width:34px;height:34px;border-radius:10px;flex:none;display:grid;place-items:center;
+    background:var(--accent-soft);border:1px solid #4de1c133;font-size:16px}
+  :root[data-theme="light"] .brand .logo{border-color:#0f9b8433}
+  .brand .bt{min-width:0;line-height:1.15}
+  .brand .b1{font-family:"Inter",sans-serif;font-size:14.5px;font-weight:700;color:var(--ink);white-space:nowrap}
+  .brand .b1 b{color:var(--gil);font-weight:700}
+  .brand .b2{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint);white-space:nowrap}
+  .tab{all:unset;cursor:pointer;color:var(--muted);font-family:"Inter",sans-serif;font-size:14px;
+    padding:10px 15px;border-radius:10px;border:1px solid transparent;display:flex;align-items:center;gap:9px}
+  .tab:hover{color:var(--ink);background:var(--panel2)}
+  .tab[aria-selected="true"]{color:var(--ink);background:var(--accent-soft);border-color:#4de1c133}
+  :root[data-theme="light"] .tab[aria-selected="true"]{border-color:#0f9b8433}
+  /* a plain divider: the list tabs carry on along the same row while there is
+     room for them, and only wrap once there is not */
+  .tabsep{width:1px;height:24px;background:var(--line);margin:0 5px}
+  .tabadd{all:unset;cursor:pointer;color:var(--faint);font-family:"JetBrains Mono",monospace;font-size:12.5px;padding:9px 14px;
+    border-radius:10px;border:1px dashed var(--line2)}
+  .tabadd:hover{color:var(--gil);border-color:var(--gil)}
+  .tabadd[hidden]{display:none}
+  .tabright{margin-left:auto;display:flex;align-items:center;gap:8px}
+  .themebtn{
+    all:unset;cursor:pointer;display:flex;align-items:center;gap:7px;padding:9px 14px;border-radius:10px;
+    border:1px solid var(--line);background:var(--panel);color:var(--muted);font-family:"JetBrains Mono",monospace;font-size:12px;
+  }
+  .themebtn:hover{color:var(--ink);border-color:var(--line2)}
+  .themebtn .ti{display:flex;line-height:1}
+  .themebtn .ti svg{width:15px;height:15px;display:block}
+  @media(max-width:900px){
+    .tabbar{padding:8px 12px}
+    .brand{width:auto;border-right:none}
+    .tabright{margin-left:0;width:100%}
+  }
+  .frames{position:relative;flex:1;min-height:0}
+  iframe{width:100%;height:100%;border:0;display:none;background:var(--bg)}
+  iframe.active{display:block}
+  /* ===== v22 shell colour: the bar carries the same accents as the tabs ===== */
+  .tabbar{background-image:linear-gradient(90deg,#4de1c114,transparent 38%,#e8b34114)}
+  :root[data-theme="light"] .tabbar{background-image:linear-gradient(90deg,#0f9b8412,transparent 38%,#e8b34120)}
+  .brand{background:linear-gradient(180deg,#4de1c10a,transparent)}
+  .brand .logo{background:linear-gradient(160deg,#e8b34126,#4de1c11c);border-color:#e8b3414d;padding:3px}
+  .brand .logo svg{width:100%;height:100%;display:block}
+  /* ===== v24 tab icons: stroked in currentColor, so each one takes whatever
+     its tab is already doing, including the accent on the selected tab ===== */
+  .tabic{width:19px;height:19px;flex:none;opacity:.92}
+  .tab[aria-selected="true"] .tabic{color:var(--aether);opacity:1}
+  .tab[aria-selected="true"]{background:linear-gradient(180deg,#4de1c122,#4de1c10a);box-shadow:inset 0 -2px 0 var(--aether)}
+  :root[data-theme="light"] .tab[aria-selected="true"]{background:linear-gradient(180deg,#0f9b841f,#0f9b8408)}
+  /* ===== v25 first-visit home world picker ===== */
+  .homepick-back{position:fixed;inset:0;z-index:50;background:rgba(4,8,14,.62);backdrop-filter:blur(2px);
+    display:flex;align-items:center;justify-content:center;padding:16px}
+  .homepick-panel{width:min(420px,100%);background:var(--panel);border:1px solid var(--line);border-radius:16px;
+    padding:22px 22px 18px;box-shadow:0 24px 70px #00000090;font-family:"Inter",sans-serif}
+  .homepick-panel h2{margin:0 0 8px;font-size:17px;color:var(--ink)}
+  .homepick-panel p{margin:0 0 14px;font-size:13px;color:var(--muted);line-height:1.5}
+  .homepick-panel select{width:100%;padding:9px 10px;border-radius:9px;border:1px solid var(--line2);
+    background:var(--panel2);color:var(--ink);font-family:"Inter",sans-serif;font-size:14px;margin-bottom:16px}
+  .homepick-actions{display:flex;justify-content:flex-end;gap:8px}
+  .homepick-actions button{all:unset;cursor:pointer;font-family:"Inter",sans-serif;font-size:13px;padding:9px 16px;border-radius:9px}
+  .homepick-skip{color:var(--muted);border:1px solid var(--line)}
+  .homepick-skip:hover{color:var(--ink);border-color:var(--line2)}
+  .homepick-go{color:#0b1017;background:var(--gil);font-weight:700}
+  .homepick-go:hover{filter:brightness(1.08)}
+</style>
+<script>try{var __t=localStorage.getItem("gildesk:theme:v1");document.documentElement.setAttribute("data-theme",__t==="light"?"light":"dark");document.documentElement.setAttribute("data-side",localStorage.getItem("gildesk:sidebar:v1")==="collapsed"?"collapsed":"open");}catch(e){document.documentElement.setAttribute("data-theme","dark");}</script>
+</head>
+<body>
+<div class="tabbar">
+  <span class="brand">
+    <span class="logo"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="7.6" fill="#e8b341"/><circle cx="10" cy="10" r="5.9" fill="#f4c964"/><path d="M12.6 7.1a3.9 3.9 0 1 0 0 5.8V10h-2.2" fill="none" stroke="#a5711a" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    <span class="bt">
+      <span class="b1">Jikky&rsquo;s <b>Gil Factory</b></span>
+    </span>
+  </span>
+  <button class="tab" data-tab="all" aria-selected="false">Dashboard</button>
+  <button class="tab" data-tab="precraft" aria-selected="false">Precrafts</button>
+  <button class="tab" data-tab="flips" aria-selected="false">Flips</button>
+  <button class="tab" data-tab="materia" aria-selected="false">Scrips</button>
+  <button class="tab" data-tab="currencies" aria-selected="false">Currencies</button>
+  <button class="tab" data-tab="vendors" aria-selected="false">Vendors</button>
+  <button class="tab" data-tab="retainer" aria-selected="false">Retainers</button>
+  <button class="tab" data-tab="submersible" aria-selected="false">Submersibles</button>
+  <button class="tab" data-tab="workshop" aria-selected="false">Workshop</button>
+  <button class="tab" data-tab="duties" aria-selected="false">Duties</button>
+  <span class="tabsep"></span>
+  <button class="tabadd" id="addList" title="Create another list (up to five)">＋ List</button>
+  <div class="tabright">
+    <div class="tabsearch" id="tabSearch"></div>
+    <span id="themeToggle"></span>
+  </div>
+</div>
+<div class="frames">
+  <iframe data-frame="all"></iframe>
+  <iframe data-frame="precraft"></iframe>
+  <iframe data-frame="flips"></iframe>
+  <iframe data-frame="materia"></iframe>
+  <iframe data-frame="currencies"></iframe>
+  <iframe data-frame="vendors"></iframe>
+  <iframe data-frame="retainer"></iframe>
+  <iframe data-frame="submersible"></iframe>
+  <iframe data-frame="workshop"></iframe>
+  <iframe data-frame="duties"></iframe>
+</div>
+<script>
+const SHARED_A = /*@string shared/data-layer.js*/"";
+const SHARED_B = /*@string shared/markets.js*/"";
+const SHARED_SHOP = /*@string shared/shopping-list.js*/"";
+const SHARED_LIST = /*@string shared/saved-lists.js*/"";
+const SHARED_XW = /*@string shared/cross-world.js*/"";
+const UI_CSS =/*@string shared/ui.css*/"";
+const UI_JS =/*@string shared/ui.js*/"";
+/* item id -> in-game icon id, base36 deltas; feeds the row icons */
+const ICON_INDEX = /*@string data/icon-index.txt*/""
+/* every craftable item as "item-id-delta recipe-id", both base36 — the
+   second half of a Teamcraft simulator URL, which nothing else here knows */
+const RECIPE_INDEX = /*@string data/recipe-index.txt*/""
+const BLOBS = {
+  "vendors": /*@string tabs/vendors.html*/"",
+  "flips": /*@string tabs/flips.html*/"",
+  "all": /*@string tabs/dashboard.html*/"",
+  "precraft": /*@string tabs/precrafts.html*/"",
+  "materia": /*@string tabs/scrips.html*/"",
+  "currencies": /*@string tabs/currencies.html*/"",
+  "retainer": /*@string tabs/retainer.html*/"",
+  "submersible": /*@string tabs/submersibles.html*/"",
+  "workshop": /*@string tabs/workshop.html*/"",
+  "duties": /*@string tabs/duties.html*/""
+};
+/* every list tab is this one page, rendered for its own slot */
+/* every item the desk knows a name for, as "base36 id-delta name" — feeds the search box */
+const ITEM_INDEX = /*@string data/item-index.txt*/"";
+const LIST_TPL = /*@string tabs/list.html*/"";
+function htmlFor(key){
+  const m=/^list([1-5])$/.exec(key);
+  const doc=m?LIST_TPL.replace(/__LIST_N__/g,m[1]):BLOBS[key];
+  return doc
+    .replace("/*__UI_CSS__*/",()=>UI_CSS)
+    .replace("/*__UI_JS__*/",()=>UI_JS)
+    .replace("/*__ICON_INDEX__*/",()=>JSON.stringify(ICON_INDEX))
+    .replace("/*__RECIPE_INDEX__*/",()=>JSON.stringify(RECIPE_INDEX))
+    .replace("/*__SHARED_A__*/",()=>SHARED_A)
+    .replace("/*__SHARED_B__*/",()=>SHARED_B)
+    .replace("/*__SHARED_SHOP__*/",()=>SHARED_SHOP)
+    .replace("/*__SHARED_LIST__*/",()=>SHARED_LIST)
+    .replace("/*__SHARED_XW__*/",()=>SHARED_XW);
+}
+/* ===== v24 tab icons =====
+   Inline SVG rather than emoji: emoji are full-colour bitmaps that differ on
+   every OS and cannot take the accent on the active tab. These are stroked in
+   currentColor, so they inherit whatever the tab is already doing. 20x20 grid,
+   1.7 stroke, round caps — the same weight as the rest of the chrome. */
+const TAB_ICONS={
+  /* dashboard: bars, because the dashboard ranks things */
+  all:'<path d="M3.5 16.5h13M6 16.5V9M10 16.5V4.5M14 16.5v-5"/>',
+  /* precrafts: a smith's hammer */
+  precraft:'<path d="M4.5 3.5h11V8h-11z"/><path d="M10 8v8.5"/>',
+  /* flips: two worlds trading, so arrows crossing back */
+  flips:'<path d="M3 7h11l-2.5-2.5M17 13H6l2.5 2.5"/>',
+  /* scrips: a cut gem */
+  materia:'<path d="M10 3.5l6 4.5-6 8.5-6-8.5z"/><path d="M4 8h12M10 3.5V16.5"/>',
+  /* currencies: one coin becoming another */
+  currencies:'<circle cx="7.6" cy="7.8" r="4.3"/><circle cx="12.4" cy="12.2" r="4.3"/>',
+  /* vendors: a shopfront with its awning */
+  vendors:'<path d="M4 8.5v8h12v-8"/><path d="M2.5 8.5l1.5-4.5h12l1.5 4.5z"/><path d="M8 16.5v-4.5h4v4.5"/>',
+  /* retainer: a satchel */
+  retainer:'<path d="M6 8.5V6.5a4 4 0 0 1 8 0v2"/><path d="M4.5 8.5h11l-1 8h-9z"/><path d="M8.5 11.5h3"/>',
+  /* submersible: a hull with a periscope */
+  submersible:'<path d="M3 12.5c0-2.5 3-3.8 7-3.8s7 1.3 7 3.8-3 3-7 3-7-.5-7-3z"/><path d="M10 8.7V4.5M8 4.5h4"/>',
+  /* workshop: a wrench */
+  workshop:'<path d="M12.3 4.3a3.3 3.3 0 0 0-4.4 3.9L4 12l2 2 3.8-3.9a3.3 3.3 0 0 0 3.9-4.4l-2 2-1.8-.4-.4-1.8z"/>',
+  /* duties: a duty-roulette style shield */
+  duties:'<path d="M10 3.5l6 2.5v4c0 4-2.6 6.3-6 7-3.4-.7-6-3-6-7v-4z"/><path d="M7.5 10l1.8 1.8L13 8.2"/>',
+  /* saved lists: ticked rows */
+  list:'<path d="M7.5 5.5h9M7.5 10h9M7.5 14.5h9"/><path d="M3.5 5.5l1 1 1.5-2M3.5 10l1 1 1.5-2M3.5 14.5l1 1 1.5-2"/>'
+};
+function tabIcon(key){
+  const d=TAB_ICONS[/^list\d$/.test(key)?"list":key];
+  if(!d)return "";
+  return '<svg class="tabic" viewBox="0 0 20 20" fill="none" stroke="currentColor" '
+       + 'stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+       + d + '</svg>';
+}
+/* each tab wears its icon ahead of its label; list tabs get theirs in syncListTabs */
+document.querySelectorAll(".tab[data-tab]").forEach(b=>{
+  if(!b.querySelector(".tabic"))b.insertAdjacentHTML("afterbegin",tabIcon(b.dataset.tab));
+});
+const loaded={};
+function activate(key){
+  document.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected", t.dataset.tab===key));
+  document.querySelectorAll("iframe[data-frame]").forEach(f=>{
+    const on=f.dataset.frame===key;
+    f.classList.toggle("active",on);
+    // First visit renders the tab, which scans on its own; later visits just say
+    // we are back, and the tab decides whether its prices are stale enough to rescan.
+    if(on && !loaded[key]){ loaded[key]=true; f.srcdoc=htmlFor(key); }
+    else if(on && f.contentWindow){ try{ f.contentWindow.postMessage({gildesk:"activate"},"*"); }catch(err){} }
+  });
+}
+document.querySelector(".tabbar").addEventListener("click",e=>{
+  const t=e.target.closest(".tab[data-tab]");
+  if(t)activate(t.dataset.tab);
+});
+
+/* ---- saved lists: the tabs follow whatever the user has created ----
+   Storage shape is owned by SHARED_LIST; the shell only reads it, plus appends
+   a slot when ＋ List is used. */
+const LIST_KEY="gildesk:lists:v1", LIST_SLOTS=[1,2,3,4,5], LIST_MAX=LIST_SLOTS.length;
+function readLists(){
+  let d=null;try{d=JSON.parse(localStorage.getItem(LIST_KEY)||"null");}catch(e){}
+  const names={};
+  for(const n of LIST_SLOTS){
+    const nm=d&&d.names&&typeof d.names[n]==="string"?d.names[n].trim():"";
+    names[n]=nm||("List "+n);
+  }
+  const raw=d&&Array.isArray(d.order)?d.order:[1,2];
+  return{order:[...new Set(raw.map(Number).filter(n=>LIST_SLOTS.indexOf(n)>=0))],names:names};
+}
+const addBtn=document.getElementById("addList");
+function syncListTabs(){
+  const st=readLists(),bar=document.querySelector(".tabbar"),frames=document.querySelector(".frames");
+  /* drop tabs for lists that no longer exist */
+  document.querySelectorAll("[data-listtab]").forEach(b=>{
+    if(st.order.indexOf(+b.dataset.listtab)>=0)return;
+    const key="list"+b.dataset.listtab, f=frames.querySelector('iframe[data-frame="'+key+'"]');
+    const wasOn=f&&f.classList.contains("active");
+    if(f)f.remove();
+    delete loaded[key];
+    b.remove();
+    if(wasOn)activate("all");
+  });
+  /* add or relabel the rest, keeping the order the user made them in */
+  for(const n of st.order){
+    const key="list"+n;
+    let b=bar.querySelector('[data-listtab="'+n+'"]');
+    if(!b){
+      b=document.createElement("button");
+      b.className="tab";b.dataset.tab=key;b.dataset.listtab=n;
+      b.setAttribute("aria-selected","false");
+      bar.insertBefore(b,addBtn);
+    }
+    b.textContent="";
+    b.insertAdjacentHTML("afterbegin",tabIcon("list"));
+    b.appendChild(document.createTextNode(st.names[n]));
+    if(!frames.querySelector('iframe[data-frame="'+key+'"]')){
+      const f=document.createElement("iframe");f.dataset.frame=key;frames.appendChild(f);
+    }
+  }
+  addBtn.hidden=st.order.length>=LIST_MAX;
+}
+addBtn.addEventListener("click",()=>{
+  const st=readLists();
+  if(st.order.length>=LIST_MAX)return;
+  const n=LIST_SLOTS.find(x=>st.order.indexOf(x)<0);
+  if(n==null)return;
+  let d={};try{d=JSON.parse(localStorage.getItem(LIST_KEY)||"null")||{};}catch(e){d={};}
+  d.order=st.order.concat([n]);
+  d.names=d.names||{};if(typeof d.names[n]!=="string"||!d.names[n].trim())d.names[n]="List "+n;
+  d.items=d.items||{};if(!Array.isArray(d.items[n]))d.items[n]=[];
+  try{localStorage.setItem(LIST_KEY,JSON.stringify(d));}catch(e){return;}
+  syncListTabs();activate("list"+n);
+});
+/* a list renamed, added or removed inside a tab reaches us either way */
+addEventListener("storage",e=>{if(e.key===LIST_KEY)syncListTabs();});
+addEventListener("message",e=>{if(e.data&&e.data.gildesk==="lists")syncListTabs();});
+syncListTabs();
+
+/* ---- item search (top right) ----
+   The shell has no data layer of its own, so it runs the same cross-world module
+   the tabs get, over the name index above. One source, two places. */
+/* indirect eval keeps its own scope for const, so hand the module out deliberately */
+(0,eval)(SHARED_XW+"\n;window.XW=XW;");
+XW.index=(function(){const out=[];let id=0;
+  for(const line of ITEM_INDEX.split("\n")){
+    const sp=line.indexOf(" ");if(sp<0)continue;
+    id+=parseInt(line.slice(0,sp),36);
+    out.push([id,line.slice(sp+1)]);}
+  return out;})();
+XW.mountSearch(document.getElementById("tabSearch"));
+/* the shared UI runtime also owns the theme, which the shell shares with every tab */
+(0,eval)(UI_JS+"\n;window.mountThemeToggle=mountThemeToggle;window.__applyTheme=applyTheme;");
+mountThemeToggle(document.getElementById("themeToggle"));
+/* "/" pressed inside a tab arrives here, since the key never reaches this document */
+addEventListener("message",e=>{if(e.data&&e.data.gildesk==="focusSearch"&&XW.focusSearch)XW.focusSearch();});
+
+/* ---- first-visit home world picker ----
+   A new visitor has never told us which world to price against, so every
+   "Sell on" select would default to Spriggan. Ask once, before the first tab
+   loads, and write the answer into the same settings key every tab's own
+   restoreSettings() already reads on load — no per-tab wiring needed. */
+function pickHomeWorld(){
+  return new Promise(resolve=>{
+    const SKEY="gildesk:all:settings", PICKED="gildesk:homePicked:v1";
+    let picked=false;try{picked=!!localStorage.getItem(PICKED);}catch(e){}
+    if(picked)return resolve();
+    let saved=null;try{const s=JSON.parse(localStorage.getItem(SKEY)||"null");
+      if(s&&typeof s.home==="string"&&s.home)saved=s.home;}catch(e){}
+    if(saved){try{localStorage.setItem(PICKED,"1");}catch(e){}return resolve();}
+    const TOPO=[
+      {region:"North America",dcs:{
+        "Aether":["Adamantoise","Cactuar","Faerie","Gilgamesh","Jenova","Midgardsormr","Sargatanas","Siren"],
+        "Primal":["Behemoth","Excalibur","Exodus","Famfrit","Hyperion","Lamia","Leviathan","Ultros"],
+        "Crystal":["Balmung","Brynhildr","Coeurl","Diabolos","Goblin","Malboro","Mateus","Zalera"],
+        "Dynamis":["Cuchulainn","Golem","Halicarnassus","Kraken","Maduin","Marilith","Rafflesia","Seraph"]}},
+      {region:"Europe",dcs:{
+        "Chaos":["Cerberus","Louisoix","Moogle","Omega","Phantom","Ragnarok","Sagittarius","Spriggan"],
+        "Light":["Alpha","Lich","Odin","Phoenix","Raiden","Shiva","Twintania","Zodiark"],
+        "Shadow":["Innocence","Pixie","Titania","Tycoon"]}},
+      {region:"Japan",dcs:{
+        "Elemental":["Aegis","Atomos","Carbuncle","Garuda","Gungnir","Kujata","Tonberry","Typhon"],
+        "Gaia":["Alexander","Bahamut","Durandal","Fenrir","Ifrit","Ridill","Tiamat","Ultima"],
+        "Mana":["Anima","Asura","Chocobo","Hades","Ixion","Masamune","Pandaemonium","Titan"],
+        "Meteor":["Belias","Mandragora","Ramuh","Shinryu","Unicorn","Valefor","Yojimbo","Zeromus"]}},
+      {region:"Oceania",dcs:{
+        "Materia":["Bismarck","Ravana","Sephirot","Sophia","Zurvan"]}}
+    ];
+    const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+    const back=document.createElement("div");
+    back.className="homepick-back";
+    back.innerHTML=`<div class="homepick-panel" role="dialog" aria-modal="true" aria-label="Pick your home world">
+      <h2>Which server do you play on?</h2>
+      <p>This sets what "Sell on" defaults to everywhere on the desk, so prices already match your world. You can change it any time from any tab.</p>
+      <select id="homepickSel">
+        ${TOPO.map(r=>Object.keys(r.dcs).map(d=>
+          `<optgroup label="${esc(r.region)} · ${esc(d)}">`+
+          r.dcs[d].map(w=>`<option value="${esc(w)}">${esc(w)}</option>`).join("")+
+          `</optgroup>`).join("")).join("")}
+      </select>
+      <div class="homepick-actions">
+        <button type="button" class="homepick-skip" id="homepickSkip">Skip</button>
+        <button type="button" class="homepick-go" id="homepickGo">Continue</button>
+      </div>
+    </div>`;
+    document.body.appendChild(back);
+    const sel=back.querySelector("#homepickSel");
+    sel.value="Spriggan";
+    function dismiss(){try{localStorage.setItem(PICKED,"1");}catch(e){}back.remove();resolve();}
+    back.querySelector("#homepickGo").addEventListener("click",()=>{
+      let s={};try{s=JSON.parse(localStorage.getItem(SKEY)||"null")||{};}catch(e){}
+      s.home=sel.value;
+      /* restoreSettings() only follows a saved "dc" id to the matching data
+         centre for the "home" id, so without this the price panels would
+         load whatever DC the tab defaults to, not the one this world is in. */
+      for(const r of TOPO)for(const d in r.dcs)if(r.dcs[d].indexOf(sel.value)>=0)s.dc=d;
+      try{localStorage.setItem(SKEY,JSON.stringify(s));}catch(e){}
+      dismiss();
+    });
+    back.querySelector("#homepickSkip").addEventListener("click",dismiss);
+    back.addEventListener("click",e=>{if(e.target===back)dismiss();});
+    addEventListener("keydown",function esck(e){if(e.key==="Escape"){removeEventListener("keydown",esck);dismiss();}});
+  });
+}
+pickHomeWorld().then(()=>activate("all"));
+</script>
+</body>
+</html>

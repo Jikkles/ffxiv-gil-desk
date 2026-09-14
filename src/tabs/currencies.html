@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Currencies</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/*__UI_CSS__*/
+/* ---- currencies only ---- */
+.tree{padding:12px 16px 14px}
+.thead{display:grid;grid-template-columns:1fr 132px 152px 132px 112px;gap:18px;font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);padding:0 6px 6px;border-bottom:1px solid var(--line)}
+.thead .r{text-align:center}
+.node{display:grid;grid-template-columns:1fr 132px 152px 132px 112px;gap:18px;align-items:center;padding:5px 6px;border-radius:7px;font-family:"JetBrains Mono",monospace;font-size:13px}
+.node:hover{background:var(--row-hover)}
+.node.clickable{cursor:pointer}
+.nlabel{display:flex;align-items:center;gap:7px;font-family:"Inter",sans-serif}
+.ntoggle{width:14px;flex:none;display:inline-flex;justify-content:center;color:var(--faint)}
+.ntoggle .c{display:inline-block;width:0;height:0;border-left:5px solid var(--faint);border-top:3.5px solid transparent;border-bottom:3.5px solid transparent;transition:transform .15s}
+.ntoggle.open .c{transform:rotate(90deg);border-left-color:var(--aether)}
+.ntoggle.leaf{color:var(--line2)}
+.nqty{color:var(--muted);font-family:"JetBrains Mono",monospace;margin-right:4px}
+.price{text-align:center}
+.price.cheap{color:var(--win)}
+.price.dim{color:var(--faint)}
+.server{text-align:right;font-size:12px}
+.server.home{color:var(--win)}
+.server.hop{color:var(--hop)}
+.server.dim{color:var(--faint)}
+.qtag{font-size:9px;color:var(--faint)}
+.qtag.hq{color:var(--gil)}
+.badge{font-family:"JetBrains Mono",monospace;font-size:9px;color:var(--win);border:1px solid var(--win-line);border-radius:5px;padding:1px 5px;margin-left:6px}
+.line{text-align:center;font-weight:500}
+.tfoot{display:flex;flex-wrap:wrap;gap:6px 20px;margin-top:12px;padding-top:11px;border-top:1px solid var(--line);font-family:"JetBrains Mono",monospace;font-size:12.5px}
+.tfoot .lab{color:var(--faint);text-transform:uppercase;font-size:10px;letter-spacing:.1em;margin-right:6px}
+.tfoot b{font-weight:500}
+.kpi-strip{position:fixed;bottom:0;left:0;right:0;z-index:20;
+    background:rgba(13,17,22,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    border-top:1px solid var(--line);display:flex;gap:0;overflow-x:auto}
+.ks-cell{flex:1;min-width:140px;padding:7px 14px;border-right:1px solid var(--line)}
+.ks-cell:last-child{border-right:none}
+.ks-k{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.ks-v{font-family:"JetBrains Mono",monospace;font-size:15px;font-weight:500;margin-top:1px}
+.ks-v.gil{color:var(--gil)}
+.ks-v.cy{color:var(--aether)}
+.dense tbody td{padding:6px 11px!important}
+.dense tbody .name{gap:0}
+.dense .bar{display:none}
+.copy-btn{all:unset;cursor:pointer;font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--aether);
+    border:1px solid var(--line);border-radius:7px;padding:4px 10px;background:var(--panel);margin-left:8px}
+.copy-btn:hover{border-color:var(--aether)}
+.stale-warn{display:inline-block;color:var(--loss);font-size:13px;line-height:1;font-family:"JetBrains Mono",monospace;padding:2px 5px;margin-left:5px;border:1px solid var(--loss-line);border-radius:7px;background:var(--loss-soft);vertical-align:middle;cursor:help}
+.lvl-range{display:flex;align-items:center;gap:6px}
+.lvl-range input[type=range]{accent-color:var(--aether);width:90px}
+@media(max-width:820px){.thead{grid-template-columns:1fr 78px 84px 72px;gap:8px}
+.thead .hcraft,.node .ncraft{display:none}
+.node{grid-template-columns:1fr 78px 84px 72px;gap:8px}}
+.buy-world{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--hop);font-weight:500}
+.buy-world.home{color:var(--aether)}
+.row{cursor:default;border-bottom:1px solid var(--line)}
+.row:hover td{background:var(--row-hover)}
+.no-data{color:var(--faint);font-size:13px;font-family:"JetBrains Mono",monospace}
+.tag-home{font-size:10px;font-family:"JetBrains Mono",monospace;color:var(--aether);background:var(--accent-soft);border:1px solid var(--aether-line);padding:1px 5px;border-radius:4px;margin-left:4px}
+.minprice-note{font-size:11px;color:var(--faint);font-family:"JetBrains Mono",monospace}
+</style>
+<style>.cyc{color:var(--aether)}
+.gpc{font-weight:500}
+.gpc.top{color:var(--win)}
+.legend{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--faint);margin:8px 2px;display:flex;gap:16px;flex-wrap:wrap}
+.shopname{font-size:11px;color:var(--faint);font-family:"JetBrains Mono",monospace}
+/* the currency price of the row, parked on the right of the item column */
+.curcost{margin-left:auto;display:flex;align-items:center;gap:6px;padding-left:22px;flex:none;white-space:nowrap;font-family:"JetBrains Mono",monospace;font-size:13px}
+.curcost .ricon{margin-right:0;width:20px;height:20px}
+.curcost b{font-weight:500;color:var(--aether)}
+.curcost .q{font-size:11px;color:var(--faint)}
+.name.wide{width:100%;min-width:390px}
+.balbox input{min-width:96px}
+.cur-tag{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--aether);border:1px solid var(--aether-line);background:var(--accent-soft);padding:2px 6px;border-radius:5px}
+.curbar{display:flex;flex-wrap:wrap;align-items:center;gap:5px;margin:14px 0 4px;padding:11px 12px;
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:visible}
+.curbtn{all:unset;position:relative;cursor:pointer;width:38px;height:38px;border-radius:9px;border:1px solid transparent;
+    display:flex;align-items:center;justify-content:center;background:var(--panel2);transition:border-color .12s,background .12s;flex:none}
+.curbtn:hover{border-color:var(--line2);background:var(--raised)}
+.curbtn.sel{border-color:var(--aether);background:var(--accent-soft);box-shadow:0 0 0 1px var(--aether)55}
+.curbtn img{width:30px;height:30px;image-rendering:auto;display:block}
+.curbtn .fb{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--muted);letter-spacing:.02em}
+.curbtn.star{font-size:17px;color:var(--gil);width:38px}
+.curbtn::after{content:attr(data-name);position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%);
+    background:var(--panel2);border:1px solid var(--line2);color:var(--ink);font-family:"JetBrains Mono",monospace;font-size:11px;
+    padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .12s;z-index:40;
+    box-shadow:0 8px 24px #00000070}
+.curbtn:hover::after{opacity:1}
+.curdiv{width:1px;height:26px;background:var(--line);margin:0 6px;flex:none}
+.cursel{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--muted);margin:6px 4px 0}
+.ricon{width:19px;height:19px;flex:none;margin-right:7px;border-radius:3px;vertical-align:middle}
+.ricon.gone{display:none}
+.cursel b{color:var(--aether);font-weight:500}
+
+</style>
+<script>try{var __t=localStorage.getItem("gildesk:theme:v1");document.documentElement.setAttribute("data-theme",__t==="light"?"light":"dark");}catch(e){document.documentElement.setAttribute("data-theme","dark");}</script>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="sgroup">
+      <div class="slabel">Filter items</div>
+      <div class="field"><label>&#128269;</label><input id="search" placeholder="search item&hellip;" autocomplete="off"></div>
+    </div>
+    <div class="sgroup">
+      <div class="slabel">Server</div>
+      <div class="field sel"><label>Sell on</label><select id="home"></select></div>
+      <button class="btn wide" id="copyList" title="Copy visible rows">&#128203; Copy list</button>
+      <button class="btn primary wide" id="refresh">&#8635; Refresh</button>
+    </div>
+    <div class="sgroup">
+      <div class="slabel">Marketboard settings</div>
+      <label class="chk"><input type="checkbox" id="showTribal"> Tribal currencies</label>
+      <label class="chk"><input type="checkbox" id="density"> Compact rows</label>
+    </div>
+    <div class="sgroup">
+      <div class="slabel">Filters</div>
+      <div class="field sel"><label>Value at</label><select id="basis">
+      <option value="avg" selected>Avg 30d</option>
+      <option value="now">Current lowest</option>
+      <option value="min">Conservative (lower)</option>
+    </select></div>
+      <div class="field sel"><label>Min units/day</label><select id="minVel">
+      <option value="0">Any</option>
+      <option value="0.5" selected>0.5+</option>
+      <option value="1">1+</option>
+      <option value="3">3+</option>
+      <option value="10">10+</option>
+    </select></div>
+      <div class="field sel"><label>Tax</label><select id="tax">
+      <option value="0.05" selected>5%</option><option value="0.03">3%</option><option value="0.02">2%</option>
+    </select></div>
+    </div>
+    <div class="sgroup">
+      <div class="scancard"><span class="dot"></span>Last scan<br><b id="lastScan"></b></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="hero">
+      <div class="hicon">💱</div>
+      <div>
+        <h1><b>Currencies</b></h1>
+        <p class="sub">Pick a currency. This works out which marketable item it buys at the best gil-per-unit rate, then what that sells for on your home world after tax. Vendor costs come straight from the game&rsquo;s shop tables (patch 7.55); prices are live from Universalis.</p>
+      </div>
+    <div class="kpis">
+    <div class="kpi"><div class="ki">🪙</div><div class="kbody"><div class="k">Best rate</div><div class="v gil" id="kpiRate">&mdash;</div><div class="s" id="kpiRateName">waiting for data&hellip;</div></div></div>
+    <div class="kpi"><div class="ki">📈</div><div class="kbody"><div class="k">Fastest earner</div><div class="v gil" id="kpiDay">&mdash;</div><div class="s" id="kpiDaySub">highest gil/day at market pace</div></div></div>
+    <div class="kpi"><div class="ki">🌍</div><div class="kbody"><div class="k">Items priced</div><div class="v cy" id="kpiCount">&mdash;</div><div class="s" id="kpiCountSub">marketable items for this currency</div></div></div>
+  </div></div>
+
+
+  <div class="curbar" id="curbar"></div>
+  <div class="cursel" id="cursel"></div>
+
+  
+
+  <div class="legend">
+    <span>The <b class="cyc">currency price</b> sits on the right of the item column &mdash; what one of that item costs you in the currency</span>
+    <span><b class="cyc">Trend</b> = the newer half of the 30-day sales history measured against the older half</span>
+    <span><b class="cyc">Gil/day</b> = net sale price &times; units sold a day &mdash; how fast the market absorbs it, counting a stack of 99 as 99 rather than as one sale</span>
+  </div>
+
+  <div class="status" id="status">Pricing every currency item&hellip;</div>
+  <div id="errbox"></div>
+
+  <div class="tablewrap"><table id="tbl" hidden>
+    <thead><tr id="thr"></tr></thead>
+    <tbody id="rows"></tbody>
+  </table></div>
+
+  <p class="foot">
+    Costs are read from the game&rsquo;s <b>SpecialShop</b> and <b>GCScripShopItem</b> tables at patch 7.55, filtered to items that are actually sellable on the market board. Where the same item is sold by more than one vendor for the same currency, the cheapest is used. Tomestone and scrip costs use the client&rsquo;s virtual-currency indices, resolved the same way the CurrencySpender plugin does it.
+    <b>Sell now</b> is the cheapest current listing on your world; <b>Avg 30d</b> is the recent average sale price &mdash; steadier for thin items, which is why it is the default basis. <b>Net</b> is that price after market tax.
+    Some shop rows belong to vendors that no longer exist in-game, so the vendor name is shown on every row &mdash; if it looks like a dead NPC, treat the row with suspicion. Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>.
+  </p>
+  </main>
+</div>
+
+<script>
+const ICON_INDEX = /*__ICON_INDEX__*/;
+/*__UI_JS__*/
+
+const CD = /*@json data/currencies.json*/null;
+const IT = CD.items;
+const ALL_IDS = Object.keys(IT).map(Number);
+const CHAOS_FALLBACK={39:"Omega",71:"Moogle",80:"Cerberus",83:"Louisoix",85:"Spriggan",97:"Ragnarok",400:"Sagittarius",401:"Phantom"};
+const fmt=n=>n==null||!isFinite(n)?"—":Math.round(n).toLocaleString("en-GB");
+const fmtK=n=>{if(n==null||!isFinite(n))return"—";if(Math.abs(n)>=1e6)return(n/1e6).toFixed(2)+"M";if(Math.abs(n)>=1e3)return(n/1e3).toFixed(1)+"k";return Math.round(n).toString();};
+const fmt2=n=>n==null||!isFinite(n)?"—":(n>=100?Math.round(n).toLocaleString("en-GB"):n.toFixed(n>=10?1:2));
+
+let state={home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],tax:0.05,cur:CD.currencies[0].id,basis:"avg",
+  minVel:0.5,query:"",showTribal:false,sortKey:"gilDay",sortDir:-1,worlds:null,mkt:null,hist:{},rows:null};
+
+function side(res,hq){return res?(hq?res.h:res.n):null;}
+function aggPrice(res,hq,scope){const q=side(res,hq);const m=q&&(scope==="world"?q.mw:q.md);return m&&m[0]!=null?m[0]:null;}
+function aggAvg(res,hq,scope){const q=side(res,hq);const a=q?(scope==="world"?q.aw:q.ad):null;return a!=null?a:null;}
+function aggVel(res,hq,scope){const q=side(res,hq);const d=q?(scope==="world"?q.vw:q.vd):null;return d!=null?d:0;}
+function aggUpload(res){return(res&&res.u)||0;}
+
+/*__SHARED_A__*/
+/*__SHARED_B__*/
+/*__SHARED_SHOP__*/
+/*__SHARED_LIST__*/
+/*__SHARED_XW__*/
+
+function setStatus(h){document.getElementById("status").innerHTML=h;}
+function clearErr(){document.getElementById("errbox").innerHTML="";}
+function showErr(e){document.getElementById("tbl").hidden=true;setStatus("Couldn't reach the market board.");
+  document.getElementById("errbox").innerHTML=`<div class="err"><b>Live prices didn't load.</b> ${e.message||e}. Open this file directly in your browser, or check <a href="https://universalis.app" target="_blank" rel="noopener" style="color:#ffd7db">universalis.app</a>.</div>`;}
+
+async function fetchAgg(scope,ids,onProgress){
+  const ck=`agg:${scope}:${hashIds(ids)}`;const hit=Cache.get(ck,NET.CACHE_TTL_MS);
+  if(hit){if(onProgress)onProgress(1,1);return{out:hit,failed:[],fromCache:true};}
+  const res=await runBatches(ids,async b=>{
+    const r=await tfetch(`https://universalis.app/api/v2/aggregated/${scope}/${b.join(",")}`);
+    if(!r.ok)throw new Error("HTTP "+r.status+" \u00b7 "+scope);
+    const j=await r.json();const m={};for(const row of(j.results||[]))m[row.itemId]=compressAgg(row);return m;},onProgress);
+  if(!res.failed.length)Cache.set(ck,res.out);
+  return res;}
+async function fetchHist(scope,ids,onProgress){
+  const ck=`hist:${scope}:${hashIds(ids)}`;const hit=Cache.get(ck,NET.CACHE_TTL_MS);
+  if(hit){if(onProgress)onProgress(1,1);return{out:hit,failed:[],fromCache:true};}
+  const res=await runBatches(ids,async b=>{
+    const r=await tfetch(`https://universalis.app/api/v2/history/${scope}/${b.join(",")}?entriesToReturn=${HIST_ENTRIES}&entriesWithin=${HIST_SECS}&statsWithin=${HIST_SECS*1000}`);
+    if(!r.ok)throw new Error("HTTP "+r.status+" \u00b7 history");
+    const j=await r.json();const src=j.items||(j.itemID?{[j.itemID]:j}:{});
+    const m={};for(const k in src)m[k]=summarizeHist(src[k]);return m;},onProgress);
+  if(!res.failed.length)Cache.set(ck,res.out);
+  return res;}
+async function fetchWorlds(){
+  const hit=Cache.get("worlds",NET.WORLDS_TTL_MS);if(hit)return hit;
+  try{const r=await tfetch("https://universalis.app/api/v2/worlds");const a=await r.json();
+    const m={};for(const w of a)m[w.id]=w.name;Cache.set("worlds",m);return m;}catch(e){return{...CHAOS_FALLBACK};}}
+
+/* ---- currency picker: icon grid ---- */
+function iconUrls(ic){const folder=String(Math.floor(ic/1000)*1000).padStart(6,"0");
+  return[`https://xivapi.com/i/${folder}/${String(ic).padStart(6,"0")}.png`,
+         `https://garlandtools.org/files/icons/item/${ic}.png`];}
+window.ICOFB=function(img,ic){
+  if(img.dataset.try!=="1"){img.dataset.try="1";img.src=iconUrls(ic)[1];return;}
+  img.classList.add("gone");};
+function rowIcon(ic){return ic?`<img class="ricon" src="${iconUrls(ic)[0]}" onerror="ICOFB(this,${ic})" alt="" loading="lazy">`:"";}
+function abbrev(n){return n.replace(/[^A-Za-z ]/g,"").split(/\s+/).filter(Boolean).slice(0,3).map(w=>w[0]).join("").toUpperCase()||"?";}
+function makeTile(cur){
+  const b=document.createElement("button");
+  b.className="curbtn";b.dataset.cur=cur?cur.id:"__all";
+  b.dataset.name=cur?`${cur.name} \u00b7 ${cur.items.length} items`:"Overview \u2014 best item per currency";
+  b.title=b.dataset.name;
+  if(!cur){b.classList.add("star");b.textContent="\u2b50";return b;}
+  const urls=iconUrls(cur.ic);
+  const img=document.createElement("img");img.alt="";img.loading="lazy";img.src=urls[0];
+  img.addEventListener("error",function(){
+    if(this.dataset.try!=="1"){this.dataset.try="1";this.src=urls[1];return;}
+    const sp=document.createElement("span");sp.className="fb";sp.textContent=abbrev(cur.name);
+    this.replaceWith(sp);});
+  b.appendChild(img);return b;}
+const TRIBAL="Tribal / Society";
+function shownCurrencies(){return CD.currencies.filter(c=>
+  state.showTribal||c.group!==TRIBAL||c.id===state.cur);}
+function buildBar(){
+  const bar=document.getElementById("curbar");
+  bar.innerHTML="";
+  bar.appendChild(makeTile(null));
+  let g=null;
+  for(const c of shownCurrencies()){
+    if(c.group!==g){g=c.group;const d=document.createElement("span");d.className="curdiv";bar.appendChild(d);}
+    bar.appendChild(makeTile(c));}
+  markSel();}
+(function(){
+  const bar=document.getElementById("curbar");
+  bar.addEventListener("click",e=>{
+    const b=e.target.closest(".curbtn");if(!b)return;
+    state.cur=b.dataset.cur==="__all"?"__all":+b.dataset.cur;
+    state.sortKey="gilDay";state.sortDir=-1;
+    markSel();saveCur();if(state.mkt){compute();render();}});
+})();
+function markSel(){
+  document.querySelectorAll(".curbtn").forEach(b=>
+    b.classList.toggle("sel", b.dataset.cur===String(state.cur)));
+  const c=state.cur==="__all"?null:curById(state.cur);
+  document.getElementById("cursel").innerHTML=c
+    ?`Showing <b>${c.name}</b> &middot; ${c.items.length} marketable items &middot; ${c.group}`
+    :`Showing <b>Overview</b> &middot; best item for each of ${CD.currencies.length} currencies`;}
+function saveCur(){try{localStorage.setItem("gildesk:currencies:cur",String(state.cur));}catch(e){}}
+
+function curById(id){return CD.currencies.find(c=>c.id==id);}
+
+/* ---- compute ---- */
+function priceRow(e){
+  const meta=IT[e.i]||{n:"#"+e.i};
+  const hq=!!e.hq&&!!meta.hq;
+  const res=state.mkt?state.mkt[e.i]:null;
+  const now=aggPrice(res,hq,"world");
+  const avg=aggAvg(res,hq,"world")??aggAvg(res,hq,"dc");
+  const vel=aggVel(res,hq,"world");
+  const trendT=trend30(state.hist[e.i],hq);
+  let basis=null;
+  if(state.basis==="now")basis=now;
+  else if(state.basis==="avg")basis=avg??now;
+  else basis=(now!=null&&avg!=null)?Math.min(now,avg):(now??avg);
+  const net=basis!=null?basis*(1-state.tax):null;
+  const perUnit=e.c/e.q;
+  const gpc=net!=null?net/perUnit:null;
+  return {id:e.i,name:meta.n,shop:e.s,cost:e.c,qty:e.q,hq,unique:!!e.u,perUnit,trendT,upload:aggUpload(res),
+    now,avg,vel,net,gpc,gilDay:net!=null?net*vel:null};
+}
+function compute(){
+  if(state.cur==="__all"){
+    state.rows=shownCurrencies().map(c=>{
+      let best=null;
+      for(const e of c.items){const r=priceRow(e);
+        if(r.gpc==null||r.vel<state.minVel)continue;
+        if(!best||r.gpc>best.gpc)best=r;}
+      return best?{...best,curName:c.name,curGroup:c.group,curId:c.id,curIc:c.ic}:
+        {curName:c.name,curGroup:c.group,curId:c.id,curIc:c.ic,name:"—",gpc:null,vel:0,net:null,gilDay:null,cost:null,qty:1,perUnit:null,now:null,avg:null,shop:"",trendT:null,upload:0};
+    });
+  } else {
+    const c=curById(state.cur);
+    state.rows=(c?c.items:[]).map(e=>({...priceRow(e),curIc:c.ic,curName:null}));
+  }
+}
+function visibleRows(){
+  let r=state.rows||[];
+  if(state.cur!=="__all"){
+    r=r.filter(x=>x.gpc!=null&&x.vel>=state.minVel);
+    if(state.query){const q=state.query.toLowerCase();r=r.filter(x=>x.name.toLowerCase().includes(q)||(x.shop||"").toLowerCase().includes(q));}
+  } else if(state.query){const q=state.query.toLowerCase();
+    r=r.filter(x=>x.curName.toLowerCase().includes(q)||(x.name||"").toLowerCase().includes(q));}
+  const k=state.sortKey,d=state.sortDir;
+  return r.slice().sort((a,b)=>{
+    if(k==="name")return d*String(a.curName||a.name).localeCompare(String(b.curName||b.name));
+    const val=(r)=>k==="trend"?(r.trendT?r.trendT.pct:null):r[k];
+    const av=val(a),bv=val(b);
+    if(av==null&&bv==null)return 0;if(av==null)return 1;if(bv==null)return -1;
+    return d*(av-bv);});
+}
+
+/* Trend needs sales history, and asking for all 1,122 currency items doubles
+   the scan for rows most currencies never show. Only the rows on screen are
+   asked about, and their trends fill in behind the first render; misses are
+   remembered too, so changing currency or filter never asks twice. */
+const MAX_TRENDS=400;
+let trendsPending=false;
+async function loadTrends(){
+  if(!state.mkt||trendsPending)return;
+  const need=visibleRows().slice(0,MAX_TRENDS)
+    .map(r=>r.id).filter(id=>id!=null&&!(id in state.hist));
+  if(!need.length)return;
+  trendsPending=true;
+  try{
+    const res=await fetchHist(state.home,need);
+    for(const id of need)state.hist[id]=res.out[id]||null;
+    compute();render();
+  }catch(e){for(const id of need)state.hist[id]=null;}
+  finally{trendsPending=false;}
+}
+
+/* ---- render ---- */
+/* What the row costs in its currency, shown on the right of the item cell. In
+   the all-currencies view the icon is already the row’s own, so only the
+   number is worth repeating. */
+/* costs are whole currency units nine times out of ten, so 3 reads as 3 rather
+   than 3.00; the split rate a vendor bundle works out to keeps its decimals */
+const fmtCost=n=>{const r=Math.round(n*100)/100;
+  return Number.isInteger(r)?r.toLocaleString("en-GB"):r.toFixed(2).replace(/0+$/,"");};
+function costChip(r,withIcon){
+  if(r.perUnit==null)return "";
+  const split=r.qty>1?` <span class="q">(${fmt(r.cost)}&divide;${r.qty})</span>`:"";
+  const name=r.curName||(curById(state.cur)||{}).name||"";
+  return `<span class="curcost" title="${xesc(name)} × ${fmtCost(r.perUnit)} for one">${withIcon?rowIcon(r.curIc):""}<b>×${fmtCost(r.perUnit)}</b>${split}</span>`;
+}
+/* the desk-wide column set: every tab reads Item, Sell now, Avg 30d, Trend,
+   Units/day, Gil/day, with anything tab-specific riding inside the item cell */
+const COLS_ONE=[["name","Item",1],["now","Sell now"],["avg","Avg 30d"],["trend","Trend"],
+  ["vel","Units/day"],["gilDay","Gil/day"]];
+const COLS_ALL=[["name","Currency",1],["now","Sell now"],["avg","Avg 30d"],["trend","Trend"],
+  ["vel","Units/day"],["gilDay","Gil/day"]];
+function cols(){return state.cur==="__all"?COLS_ALL:COLS_ONE;}
+function renderHead(){
+  const tr=document.getElementById("thr");
+  tr.innerHTML=cols().map(([k,l,noSort])=>
+    `<th data-k="${k}"${noSort?' style="cursor:default"':''}${k===state.sortKey?' data-sorted':''}>${l} <span>${k===state.sortKey?(state.sortDir<0?"▾":"▴"):""}</span></th>`).join("");
+  tr.querySelectorAll("th[data-k]").forEach(th=>{
+    if(th.style.cursor==="default")return;
+    th.addEventListener("click",()=>{const k=th.dataset.k;
+      if(state.sortKey===k)state.sortDir*=-1;else{state.sortKey=k;state.sortDir=-1;}
+      render();});});
+}
+function render(){
+  renderHead();
+  const rows=visibleRows();
+  const tb=document.getElementById("rows");
+  const tbl=document.getElementById("tbl");
+  tbl.hidden=!rows.length;
+  tb.innerHTML=rows.map(r=>{
+    /* in the all-currencies view the row stands for the best item that currency buys,
+       and there is no item at all when nothing met the sales filter */
+    const lb=r.id!=null?`<button class="listbtn" data-listadd="${r.id}" title="Add to a saved list">📋</button><button class="xwbtn" data-xw="${r.id}" data-xwname="${xesc(r.name)}" title="Compare this item's price and stock on every world">\ud83c\udf10</button>`:"";
+    const tools=lb?`<span class="rowtools">${lb}</span>`:"";
+    const nameCell=state.cur==="__all"
+      ? `<td><div class="name rich wide">${tools}${rowIcon(r.curIc)}<span class="nmeta"><span class="n">${r.curName}</span><span class="t">${r.gpc!=null?("best: "+r.name):"nothing meets the sales filter"}</span></span>${costChip(r,false)}</div></td>`
+      : `<td><div class="name rich wide">${tools}${iconHTML(r.id)}<span class="nmeta"><span class="n"><a href="https://universalis.app/market/${r.id}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">${r.name}</a>${r.hq?'<span class="qtag hq">HQ</span>':''}${r.unique?'<span class="q">unique</span>':''}</span><span class="t shopname">${r.shop||"&mdash;"}</span></span>${costChip(r,true)}</div></td>`;
+    return `<tr class="row">${nameCell}`+
+      `<td>${fmtK(r.now)}${agePill(r.upload)}</td>`+
+      `<td>${fmtK(r.avg)}</td>`+
+      `<td>${trendChip(r.trendT)}</td>`+
+      `<td>${r.vel?velCell(velAgg(r.vel)):"—"}</td>`+
+      `<td>${fmtK(r.gilDay)}</td></tr>`;}).join("");
+
+  loadTrends();
+
+  const top=rows.filter(r=>r.gpc!=null).sort((a,b)=>b.gpc-a.gpc)[0];
+  document.getElementById("kpiRate").textContent=top?fmt2(top.gpc)+" g":"—";
+  document.getElementById("kpiRateName").innerHTML=top
+    ?(state.cur==="__all"?`${top.curName} &rarr; ${top.name}`:`per 1 &times; ${curById(state.cur).name} &middot; ${top.name}`)
+    :"nothing meets the filters";
+  const fast=rows.filter(r=>r.gilDay!=null).sort((a,b)=>b.gilDay-a.gilDay)[0];
+  document.getElementById("kpiDay").textContent=fast?fmtK(fast.gilDay):"—";
+  document.getElementById("kpiDaySub").innerHTML=fast
+    ?`${state.cur==="__all"?fast.curName+" &rarr; ":""}${fast.name} &middot; ${velNum(fast.vel)}/day`
+    :"highest gil/day at market pace";
+  document.getElementById("kpiCount").textContent=rows.length;
+  document.getElementById("kpiCountSub").textContent=state.cur==="__all"
+    ?"currencies with a live rate":`of ${(curById(state.cur)||{items:[]}).items.length} marketable items, after filters`;
+  if(!rows.length)setStatus("No rows match the current filters \u2014 try lowering <b>Min units/day</b>.");
+}
+
+function updateScanTime(){const el=document.getElementById("lastScan");if(!el)return;
+  el._scanTime=new Date();
+  function tick(){if(!el._scanTime)return;const age=(Date.now()-el._scanTime)/1000;
+    el.textContent=el._scanTime.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit",second:"2-digit"});
+    el.style.color=age<1800?"var(--win)":"var(--loss)";}
+  tick();if(el._ticker)clearInterval(el._ticker);el._ticker=setInterval(tick,30000);}
+
+async function load(){
+  const btn=document.getElementById("refresh");btn.disabled=true;clearErr();
+  try{
+    setStatus("Fetching world list\u2026");
+    await refreshTopology();buildHomeSelect(document.getElementById("home"),state.home);
+    state.worlds=await fetchWorlds();
+    for(const[id,nm]of Object.entries(state.worlds))if(nm===state.home)state.homeId=+id;
+    const sell=await fetchAgg(state.home,ALL_IDS,(d,t)=>setStatus(`Pricing ${ALL_IDS.length} currency items on ${state.home}\u2026 ${d}/${t} batches`));
+    state.mkt=sell.out;
+    state.hist={};
+    compute();render();updateScanTime();
+    setStatus(`Priced <b>${ALL_IDS.length}</b> items across <b>${CD.currencies.length}</b> currencies on <b>${state.home}</b>.`);
+    finishStatus([sell]);
+  }catch(e){showErr(e);}finally{btn.disabled=false;}
+}
+
+const re=()=>{if(state.mkt){compute();render();}};
+document.getElementById("basis").addEventListener("change",e=>{state.basis=e.target.value;re();});
+document.getElementById("minVel").addEventListener("change",e=>{state.minVel=+e.target.value;re();});
+document.getElementById("tax").addEventListener("change",e=>{state.tax=+e.target.value;re();});
+document.getElementById("search").addEventListener("input",e=>{state.query=e.target.value;if(state.mkt)render();});
+buildHomeSelect(document.getElementById("home"),state.home);
+document.getElementById("home").addEventListener("change",e=>{homeChanged(e.target.value);load();});
+document.getElementById("refresh").addEventListener("click",load);
+document.getElementById("showTribal").addEventListener("change",e=>{
+  state.showTribal=e.target.checked;
+  if(!state.showTribal&&state.cur!=="__all"){const c=curById(state.cur);
+    if(c&&c.group===TRIBAL){state.cur=CD.currencies[0].id;saveCur();}}
+  buildBar();if(state.mkt){compute();render();}});
+document.getElementById("density").addEventListener("change",e=>{document.getElementById("tbl").classList.toggle("dense",e.target.checked);});
+document.getElementById("copyList").addEventListener("click",()=>{
+  const rows=visibleRows().filter(r=>r.gpc!=null);
+  if(!rows.length){alert("Nothing to copy.");return;}
+  const label=state.cur==="__all"?"BEST ITEM PER CURRENCY":curById(state.cur).name.toUpperCase();
+  const lines=rows.map(r=>state.cur==="__all"
+    ?`${r.curName} → ${r.name} — ${fmt2(r.perUnit)} per item, ${fmtK(r.gilDay)} gil/day (${velNum(r.vel)} units/day)`
+    :`${r.name} — ${fmt2(r.perUnit)} per item → ${fmtK(r.net)} net each, ${fmtK(r.gilDay)} gil/day (${velNum(r.vel)} units/day) [${r.shop}]`);
+  navigator.clipboard.writeText(label+"\n"+lines.join("\n")).then(()=>{
+    const b=document.getElementById("copyList");b.textContent="✓ Copied!";setTimeout(()=>b.textContent="📋 Copy list",2000);});
+});
+
+/* settings persistence + force-refresh */
+(function(){
+  const SKEY="gildesk:currencies:settings";
+  function collect(){const s={};document.querySelectorAll("select[id],input[id]").forEach(el=>{
+    if(el.id==="search")return;s[el.id]=el.type==="checkbox"?el.checked:el.value;});return s;}
+  document.addEventListener("change",()=>{try{localStorage.setItem(SKEY,JSON.stringify(collect()));}catch(e){}});
+  document.addEventListener("click",e=>{if(e.shiftKey&&e.target&&e.target.id==="refresh"){Cache.clear();setStatus("Cache cleared \u00b7 pulling fresh prices\u2026");}},true);
+  try{const s=JSON.parse(localStorage.getItem(SKEY)||"{}");
+    for(const[id,v]of Object.entries(s)){const el=document.getElementById(id);if(!el)continue;
+      if(el.type==="checkbox")el.checked=!!v;else el.value=v;
+      if(id==="home"){state.home=el.value;syncHomeNames();continue;}
+      el.dispatchEvent(new Event("change"));}
+  }catch(e){}
+})();
+try{const sc=localStorage.getItem("gildesk:currencies:cur");
+  if(sc)state.cur=sc==="__all"?"__all":+sc;}catch(e){}
+if(state.cur!=="__all"&&!curById(state.cur))state.cur=CD.currencies[0].id;
+buildBar();renderHead();
+
+
+/* ===== saved-list glue ===== */
+window.__listEntry=id=>{
+  const r=(state.rows||[]).find(x=>x.id==+id);
+  if(!r)return null;
+  const bits=[];if(r.curName)bits.push(r.curName);if(r.shop)bits.push(r.shop);
+  return{id:+id,name:r.name,kind:"currency",group:"currency",q:r.hq?"hq":"nq",
+    note:bits.join(" · ")||"Currency exchange",recipes:{},src:"Currencies"};
+};
+</script>
+</body>
+</html>

@@ -1,0 +1,2256 @@
+{
+  "exchanges": {
+    "purple": {
+      "name": "Purple Crafters' Scrip",
+      "materiaCost": 250,
+      "scripMateria": [41765,41766,41767],
+      "grade": "XI"
+    },
+    "orange": {
+      "name": "Orange Crafters' Scrip",
+      "materiaCost": 500,
+      "scripMateria": [41778,41779,41780],
+      "grade": "XII"
+    }
+  },
+  "collectibles": [
+    {
+      "id": 44186,
+      "name": "Rarefied Ceiba Spear",
+      "class": "CRP",
+      "lvl": 92,
+      "scrips": 142,
+      "tree": {
+        "id": 44186,
+        "name": "Rarefied Ceiba Spear",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "CRP",
+        "ings": [
+          {
+            "id": 44020,
+            "name": "Ceiba Lumber",
+            "amount": 2,
+            "craftable": true,
+            "yields": 1,
+            "job": "CRP",
+            "ings": [{"id":44015,"name":"Ceiba Log","amount":5,"craftable":false}]
+          },
+          {
+            "id": 44009,
+            "name": "Ihuykanite",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "GSM",
+            "ings": [
+              {"id":44003,"name":"Raw Ihuykanite","amount":3,"craftable":false},
+              {
+                "id": 36189,
+                "name": "Annite Whetstone",
+                "amount": 1,
+                "craftable": true,
+                "yields": 1,
+                "job": "GSM",
+                "ings": [{"id":36181,"name":"Annite","amount":4,"craftable":false}]
+              }
+            ]
+          },
+          {
+            "id": 36189,
+            "name": "Annite Whetstone",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "GSM",
+            "ings": [{"id":36181,"name":"Annite","amount":4,"craftable":false}]
+          }
+        ]
+      },
+      "scripType": "purple"
+    },
+    {
+      "id": 44192,
+      "name": "Rarefied Ruthenium War Axe",
+      "class": "BSM",
+      "lvl": 92,
+      "scrips": 142,
+      "tree": {
+        "id": 44192,
+        "name": "Rarefied Ruthenium War Axe",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "BSM",
+        "ings": [
+          {
+            "id": 43998,
+            "name": "Ruthenium Ingot",
+            "amount": 2,
+            "craftable": true,
+            "yields": 1,
+            "job": "BSM",
+            "ings": [
+              {"id":43993,"name":"Ruthenium Ore","amount":5,"craftable":false},
+              {"id":36163,"name":"High Durium Ore","amount":1,"craftable":false}
+            ]
+          },
+          {
+            "id": 44020,
+            "name": "Ceiba Lumber",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "CRP",
+            "ings": [{"id":44015,"name":"Ceiba Log","amount":5,"craftable":false}]
+          },
+          {
+            "id": 44030,
+            "name": "Mountain Linen",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "WVR",
+            "ings": [{"id":44025,"name":"Mountain Flax","amount":5,"craftable":false}]
+          }
+        ]
+      },
+      "scripType": "purple"
+    },
+    {
+      "id": 44198,
+      "name": "Rarefied Ruthenium Sabatons",
+      "class": "ARM",
+      "lvl": 92,
+      "scrips": 142,
+      "tree": {
+        "id": 44198,
+        "name": "Rarefied Ruthenium Sabatons",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "ARM",
+        "ings": [
+          {
+            "id": 43998,
+            "name": "Ruthenium Ingot",
+            "amount": 2,
+            "craftable": true,
+            "yields": 1,
+            "job": "BSM",
+            "ings": [
+              {"id":43993,"name":"Ruthenium Ore","amount":5,"craftable":false},
+              {"id":36163,"name":"High Durium Ore","amount":1,"craftable":false}
+            ]
+          },
+          {
+            "id": 44009,
+            "name": "Ihuykanite",
+            "amount": 2,
+            "craftable": true,
+            "yields": 1,
+            "job": "GSM",
+            "ings": [
+              {"id":44003,"name":"Raw Ihuykanite","amount":3,"craftable":false},
+              {
+                "id": 36189,
+                "name": "Annite Whetstone",
+                "amount": 1,
+                "craftable": true,
+                "yields": 1,
+                "job": "GSM",
+                "ings": [{"id":36181,"name":"Annite","amount":4,"craftable":false}]
+              }
+            ]
+          }
+        ]
+      },
+      "scripType": "purple"
+    },
+    {
+      "id": 44204,
+      "name": "Rarefied Ihuykanite Circlet",
+      "class": "GSM",
+      "lvl": 92,
+      "scrips": 142,
+      "tree": {
+        "id": 44204,
+        "name": "Rarefied Ihuykanite Circlet",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "GSM",
+        "ings": [
+          {
+            "id": 44009,
+            "name": "Ihuykanite",
+            "amount": 2,
+            "craftable": true,
+            "yields": 1,
+            "job": "GSM",
+            "ings": [
+              {"id":44003,"name":"Raw Ihuykanite","amount":3,"craftable":false},
+              {
+                "id": 36189,
+                "name": "Annite Whetstone",
+                "amount": 1,
+                "craftable": true,
+                "yields": 1,
+                "job": "GSM",
+                "ings": [{"id":36181,"name":"Annite","amount":4,"craftable":false}]
+              }
+            ]
+          },
+          {
+            "id": 43998,
+            "name": "Ruthenium Ingot",
+            "amount": 2,
+            "craftable": true,
+            "yields": 1,
+            "job": "BSM",
+            "ings": [
+              {"id":43993,"name":"Ruthenium Ore","amount":5,"craftable":false},
+              {"id":36163,"name":"High Durium Ore","amount":1,"craftable":false}
+            ]
+          }
+        ]
+      },
+      "scripType": "purple"
+    },
+    {
+      "id": 44210,
+      "name": "Rarefied Crocodileskin Leggings",
+      "class": "LTW",
+      "lvl": 92,
+      "scrips": 142,
+      "tree": {
+        "id": 44210,
+        "name": "Rarefied Crocodileskin Leggings",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "LTW",
+        "ings": [
+          {
+            "id": 44059,
+            "name": "Hammerhead Crocodile Leather",
+            "amount": 2,
+            "craftable": true,
+            "yields": 1,
+            "job": "LTW",
+            "ings": [
+              {"id":44054,"name":"Hammerhead Crocodile Skin","amount":4,"craftable":false},
+              {"id":36241,"name":"Eblan Alumen","amount":1,"craftable":false}
+            ]
+          },
+          {
+            "id": 44030,
+            "name": "Mountain Linen",
+            "amount": 2,
+            "craftable": true,
+            "yields": 1,
+            "job": "WVR",
+            "ings": [{"id":44025,"name":"Mountain Flax","amount":5,"craftable":false}]
+          }
+        ]
+      },
+      "scripType": "purple"
+    },
+    {
+      "id": 44216,
+      "name": "Rarefied Mountain Linen Top",
+      "class": "WVR",
+      "lvl": 92,
+      "scrips": 142,
+      "tree": {
+        "id": 44216,
+        "name": "Rarefied Mountain Linen Top",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "WVR",
+        "ings": [
+          {
+            "id": 44030,
+            "name": "Mountain Linen",
+            "amount": 2,
+            "craftable": true,
+            "yields": 1,
+            "job": "WVR",
+            "ings": [{"id":44025,"name":"Mountain Flax","amount":5,"craftable":false}]
+          },
+          {
+            "id": 43998,
+            "name": "Ruthenium Ingot",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "BSM",
+            "ings": [
+              {"id":43993,"name":"Ruthenium Ore","amount":5,"craftable":false},
+              {"id":36163,"name":"High Durium Ore","amount":1,"craftable":false}
+            ]
+          },
+          {
+            "id": 44059,
+            "name": "Hammerhead Crocodile Leather",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "LTW",
+            "ings": [
+              {"id":44054,"name":"Hammerhead Crocodile Skin","amount":4,"craftable":false},
+              {"id":36241,"name":"Eblan Alumen","amount":1,"craftable":false}
+            ]
+          }
+        ]
+      },
+      "scripType": "purple"
+    },
+    {
+      "id": 44222,
+      "name": "Rarefied Gemsap of Dexterity",
+      "class": "ALC",
+      "lvl": 92,
+      "scrips": 142,
+      "tree": {
+        "id": 44222,
+        "name": "Rarefied Gemsap of Dexterity",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "ALC",
+        "ings": [
+          {"id":36263,"name":"Ambrosial Water","amount":3,"craftable":false},
+          {"id":44069,"name":"Lesser Apollyon Shell","amount":4,"craftable":false},
+          {"id":44040,"name":"Kozama'uka Chamomile","amount":3,"craftable":false}
+        ]
+      },
+      "scripType": "purple"
+    },
+    {
+      "id": 44228,
+      "name": "Rarefied Banana Ponzecake",
+      "class": "CUL",
+      "lvl": 92,
+      "scrips": 142,
+      "tree": {
+        "id": 44228,
+        "name": "Rarefied Banana Ponzecake",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "CUL",
+        "ings": [
+          {
+            "id": 43974,
+            "name": "Royal Maple Syrup",
+            "amount": 2,
+            "craftable": true,
+            "yields": 3,
+            "job": "CUL",
+            "ings": [{"id":43979,"name":"Royal Maple Sap","amount":6,"craftable":false}]
+          },
+          {"id":43990,"name":"Wild Ja Tiika Bananas","amount":3,"craftable":false},
+          {
+            "id": 27841,
+            "name": "Upland Wheat Flour",
+            "amount": 1,
+            "craftable": true,
+            "yields": 3,
+            "job": "CUL",
+            "ings": [{"id":27832,"name":"Upland Wheat","amount":5,"craftable":false}]
+          },
+          {"id":36256,"name":"Egg of Elpis","amount":1,"craftable":false}
+        ]
+      },
+      "scripType": "purple"
+    },
+    {
+      "id": 44187,
+      "name": "Rarefied Dark Mahogany Necklace",
+      "class": "CRP",
+      "lvl": 94,
+      "scrips": 157,
+      "tree": {
+        "id": 44187,
+        "name": "Rarefied Dark Mahogany Necklace",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "CRP",
+        "ings": [
+          {
+            "id": 44021,
+            "name": "Dark Mahogany Lumber",
+            "amount": 2,
+            "craftable": true,
+            "yields": 1,
+            "job": "CRP",
+            "ings": [{"id":44016,"name":"Dark Mahogany Log","amount":5,"craftable":false}]
+          },
+          {
+            "id": 44060,
+            "name": "Br'aax Leather",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "LTW",
+            "ings": [
+              {"id":44055,"name":"Br'aax Hide","amount":4,"craftable":false},
+              {"id":36241,"name":"Eblan Alumen","amount":1,"craftable":false}
+            ]
+          },
+          {
+            "id": 44009,
+            "name": "Ihuykanite",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "GSM",
+            "ings": [
+              {"id":44003,"name":"Raw Ihuykanite","amount":3,"craftable":false},
+              {
+                "id": 36189,
+                "name": "Annite Whetstone",
+                "amount": 1,
+                "craftable": true,
+                "yields": 1,
+                "job": "GSM",
+                "ings": [{"id":36181,"name":"Annite","amount":4,"craftable":false}]
+              }
+            ]
+          }
+        ]
+      },
+      "scripType": "purple"
+    },
+    {
+      "id": 44193,
+      "name": "Rarefied Cobalt Tungsten Scimitars",
+      "class": "BSM",
+      "lvl": 94,
+      "scrips": 157,
+      "tree": {
+        "id": 44193,
+        "name": "Rarefied Cobalt Tungsten Scimitars",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "BSM",
+        "ings": [
+          {
+            "id": 43999,
+            "name": "Cobalt Tungsten Ingot",
+            "amount": 2,
+            "craftable": true,
+            "yields": 1,
+            "job": "BSM",
+            "ings": [
+              {"id":43994,"name":"Cobalt Tungsten Ore","amount":5,"craftable":false},
+              {"id":5116,"name":"Cobalt Ore","amount":1,"craftable":false}
+            ]
+          },
+          {
+            "id": 44010,
+            "name": "Pink Beryl",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "GSM",
+            "ings": [
+              {"id":44004,"name":"Raw Pink Beryl","amount":3,"craftable":false},
+              {
+                "id": 36189,
+                "name": "Annite Whetstone",
+                "amount": 1,
+                "craftable": true,
+                "yields": 1,
+                "job": "GSM",
+                "ings": [{"id":36181,"name":"Annite","amount":4,"craftable":false}]
+              }
+            ]
+          },
+          {
+            "id": 44013,
+            "name": "Magnesia Whetstone",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "ALC",
+            "ings": [{"id":44007,"name":"Magnesia Powder","amount":4,"craftable":false}]
+          }
+        ]
+      },
+      "scripType": "purple"
+    },
+    {
+      "id": 44199,
+      "name": "Rarefied Cobalt Tungsten Chocobo Frypan",
+      "class": "ARM",
+      "lvl": 94,
+      "scrips": 157,
+      "tree": {
+        "id": 44199,
+        "name": "Rarefied Cobalt Tungsten Chocobo Frypan",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "ARM",
+        "ings": [
+          {
+            "id": 43999,
+            "name": "Cobalt Tungsten Ingot",
+            "amount": 2,
+            "craftable": true,
+            "yields": 1,
+            "job": "BSM",
+            "ings": [
+              {"id":43994,"name":"Cobalt Tungsten Ore","amount":5,"craftable":false},
+              {"id":5116,"name":"Cobalt Ore","amount":1,"craftable":false}
+            ]
+          },
+          {
+            "id": 44021,
+            "name": "Dark Mahogany Lumber",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "CRP",
+            "ings": [{"id":44016,"name":"Dark Mahogany Log","amount":5,"craftable":false}]
+          },
+          {
+            "id": 44010,
+            "name": "Pink Beryl",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "GSM",
+            "ings": [
+              {"id":44004,"name":"Raw Pink Beryl","amount":3,"craftable":false},
+              {
+                "id": 36189,
+                "name": "Annite Whetstone",
+                "amount": 1,
+                "craftable": true,
+                "yields": 1,
+                "job": "GSM",
+                "ings": [{"id":36181,"name":"Annite","amount":4,"craftable":false}]
+              }
+            ]
+          }
+        ]
+      },
+      "scripType": "purple"
+    },
+    {
+      "id": 44205,
+      "name": "Rarefied Cobalt Tungsten Tuck",
+      "class": "GSM",
+      "lvl": 94,
+      "scrips": 157,
+      "tree": {
+        "id": 44205,
+        "name": "Rarefied Cobalt Tungsten Tuck",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "GSM",
+        "ings": [
+          {
+            "id": 44010,
+            "name": "Pink Beryl",
+            "amount": 2,
+            "craftable": true,
+            "yields": 1,
+            "job": "GSM",
+            "ings": [
+              {"id":44004,"name":"Raw Pink Beryl","amount":3,"craftable":false},
+              {
+                "id": 36189,
+                "name": "Annite Whetstone",
+                "amount": 1,
+                "craftable": true,
+                "yields": 1,
+                "job": "GSM",
+                "ings": [{"id":36181,"name":"Annite","amount":4,"craftable":false}]
+              }
+            ]
+          },
+          {
+            "id": 43999,
+            "name": "Cobalt Tungsten Ingot",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "BSM",
+            "ings": [
+              {"id":43994,"name":"Cobalt Tungsten Ore","amount":5,"craftable":false},
+              {"id":5116,"name":"Cobalt Ore","amount":1,"craftable":false}
+            ]
+          },
+          {
+            "id": 44013,
+            "name": "Magnesia Whetstone",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "ALC",
+            "ings": [{"id":44007,"name":"Magnesia Powder","amount":4,"craftable":false}]
+          }
+        ]
+      },
+      "scripType": "purple"
+    },
+    {
+      "id": 44211,
+      "name": "Rarefied Br'aaxskin Armlets",
+      "class": "LTW",
+      "lvl": 94,
+      "scrips": 157,
+      "tree": {
+        "id": 44211,
+        "name": "Rarefied Br'aaxskin Armlets",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "LTW",
+        "ings": [
+          {
+            "id": 44060,
+            "name": "Br'aax Leather",
+            "amount": 2,
+            "craftable": true,
+            "yields": 1,
+            "job": "LTW",
+            "ings": [
+              {"id":44055,"name":"Br'aax Hide","amount":4,"craftable":false},
+              {"id":36241,"name":"Eblan Alumen","amount":1,"craftable":false}
+            ]
+          },
+          {
+            "id": 44031,
+            "name": "Sarcenet Cloth",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "WVR",
+            "ings": [{"id":44026,"name":"Sarcenet","amount":5,"craftable":false}]
+          },
+          {
+            "id": 44059,
+            "name": "Hammerhead Crocodile Leather",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "LTW",
+            "ings": [
+              {"id":44054,"name":"Hammerhead Crocodile Skin","amount":4,"craftable":false},
+              {"id":36241,"name":"Eblan Alumen","amount":1,"craftable":false}
+            ]
+          }
+        ]
+      },
+      "scripType": "purple"
+    },
+    {
+      "id": 44217,
+      "name": "Rarefied Sarcenet Kecks",
+      "class": "WVR",
+      "lvl": 94,
+      "scrips": 157,
+      "tree": {
+        "id": 44217,
+        "name": "Rarefied Sarcenet Kecks",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "WVR",
+        "ings": [
+          {
+            "id": 44031,
+            "name": "Sarcenet Cloth",
+            "amount": 2,
+            "craftable": true,
+            "yields": 1,
+            "job": "WVR",
+            "ings": [{"id":44026,"name":"Sarcenet","amount":5,"craftable":false}]
+          },
+          {
+            "id": 44060,
+            "name": "Br'aax Leather",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "LTW",
+            "ings": [
+              {"id":44055,"name":"Br'aax Hide","amount":4,"craftable":false},
+              {"id":36241,"name":"Eblan Alumen","amount":1,"craftable":false}
+            ]
+          },
+          {
+            "id": 44010,
+            "name": "Pink Beryl",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "GSM",
+            "ings": [
+              {"id":44004,"name":"Raw Pink Beryl","amount":3,"craftable":false},
+              {
+                "id": 36189,
+                "name": "Annite Whetstone",
+                "amount": 1,
+                "craftable": true,
+                "yields": 1,
+                "job": "GSM",
+                "ings": [{"id":36181,"name":"Annite","amount":4,"craftable":false}]
+              }
+            ]
+          }
+        ]
+      },
+      "scripType": "purple"
+    },
+    {
+      "id": 44223,
+      "name": "Rarefied Br'aaxskin Codex",
+      "class": "ALC",
+      "lvl": 94,
+      "scrips": 157,
+      "tree": {
+        "id": 44223,
+        "name": "Rarefied Br'aaxskin Codex",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "ALC",
+        "ings": [
+          {
+            "id": 44050,
+            "name": "Tungsten Ink",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "ALC",
+            "ings": [
+              {"id":43994,"name":"Cobalt Tungsten Ore","amount":2,"craftable":false},
+              {"id":44070,"name":"Ty'aitya Wingblade","amount":1,"craftable":false},
+              {"id":36263,"name":"Ambrosial Water","amount":1,"craftable":false},
+              {"id":12597,"name":"Rainbow Cotton Boll","amount":1,"craftable":false}
+            ]
+          },
+          {
+            "id": 44060,
+            "name": "Br'aax Leather",
+            "amount": 2,
+            "craftable": true,
+            "yields": 1,
+            "job": "LTW",
+            "ings": [
+              {"id":44055,"name":"Br'aax Hide","amount":4,"craftable":false},
+              {"id":36241,"name":"Eblan Alumen","amount":1,"craftable":false}
+            ]
+          },
+          {
+            "id": 44031,
+            "name": "Sarcenet Cloth",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "WVR",
+            "ings": [{"id":44026,"name":"Sarcenet","amount":5,"craftable":false}]
+          }
+        ]
+      },
+      "scripType": "purple"
+    },
+    {
+      "id": 44229,
+      "name": "Rarefied Turali Pineapple Ponzecake",
+      "class": "CUL",
+      "lvl": 94,
+      "scrips": 157,
+      "tree": {
+        "id": 44229,
+        "name": "Rarefied Turali Pineapple Ponzecake",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "CUL",
+        "ings": [
+          {"id":43988,"name":"Turali Pineapple","amount":2,"craftable":false},
+          {
+            "id": 43975,
+            "name": "Whipped Cream",
+            "amount": 2,
+            "craftable": true,
+            "yields": 3,
+            "job": "CUL",
+            "ings": [{"id":43980,"name":"Shaaloani Oilseeds","amount":6,"craftable":false}]
+          },
+          {
+            "id": 36081,
+            "name": "Garlean Cheese",
+            "amount": 2,
+            "craftable": true,
+            "yields": 3,
+            "job": "CUL",
+            "ings": [{"id":36255,"name":"Ovibos Milk","amount":5,"craftable":false}]
+          },
+          {"id":27835,"name":"Lemonette","amount":1,"craftable":false}
+        ]
+      },
+      "scripType": "purple"
+    },
+    {
+      "id": 44188,
+      "name": "Rarefied Acacia Rod",
+      "class": "CRP",
+      "lvl": 96,
+      "scrips": 171,
+      "tree": {
+        "id": 44188,
+        "name": "Rarefied Acacia Rod",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "CRP",
+        "ings": [
+          {
+            "id": 44022,
+            "name": "Acacia Lumber",
+            "amount": 2,
+            "craftable": true,
+            "yields": 1,
+            "job": "CRP",
+            "ings": [{"id":44017,"name":"Acacia Log","amount":5,"craftable":false}]
+          },
+          {
+            "id": 44011,
+            "name": "White Gold Ingot",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "GSM",
+            "ings": [
+              {"id":44005,"name":"White Gold Ore","amount":5,"craftable":false},
+              {"id":27697,"name":"Truegold Ore","amount":1,"craftable":false}
+            ]
+          },
+          {
+            "id": 44010,
+            "name": "Pink Beryl",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "GSM",
+            "ings": [
+              {"id":44004,"name":"Raw Pink Beryl","amount":3,"craftable":false},
+              {
+                "id": 36189,
+                "name": "Annite Whetstone",
+                "amount": 1,
+                "craftable": true,
+                "yields": 1,
+                "job": "GSM",
+                "ings": [{"id":36181,"name":"Annite","amount":4,"craftable":false}]
+              }
+            ]
+          }
+        ]
+      },
+      "scripType": "purple"
+    },
+    {
+      "id": 44194,
+      "name": "Rarefied Titanium Gold Mortar",
+      "class": "BSM",
+      "lvl": 96,
+      "scrips": 171,
+      "tree": {
+        "id": 44194,
+        "name": "Rarefied Titanium Gold Mortar",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "BSM",
+        "ings": [
+          {
+            "id": 44000,
+            "name": "Titanium Gold Nugget",
+            "amount": 2,
+            "craftable": true,
+            "yields": 1,
+            "job": "BSM",
+            "ings": [
+              {"id":43995,"name":"Titanium Gold Ore","amount":5,"craftable":false},
+              {"id":27696,"name":"Truegold Sand","amount":1,"craftable":false}
+            ]
+          },
+          {
+            "id": 44011,
+            "name": "White Gold Ingot",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "GSM",
+            "ings": [
+              {"id":44005,"name":"White Gold Ore","amount":5,"craftable":false},
+              {"id":27697,"name":"Truegold Ore","amount":1,"craftable":false}
+            ]
+          },
+          {
+            "id": 44061,
+            "name": "Gomphotherium Leather",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "LTW",
+            "ings": [
+              {"id":44056,"name":"Gomphotherium Skin","amount":4,"craftable":false},
+              {"id":44052,"name":"Acacia Bark","amount":1,"craftable":false}
+            ]
+          }
+        ]
+      },
+      "scripType": "purple"
+    },
+    {
+      "id": 44200,
+      "name": "Rarefied Titanium Gold Thorned Corselet",
+      "class": "ARM",
+      "lvl": 96,
+      "scrips": 171,
+      "tree": {
+        "id": 44200,
+        "name": "Rarefied Titanium Gold Thorned Corselet",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "ARM",
+        "ings": [
+          {
+            "id": 44000,
+            "name": "Titanium Gold Nugget",
+            "amount": 2,
+            "craftable": true,
+            "yields": 1,
+            "job": "BSM",
+            "ings": [
+              {"id":43995,"name":"Titanium Gold Ore","amount":5,"craftable":false},
+              {"id":27696,"name":"Truegold Sand","amount":1,"craftable":false}
+            ]
+          },
+          {
+            "id": 44011,
+            "name": "White Gold Ingot",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "GSM",
+            "ings": [
+              {"id":44005,"name":"White Gold Ore","amount":5,"craftable":false},
+              {"id":27697,"name":"Truegold Ore","amount":1,"craftable":false}
+            ]
+          },
+          {
+            "id": 44032,
+            "name": "Rroneek Serge",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "WVR",
+            "ings": [{"id":44027,"name":"Rroneek Fleece","amount":4,"craftable":false}]
+          }
+        ]
+      },
+      "scripType": "purple"
+    },
+    {
+      "id": 44206,
+      "name": "Rarefied White Gold Choker",
+      "class": "GSM",
+      "lvl": 96,
+      "scrips": 171,
+      "tree": {
+        "id": 44206,
+        "name": "Rarefied White Gold Choker",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "GSM",
+        "ings": [
+          {
+            "id": 44011,
+            "name": "White Gold Ingot",
+            "amount": 2,
+            "craftable": true,
+            "yields": 1,
+            "job": "GSM",
+            "ings": [
+              {"id":44005,"name":"White Gold Ore","amount":5,"craftable":false},
+              {"id":27697,"name":"Truegold Ore","amount":1,"craftable":false}
+            ]
+          },
+          {
+            "id": 44000,
+            "name": "Titanium Gold Nugget",
+            "amount": 2,
+            "craftable": true,
+            "yields": 1,
+            "job": "BSM",
+            "ings": [
+              {"id":43995,"name":"Titanium Gold Ore","amount":5,"craftable":false},
+              {"id":27696,"name":"Truegold Sand","amount":1,"craftable":false}
+            ]
+          }
+        ]
+      },
+      "scripType": "purple"
+    },
+    {
+      "id": 44212,
+      "name": "Rarefied Gomphotherium Brais",
+      "class": "LTW",
+      "lvl": 96,
+      "scrips": 171,
+      "tree": {
+        "id": 44212,
+        "name": "Rarefied Gomphotherium Brais",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "LTW",
+        "ings": [
+          {
+            "id": 44061,
+            "name": "Gomphotherium Leather",
+            "amount": 2,
+            "craftable": true,
+            "yields": 1,
+            "job": "LTW",
+            "ings": [
+              {"id":44056,"name":"Gomphotherium Skin","amount":4,"craftable":false},
+              {"id":44052,"name":"Acacia Bark","amount":1,"craftable":false}
+            ]
+          },
+          {
+            "id": 44032,
+            "name": "Rroneek Serge",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "WVR",
+            "ings": [{"id":44027,"name":"Rroneek Fleece","amount":4,"craftable":false}]
+          },
+          {
+            "id": 43999,
+            "name": "Cobalt Tungsten Ingot",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "BSM",
+            "ings": [
+              {"id":43994,"name":"Cobalt Tungsten Ore","amount":5,"craftable":false},
+              {"id":5116,"name":"Cobalt Ore","amount":1,"craftable":false}
+            ]
+          }
+        ]
+      },
+      "scripType": "purple"
+    },
+    {
+      "id": 44218,
+      "name": "Rarefied Rroneek Serge Hat",
+      "class": "WVR",
+      "lvl": 96,
+      "scrips": 171,
+      "tree": {
+        "id": 44218,
+        "name": "Rarefied Rroneek Serge Hat",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "WVR",
+        "ings": [
+          {
+            "id": 44032,
+            "name": "Rroneek Serge",
+            "amount": 2,
+            "craftable": true,
+            "yields": 1,
+            "job": "WVR",
+            "ings": [{"id":44027,"name":"Rroneek Fleece","amount":4,"craftable":false}]
+          },
+          {
+            "id": 44061,
+            "name": "Gomphotherium Leather",
+            "amount": 2,
+            "craftable": true,
+            "yields": 1,
+            "job": "LTW",
+            "ings": [
+              {"id":44056,"name":"Gomphotherium Skin","amount":4,"craftable":false},
+              {"id":44052,"name":"Acacia Bark","amount":1,"craftable":false}
+            ]
+          }
+        ]
+      },
+      "scripType": "purple"
+    },
+    {
+      "id": 44224,
+      "name": "Rarefied Cunning Craftsman's Tisane",
+      "class": "ALC",
+      "lvl": 96,
+      "scrips": 171,
+      "tree": {
+        "id": 44224,
+        "name": "Rarefied Cunning Craftsman's Tisane",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "ALC",
+        "ings": [
+          {"id":44034,"name":"Yak T'el Spring Water","amount":3,"craftable":false},
+          {"id":44071,"name":"Tumbleclaw Weeds","amount":4,"craftable":false},
+          {"id":44043,"name":"Pearl Grass","amount":3,"craftable":false}
+        ]
+      },
+      "scripType": "purple"
+    },
+    {
+      "id": 44230,
+      "name": "Rarefied Salmon Jerky",
+      "class": "CUL",
+      "lvl": 96,
+      "scrips": 171,
+      "tree": {
+        "id": 44230,
+        "name": "Rarefied Salmon Jerky",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "CUL",
+        "ings": [
+          {
+            "id": 43972,
+            "name": "Cooking Mezcal",
+            "amount": 2,
+            "craftable": true,
+            "yields": 3,
+            "job": "CUL",
+            "ings": [{"id":44067,"name":"Megamaguey Pineapple","amount":5,"craftable":false}]
+          },
+          {"id":43753,"name":"Shaaloani Salmon","amount":1,"craftable":false},
+          {
+            "id": 43977,
+            "name": "Mountain Salt",
+            "amount": 2,
+            "craftable": true,
+            "yields": 3,
+            "job": "CUL",
+            "ings": [{"id":43982,"name":"Mountain Rock Salt","amount":6,"craftable":false}]
+          },
+          {"id":44034,"name":"Yak T'el Spring Water","amount":2,"craftable":false}
+        ]
+      },
+      "scripType": "purple"
+    },
+    {
+      "id": 44189,
+      "name": "Rarefied Claro Walnut Grinding Wheel",
+      "class": "CRP",
+      "lvl": 98,
+      "scrips": 198,
+      "tree": {
+        "id": 44189,
+        "name": "Rarefied Claro Walnut Grinding Wheel",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "CRP",
+        "ings": [
+          {
+            "id": 44023,
+            "name": "Claro Walnut Lumber",
+            "amount": 2,
+            "craftable": true,
+            "yields": 1,
+            "job": "CRP",
+            "ings": [{"id":44018,"name":"Claro Walnut Log","amount":5,"craftable":false}]
+          },
+          {
+            "id": 44012,
+            "name": "Black Star",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "GSM",
+            "ings": [
+              {"id":44006,"name":"Raw Black Star","amount":3,"craftable":false},
+              {
+                "id": 44013,
+                "name": "Magnesia Whetstone",
+                "amount": 1,
+                "craftable": true,
+                "yields": 1,
+                "job": "ALC",
+                "ings": [{"id":44007,"name":"Magnesia Powder","amount":4,"craftable":false}]
+              }
+            ]
+          },
+          {
+            "id": 44013,
+            "name": "Magnesia Whetstone",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "ALC",
+            "ings": [{"id":44007,"name":"Magnesia Powder","amount":4,"craftable":false}]
+          }
+        ]
+      },
+      "scripType": "purple"
+    },
+    {
+      "id": 44195,
+      "name": "Rarefied Ra'Kaznar War Scythe",
+      "class": "BSM",
+      "lvl": 98,
+      "scrips": 198,
+      "tree": {
+        "id": 44195,
+        "name": "Rarefied Ra'Kaznar War Scythe",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "BSM",
+        "ings": [
+          {
+            "id": 44001,
+            "name": "Ra'Kaznar Ingot",
+            "amount": 2,
+            "craftable": true,
+            "yields": 1,
+            "job": "BSM",
+            "ings": [
+              {"id":43996,"name":"Ra'Kaznar Ore","amount":5,"craftable":false},
+              {"id":44007,"name":"Magnesia Powder","amount":1,"craftable":false}
+            ]
+          },
+          {
+            "id": 44012,
+            "name": "Black Star",
+            "amount": 2,
+            "craftable": true,
+            "yields": 1,
+            "job": "GSM",
+            "ings": [
+              {"id":44006,"name":"Raw Black Star","amount":3,"craftable":false},
+              {
+                "id": 44013,
+                "name": "Magnesia Whetstone",
+                "amount": 1,
+                "craftable": true,
+                "yields": 1,
+                "job": "ALC",
+                "ings": [{"id":44007,"name":"Magnesia Powder","amount":4,"craftable":false}]
+              }
+            ]
+          }
+        ]
+      },
+      "scripType": "purple"
+    },
+    {
+      "id": 44201,
+      "name": "Rarefied Ra'Kaznar Greaves",
+      "class": "ARM",
+      "lvl": 98,
+      "scrips": 198,
+      "tree": {
+        "id": 44201,
+        "name": "Rarefied Ra'Kaznar Greaves",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "ARM",
+        "ings": [
+          {
+            "id": 44001,
+            "name": "Ra'Kaznar Ingot",
+            "amount": 2,
+            "craftable": true,
+            "yields": 1,
+            "job": "BSM",
+            "ings": [
+              {"id":43996,"name":"Ra'Kaznar Ore","amount":5,"craftable":false},
+              {"id":44007,"name":"Magnesia Powder","amount":1,"craftable":false}
+            ]
+          },
+          {
+            "id": 44012,
+            "name": "Black Star",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "GSM",
+            "ings": [
+              {"id":44006,"name":"Raw Black Star","amount":3,"craftable":false},
+              {
+                "id": 44013,
+                "name": "Magnesia Whetstone",
+                "amount": 1,
+                "craftable": true,
+                "yields": 1,
+                "job": "ALC",
+                "ings": [{"id":44007,"name":"Magnesia Powder","amount":4,"craftable":false}]
+              }
+            ]
+          },
+          {
+            "id": 44062,
+            "name": "Gargantua Leather",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "LTW",
+            "ings": [
+              {"id":44057,"name":"Gargantua Hide","amount":4,"craftable":false},
+              {"id":44052,"name":"Acacia Bark","amount":1,"craftable":false}
+            ]
+          }
+        ]
+      },
+      "scripType": "purple"
+    },
+    {
+      "id": 44207,
+      "name": "Rarefied Ra'Kaznar Orrery",
+      "class": "GSM",
+      "lvl": 98,
+      "scrips": 198,
+      "tree": {
+        "id": 44207,
+        "name": "Rarefied Ra'Kaznar Orrery",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "GSM",
+        "ings": [
+          {
+            "id": 44012,
+            "name": "Black Star",
+            "amount": 2,
+            "craftable": true,
+            "yields": 1,
+            "job": "GSM",
+            "ings": [
+              {"id":44006,"name":"Raw Black Star","amount":3,"craftable":false},
+              {
+                "id": 44013,
+                "name": "Magnesia Whetstone",
+                "amount": 1,
+                "craftable": true,
+                "yields": 1,
+                "job": "ALC",
+                "ings": [{"id":44007,"name":"Magnesia Powder","amount":4,"craftable":false}]
+              }
+            ]
+          },
+          {
+            "id": 44001,
+            "name": "Ra'Kaznar Ingot",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "BSM",
+            "ings": [
+              {"id":43996,"name":"Ra'Kaznar Ore","amount":5,"craftable":false},
+              {"id":44007,"name":"Magnesia Powder","amount":1,"craftable":false}
+            ]
+          },
+          {
+            "id": 44051,
+            "name": "Sanctified Water",
+            "amount": 3,
+            "craftable": true,
+            "yields": 3,
+            "job": "ALC",
+            "ings": [
+              {"id":44034,"name":"Yak T'el Spring Water","amount":2,"craftable":false},
+              {"id":44071,"name":"Tumbleclaw Weeds","amount":2,"craftable":false}
+            ]
+          }
+        ]
+      },
+      "scripType": "purple"
+    },
+    {
+      "id": 44213,
+      "name": "Rarefied Gargantuaskin Trousers",
+      "class": "LTW",
+      "lvl": 98,
+      "scrips": 198,
+      "tree": {
+        "id": 44213,
+        "name": "Rarefied Gargantuaskin Trousers",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "LTW",
+        "ings": [
+          {
+            "id": 44062,
+            "name": "Gargantua Leather",
+            "amount": 2,
+            "craftable": true,
+            "yields": 1,
+            "job": "LTW",
+            "ings": [
+              {"id":44057,"name":"Gargantua Hide","amount":4,"craftable":false},
+              {"id":44052,"name":"Acacia Bark","amount":1,"craftable":false}
+            ]
+          },
+          {
+            "id": 44033,
+            "name": "Thunderyards Silk",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "WVR",
+            "ings": [{"id":44028,"name":"Levinsilk","amount":5,"craftable":false}]
+          },
+          {
+            "id": 44001,
+            "name": "Ra'Kaznar Ingot",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "BSM",
+            "ings": [
+              {"id":43996,"name":"Ra'Kaznar Ore","amount":5,"craftable":false},
+              {"id":44007,"name":"Magnesia Powder","amount":1,"craftable":false}
+            ]
+          }
+        ]
+      },
+      "scripType": "purple"
+    },
+    {
+      "id": 44219,
+      "name": "Rarefied Thunderyards Silk Gloves",
+      "class": "WVR",
+      "lvl": 98,
+      "scrips": 198,
+      "tree": {
+        "id": 44219,
+        "name": "Rarefied Thunderyards Silk Gloves",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "WVR",
+        "ings": [
+          {
+            "id": 44033,
+            "name": "Thunderyards Silk",
+            "amount": 2,
+            "craftable": true,
+            "yields": 1,
+            "job": "WVR",
+            "ings": [{"id":44028,"name":"Levinsilk","amount":5,"craftable":false}]
+          },
+          {
+            "id": 44062,
+            "name": "Gargantua Leather",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "LTW",
+            "ings": [
+              {"id":44057,"name":"Gargantua Hide","amount":4,"craftable":false},
+              {"id":44052,"name":"Acacia Bark","amount":1,"craftable":false}
+            ]
+          },
+          {
+            "id": 44001,
+            "name": "Ra'Kaznar Ingot",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "BSM",
+            "ings": [
+              {"id":43996,"name":"Ra'Kaznar Ore","amount":5,"craftable":false},
+              {"id":44007,"name":"Magnesia Powder","amount":1,"craftable":false}
+            ]
+          }
+        ]
+      },
+      "scripType": "purple"
+    },
+    {
+      "id": 44225,
+      "name": "Rarefied Gemdraught of Vitality",
+      "class": "ALC",
+      "lvl": 98,
+      "scrips": 198,
+      "tree": {
+        "id": 44225,
+        "name": "Rarefied Gemdraught of Vitality",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "ALC",
+        "ings": [
+          {
+            "id": 44051,
+            "name": "Sanctified Water",
+            "amount": 3,
+            "craftable": true,
+            "yields": 3,
+            "job": "ALC",
+            "ings": [
+              {"id":44034,"name":"Yak T'el Spring Water","amount":2,"craftable":false},
+              {"id":44071,"name":"Tumbleclaw Weeds","amount":2,"craftable":false}
+            ]
+          },
+          {"id":44072,"name":"Alexandrian Axe Beak Wing","amount":4,"craftable":false},
+          {"id":44041,"name":"Windsbalm Bay Leaf","amount":3,"craftable":false}
+        ]
+      },
+      "scripType": "purple"
+    },
+    {
+      "id": 44231,
+      "name": "Rarefied Stuffed Peppers",
+      "class": "CUL",
+      "lvl": 98,
+      "scrips": 198,
+      "tree": {
+        "id": 44231,
+        "name": "Rarefied Stuffed Peppers",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "CUL",
+        "ings": [
+          {
+            "id": 43976,
+            "name": "Turali Corn Oil",
+            "amount": 1,
+            "craftable": true,
+            "yields": 3,
+            "job": "CUL",
+            "ings": [{"id":43981,"name":"Turali Corn","amount":6,"craftable":false}]
+          },
+          {
+            "id": 43973,
+            "name": "Ut'ohmu Chili Sauce",
+            "amount": 2,
+            "craftable": true,
+            "yields": 3,
+            "job": "CUL",
+            "ings": [
+              {"id":43978,"name":"Ut'ohmu Tomato","amount":5,"craftable":false},
+              {"id":4838,"name":"Dragon Pepper","amount":1,"craftable":false}
+            ]
+          },
+          {"id":44063,"name":"Alpaca Fillet","amount":1,"craftable":false},
+          {"id":43984,"name":"Bell Pepper","amount":3,"craftable":false}
+        ]
+      },
+      "scripType": "purple"
+    },
+    {
+      "id": 44190,
+      "name": "Rarefied Claro Walnut Fishing Rod",
+      "class": "CRP",
+      "lvl": 100,
+      "scrips": 144,
+      "tree": {
+        "id": 44190,
+        "name": "Rarefied Claro Walnut Fishing Rod",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "CRP",
+        "ings": [
+          {
+            "id": 44023,
+            "name": "Claro Walnut Lumber",
+            "amount": 2,
+            "craftable": true,
+            "yields": 1,
+            "job": "CRP",
+            "ings": [{"id":44018,"name":"Claro Walnut Log","amount":5,"craftable":false}]
+          },
+          {
+            "id": 44001,
+            "name": "Ra'Kaznar Ingot",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "BSM",
+            "ings": [
+              {"id":43996,"name":"Ra'Kaznar Ore","amount":5,"craftable":false},
+              {"id":44007,"name":"Magnesia Powder","amount":1,"craftable":false}
+            ]
+          },
+          {
+            "id": 44012,
+            "name": "Black Star",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "GSM",
+            "ings": [
+              {"id":44006,"name":"Raw Black Star","amount":3,"craftable":false},
+              {
+                "id": 44013,
+                "name": "Magnesia Whetstone",
+                "amount": 1,
+                "craftable": true,
+                "yields": 1,
+                "job": "ALC",
+                "ings": [{"id":44007,"name":"Magnesia Powder","amount":4,"craftable":false}]
+              }
+            ]
+          }
+        ]
+      },
+      "scripType": "orange"
+    },
+    {
+      "id": 44196,
+      "name": "Rarefied Ra'Kaznar Round Knife",
+      "class": "BSM",
+      "lvl": 100,
+      "scrips": 144,
+      "tree": {
+        "id": 44196,
+        "name": "Rarefied Ra'Kaznar Round Knife",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "BSM",
+        "ings": [
+          {
+            "id": 44001,
+            "name": "Ra'Kaznar Ingot",
+            "amount": 2,
+            "craftable": true,
+            "yields": 1,
+            "job": "BSM",
+            "ings": [
+              {"id":43996,"name":"Ra'Kaznar Ore","amount":5,"craftable":false},
+              {"id":44007,"name":"Magnesia Powder","amount":1,"craftable":false}
+            ]
+          },
+          {
+            "id": 44023,
+            "name": "Claro Walnut Lumber",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "CRP",
+            "ings": [{"id":44018,"name":"Claro Walnut Log","amount":5,"craftable":false}]
+          },
+          {
+            "id": 44012,
+            "name": "Black Star",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "GSM",
+            "ings": [
+              {"id":44006,"name":"Raw Black Star","amount":3,"craftable":false},
+              {
+                "id": 44013,
+                "name": "Magnesia Whetstone",
+                "amount": 1,
+                "craftable": true,
+                "yields": 1,
+                "job": "ALC",
+                "ings": [{"id":44007,"name":"Magnesia Powder","amount":4,"craftable":false}]
+              }
+            ]
+          }
+        ]
+      },
+      "scripType": "orange"
+    },
+    {
+      "id": 44202,
+      "name": "Rarefied Ra'Kaznar Ring",
+      "class": "ARM",
+      "lvl": 100,
+      "scrips": 144,
+      "tree": {
+        "id": 44202,
+        "name": "Rarefied Ra'Kaznar Ring",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "ARM",
+        "ings": [
+          {
+            "id": 44001,
+            "name": "Ra'Kaznar Ingot",
+            "amount": 2,
+            "craftable": true,
+            "yields": 1,
+            "job": "BSM",
+            "ings": [
+              {"id":43996,"name":"Ra'Kaznar Ore","amount":5,"craftable":false},
+              {"id":44007,"name":"Magnesia Powder","amount":1,"craftable":false}
+            ]
+          },
+          {
+            "id": 44033,
+            "name": "Thunderyards Silk",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "WVR",
+            "ings": [{"id":44028,"name":"Levinsilk","amount":5,"craftable":false}]
+          },
+          {
+            "id": 44012,
+            "name": "Black Star",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "GSM",
+            "ings": [
+              {"id":44006,"name":"Raw Black Star","amount":3,"craftable":false},
+              {
+                "id": 44013,
+                "name": "Magnesia Whetstone",
+                "amount": 1,
+                "craftable": true,
+                "yields": 1,
+                "job": "ALC",
+                "ings": [{"id":44007,"name":"Magnesia Powder","amount":4,"craftable":false}]
+              }
+            ]
+          }
+        ]
+      },
+      "scripType": "orange"
+    },
+    {
+      "id": 44208,
+      "name": "Rarefied Black Star Earrings",
+      "class": "GSM",
+      "lvl": 100,
+      "scrips": 144,
+      "tree": {
+        "id": 44208,
+        "name": "Rarefied Black Star Earrings",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "GSM",
+        "ings": [
+          {
+            "id": 44012,
+            "name": "Black Star",
+            "amount": 2,
+            "craftable": true,
+            "yields": 1,
+            "job": "GSM",
+            "ings": [
+              {"id":44006,"name":"Raw Black Star","amount":3,"craftable":false},
+              {
+                "id": 44013,
+                "name": "Magnesia Whetstone",
+                "amount": 1,
+                "craftable": true,
+                "yields": 1,
+                "job": "ALC",
+                "ings": [{"id":44007,"name":"Magnesia Powder","amount":4,"craftable":false}]
+              }
+            ]
+          },
+          {
+            "id": 44001,
+            "name": "Ra'Kaznar Ingot",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "BSM",
+            "ings": [
+              {"id":43996,"name":"Ra'Kaznar Ore","amount":5,"craftable":false},
+              {"id":44007,"name":"Magnesia Powder","amount":1,"craftable":false}
+            ]
+          },
+          {
+            "id": 44013,
+            "name": "Magnesia Whetstone",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "ALC",
+            "ings": [{"id":44007,"name":"Magnesia Powder","amount":4,"craftable":false}]
+          }
+        ]
+      },
+      "scripType": "orange"
+    },
+    {
+      "id": 44214,
+      "name": "Rarefied Gargantuaskin Hat",
+      "class": "LTW",
+      "lvl": 100,
+      "scrips": 144,
+      "tree": {
+        "id": 44214,
+        "name": "Rarefied Gargantuaskin Hat",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "LTW",
+        "ings": [
+          {
+            "id": 44062,
+            "name": "Gargantua Leather",
+            "amount": 2,
+            "craftable": true,
+            "yields": 1,
+            "job": "LTW",
+            "ings": [
+              {"id":44057,"name":"Gargantua Hide","amount":4,"craftable":false},
+              {"id":44052,"name":"Acacia Bark","amount":1,"craftable":false}
+            ]
+          },
+          {
+            "id": 44012,
+            "name": "Black Star",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "GSM",
+            "ings": [
+              {"id":44006,"name":"Raw Black Star","amount":3,"craftable":false},
+              {
+                "id": 44013,
+                "name": "Magnesia Whetstone",
+                "amount": 1,
+                "craftable": true,
+                "yields": 1,
+                "job": "ALC",
+                "ings": [{"id":44007,"name":"Magnesia Powder","amount":4,"craftable":false}]
+              }
+            ]
+          },
+          {
+            "id": 44032,
+            "name": "Rroneek Serge",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "WVR",
+            "ings": [{"id":44027,"name":"Rroneek Fleece","amount":4,"craftable":false}]
+          }
+        ]
+      },
+      "scripType": "orange"
+    },
+    {
+      "id": 44220,
+      "name": "Rarefied Thunderyards Silk Culottes",
+      "class": "WVR",
+      "lvl": 100,
+      "scrips": 144,
+      "tree": {
+        "id": 44220,
+        "name": "Rarefied Thunderyards Silk Culottes",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "WVR",
+        "ings": [
+          {
+            "id": 44033,
+            "name": "Thunderyards Silk",
+            "amount": 2,
+            "craftable": true,
+            "yields": 1,
+            "job": "WVR",
+            "ings": [{"id":44028,"name":"Levinsilk","amount":5,"craftable":false}]
+          },
+          {
+            "id": 44062,
+            "name": "Gargantua Leather",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "LTW",
+            "ings": [
+              {"id":44057,"name":"Gargantua Hide","amount":4,"craftable":false},
+              {"id":44052,"name":"Acacia Bark","amount":1,"craftable":false}
+            ]
+          },
+          {
+            "id": 44012,
+            "name": "Black Star",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "GSM",
+            "ings": [
+              {"id":44006,"name":"Raw Black Star","amount":3,"craftable":false},
+              {
+                "id": 44013,
+                "name": "Magnesia Whetstone",
+                "amount": 1,
+                "craftable": true,
+                "yields": 1,
+                "job": "ALC",
+                "ings": [{"id":44007,"name":"Magnesia Powder","amount":4,"craftable":false}]
+              }
+            ]
+          }
+        ]
+      },
+      "scripType": "orange"
+    },
+    {
+      "id": 44226,
+      "name": "Rarefied Claro Walnut Flat Brush",
+      "class": "ALC",
+      "lvl": 100,
+      "scrips": 144,
+      "tree": {
+        "id": 44226,
+        "name": "Rarefied Claro Walnut Flat Brush",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "ALC",
+        "ings": [
+          {
+            "id": 44050,
+            "name": "Tungsten Ink",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "ALC",
+            "ings": [
+              {"id":43994,"name":"Cobalt Tungsten Ore","amount":2,"craftable":false},
+              {"id":44070,"name":"Ty'aitya Wingblade","amount":1,"craftable":false},
+              {"id":36263,"name":"Ambrosial Water","amount":1,"craftable":false},
+              {"id":12597,"name":"Rainbow Cotton Boll","amount":1,"craftable":false}
+            ]
+          },
+          {
+            "id": 44023,
+            "name": "Claro Walnut Lumber",
+            "amount": 2,
+            "craftable": true,
+            "yields": 1,
+            "job": "CRP",
+            "ings": [{"id":44018,"name":"Claro Walnut Log","amount":5,"craftable":false}]
+          },
+          {
+            "id": 44033,
+            "name": "Thunderyards Silk",
+            "amount": 1,
+            "craftable": true,
+            "yields": 1,
+            "job": "WVR",
+            "ings": [{"id":44028,"name":"Levinsilk","amount":5,"craftable":false}]
+          }
+        ]
+      },
+      "scripType": "orange"
+    },
+    {
+      "id": 44232,
+      "name": "Rarefied Tacos de Carne Asada",
+      "class": "CUL",
+      "lvl": 100,
+      "scrips": 144,
+      "tree": {
+        "id": 44232,
+        "name": "Rarefied Tacos de Carne Asada",
+        "amount": 1,
+        "craftable": true,
+        "yields": 1,
+        "job": "CUL",
+        "ings": [
+          {"id":44106,"name":"Rroneek Chuck","amount":2,"craftable":false},
+          {
+            "id": 36077,
+            "name": "Dark Rye Flour",
+            "amount": 2,
+            "craftable": true,
+            "yields": 3,
+            "job": "CUL",
+            "ings": [{"id":36083,"name":"Dark Rye","amount":6,"craftable":false}]
+          },
+          {"id":43986,"name":"White Pepper","amount":1,"craftable":false},
+          {"id":43985,"name":"Yyasulani Garlic","amount":2,"craftable":false}
+        ]
+      },
+      "scripType": "orange"
+    }
+  ],
+  "materia": [
+    {
+      "id": 41780,
+      "name": "Craftsman's Command Materia XII",
+      "type": "Craftsman's Command",
+      "grade": "XII",
+      "gi": 12
+    },
+    {
+      "id": 41778,
+      "name": "Craftsman's Competence Materia XII",
+      "type": "Craftsman's Competence",
+      "grade": "XII",
+      "gi": 12
+    },
+    {
+      "id": 41779,
+      "name": "Craftsman's Cunning Materia XII",
+      "type": "Craftsman's Cunning",
+      "grade": "XII",
+      "gi": 12
+    },
+    {
+      "id": 41767,
+      "name": "Craftsman's Command Materia XI",
+      "type": "Craftsman's Command",
+      "grade": "XI",
+      "gi": 11
+    },
+    {
+      "id": 41765,
+      "name": "Craftsman's Competence Materia XI",
+      "type": "Craftsman's Competence",
+      "grade": "XI",
+      "gi": 11
+    },
+    {
+      "id": 41766,
+      "name": "Craftsman's Cunning Materia XI",
+      "type": "Craftsman's Cunning",
+      "grade": "XI",
+      "gi": 11
+    },
+    {
+      "id": 33940,
+      "name": "Craftsman's Command Materia X",
+      "type": "Craftsman's Command",
+      "grade": "X",
+      "gi": 10
+    },
+    {
+      "id": 33938,
+      "name": "Craftsman's Competence Materia X",
+      "type": "Craftsman's Competence",
+      "grade": "X",
+      "gi": 10
+    },
+    {
+      "id": 33939,
+      "name": "Craftsman's Cunning Materia X",
+      "type": "Craftsman's Cunning",
+      "grade": "X",
+      "gi": 10
+    },
+    {
+      "id": 33927,
+      "name": "Craftsman's Command Materia IX",
+      "type": "Craftsman's Command",
+      "grade": "IX",
+      "gi": 9
+    },
+    {
+      "id": 33925,
+      "name": "Craftsman's Competence Materia IX",
+      "type": "Craftsman's Competence",
+      "grade": "IX",
+      "gi": 9
+    },
+    {
+      "id": 33926,
+      "name": "Craftsman's Cunning Materia IX",
+      "type": "Craftsman's Cunning",
+      "grade": "IX",
+      "gi": 9
+    },
+    {
+      "id": 26737,
+      "name": "Craftsman's Command Materia VIII",
+      "type": "Craftsman's Command",
+      "grade": "VIII",
+      "gi": 8
+    },
+    {
+      "id": 26735,
+      "name": "Craftsman's Competence Materia VIII",
+      "type": "Craftsman's Competence",
+      "grade": "VIII",
+      "gi": 8
+    },
+    {
+      "id": 26736,
+      "name": "Craftsman's Cunning Materia VIII",
+      "type": "Craftsman's Cunning",
+      "grade": "VIII",
+      "gi": 8
+    },
+    {
+      "id": 25196,
+      "name": "Craftsman's Command Materia VII",
+      "type": "Craftsman's Command",
+      "grade": "VII",
+      "gi": 7
+    },
+    {
+      "id": 25194,
+      "name": "Craftsman's Competence Materia VII",
+      "type": "Craftsman's Competence",
+      "grade": "VII",
+      "gi": 7
+    },
+    {
+      "id": 25195,
+      "name": "Craftsman's Cunning Materia VII",
+      "type": "Craftsman's Cunning",
+      "grade": "VII",
+      "gi": 7
+    },
+    {
+      "id": 18027,
+      "name": "Craftsman's Command Materia VI",
+      "type": "Craftsman's Command",
+      "grade": "VI",
+      "gi": 6
+    },
+    {
+      "id": 18025,
+      "name": "Craftsman's Competence Materia VI",
+      "type": "Craftsman's Competence",
+      "grade": "VI",
+      "gi": 6
+    },
+    {
+      "id": 18026,
+      "name": "Craftsman's Cunning Materia VI",
+      "type": "Craftsman's Cunning",
+      "grade": "VI",
+      "gi": 6
+    },
+    {
+      "id": 5713,
+      "name": "Craftsman's Command Materia V",
+      "type": "Craftsman's Command",
+      "grade": "V",
+      "gi": 5
+    },
+    {
+      "id": 5703,
+      "name": "Craftsman's Competence Materia V",
+      "type": "Craftsman's Competence",
+      "grade": "V",
+      "gi": 5
+    },
+    {
+      "id": 5708,
+      "name": "Craftsman's Cunning Materia V",
+      "type": "Craftsman's Cunning",
+      "grade": "V",
+      "gi": 5
+    },
+    {
+      "id": 5712,
+      "name": "Craftsman's Command Materia IV",
+      "type": "Craftsman's Command",
+      "grade": "IV",
+      "gi": 4
+    },
+    {
+      "id": 5702,
+      "name": "Craftsman's Competence Materia IV",
+      "type": "Craftsman's Competence",
+      "grade": "IV",
+      "gi": 4
+    },
+    {
+      "id": 5707,
+      "name": "Craftsman's Cunning Materia IV",
+      "type": "Craftsman's Cunning",
+      "grade": "IV",
+      "gi": 4
+    },
+    {
+      "id": 5711,
+      "name": "Craftsman's Command Materia III",
+      "type": "Craftsman's Command",
+      "grade": "III",
+      "gi": 3
+    },
+    {
+      "id": 5701,
+      "name": "Craftsman's Competence Materia III",
+      "type": "Craftsman's Competence",
+      "grade": "III",
+      "gi": 3
+    },
+    {
+      "id": 5706,
+      "name": "Craftsman's Cunning Materia III",
+      "type": "Craftsman's Cunning",
+      "grade": "III",
+      "gi": 3
+    },
+    {
+      "id": 5710,
+      "name": "Craftsman's Command Materia II",
+      "type": "Craftsman's Command",
+      "grade": "II",
+      "gi": 2
+    },
+    {
+      "id": 5700,
+      "name": "Craftsman's Competence Materia II",
+      "type": "Craftsman's Competence",
+      "grade": "II",
+      "gi": 2
+    },
+    {
+      "id": 5705,
+      "name": "Craftsman's Cunning Materia II",
+      "type": "Craftsman's Cunning",
+      "grade": "II",
+      "gi": 2
+    },
+    {
+      "id": 5709,
+      "name": "Craftsman's Command Materia I",
+      "type": "Craftsman's Command",
+      "grade": "I",
+      "gi": 1
+    },
+    {
+      "id": 5699,
+      "name": "Craftsman's Competence Materia I",
+      "type": "Craftsman's Competence",
+      "grade": "I",
+      "gi": 1
+    },
+    {
+      "id": 5704,
+      "name": "Craftsman's Cunning Materia I",
+      "type": "Craftsman's Cunning",
+      "grade": "I",
+      "gi": 1
+    }
+  ]
+}

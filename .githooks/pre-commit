@@ -1,0 +1,4 @@
+#!/bin/sh
+# index.html is built from src/. Refuse a commit where the two disagree.
+# Switched on per clone with: git config core.hooksPath .githooks
+exec node tools/build.js --check

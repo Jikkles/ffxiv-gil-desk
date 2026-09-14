@@ -7,7 +7,8 @@
 const { execFileSync } = require("child_process");
 const fs = require("fs");
 const vm = require("vm");
-const { ROOT, INDEX } = require("./lib/common");
+const { ROOT } = require("./lib/common");
+const { INDEX } = require("./build");
 
 const SHRINK = 0.75;
 

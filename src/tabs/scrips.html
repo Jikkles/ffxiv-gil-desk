@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scrips</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/*__UI_CSS__*/
+/* ---- materia only ---- */
+h2{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--aether);margin:30px 0 2px}
+.legend{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--faint);margin:6px 2px;display:flex;gap:14px;flex-wrap:wrap}
+.legend b{font-weight:500}
+.rev{color:var(--gil)}
+.ptext{color:var(--purple)}
+.otext{color:var(--orange)}
+.tree{padding:13px 16px 15px}
+.thead{display:grid;grid-template-columns:1fr 132px 152px 132px 110px 110px;gap:18px;font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);padding:0 6px 7px;border-bottom:1px solid var(--line)}
+.thead .r{text-align:center}
+.node{display:grid;grid-template-columns:1fr 132px 152px 132px 110px 110px;gap:18px;align-items:center;padding:5px 6px;font-family:"JetBrains Mono",monospace;font-size:13px;border-bottom:1px solid var(--panel2)}
+.node:hover{background:var(--row-hover)}
+.node.clickable{cursor:pointer}
+.ntoggle{width:14px;flex:none;display:inline-flex;justify-content:center;color:var(--faint);margin-right:6px}
+.ntoggle .c{display:inline-block;width:0;height:0;border-left:5px solid var(--faint);border-top:3.5px solid transparent;border-bottom:3.5px solid transparent;transition:transform .15s}
+.ntoggle.open .c{transform:rotate(90deg);border-left-color:var(--aether)}
+.nlabel{font-family:"Inter",sans-serif;display:flex;align-items:center}
+.nlabel .iconbox{width:22px;height:22px;border-radius:6px;margin-right:7px}
+.nlabel .iconbox img{width:22px;height:22px}
+.nlabel .iconbox .fallback{font-size:11px}
+.nqty{color:var(--muted);margin-right:7px;font-family:"JetBrains Mono",monospace}
+.branch{color:var(--line2);margin-right:6px}
+.mtag{font-family:"JetBrains Mono",monospace;font-size:8.5px;letter-spacing:.04em;text-transform:uppercase;padding:1px 5px;border-radius:5px;margin-left:8px;border:1px solid var(--line);flex:none}
+.mtag.buy{color:var(--muted)}
+.mtag.buyHQ{color:var(--aether);border-color:var(--aether-line)}
+.mtag.craft{color:var(--hop);border-color:var(--gil-line)}
+.price{text-align:center}
+.price.dim{color:var(--faint)}
+.price.cheap{color:var(--win)}
+.badge{font-family:"JetBrains Mono",monospace;font-size:9px;color:var(--win);border:1px solid var(--win-line);border-radius:5px;padding:1px 5px;margin-left:6px}
+.server{text-align:left;font-size:12px}
+.server.home{color:var(--win)}
+.server.hop{color:var(--hop)}
+.line{text-align:center;font-weight:500}
+.tfoot{display:flex;flex-wrap:wrap;gap:7px 22px;margin-top:13px;padding-top:12px;border-top:1px solid var(--line);font-family:"JetBrains Mono",monospace;font-size:12.5px}
+.tfoot .lab{color:var(--faint);text-transform:uppercase;font-size:10px;letter-spacing:.1em;margin-right:6px}
+.tfoot b{font-weight:500}
+@media(max-width:860px){.thead{grid-template-columns:1fr 84px 96px 70px;gap:8px}
+.thead .hcraft,.node .ncraft,.thead .hvendor,.node .nvendor{display:none}
+.node{grid-template-columns:1fr 84px 96px 70px;gap:8px}}
+</style>
+<script>try{var __t=localStorage.getItem("gildesk:theme:v1");document.documentElement.setAttribute("data-theme",__t==="light"?"light":"dark");}catch(e){document.documentElement.setAttribute("data-theme","dark");}</script>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="sgroup">
+      <div class="slabel">Filter items</div>
+      <div class="field"><label>&#128269;</label><input id="search" type="text" placeholder="search type&hellip;" autocomplete="off"></div>
+    </div>
+    <div class="sgroup">
+      <div class="slabel">Server</div>
+      <div class="field sel"><label for="home">Sell on</label><select id="home"></select></div>
+      <div class="field dcwrap"><label>Mats from</label>
+      <input type="hidden" id="dc" value="Chaos">
+      <button type="button" class="dcbtn" id="dcBtn" title="Choose which data centres to price materials across">Chaos <span class="dccar">▾</span></button>
+      <div class="dcmenu" id="dcMenu" hidden></div></div>
+      <button class="btn primary wide" id="refresh">↻ Refresh</button>
+    </div>
+    <div class="sgroup">
+      <div class="slabel">Marketboard settings</div>
+      <label class="chk"><input type="checkbox" id="hideNo" checked> Hide no-sales</label>
+    </div>
+    <div class="sgroup">
+      <div class="slabel">Filters</div>
+      <div class="field sel"><label for="scrip">Show</label><select id="scrip"><option value="all">Both scrips</option><option value="purple">Purple → XI</option><option value="orange">Orange → XII</option></select></div>
+      <div class="field sel"><label for="tax">Tax</label><select id="tax"><option value="0.05">5%</option><option value="0.03">3%</option><option value="0">0%</option></select></div>
+    </div>
+    <div class="sgroup">
+      <div class="scancard"><span class="dot"></span>Last scan<br><b id="lastScan"></b></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="hero">
+      <div class="hicon">💎</div>
+      <div>
+        <h1><b>Scrips</b></h1>
+        <p class="sub">Two scrip-flip loops, valued live. <span class="otext">Orange</span> collectibles (lvl 100, 144 scrips) buy grade <b>XII</b> materia at 500 scrips; <span class="ptext">Purple</span> collectibles (lvls 92–98, 142–198 scrips) buy grade <b>XI</b> materia at 250 scrips. <b>Revenue/craft</b> is the materia those scrips are worth on <b class="homename">Spriggan</b>; <b>profit</b> subtracts the material cost. Click any row to see the recipe tree — precrafts are bought NQ wherever they are listed (you would rather buy than precraft), and only expanded into their own mats when nothing is for sale.</p>
+      </div>
+    <div class="kpis">
+    <div class="kpi"><div class="ki">🪙</div><div class="kbody"><div class="k">Purple → XI · gil per scrip</div><div class="v p" id="kP">—</div><div class="s" id="kPn">—</div></div></div>
+    <div class="kpi"><div class="ki">📈</div><div class="kbody"><div class="k">Orange → XII · gil per scrip</div><div class="v o" id="kO">—</div><div class="s" id="kOn">—</div></div></div>
+    <div class="kpi"><div class="ki">🌍</div><div class="kbody"><div class="k">Best collectible / craft</div><div class="v gil" id="kBest">—</div><div class="s" id="kBestN">—</div></div></div>
+  </div></div>
+
+
+  
+
+  <h2>Collectible scrip-flip — profit per craft</h2>
+  <div class="legend"><span><b class="rev">Revenue/craft</b> = scrips × gil/scrip (materia value)</span><span><b>Profit</b> = revenue − material cost</span><span><b class="src-hop">hop</b> = cheaper on another world</span></div>
+  <div class="status" id="status">Loading…</div>
+  <div id="errbox"></div>
+  <div class="tablewrap"><table id="ctbl" hidden>
+    <thead><tr>
+      <th data-k="key" style="cursor:default">Collectible</th>
+      <th data-k="scrips">Scrips <span></span></th>
+      <th data-k="mat">Mat cost <span></span></th>
+      <th data-k="value">Revenue/craft <span></span></th>
+      <th data-k="profit" data-sorted>Profit/craft <span>▾</span></th>
+    </tr></thead>
+    <tbody id="crows"></tbody>
+  </table></div>
+
+  <h2>Crafting materia — <span class="homename">Spriggan</span> sell prices</h2>
+  <div class="controls">
+    <div class="field sel"><label for="grade">Grade</label><select id="grade"><option value="all">All grades</option><option>XII</option><option>XI</option><option>X</option><option>IX</option><option>VIII</option><option>VII</option><option>VI</option><option>V</option><option>IV</option><option>III</option><option>II</option><option>I</option></select></div>
+  </div>
+  <div class="tablewrap"><table id="mtbl" hidden>
+    <thead><tr>
+      <th data-mk="name" style="cursor:default">Materia</th>
+      <th data-mk="grade">Grade <span></span></th>
+      <th data-mk="sell" data-msorted>Sell · <i class="homename" style="font-style:normal">Spriggan</i> <span>▾</span></th>
+      <th data-mk="avg">Avg <span></span></th>
+      <th data-mk="vel" title="Units sold a day, which is not sales a day: a stack of 99 leaving in one transaction is 99 units">Units/day <span></span></th>
+      <th data-mk="scrip" class="hide">Scrip buy <span></span></th>
+    </tr></thead>
+    <tbody id="mrows"></tbody>
+  </table></div>
+
+  <p class="foot">Scrip yields and materia costs are the live in-game values at high collectibility: Purple lvl 92/94/96/98 give 142/157/171/198 scrips and a grade-XI crafter materia costs 250 Purple; Orange lvl 100 gives 144 and a grade-XII materia costs 500 Orange. "gil/scrip" uses whichever of the three crafter materia (Competence/Cunning/Command) at that grade sells highest on <span class="homename">Spriggan</span>, net of tax. Material cost buys each precraft NQ at the cheapest <span class="dcname">Chaos</span> price where it is listed, and only expands/crafts a precraft when it has no listings; raw mats NQ. Only crafting (Craftsman&rsquo;s) materia are shown; materia sells NQ. Lower-level Purple gives fewer scrips but often cheaper mats — sort by profit to see which actually wins. Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>.</p>
+  </main>
+</div>
+
+<script>
+const ICON_INDEX = /*__ICON_INDEX__*/;
+/*__UI_JS__*/
+
+const T4 = /*@json data/scrips.json*/null;
+const EX=T4.exchanges, COLL=T4.collectibles, MATERIA=T4.materia;
+const MATERIA_IDS=MATERIA.map(m=>m.id);
+const COLL_PRICE_IDS=(()=>{const s=new Set();const walk=n=>{if(!n)return;s.add(n.id);(n.ings||[]).forEach(walk);};COLL.forEach(c=>walk(c.tree));return[...s];})();
+const SCRIP_BUY={};
+for(const key of ['purple','orange']) for(const id of EX[key].scripMateria) SCRIP_BUY[id]={type:key,cost:EX[key].materiaCost};
+const CHAOS_FALLBACK={39:"Omega",71:"Moogle",80:"Cerberus",83:"Louisoix",85:"Spriggan",97:"Ragnarok",400:"Sagittarius",401:"Phantom"};const LIGHT_FALLBACK={36:"Lich",33:"Twintania",56:"Phoenix",66:"Odin",67:"Shiva",402:"Zodiark",43:"Raiden",79:"Alpha"};
+const fmt=n=>n==null||!isFinite(n)?"—":Math.round(n).toLocaleString("en-GB");
+const fmtK=n=>{if(n==null||!isFinite(n))return"—";if(Math.abs(n)>=1e6)return(n/1e6).toFixed(2)+"M";if(Math.abs(n)>=1e3)return(n/1e3).toFixed(1)+"k";return Math.round(n).toString();};
+
+let state={home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],tax:0.05,scrip:"all",grade:"all",query:"",hideNo:true,
+  csort:"profit",cdir:-1,msort:"sell",mdir:-1,worlds:null,sell:null,chaos:null,
+  gps:{purple:null,orange:null},collRows:null,matRows:null,expanded:new Set()};
+
+function side(res,hq){return res?(hq?res.h:res.n):null;}
+function aggPrice(res,hq,scope){const q=side(res,hq);const m=q&&(scope==="world"?q.mw:q.md);return m&&m[0]!=null?{price:m[0],worldId:m[1]!=null?m[1]:null}:{price:null,worldId:null};}
+function aggAvg(res,hq,scope){const q=side(res,hq);const a=q?(scope==="world"?q.aw:q.ad):null;return a!=null?a:null;}
+function aggVel(res,hq,scope){const q=side(res,hq);const d=q?(scope==="world"?q.vw:q.vd):null;return d!=null?d:0;}
+function wname(id){return(state.worlds&&state.worlds[id])||CHAOS_FALLBACK[id]||LIGHT_FALLBACK[id]||(id?("world "+id):"—");}
+const VENDOR_PRICES={10386:120,12888:617};
+function rawNQ(id){return aggPrice(state.chaos[id],false,"dc");}
+function preHQ(id){return aggPrice(state.chaos[id],true,"dc");}
+
+/*__SHARED_A__*/
+/*__SHARED_B__*/
+/*__SHARED_SHOP__*/
+/*__SHARED_LIST__*/
+/*__SHARED_XW__*/
+
+
+async function fetchAgg(scope,ids,onProgress){
+  const ck=`agg:${scope}:${hashIds(ids)}`;const hit=Cache.get(ck,NET.CACHE_TTL_MS);
+  if(hit){if(onProgress)onProgress(1,1);return{out:hit,failed:[],fromCache:true};}
+  const res=await runBatches(ids,async b=>{
+    const r=await tfetch(`https://universalis.app/api/v2/aggregated/${scope}/${b.join(",")}`);
+    if(!r.ok)throw new Error("HTTP "+r.status+" \u00b7 "+scope);
+    const j=await r.json();const m={};for(const row of(j.results||[]))m[row.itemId]=compressAgg(row);return m;},onProgress);
+  if(!res.failed.length)Cache.set(ck,res.out);
+  return res;}
+async function fetchWorlds(){
+  const hit=Cache.get("worlds",NET.WORLDS_TTL_MS);if(hit)return hit;
+  try{const r=await tfetch("https://universalis.app/api/v2/worlds");const a=await r.json();
+    const m={};for(const w of a)m[w.id]=w.name;Cache.set("worlds",m);return m;
+  }catch(e){return{...CHAOS_FALLBACK};}}
+
+async function load(){const btn=document.getElementById("refresh");btn.disabled=true;clearErr();
+  try{setStatus("Fetching world list\u2026");
+    await refreshTopology();buildHomeSelect(document.getElementById("home"),state.home);setDcs(state.dcs);
+    state.worlds=await fetchWorlds();
+    for(const[id,nmw]of Object.entries(state.worlds))if(nmw===state.home)state.homeId=+id;
+    const prog=l=>(d,t)=>setStatus(`${l}\u2026 ${d}/${t} batches`);
+    const[sell,chaos]=await Promise.all([
+      fetchAgg(state.home,MATERIA_IDS,prog("Pricing materia on "+state.home)),
+      fetchMarket(COLL_PRICE_IDS,prog("Pricing recipe trees ("+dcLabel()+")"))]);
+    state.sell=sell.out;state.chaos=chaos.out;
+    compute();renderColl();renderMateria();updateScanTime();
+    finishStatus([sell,chaos]);
+  }catch(e){showErr(e);}finally{btn.disabled=false;}}
+
+// recursive cost of a recipe node: leaf = buy NQ; craftable = cheaper of buy-HQ vs craft-from-children
+function costNode(n,path){
+  const myPath=path!=null?path:String(n.id);
+  const base={id:n.id,name:n.name,amount:n.amount,craftable:!!n.craftable,path:myPath};
+  const nq=rawNQ(n.id);const buyUnit=nq.price;
+  if(!n.craftable){base.unit=buyUnit;base.buyUnit=buyUnit;base.craftUnit=null;base.q="NQ";base.mode="buy";base.world=nq.worldId;base.missing=buyUnit==null;base.total=buyUnit!=null?buyUnit*n.amount:null;base.children=[];base.showKids=false;return base;}
+  const kids=(n.ings||[]).map(ing=>costNode(ing,myPath+">"+ing.id));
+  let craftSum=0,kbad=false;for(const k of kids){if(k.total==null)kbad=true;else craftSum+=k.total;}
+  const craftUnit=kbad?null:craftSum/(n.yields||1);
+  if(buyUnit!=null){base.unit=buyUnit;base.q="NQ";base.mode="buy";base.world=nq.worldId;base.showKids=false;}
+  else if(craftUnit!=null){base.unit=craftUnit;base.q="";base.mode="craft";base.world=null;base.showKids=true;}
+  else {base.unit=null;base.q="";base.mode="craft";base.world=null;base.showKids=true;}
+  base.buyUnit=buyUnit;base.craftUnit=craftUnit;
+  base.missing=base.unit==null;base.total=base.unit!=null?base.unit*n.amount:null;base.children=kids;base.yields=n.yields;base.job=n.job;
+  return base;
+}
+function walkCost(node,fn){fn(node);if(node.showKids)node.children.forEach(k=>walkCost(k,fn));}
+
+function updateScanTime(){const el=document.getElementById("lastScan");if(!el)return;const now=new Date();el._scanTime=now;function tick(){if(!el._scanTime)return;const age=(Date.now()-el._scanTime)/1000;el.textContent=el._scanTime.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit",second:"2-digit"});el.style.color=age<1800?"var(--win)":"var(--loss)";}tick();if(el._ticker)clearInterval(el._ticker);el._ticker=setInterval(tick,30000);}
+function compute(){
+  state.matRows=MATERIA.map(m=>{const res=state.sell[m.id];
+    const sell=aggPrice(res,false,"world").price;const avg=aggAvg(res,false,"world");const vel=aggVel(res,false,"world");
+    const net=sell!=null?sell*(1-state.tax):null;const sb=SCRIP_BUY[m.id];
+    return {...m,sell,avg,vel,net,scripType:sb?sb.type:null,scripCost:sb?sb.cost:null};});
+  const byId={};state.matRows.forEach(r=>byId[r.id]=r);
+  for(const key of ['purple','orange']){let best=null;
+    for(const id of EX[key].scripMateria){const r=byId[id];if(r&&r.net!=null){const g=r.net/EX[key].materiaCost;if(best==null||g>best.g)best={g,mat:r};}}
+    state.gps[key]=best;}
+  state.collRows=COLL.map(c=>{
+    const kids=(c.tree.ings||[]).map(ing=>costNode(ing,c.id+">"+ing.id));
+    let mat=0,missing=false;for(const k of kids){if(k.total==null)missing=true;else mat+=k.total;}
+    let hop=0,miss=false;kids.forEach(k=>walkCost(k,nd=>{if(nd.mode==="buy"||nd.mode==="buyHQ"){if(nd.missing)miss=true;else if(nd.world!=null&&nd.world!==state.homeId)hop++;}}));
+    const g=state.gps[c.scripType];const gps=g?g.g:null;
+    const value=gps!=null?c.scrips*gps:null;
+    const profit=(value!=null&&!missing)?value-mat:null;
+    return {id:c.id,key:c.class+" "+c.lvl,cls:c.class,lvl:c.lvl,name:c.name.replace("Rarefied ",""),scripType:c.scripType,grade:EX[c.scripType].grade,
+      scrips:c.scrips,mat:missing?null:mat,value,profit,kids,hop,missing:missing||miss};});
+}
+
+function nodeRows(kids,depth){let h="";
+  for(const k of kids){const ind=depth*18;
+    const canExpand=!!(k.children&&k.children.length);
+    const open=canExpand&&(state.matOpen.has(k.path)?!k.showKids:k.showKids);
+    const tag=k.mode==="buy"?"buy NQ":"craft";
+    const bavg=buyAvg(state.chaos[k.id],false);
+    const stk=stockBadge(k.buyUnit,bavg);
+    const vendor=VENDOR_PRICES[k.id]!=null?VENDOR_PRICES[k.id]:null;
+    /* the highlight follows the basis this page actually costs against: a
+       precraft that is listed is bought, even when crafting it would be
+       cheaper. The craft column still shows what that would have cost. */
+    const buyCls=k.buyUnit==null?"dim":(k.mode==="buy"?"cheap":"dim");
+    const craftCls=(k.craftUnit!=null&&k.mode==="craft")?"cheap":"dim";
+    const vendorCls=(vendor!=null&&(k.buyUnit==null||vendor<k.buyUnit))?"cheap":"dim";
+    const saveBadge=(k.craftUnit!=null&&k.buyUnit!=null&&k.craftUnit<k.buyUnit)?`<span class="badge">craft −${fmtK(k.buyUnit-k.craftUnit)}</span>`:"";
+    const where=k.missing?'<span class="muted">no listing</span>':(k.mode==="craft"?'<span class="muted">—</span>':`<span class="server ${(k.world!=null&&k.world!==state.homeId)?'hop':'home'}">${wname(k.world)}${(k.world!=null&&k.world!==state.homeId)?' · hop':''}</span>`);
+    h+=`<div class="node${canExpand?' clickable':''}"${canExpand?` data-mp="${k.path}"`:''}><div class="nlabel" style="padding-left:${ind}px"><button class="shopbtn sm" data-shopmat="${k.id}|${k.amount}" title="Add ${k.amount}× to shopping list">+</button><button class="listbtn sm" data-listadd="${k.id}" title="Add to a saved list">📋</button><button class="xwbtn sm" data-xw="${k.id}" data-xwname="${xesc(k.name)}" data-xwqty="${k.amount}" title="Compare this item's price and stock on every world">\ud83c\udf10</button>${canExpand?`<span class="ntoggle ${open?'open':''}"><span class="c"></span></span>`:''}${depth>0?'<span class="branch">└</span>':''}${iconHTML(k.id)}<span><span class="nqty">${k.amount}×</span>${k.name}<span class="mtag ${k.mode}">${tag}</span>${saveBadge}${stk}</span></div>
+      <div class="price ${buyCls}">${k.buyUnit!=null?'buy '+fmt(k.buyUnit)+' <span class="qtag">NQ</span>':'<span class="dim">no listing</span>'}${bavg!=null?'<span class="navg">avg '+fmtK(bavg)+'</span>':''}</div>
+      <div>${where}</div>
+      <div class="price ${craftCls} ncraft">${k.craftUnit!=null?'craft '+fmt(k.craftUnit):'<span class="dim">—</span>'}</div>
+      <div class="price ${vendorCls} nvendor">${vendor!=null?'vendor '+fmt(vendor):'<span class="dim">—</span>'}</div>
+      <div class="line nline">${fmt(k.total)}</div></div>`;
+    if(open)h+=nodeRows(k.children,depth+1);}
+  return h;}
+
+function renderColl(){if(!state.collRows)return;
+  state.matOpen=state.matOpen||new Set();
+  let rows=state.collRows.filter(r=>state.scrip==="all"||r.scripType===state.scrip);
+  rows.sort((a,b)=>{const k=state.csort;let av=a[k],bv=b[k];if(k==="key")return a.key.localeCompare(b.key)*(state.cdir*-1);av=(av==null||!isFinite(av))?-Infinity:av;bv=(bv==null||!isFinite(bv))?-Infinity:bv;return(av-bv)*state.cdir;});
+  const tb=document.getElementById("crows");tb.innerHTML="";
+  for(const r of rows){const open=state.expanded.has(r.id);
+    const tr=document.createElement("tr");tr.className="row"+(open?" open":"");
+    const cls=r.profit==null?"":(r.profit>=0?"win":"loss");
+    tr.innerHTML=`<td><div class="name"><span class="n"><button class="shopbtn" data-shopitem="${r.id}" title="Add all buy-mode materials to shopping list">🛒</button><button class="listbtn" data-listadd="${r.id}" title="Add to a saved list">📋</button><button class="xwbtn" data-xw="${r.id}" data-xwname="${xesc(r.name)}" title="Compare this item's price and stock on every world">\ud83c\udf10</button><span class="caret"></span>${iconHTML(r.id)}${r.name}</span>
+        <span class="t"><span class="pill">${r.cls}</span> lvl ${r.lvl} <span class="pill ${r.scripType}">${r.scripType==='purple'?'Purple':'Orange'} → ${r.grade}</span></span></div></td>
+      <td class="${r.scripType==='purple'?'ptext':'otext'}">${r.scrips}</td>
+      <td>${fmt(r.mat)}</td>
+      <td class="rev">${fmt(r.value)}</td>
+      <td class="profit ${cls}">${r.profit==null?'—':fmt(r.profit)}</td>`;
+    tr.addEventListener("click",()=>{if(state.expanded.has(r.id))state.expanded.delete(r.id);else state.expanded.add(r.id);renderColl();});
+    tb.appendChild(tr);
+    if(open){const dr=document.createElement("tr");dr.className="detail";const td=document.createElement("td");td.colSpan=5;
+      const ex=EX[r.scripType];const g=state.gps[r.scripType];
+      td.innerHTML=`<div class="tree"><div class="thead"><div>Craft this → turn in for ${r.scrips} ${r.scripType==='purple'?'Purple':'Orange'} scrips → grade ${r.grade} materia</div><div class="r">Buy (${dcLabel()})</div><div class="r">Buy on</div><div class="r hcraft">Craft it</div><div class="r hvendor">Vendor</div><div class="r">Line (best)</div></div>
+        ${nodeRows(r.kids,0)}
+        <div class="tfoot">
+          <span><span class="lab">Material cost</span><b>${fmt(r.mat)}</b></span>
+          <span><span class="lab">Scrips</span><b class="${r.scripType==='purple'?'ptext':'otext'}">${r.scrips}</b></span>
+          <span><span class="lab">gil/scrip</span><b>${g?fmt(g.g):'—'}</b></span>
+          <span><span class="lab">Revenue/craft</span><b class="rev">${fmt(r.value)}</b></span>
+          <span><span class="lab">Profit/craft</span><b class="${r.profit==null?'':(r.profit>=0?'profit win':'profit loss')}">${fmt(r.profit)}</b></span>
+        </div></div>`;
+      td.querySelectorAll("[data-mp]").forEach(el=>{el.addEventListener("click",ev=>{ev.stopPropagation();const p=el.dataset.mp;if(state.matOpen.has(p))state.matOpen.delete(p);else state.matOpen.add(p);renderColl();});});
+      dr.appendChild(td);tb.appendChild(dr);}}
+  document.getElementById("ctbl").hidden=false;
+  const gp=state.gps.purple,go=state.gps.orange;
+  document.getElementById("kP").textContent=gp?fmt(gp.g)+" g":"—";
+  document.getElementById("kPn").textContent=gp?("via "+gp.mat.type+" · 250/materia"):"no XI listing";
+  document.getElementById("kO").textContent=go?fmt(go.g)+" g":"—";
+  document.getElementById("kOn").textContent=go?("via "+go.mat.type+" · 500/materia"):"no XII listing";
+  const prof=rows.filter(r=>r.profit!=null).sort((a,b)=>b.profit-a.profit)[0];
+  document.getElementById("kBest").textContent=prof?fmt(prof.profit)+" g":"—";
+  document.getElementById("kBestN").textContent=prof?(prof.name+" · "+prof.cls+" lvl "+prof.lvl):"—";
+  setStatus(`Sell vs <b>${state.home}</b> · materia NQ · precrafts bought NQ where listed, else crafted · tax ${Math.round(state.tax*100)}% · click a row for its recipe tree`);
+}
+
+function renderMateria(){if(!state.matRows)return;const q=state.query.trim().toLowerCase();
+  let rows=state.matRows.filter(m=>{if(state.grade!=="all"&&m.grade!==state.grade)return false;if(state.hideNo&&!(m.vel>0)&&!m.scripType)return false;if(q&&!m.type.toLowerCase().includes(q))return false;return true;});
+  rows.sort((a,b)=>{const k=state.msort;let av=a[k],bv=b[k];if(k==="name")return a.name.localeCompare(b.name)*(state.mdir*-1);if(k==="grade"){av=a.gi;bv=b.gi;}av=(av==null||!isFinite(av))?-Infinity:av;bv=(bv==null||!isFinite(bv))?-Infinity:bv;return(av-bv)*state.mdir;});
+  const tb=document.getElementById("mrows");tb.innerHTML="";
+  for(const m of rows){const tr=document.createElement("tr");tr.className="row";
+    const tag=m.scripType?`<span class="pill ${m.scripType}">${m.scripType==='purple'?'Purple':'Orange'}</span>`:'';
+    tr.innerHTML=`<td><div class="name"><span class="n"><button class="listbtn" data-listadd="${m.id}" title="Add to a saved list">📋</button><button class="xwbtn" data-xw="${m.id}" data-xwname="${xesc(m.name)}" title="Compare this item's price and stock on every world">\ud83c\udf10</button>${iconHTML(m.id)}${m.type} ${tag}</span></div></td>
+      <td>${m.grade||'—'}</td><td>${fmt(m.sell)} <span class="q">NQ</span></td><td>${fmt(m.avg)}</td><td>${velCell(velAgg(m.vel))}</td>
+      <td class="hide">${m.scripCost?`<span class="${m.scripType==='purple'?'ptext':'otext'}">${m.scripCost} ${m.scripType==='purple'?'P':'O'}</span>`:'—'}</td>`;
+    tb.appendChild(tr);}
+  document.getElementById("mtbl").hidden=false;
+}
+
+function setStatus(h){document.getElementById("status").innerHTML=h;}
+function clearErr(){document.getElementById("errbox").innerHTML="";}
+function showErr(e){document.getElementById("ctbl").hidden=true;document.getElementById("mtbl").hidden=true;setStatus("Couldn't reach the market board.");
+  document.getElementById("errbox").innerHTML=`<div class="err"><b>Live prices did not load.</b> ${(e&&e.message)||e}. If you are viewing this inside the Claude app, the in-app preview blocks market-board access — download the file and open it in your own browser (Chrome / Firefox), then hit Refresh.</div>`;}
+
+document.getElementById("scrip").addEventListener("change",e=>{state.scrip=e.target.value;renderColl();});
+buildHomeSelect(document.getElementById("home"),state.home);
+document.getElementById("home").addEventListener("change",e=>{homeChanged(e.target.value);load();});
+initDcPicker(()=>load());
+document.getElementById("tax").addEventListener("change",e=>{state.tax=parseFloat(e.target.value);if(state.matRows){compute();renderColl();renderMateria();}});
+document.getElementById("grade").addEventListener("change",e=>{state.grade=e.target.value;renderMateria();});
+document.getElementById("search").addEventListener("input",e=>{state.query=e.target.value;renderMateria();});
+document.getElementById("hideNo").addEventListener("change",e=>{state.hideNo=e.target.checked;renderMateria();});
+document.getElementById("refresh").addEventListener("click",load);
+document.querySelectorAll("th[data-k]").forEach(th=>{if(th.style.cursor==="default")return;th.addEventListener("click",()=>{const k=th.dataset.k;if(state.csort===k)state.cdir*=-1;else{state.csort=k;state.cdir=-1;}
+  document.querySelectorAll("th[data-k]").forEach(x=>{x.removeAttribute("data-sorted");const s=x.querySelector("span");if(s)s.textContent="";});th.setAttribute("data-sorted","");th.querySelector("span").textContent=state.cdir<0?"▾":"▴";renderColl();});});
+document.querySelectorAll("th[data-mk]").forEach(th=>{if(th.style.cursor==="default")return;th.addEventListener("click",()=>{const k=th.dataset.mk;if(state.msort===k)state.mdir*=-1;else{state.msort=k;state.mdir=-1;}
+  document.querySelectorAll("th[data-mk]").forEach(x=>{x.removeAttribute("data-msorted");const s=x.querySelector("span");if(s)s.textContent="";});th.setAttribute("data-msorted","");th.querySelector("span").textContent=state.mdir<0?"▾":"▴";renderMateria();});});
+document.getElementById("status").innerHTML='Click <b>Refresh</b> to load live prices…';
+
+/* ===== v12: settings persistence + force-refresh ===== */
+(function(){
+  const SKEY="gildesk:materia:settings";
+  function collect(){const s={};document.querySelectorAll("select[id],input[id]").forEach(el=>{
+    if(el.id==="search"||el.type==="button")return;
+    s[el.id]=el.type==="checkbox"?el.checked:el.value;});return s;}
+  function saveSettings(){try{localStorage.setItem(SKEY,JSON.stringify(collect()));}catch(e){}}
+  function restoreSettings(){try{const s=JSON.parse(localStorage.getItem(SKEY)||"{}");
+    for(const[id,v]of Object.entries(s)){const el=document.getElementById(id);if(!el)continue;
+      if(el.type==="checkbox")el.checked=!!v;else el.value=v;
+      if(id==="home"){state.home=el.value;syncHomeNames();continue;}
+      if(id==="dc"){setDcs(el.value);continue;}
+      el.dispatchEvent(new Event("change"));}
+  }catch(e){}}
+  document.addEventListener("change",()=>saveSettings());
+  document.addEventListener("click",e=>{if(e.shiftKey&&e.target&&e.target.id==="refresh"){Cache.clear();setStatus("Cache cleared \u00b7 pulling fresh prices\u2026");}},true);
+  restoreSettings();syncDcNames();syncHomeNames();
+})();
+
+/* ===== v14: shopping list glue ===== */
+window.__shopAddItem=id=>{if(!state.chaos)return Shop.toast("Refresh prices first");
+  const r=(state.collRows||[]).find(x=>x.id==id);if(!r)return;
+  const out=[];const walk=(n,mult)=>{const need=n.amount*mult;
+    if(n.mode==="buy"){out.push({id:n.id,name:n.name,qty:need,unit:n.unit,worldId:n.world,world:n.world!=null?wname(n.world):null,hq:false,avg:Shop.avgFrom(state.chaos[n.id],false)});return;}
+    const crafts=Math.ceil(need/(n.yields||1));(n.children||[]).forEach(k=>walk(k,crafts));};
+  r.kids.forEach(k=>walk(k,1));
+  if(!out.length)return Shop.toast("Nothing marketable to buy");
+  Shop.add(out,r.name);};
+
+window.__shopAddMat=s=>{if(!state.chaos)return Shop.toast("Refresh prices first");
+  const i=s.lastIndexOf("|"),id=+s.slice(0,i),qty=+s.slice(i+1);
+  const nq=rawNQ(id);let name=null;
+  (state.collRows||[]).forEach(r=>r.kids.forEach(function w(n){if(n.id===id&&name==null)name=n.name;(n.children||[]).forEach(w);}));
+  Shop.add([{id,name:name||("#"+id),qty,unit:nq.price,worldId:nq.worldId,world:nq.worldId!=null?wname(nq.worldId):null,hq:false,avg:Shop.avgFrom(state.chaos[id],false)}],null);};
+
+/* ===== saved-list glue =====
+   a collectable carries its whole crafting tree over, so the list tab can price the
+   materials the same way it does for a precraft */
+window.__listEntry=id=>{
+  id=+id;
+  const c=COLL.find(x=>+x.id===id);
+  if(c){
+    const rec={},walk=n=>{if(!n||!n.craftable||rec[n.id])return;
+      rec[n.id]={name:n.name,yields:n.yields||1,
+        ingredients:(n.ings||[]).map(g=>({id:g.id,name:g.name,amount:g.amount}))};
+      (n.ings||[]).forEach(walk);};
+    walk(c.tree);
+    return{id,name:c.name,kind:"collectable",group:"collectable",q:"hq",
+      note:c.class+" lvl "+c.lvl+" · "+c.scrips+" "+(c.scripType==="purple"?"purple":"orange")+" scrips",
+      recipes:rec,src:"Scrips"};
+  }
+  const m=MATERIA.find(x=>+x.id===id);
+  if(m)return{id,name:m.name,kind:"materia",group:"materia",q:"nq",
+    note:m.type+" · grade "+m.grade,recipes:{},src:"Scrips"};
+  return null;
+};
+</script>
+</body>
+</html>

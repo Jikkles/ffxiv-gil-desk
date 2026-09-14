@@ -1,0 +1,553 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Submersibles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/*__UI_CSS__*/
+/* ---- submersibles only ---- */
+thead th span{display:inline-block;min-width:.8em}
+tr.detail>td{background:var(--bg2);border-bottom:1px solid var(--line);padding:0;border-left:none}
+/* routes and loot are two views of one voyage model, switched above the table */
+.views{display:flex;align-items:center;gap:6px;margin:4px 0 10px}
+.views button{all:unset;cursor:pointer;font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.04em;color:var(--muted);
+  padding:7px 14px;border-radius:9px;border:1px solid var(--line);background:var(--panel)}
+.views button:hover{color:var(--ink);border-color:var(--line2)}
+.views button[aria-pressed="true"]{color:var(--ink);background:var(--accent-soft);border-color:var(--aether-line);box-shadow:inset 0 -2px 0 var(--aether)}
+.views .vnote{margin-left:auto;font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--faint)}
+/* the route code, as players write it: the sectors' letters in sailing order */
+.rcode{font-family:"JetBrains Mono",monospace;font-size:15px;font-weight:500;color:var(--ink);letter-spacing:.06em;
+  min-width:62px;padding:3px 8px;border-radius:7px;background:var(--panel2);border:1px solid var(--line2);text-align:center}
+.alias{font-family:"JetBrains Mono",monospace;font-size:8.5px;letter-spacing:.07em;text-transform:uppercase;padding:2px 6px;border-radius:5px;
+  color:var(--gil);border:1px solid var(--gil-line);background:var(--gil-soft)}
+.seapill{font-family:"JetBrains Mono",monospace;font-size:8.5px;letter-spacing:.07em;text-transform:uppercase;padding:2px 6px;border-radius:5px;border:1px solid var(--aether-line);color:var(--aether);background:var(--accent-soft)}
+.chk-ok{color:var(--win)} .chk-bad{color:var(--hop)}
+.sect{margin:12px 16px 4px;padding:10px 12px;border:1px solid var(--line);border-radius:11px;background:var(--panel)}
+.sect h4{margin:0 0 7px;display:flex;align-items:center;gap:9px;font-size:13px;color:var(--ink);font-weight:500;flex-wrap:wrap}
+.sect h4 .l{font-family:"JetBrains Mono",monospace;color:var(--aether);font-size:13px}
+.sect h4 .meta{margin-left:auto;font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--faint);font-weight:400}
+.bps{display:flex;gap:12px;flex-wrap:wrap;font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--muted);margin-bottom:6px}
+.lootgrid{display:grid;grid-template-columns:minmax(0,1fr) 110px 120px 120px;gap:2px 16px;align-items:center;font-family:"JetBrains Mono",monospace;font-size:12.5px}
+.lootgrid .h{font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);padding-bottom:3px;border-bottom:1px solid var(--line)}
+.lootgrid .r{text-align:right}
+.lootgrid .nm{display:flex;align-items:center;gap:7px;font-family:"Inter",sans-serif;font-size:12.5px;color:var(--ink2);min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:2px 0}
+.lootgrid .nm .iconbox{width:22px;height:22px;border-radius:6px}
+.lootgrid .nm .iconbox img{width:22px;height:22px}
+.vend{color:var(--gil)}
+.tfoot{display:flex;flex-wrap:wrap;gap:6px 20px;margin:12px 16px 14px;padding-top:11px;border-top:1px solid var(--line);font-family:"JetBrains Mono",monospace;font-size:12.5px}
+.tfoot .lab{color:var(--faint);text-transform:uppercase;font-size:10px;letter-spacing:.1em;margin-right:6px} .tfoot b{font-weight:500}
+.forecast{color:var(--muted);font-size:11px;font-family:"JetBrains Mono",monospace}
+.forecast b{color:var(--gil)}
+.buildrow{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.buildrow .field{margin-bottom:0!important}
+.statline{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--muted);line-height:1.6;margin:8px 4px 0;display:grid;grid-template-columns:repeat(5,1fr);text-align:center}
+.statline b{display:block;color:var(--ink);font-size:12.5px;font-weight:500}
+/* sector chains run long; the full chain is on the hover title */
+.name .nmeta{max-width:380px}
+.name .nmeta .n{display:block;overflow:hidden;text-overflow:ellipsis}
+tr.detail>td{position:static!important}
+.detailwrap{max-width:1180px}
+.pill.salvage{color:var(--gil);border-color:var(--gil-line);background:var(--gil-soft)}
+</style>
+<script>try{var __t=localStorage.getItem("gildesk:theme:v1");document.documentElement.setAttribute("data-theme",__t==="light"?"light":"dark");}catch(e){document.documentElement.setAttribute("data-theme","dark");}</script>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="sgroup">
+      <div class="slabel">Filter items</div>
+      <div class="field inline"><label>&#128269;</label><input id="search" placeholder="route, sector or item…" autocomplete="off"></div>
+    </div>
+    <div class="sgroup">
+      <div class="slabel">Server</div>
+      <div class="field sel"><label>Sell on</label><select id="home"></select></div>
+      <button class="btn primary wide" id="refresh">&#8635; Refresh</button>
+    </div>
+    <div class="sgroup">
+      <div class="slabel">Your submersibles</div>
+      <div class="field"><label for="rank">Rank</label><input type="number" id="rank" value="120" min="1" max="149"></div>
+      <div class="buildrow">
+        <div class="field sel"><label for="pHull">Hull</label><select id="pHull"></select></div>
+        <div class="field sel"><label for="pStern">Stern</label><select id="pStern"></select></div>
+        <div class="field sel"><label for="pBow">Bow</label><select id="pBow"></select></div>
+        <div class="field sel"><label for="pBridge">Bridge</label><select id="pBridge"></select></div>
+      </div>
+      <div class="statline" id="statline"></div>
+      <div class="field sel" style="margin-top:9px"><label for="subs">Subs sailing</label><select id="subs"><option>1</option><option>2</option><option>3</option><option selected>4</option></select></div>
+      <div class="field sel"><label for="cadence">Resend them</label><select id="cadence">
+        <option value="0">The moment they return</option>
+        <option value="12">Every 12 hours</option>
+        <option value="24" selected>Once a day</option>
+        <option value="36">Every 36 hours</option>
+        <option value="48">Every 48 hours</option>
+      </select></div>
+    </div>
+    <div class="sgroup">
+      <div class="slabel">Marketboard settings</div>
+      <label class="chk" title="Count the loot you would sell on the market board, valued at its 30-day average after tax. Off, a route is worth only what the salvage fetches from an NPC."><input type="checkbox" id="useMarket" checked> Count market-board loot</label>
+      <label class="chk" title="Hide routes whose sectors ask for more surveillance, retrieval or favor than this build has"><input type="checkbox" id="fitOnly"> Only routes this build maxes</label>
+    </div>
+    <div class="sgroup">
+      <div class="slabel">Filters</div>
+      <div class="field sel"><label for="sea">Sea</label><select id="sea"><option value="all">Every sea</option></select></div>
+      <div class="field sel"><label for="maxSec">Sectors a voyage</label><select id="maxSec"><option>1</option><option>2</option><option>3</option><option>4</option><option selected>5</option></select></div>
+      <div class="field sel"><label for="tax">Tax</label><select id="tax"><option value="0.05" selected>5%</option><option value="0.03">3%</option><option value="0.02">2%</option></select></div>
+    </div>
+    <div class="sgroup">
+      <div class="scancard"><span class="dot"></span>Last scan<br><b id="lastScan">&mdash;</b></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="hero">
+      <div class="hicon">&#128755;&#65039;</div>
+      <div>
+        <h1><b>Submersibles</b></h1>
+        <p class="sub">Which voyage your Free Company&rsquo;s subs should sail. Nearly all the gil comes from <b>salvaged jewellery</b> that only NPCs buy &mdash; up to 34,500 a piece, from a handful of Deep-sea Site sectors (and one in the Sea of Ash) &mdash; so every route here is priced on crowd-sourced drop rates from <b id="nVoy">millions</b> of recorded voyages, timed for <b>your build</b>, and ranked by what it earns a day.</p>
+      </div>
+      <div class="kpis" id="kpis"></div>
+    </div>
+
+    <div class="status" id="status">Loading voyage loot prices&hellip;</div>
+    <div id="errbox"></div>
+
+    <div class="views" id="views">
+      <button type="button" data-view="routes" aria-pressed="true">Routes</button>
+      <button type="button" data-view="loot" aria-pressed="false">Loot</button>
+      <span class="vnote" id="vnote"></span>
+    </div>
+
+    <div class="tablewrap"><table id="tbl" hidden>
+      <thead><tr id="thr"></tr></thead>
+      <tbody id="rows"></tbody>
+    </table></div>
+
+    <p class="foot">
+      <b>How a voyage is valued.</b> Each sector a sub surveys hands back a loot roll, and a second one when its <b>favor</b> clears the sector&rsquo;s breakpoint. What comes back &mdash; and how many &mdash; is read from <a href="https://github.com/Infiziert90/FFXIVGachaSpreadsheet" target="_blank" rel="noopener">Infi&rsquo;s crowd-sourced loot records</a> (the SubmarineTracker plugin&rsquo;s uploads, updated <span id="lootDate">recently</span>): units per roll &times; rolls per visit, averaged over every recorded voyage. A build that falls short of a sector&rsquo;s <b>surveillance</b> breakpoints loses that tier&rsquo;s loot, and short of its <b>retrieval</b> breakpoint brings back the smaller quantity band; both are flagged on the route. The breakpoints themselves are SubmarineTracker&rsquo;s.
+      <b>Salvage</b> is valued at the NPC price, which never moves; everything else at the lower of its 30-day average and its cheapest listing across your data centre, after tax, so a single troll sale cannot make a sector. <b>Repairs</b> are Magitek Repair Materials at the current price, spread over the voyages a part lasts. Ceruleum tanks cost company credits rather than gil, so they are counted but not subtracted.
+      <b>Voyage time</b> is the game&rsquo;s own formula (travel and survey time scaled by speed, plus a fixed 12 hours), and a route&rsquo;s sectors are sailed in whichever order is quickest within your range. <b>Profit/day</b> is what the fleet nets a day when you resend on the schedule you picked &mdash; a 22-hour voyage sent once a day earns a day&rsquo;s worth, a 26-hour one only every second day.
+      On the Loot view, Gil/day = Avg 30d &times; (1 &minus; tax) &times; units/day, the market&rsquo;s pace across your data centre, as everywhere else on the desk. Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>.
+    </p>
+  </main>
+</div>
+<script>
+const ICON_INDEX = /*__ICON_INDEX__*/;
+/*__UI_JS__*/
+
+/* the voyage model: sectors with position, survey time and distance, tanks,
+   breakpoints [T2, T3, normal, optimal, favor] and loot as
+   [item, units per roll, normal-retrieval factor, tier]; parts; rank bonuses */
+const SUB = /*@json data/submersibles.json*/null;
+const REPAIR_ID = 10373;
+const SEC_BY_ID = {}; for (const s of SUB.sectors) SEC_BY_ID[s.id] = s;
+const LOOT_IDS = [...new Set([].concat(...SUB.sectors.map(s => s.loot.map(x => x[0]))))].filter(id => !SUB.vendor[id]);
+const PRICE_IDS = LOOT_IDS.concat([REPAIR_ID]);
+const SEA_SHORT = {1:"Deep-sea",2:"Sea of Ash",3:"Sea of Jade",4:"Sirensong",5:"Lilac Sea",6:"South Indigo",7:"Northern Empty"};
+/* a sea added after this list was written still gets a name: the game's own */
+const seaName=m=>SEA_SHORT[m]||SUB.maps[m]||("sea "+m);
+/* what players call the routes they run, keyed by the letters in any order */
+const KNOWN = {1:{"JO":"OJ","JMOR":"MROJ","JMORZ":"MROJZ","JORZ":"JORZ"}};
+const CLASS_LETTER = {3:"Shark",2:"Unkiu",1:"Whale",4:"Coelacanth",5:"Syldra",8:"Modified Shark",7:"Modified Unkiu",6:"Modified Whale",9:"Modified Coelacanth",10:"Modified Syldra"};
+const CLASS_CODE = {3:"S",2:"U",1:"W",4:"C",5:"Y",8:"S+",7:"U+",6:"W+",9:"C+",10:"Y+"};
+const SLOTS = [["pHull",0],["pStern",1],["pBow",2],["pBridge",3]];
+
+let state={home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],query:"",tax:0.05,view:"routes",sortKey:"day",sortDir:-1,
+  rank:120,build:[8,8,7,9],subs:4,cadence:24,useMarket:true,fitOnly:false,sea:"all",maxSec:5,
+  world:null,mkt:null,hist:null,routes:null,loot:null,expanded:new Set(),summary:"",scopeDc:"Chaos"};
+
+function side(res,hq){return res?(hq?res.h:res.n):null;}
+function aggPrice(res,hq,scope){const q=side(res,hq);const m=q&&(scope==="world"?q.mw:q.md);return m&&m[0]!=null?m[0]:null;}
+function aggAvg(res,hq,scope){const q=side(res,hq);const a=q?(scope==="world"?q.aw:q.ad):null;return a!=null?a:null;}
+function aggUpload(res){return(res&&res.u)||0;}
+const fmt=n=>n==null||!isFinite(n)?"—":Math.round(n).toLocaleString("en-GB");
+const fmtK=n=>{if(n==null||!isFinite(n))return"—";const a=Math.abs(n);if(a>=1e6)return(n/1e6).toFixed(2)+"M";if(a>=1e3)return(n/1e3).toFixed(1)+"k";return Math.round(n).toString();};
+const fmtH=h=>{if(h==null)return"—";const H=Math.floor(h),M=Math.round((h-H)*60);return H+"h "+String(M).padStart(2,"0")+"m";};
+const nameOf=id=>(SUB.names[id]||["#"+id])[0];
+const catOf=id=>(SUB.names[id]||["",""])[1];
+
+/*__SHARED_A__*/
+/*__SHARED_B__*/
+/*__SHARED_SHOP__*/
+/*__SHARED_LIST__*/
+/*__SHARED_XW__*/
+
+function setStatus(h){document.getElementById("status").innerHTML=h;}
+function clearErr(){const b=document.getElementById("errbox");if(b)b.innerHTML="";}
+function showErr(e){document.getElementById("tbl").hidden=true;setStatus("Couldn't reach the market board.");
+  document.getElementById("errbox").innerHTML=`<div class="err"><b>Live prices didn't load.</b> ${e.message||e}. Routes are still ranked on salvage alone below once prices return. Check <a href="https://universalis.app" target="_blank" rel="noopener" style="color:#ffd7db">universalis.app</a>.</div>`;}
+
+async function fetchAgg(scope,ids,onProgress){
+  const ck=`agg:${scope}:${hashIds(ids)}`;const hit=Cache.get(ck,NET.CACHE_TTL_MS);
+  if(hit){if(onProgress)onProgress(1,1);return{out:hit,failed:[],fromCache:true};}
+  const res=await runBatches(ids,async b=>{
+    const r=await tfetch(`https://universalis.app/api/v2/aggregated/${scope}/${b.join(",")}`);
+    if(!r.ok)throw new Error("HTTP "+r.status+" · "+scope);
+    const j=await r.json();const m={};for(const row of(j.results||[]))m[row.itemId]=compressAgg(row);return m;},onProgress);
+  if(!res.failed.length)Cache.set(ck,res.out);
+  return res;}
+async function fetchHist(scope,ids,onProgress){
+  const ck=`hist:${scope}:${hashIds(ids)}`;const hit=Cache.get(ck,NET.CACHE_TTL_MS);
+  if(hit){if(onProgress)onProgress(1,1);return{out:hit,failed:[],fromCache:true};}
+  const res=await runBatches(ids,async b=>{
+    const r=await tfetch(`https://universalis.app/api/v2/history/${scope}/${b.join(",")}?entriesToReturn=${HIST_ENTRIES}&entriesWithin=${HIST_SECS}&statsWithin=${HIST_SECS*1000}`);
+    if(!r.ok)throw new Error("HTTP "+r.status+" · history");
+    const j=await r.json();const src=j.items||(j.itemID?{[j.itemID]:j}:{});
+    const m={};for(const k in src)m[k]=summarizeHist(src[k]);return m;},onProgress);
+  if(!res.failed.length)Cache.set(ck,res.out);
+  return res;}
+async function fetchWorlds(){
+  const hit=Cache.get("worlds",NET.WORLDS_TTL_MS);if(hit)return hit;
+  try{const r=await tfetch("https://universalis.app/api/v2/worlds");const a=await r.json();
+    const m={};for(const w of a)m[w.id]=w.name;Cache.set("worlds",m);return m;}catch(e){return{};}}
+
+/* ---- the build ---- */
+function partFor(cls,slot){return SUB.parts.find(p=>p.c===cls&&p.slot===slot);}
+function buildParts(){return SLOTS.map(([,slot],i)=>partFor(state.build[i],slot));}
+function buildStats(){
+  const st=[0,0,0,0,0];for(const p of buildParts())if(p)p.st.forEach((v,i)=>st[i]+=v);
+  const rb=SUB.ranks[Math.max(1,Math.min(SUB.ranks.length-1,state.rank))]||[0,0,0,0,0];
+  return st.map((v,i)=>v+rb[i]);
+}
+function buildCode(){return state.build.map(c=>CLASS_CODE[c]).join("");}
+function paintStats(){
+  const st=buildStats(),lab=["Surv","Retr","Speed","Range","Favor"];
+  const low=buildParts().some(p=>p&&p.rank>state.rank);
+  document.getElementById("statline").innerHTML=st.map((v,i)=>`<span title="${["Surveillance","Retrieval","Speed","Range","Favor"][i]}">${lab[i]}<b>${v}</b></span>`).join("")+
+    (low?`<span style="grid-column:1/-1;color:var(--hop)">a part here needs a higher rank</span>`:"");
+}
+
+/* ---- geometry: the game's own voyage formulas ---- */
+const dist3=(a,b)=>Math.hypot(a[0]-b[0],a[1]-b[1],a[2]-b[2]);
+const travelSec=(a,b,sp)=>Math.floor(dist3(a,b)*3990/(Math.max(1,sp)*100)*60);
+const surveySec=(s,sp)=>Math.floor(s.sm*7000/(Math.max(1,sp)*100)*60);
+const hopDist=(a,b)=>Math.floor(dist3(a,b)*0.035);
+
+/* ---- what one visit to a sector is worth to this build ---- */
+/* Realistic, as on Vendors: the lower of the 30-day average and the cheapest
+   listing. Cheap materials carry the odd troll sale - Piety Materia II has
+   averaged 38k on a data centre where it lists for a few hundred - and one of
+   those was enough to put a shallow sector at the top of the whole table. */
+function netPrice(id){
+  const res=state.mkt?state.mkt[id]:null;
+  const avg=aggAvg(res,false,"dc")??aggAvg(res,true,"dc");
+  const low=aggPrice(res,false,"dc")??aggPrice(res,true,"dc");
+  const p=avg!=null&&low!=null?Math.min(avg,low):(avg??low);
+  return p!=null?p*(1-state.tax):null;
+}
+function sectorValue(s,st){
+  const bp=s.bp||[0,0,0,0,0];
+  const rolls=st[4]>=bp[4]?s.rpv:1;
+  const qf=st[1]>=bp[3]?"opt":(st[1]>=bp[2]?"norm":"poor");
+  let vendor=0,market=0;const items=[];
+  for(const[id,perRoll,normF,tier]of s.loot){
+    if(tier===3&&st[0]<bp[1])continue;
+    if(tier===2&&st[0]<bp[0])continue;
+    const f=qf==="opt"?1:(qf==="norm"?normF:normF/2);
+    const units=perRoll*rolls*f;
+    const vp=SUB.vendor[id];
+    let gil=null;
+    if(vp){gil=units*vp;vendor+=gil;}
+    else{const np=netPrice(id);if(np!=null){gil=units*np;if(state.useMarket)market+=gil;}}
+    items.push({id,units,gil,vendor:!!vp,tier});
+  }
+  items.sort((a,b)=>(b.gil||0)-(a.gil||0));
+  return{vendor,market,items,rolls,qf,checks:{t2:st[0]>=bp[0],t3:st[0]>=bp[1],opt:st[1]>=bp[3],norm:st[1]>=bp[2],fav:st[4]>=bp[4]},bp};
+}
+function repairPerVoyage(sectors){
+  const price=aggPrice(state.mkt?state.mkt[REPAIR_ID]:null,false,"dc");
+  let mats=0;
+  for(const p of buildParts()){if(!p)continue;
+    let dmg=0;for(const s of sectors)dmg+=(335+s.r-p.rank)*7;
+    const lasts=Math.max(1,Math.ceil(30000/Math.max(1,dmg)));
+    mats+=p.rep/lasts;}
+  return{mats,gil:price!=null?mats*price:null,price};
+}
+
+/* ---- every route worth considering ----
+   Each sea's most valuable sectors (for this build) are strung together in
+   every combination up to the sector limit, each combination sailed in the
+   quickest order that fits the build's range. Twelve sectors a sea keeps it to
+   a few thousand combinations; the rest of a sea is never worth a slot. */
+const TOP_PER_SEA=12;
+function computeRoutes(){
+  const st=buildStats(),routes=[];
+  const cad=state.cadence;
+  const maps=state.sea==="all"?Object.keys(SUB.maps).map(Number):[+state.sea];
+  for(const m of maps){
+    const start=SUB.starts[m];if(!start)continue;
+    const cands=SUB.sectors.filter(s=>s.m===m&&s.r<=state.rank&&s.loot.length)
+      .map(s=>({s,v:sectorValue(s,st)})).map(x=>({...x,total:x.v.vendor+x.v.market}))
+      .filter(x=>x.total>0).sort((a,b)=>b.total-a.total).slice(0,TOP_PER_SEA);
+    const n=cands.length;
+    const rec=(startIdx,chosen)=>{
+      if(chosen.length){const r=bestOrder(chosen.map(i=>cands[i]),start,st);if(r)routes.push(finishRoute(r,m,cad));}
+      if(chosen.length>=state.maxSec)return;
+      for(let i=startIdx;i<n;i++)rec(i+1,chosen.concat([i]));
+    };
+    rec(0,[]);
+  }
+  return routes;
+}
+function bestOrder(set,start,st){
+  let best=null;const k=set.length,used=new Array(k).fill(false),order=[];
+  const go=(pos,dist,sec)=>{
+    if(dist>st[3])return;
+    if(order.length===k){if(!best||sec<best.sec)best={order:order.slice(),dist,sec};return;}
+    for(let i=0;i<k;i++){if(used[i])continue;
+      const s=set[i].s;used[i]=true;order.push(set[i]);
+      go(s.p,dist+hopDist(pos,s.p)+s.sd,sec+travelSec(pos,s.p,st[2])+surveySec(s,st[2]));
+      order.pop();used[i]=false;}
+  };
+  go(start,0,0);
+  if(!best)return null;
+  best.hours=(best.sec+43200)/3600;
+  return best;
+}
+function finishRoute(r,m,cad){
+  const secs=r.order.map(x=>x.s);
+  const vendor=r.order.reduce((a,x)=>a+x.v.vendor,0),market=r.order.reduce((a,x)=>a+x.v.market,0);
+  const rep=repairPerVoyage(secs);
+  const net=vendor+market-(rep.gil||0);
+  const cycle=cad?Math.ceil(r.hours/cad-1e-9)*cad:r.hours;
+  const day=net*24/cycle*state.subs;
+  const letters=secs.map(s=>s.l).join("");
+  const key=secs.map(s=>s.l).sort().join("");
+  const alias=(KNOWN[m]||{})[key]||"";
+  const fits=r.order.every(x=>x.v.checks.t3&&x.v.checks.opt&&x.v.checks.fav);
+  const tanks=secs.reduce((a,s)=>a+s.t,0),xp=secs.reduce((a,s)=>a+s.xp,0);
+  return{id:m+":"+key,m,letters,alias,secs,order:r.order,dist:r.dist,hours:r.hours,cycle,vendor,market,rep,repair:rep.gil,net,day,fits,tanks,xp,rank:Math.max(...secs.map(s=>s.r))};
+}
+
+/* ---- the loot view: every item a voyage can bring back ---- */
+function computeLoot(){
+  const by={};
+  for(const s of SUB.sectors)for(const[id,perRoll]of s.loot){
+    const e=by[id]=by[id]||{id,secs:[]};e.secs.push({s,perRoll});}
+  return Object.values(by).map(e=>{
+    e.secs.sort((a,b)=>b.perRoll-a.perRoll);
+    const res=state.mkt?state.mkt[e.id]:null;
+    const vp=SUB.vendor[e.id]||null;
+    const now=vp?null:aggPrice(state.world?state.world[e.id]:null,false,"world");
+    const avg=vp?null:(aggAvg(res,false,"dc")??aggAvg(res,true,"dc"));
+    const h=state.hist?state.hist[e.id]:null;
+    const vi=vel30(h);const trend=trend30(h);
+    const net=avg!=null?avg*(1-state.tax):null;
+    return{id:e.id,name:nameOf(e.id),cat:catOf(e.id),vendor:vp,secs:e.secs,
+      where:[...new Set(e.secs.map(x=>seaName(x.s.m)))].join(", "),
+      best:e.secs[0],now,avg,trend,vel:vi.perDay,velI:vi,gilDay:(net!=null&&vi.perDay)?net*vi.perDay:null,
+      upload:aggUpload(state.world?state.world[e.id]:null),per:e.secs[0].perRoll*e.secs[0].s.rpv};
+  });
+}
+
+function compute(){state.routes=computeRoutes();state.loot=computeLoot();}
+
+function visibleRoutes(){
+  let r=state.routes||[];
+  if(state.fitOnly)r=r.filter(x=>x.fits);
+  if(state.query){const q=state.query.toLowerCase();
+    r=r.filter(x=>x.letters.toLowerCase()===q||x.alias.toLowerCase()===q||x.secs.some(s=>s.n.toLowerCase().includes(q))||
+      SUB.maps[x.m].toLowerCase().includes(q)||x.order.some(o=>o.v.items.some(it=>nameOf(it.id).toLowerCase().includes(q))));}
+  return sortRows(r);
+}
+function visibleLoot(){
+  let r=state.loot||[];
+  if(state.sea!=="all")r=r.filter(x=>x.secs.some(y=>y.s.m===+state.sea));
+  if(state.query){const q=state.query.toLowerCase();r=r.filter(x=>x.name.toLowerCase().includes(q)||x.where.toLowerCase().includes(q));}
+  return sortRows(r);
+}
+function sortRows(r){
+  const k=state.sortKey,d=state.sortDir;
+  return r.slice().sort((a,b)=>{
+    if(k==="name")return d*String(a.name||a.letters).localeCompare(String(b.name||b.letters));
+    const val=x=>k==="trend"?(x.trend?x.trend.pct:null):x[k];
+    const av=val(a),bv=val(b);
+    if(av==null&&bv==null)return 0;if(av==null)return 1;if(bv==null)return -1;return d*(av-bv);});
+}
+
+/* ---- render ---- */
+const COLS={
+  routes:[["name","Route",1,"The sectors' letters in the order they are sailed"],["hours","Voyage","", "How long this build takes to sail it, including the fixed 12 hours"],
+    ["vendor","Salvage","","Salvaged jewellery sold to an NPC, per sub, per voyage"],["market","Market loot","","Everything else, at the lower of its 30-day average and cheapest listing, after tax, per sub, per voyage"],
+    ["repair","Repairs","","Magitek Repair Materials used per voyage, per sub"],["net","Net/voyage","","Salvage + market loot − repairs, per sub"],
+    ["day","Profit/day","","What the whole fleet nets a day on your resend schedule"]],
+  loot:[["name","Item",1],["per","Per visit","","Units per visit to its best sector, favor second rolls included"],["vendor","Vendor","","What an NPC pays for one; salvage cannot go on the market board"],
+    ["now","Sell now","","Cheapest listing on your home world"],["avg","Avg 30d","","Average sale price across your data centre"],["trend","Trend","","The newer half of the sales history against the older half"],
+    ["vel","Units/day","","Units sold a day across your data centre over 30 days"],["gilDay","Gil/day","","Avg 30d after tax × units sold a day"]]
+};
+function renderHead(){
+  const tr=document.getElementById("thr");
+  tr.innerHTML=COLS[state.view].map(([k,l,noSort,tip])=>`<th data-k="${k}"${noSort?' style="cursor:default"':''}${tip?` title="${tip}"`:""}${k===state.sortKey?' data-sorted':''}>${l} <span>${k===state.sortKey?(state.sortDir<0?"▾":"▴"):""}</span></th>`).join("");
+  tr.querySelectorAll("th[data-k]").forEach(th=>{if(th.style.cursor==="default")return;
+    th.addEventListener("click",()=>{const k=th.dataset.k;if(state.sortKey===k)state.sortDir*=-1;else{state.sortKey=k;state.sortDir=(k==="hours")?1:-1;}render();});});
+}
+const tick=ok=>ok?'<span class="chk-ok">✓</span>':'<span class="chk-bad">✗</span>';
+function routeDetail(r){
+  const st=buildStats();
+  const blocks=r.order.map(({s,v})=>{
+    const rows=v.items.filter(it=>it.gil==null||it.gil>=50||it.vendor).slice(0,9).map(it=>
+      `<span class="nm">${iconHTML(it.id)}${nameOf(it.id)}${it.vendor?' <span class="pill salvage">salvage</span>':""}</span>`+
+      `<span class="r">${it.units>=10?fmt(it.units):it.units.toFixed(2)}</span>`+
+      `<span class="r ${it.vendor?"vend":""}">${it.vendor?fmt(SUB.vendor[it.id]):fmt(netPrice(it.id))}</span>`+
+      `<span class="r">${fmt(it.gil)}</span>`).join("");
+    const bp=v.bp;
+    return `<div class="sect"><h4><span class="l">${s.l}</span>${s.n}<span class="seapill">${seaName(s.m)}</span><span class="meta">rank ${s.r} · ${s.t} tank${s.t===1?"":"s"} · ${fmt(s.xp)} exp</span></h4>
+      <div class="bps"><span>${tick(v.checks.t3)} surveillance ${st[0]}/${bp[1]} for tier 3${v.checks.t3?"":v.checks.t2?" (tier 2 only)":" (tier 1 only)"}</span>
+        <span>${tick(v.checks.opt)} retrieval ${st[1]}/${bp[3]} for full quantity${v.checks.opt?"":v.checks.norm?" (normal band)":" (poor band)"}</span>
+        <span>${tick(v.checks.fav)} favor ${st[4]}/${bp[4]} for a second roll</span>
+        <span>${v.rolls.toFixed(2)} rolls a visit</span></div>
+      <div class="lootgrid"><span class="h">Expected loot</span><span class="h r">Units</span><span class="h r">Each (net)</span><span class="h r">Gil</span>${rows||'<span class="nm">nothing priced</span><span></span><span></span><span></span>'}</div></div>`;
+  }).join("");
+  return blocks+`<div class="tfoot">
+    <span><span class="lab">Sail order</span><b>${r.letters}</b></span>
+    <span><span class="lab">Voyage</span><b>${fmtH(r.hours)}</b>${state.cadence?` <span class="q">resent every ${r.cycle}h</span>`:""}</span>
+    <span><span class="lab">Distance</span><b>${r.dist} / ${buildStats()[3]}</b></span>
+    <span><span class="lab">Tanks</span><b>${r.tanks}</b> <span class="q">${fmt(r.tanks*100)} credits</span></span>
+    <span><span class="lab">Repairs</span><b>${r.rep.mats.toFixed(2)}</b> <span class="q">mats a voyage</span></span>
+    <span><span class="lab">Exp</span><b>${fmt(r.xp)}</b></span>
+    <span><span class="lab">Net/voyage</span><b class="profit win">${fmt(r.net)}</b></span>
+    <span><span class="lab">Fleet/day</span><b class="profit win">${fmt(r.day)}</b></span></div>`;
+}
+const MAX_ROUTE_ROWS=250;
+function render(){
+  renderHead();
+  const tbl=document.getElementById("tbl"),tb=document.getElementById("rows");
+  if(state.view==="routes"){
+    const all=visibleRoutes(),rows=all.slice(0,MAX_ROUTE_ROWS);
+    tbl.hidden=!rows.length;
+    tb.innerHTML=rows.map(r=>{const open=state.expanded.has(r.id);
+      const warn=r.fits?"":`<span class="warn" title="This build misses a breakpoint on at least one sector — open the route to see which">⚠</span>`;
+      return `<tr class="row${open?" open":""}" data-id="${r.id}">`+
+        `<td><div class="name rich"><span class="caret"></span><span class="rcode">${r.letters}</span><span class="nmeta"><span class="n" title="${xesc(r.secs.map(s=>s.l+" "+s.n).join(" → "))}">${r.secs.map(s=>s.n).join(" → ")}</span>`+
+          `<span class="t">${SUB.maps[r.m]} · rank ${r.rank}+ · ${r.secs.length} sector${r.secs.length===1?"":"s"}</span></span>`+
+          `${r.alias?`<span class="alias" title="What players call this route">${r.alias}</span>`:""}${warn}</div></td>`+
+        `<td>${fmtH(r.hours)}${state.cadence?` <span class="q">/${r.cycle}h</span>`:""}</td>`+
+        `<td class="vend">${fmtK(r.vendor)}</td>`+
+        `<td>${state.useMarket?fmtK(r.market):'<span class="q">off</span>'}</td>`+
+        `<td>${r.rep.gil==null?"—":"−"+fmtK(r.rep.gil)}</td>`+
+        `<td class="profit ${r.net>=0?"win":"loss"}">${fmtK(r.net)}</td>`+
+        `<td class="forecast"><b>${fmtK(r.day)}</b>/day</td></tr>`+
+        (open?`<tr class="detail" data-id="${r.id}"><td colspan="7"><div class="detailwrap">${routeDetail(r)}</div></td></tr>`:"");
+    }).join("");
+    document.getElementById("vnote").textContent=`${all.length.toLocaleString("en-GB")} routes for a rank ${state.rank} ${buildCode()}${all.length>MAX_ROUTE_ROWS?` · top ${MAX_ROUTE_ROWS} shown`:""}`;
+  } else {
+    const rows=visibleLoot();
+    tbl.hidden=!rows.length;
+    tb.innerHTML=rows.map(r=>{
+      const best=r.best.s;
+      const tools=r.vendor?"":`<span class="rowtools"><button class="listbtn" data-listadd="${r.id}" title="Add to a saved list">📋</button><button class="xwbtn" data-xw="${r.id}" data-xwname="${xesc(r.name)}" title="Compare this item's price and stock on every world">🌐</button></span>`;
+      const pill=r.vendor?'<span class="pill salvage">salvage</span>':`<span class="pill ${catSlug(r.cat)}" title="${r.cat}">${catLabel(r.cat)}</span>`;
+      const link=r.vendor?r.name:`<a href="https://universalis.app/market/${r.id}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">${r.name}</a>`;
+      return `<tr class="row" style="cursor:default"><td><div class="name rich">${tools}${iconHTML(r.id)}<span class="nmeta"><span class="n">${link} ${pill}</span>`+
+        `<span class="t" title="${r.secs.map(x=>seaName(x.s.m)+" "+x.s.l).join(", ")}">best: ${best.l} ${best.n} (${seaName(best.m)})${r.secs.length>1?` · +${r.secs.length-1} more`:""}</span></span></div></td>`+
+        `<td>${r.per>=10?fmt(r.per):r.per.toFixed(2)}</td>`+
+        `<td class="vend">${r.vendor?fmt(r.vendor):"—"}</td>`+
+        `<td>${fmt(r.now)}${r.vendor?"":agePill(r.upload)}</td>`+
+        `<td>${fmt(r.avg)}</td>`+
+        `<td>${r.vendor?"—":trendChip(r.trend)}</td>`+
+        `<td>${r.vel?velCell(r.velI):"—"}</td>`+
+        `<td>${fmtK(r.gilDay)}</td></tr>`;}).join("");
+    document.getElementById("vnote").textContent=`${rows.length} items a voyage can return`;
+  }
+  renderKpis();
+  if(state.view==="routes"&&tbl.hidden)setStatus("No route fits these filters — try a higher rank, more range, or every sea.");
+  else setStatus(state.summary);
+}
+function renderKpis(){
+  const all=(state.routes||[]).filter(r=>!state.fitOnly||r.fits);
+  const best=all.slice().sort((a,b)=>b.day-a.day)[0];
+  const oj=all.find(r=>r.alias==="OJ");
+  const long=all.filter(r=>r.hours>24).sort((a,b)=>b.day-a.day)[0];
+  const st=buildStats();
+  const card=(ic,k,v,s,cls,tip)=>`<div class="kpi"${tip?` title="${tip}"`:""}><div class="ki">${ic}</div><div class="kbody"><div class="k">${k}</div><div class="v ${cls||"gil"}">${v}</div><div class="s">${s}</div></div></div>`;
+  document.getElementById("kpis").innerHTML=
+    card("&#129689;","Best route",best?fmtK(best.day):"—",best?`${best.letters}${best.alias&&best.alias!==best.letters?" ("+best.alias+")":""} · ${fmtH(best.hours)} · fleet a day`:"no route fits",null,best?`${SUB.maps[best.m]}: ${best.secs.map(s=>s.n).join(" → ")}`:"")+
+    card("&#9203;","Best long haul",long?fmtK(long.day):"—",long?`${long.letters} · ${fmtH(long.hours)} · resent every ${long.cycle}h`:"nothing over a day",null,"The best route that takes more than a day, for fewer logins")+
+    card("&#128674;","OJ with this build",oj?fmtK(oj.day):"—",oj?`${fmtH(oj.hours)} · ${fmtK(oj.net)} a sub a voyage`:(state.rank<30?"needs rank 30":"out of range or filtered"),null)+
+    card("&#128295;","Your build",buildCode(),`rank ${state.rank} · S${st[0]} R${st[1]} Sp${st[2]} Ra${st[3]} F${st[4]}`,"cy");
+}
+
+function updateScanTime(){const el=document.getElementById("lastScan");if(!el)return;el._scanTime=new Date();
+  function t(){if(!el._scanTime)return;const age=(Date.now()-el._scanTime)/1000;el.textContent=el._scanTime.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit",second:"2-digit"});el.style.color=age<1800?"var(--win)":"var(--loss)";}
+  t();if(el._ticker)clearInterval(el._ticker);el._ticker=setInterval(t,30000);}
+async function load(){
+  const btn=document.getElementById("refresh");btn.disabled=true;clearErr();
+  try{
+    setStatus("Fetching world list…");
+    await refreshTopology();buildHomeSelect(document.getElementById("home"),state.home);
+    const worlds=await fetchWorlds();
+    for(const[id,nm]of Object.entries(worlds))if(nm===state.home)state.homeId=+id;
+    state.scopeDc=dcOfWorld(state.home)||state.dc;
+    const dc=await fetchAgg(state.scopeDc,PRICE_IDS,(d,t)=>setStatus(`Pricing ${PRICE_IDS.length} voyage loot items across ${state.scopeDc}… ${d}/${t} batches`));
+    state.mkt=dc.out;
+    const world=await fetchAgg(state.home,LOOT_IDS,(d,t)=>setStatus(`Listings on ${state.home}… ${d}/${t} batches`));
+    state.world=world.out;
+    const hist=await fetchHist(state.scopeDc,LOOT_IDS,(d,t)=>setStatus(`Reading ${state.scopeDc} sales history… ${d}/${t} batches`));
+    state.hist=hist.out;
+    state.summary=`Loot priced across <b>${state.scopeDc}</b>, listings on <b>${state.home}</b> · salvage at NPC prices · tax ${Math.round(state.tax*100)}% · click a route for what each sector brings back`;
+    compute();render();updateScanTime();
+    finishStatus([dc,world,hist]);
+  }catch(e){showErr(e);compute();render();}finally{btn.disabled=false;}
+}
+
+/* ---- wiring ---- */
+(function initControls(){
+  for(const[sid,slot]of SLOTS){const sel=document.getElementById(sid);
+    sel.innerHTML=[3,2,1,4,5,8,7,6,9,10].map(c=>{const p=partFor(c,slot);return`<option value="${c}" title="${CLASS_LETTER[c]}, rank ${p.rank}">${CLASS_CODE[c]} ${CLASS_LETTER[c].replace("Modified ","")}</option>`;}).join("");}
+  const sea=document.getElementById("sea");
+  sea.innerHTML='<option value="all">Every sea</option>'+Object.entries(SUB.maps).map(([id,n])=>`<option value="${id}">${n}</option>`).join("");
+  document.getElementById("nVoy").textContent=Math.round(SUB.records/1e6)+" million";
+})();
+function syncBuildSelects(){SLOTS.forEach(([sid],i)=>{document.getElementById(sid).value=String(state.build[i]);});paintStats();}
+const recompute=()=>{paintStats();if(state.mkt||state.routes){compute();render();}};
+SLOTS.forEach(([sid],i)=>document.getElementById(sid).addEventListener("change",e=>{state.build[i]=+e.target.value;recompute();}));
+document.getElementById("rank").addEventListener("change",e=>{state.rank=Math.max(1,Math.min(149,+e.target.value||1));e.target.value=state.rank;recompute();});
+document.getElementById("subs").addEventListener("change",e=>{state.subs=+e.target.value;recompute();});
+document.getElementById("cadence").addEventListener("change",e=>{state.cadence=+e.target.value;recompute();});
+document.getElementById("useMarket").addEventListener("change",e=>{state.useMarket=e.target.checked;recompute();});
+document.getElementById("fitOnly").addEventListener("change",e=>{state.fitOnly=e.target.checked;if(state.routes)render();});
+document.getElementById("sea").addEventListener("change",e=>{state.sea=e.target.value;recompute();});
+document.getElementById("maxSec").addEventListener("change",e=>{state.maxSec=+e.target.value;recompute();});
+document.getElementById("tax").addEventListener("change",e=>{state.tax=+e.target.value;recompute();});
+document.getElementById("search").addEventListener("input",e=>{state.query=e.target.value.trim();if(state.routes)render();});
+buildHomeSelect(document.getElementById("home"),state.home);
+document.getElementById("home").addEventListener("change",e=>{homeChanged(e.target.value);load();});
+document.getElementById("refresh").addEventListener("click",load);
+document.getElementById("views").addEventListener("click",e=>{const b=e.target.closest("button[data-view]");if(!b||b.dataset.view===state.view)return;
+  state.view=b.dataset.view;state.sortKey=state.view==="routes"?"day":"gilDay";state.sortDir=-1;
+  document.querySelectorAll("#views button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));
+  try{localStorage.setItem("gildesk:submersible:view",state.view);}catch(err){}
+  if(state.routes)render();});
+document.getElementById("rows").addEventListener("click",e=>{
+  if(e.target.closest("button,a"))return;
+  const tr=e.target.closest("tr.row[data-id]");if(!tr||state.view!=="routes")return;
+  const id=tr.dataset.id;if(state.expanded.has(id))state.expanded.delete(id);else state.expanded.add(id);render();});
+
+/* settings persistence */
+(function(){
+  const SKEY="gildesk:submersible:settings";
+  function collect(){const s={};document.querySelectorAll("select[id],input[id]").forEach(el=>{
+    if(el.id==="search")return;s[el.id]=el.type==="checkbox"?el.checked:el.value;});return s;}
+  document.addEventListener("change",()=>{try{localStorage.setItem(SKEY,JSON.stringify(collect()));}catch(e){}});
+  syncBuildSelects();
+  try{const s=JSON.parse(localStorage.getItem(SKEY)||"{}");
+    for(const[id,v]of Object.entries(s)){const el=document.getElementById(id);if(!el)continue;
+      if(el.type==="checkbox")el.checked=!!v;else el.value=v;
+      if(id==="home"){state.home=el.value;syncHomeNames();continue;}
+      el.dispatchEvent(new Event("change"));}
+  }catch(e){}
+  try{const v=localStorage.getItem("gildesk:submersible:view");if(v==="loot"){state.view="loot";state.sortKey="gilDay";
+    document.querySelectorAll("#views button").forEach(x=>x.setAttribute("aria-pressed",String(x.dataset.view==="loot")));}}catch(e){}
+  paintStats();renderKpis();
+})();
+
+/* saved lists: a loot item goes over as a plain item */
+window.__listEntry=id=>{
+  id=+id;if(SUB.vendor[id])return null;
+  const best=(state.loot||[]).find(x=>x.id===id);
+  return{id,name:nameOf(id),kind:"item",group:"item",q:"nq",note:best?`Submersible loot · ${best.best.s.l} ${best.best.s.n}`:"Submersible loot",recipes:{},src:"Submersibles"};
+};
+</script>
+</body>
+</html>

@@ -1,0 +1,5381 @@
+{
+  "projects": [
+    {
+      "i": 9462,
+      "n": "Level 2 Aetherial Wheel Stand",
+      "cat": "Aetherial Wheels",
+      "type": "Furnishing",
+      "phases": [
+        {"part":"Wheel Stand","step":1,"of":3,"items":[[5094,3,3],[7020,3,3],[5060,3,3],[5066,3,3]]},
+        {"part":"Wheel Stand","step":2,"of":3,"items":[[5376,3,3],[5065,3,3],[5066,3,3],[5480,3,3]]},
+        {
+          "part": "Wheel Stand",
+          "step": 3,
+          "of": 3,
+          "items": [[7606,2,3],[5186,3,3],[5067,3,3],[5289,2,3],[7017,3,3]]
+        }
+      ]
+    },
+    {
+      "i": 9463,
+      "n": "Level 3 Aetherial Wheel Stand",
+      "cat": "Aetherial Wheels",
+      "type": "Furnishing",
+      "phases": [
+        {"part":"Wheel Stand","step":1,"of":3,"items":[[5094,3,3],[7020,3,3],[5060,3,3],[5066,3,3]]},
+        {
+          "part": "Wheel Stand",
+          "step": 2,
+          "of": 3,
+          "items": [[12582,3,3],[5059,3,3],[5067,6,3],[12602,3,3]]
+        },
+        {
+          "part": "Wheel Stand",
+          "step": 3,
+          "of": 3,
+          "items": [[12581,4,3],[5186,3,3],[9360,3,3],[12565,4,3],[7017,3,3]]
+        }
+      ]
+    },
+    {
+      "i": 9464,
+      "n": "Level 4 Aetherial Wheel Stand",
+      "cat": "Aetherial Wheels",
+      "type": "Furnishing",
+      "phases": [
+        {"part":"Wheel Stand","step":1,"of":3,"items":[[5095,3,3],[12519,3,3],[5067,3,3]]},
+        {"part":"Wheel Stand","step":2,"of":3,"items":[[12583,3,3],[12525,3,3],[12603,3,3]]},
+        {
+          "part": "Wheel Stand",
+          "step": 3,
+          "of": 3,
+          "items": [[13758,2,3],[12541,2,3],[12521,2,3],[12566,2,3]]
+        }
+      ]
+    },
+    {
+      "i": 9465,
+      "n": "Level 5 Aetherial Wheel Stand",
+      "cat": "Aetherial Wheels",
+      "type": "Furnishing",
+      "phases": [
+        {"part":"Wheel Stand","step":1,"of":3,"items":[[5095,3,3],[12525,3,3],[12521,3,3]]},
+        {"part":"Wheel Stand","step":2,"of":3,"items":[[12583,3,3],[14935,1,3],[12603,3,3]]},
+        {
+          "part": "Wheel Stand",
+          "step": 3,
+          "of": 3,
+          "items": [[13758,1,3],[5069,5,3],[12541,2,3],[12566,2,3]]
+        }
+      ]
+    },
+    {
+      "i": 9466,
+      "n": "Level 6 Aetherial Wheel Stand",
+      "cat": "Aetherial Wheels",
+      "type": "Furnishing",
+      "phases": [
+        {"part":"Wheel Stand","step":1,"of":3,"items":[[12530,1,3],[14146,1,2],[12521,3,3]]},
+        {"part":"Wheel Stand","step":2,"of":3,"items":[[14158,1,3],[14935,1,2],[12603,3,3]]},
+        {
+          "part": "Wheel Stand",
+          "step": 3,
+          "of": 3,
+          "items": [[13758,1,3],[14149,1,2],[12548,1,2],[12566,2,3]]
+        }
+      ]
+    },
+    {
+      "i": 9653,
+      "n": "Grade 2 Wheel of Confrontation",
+      "cat": "Aetherial Wheels",
+      "type": "Miscellany",
+      "phases": [
+        {
+          "part": "Aetherial Wheel",
+          "step": 1,
+          "of": 1,
+          "items": [[5066,1,3],[12914,1,3],[12531,1,3],[10099,1,3]]
+        }
+      ]
+    },
+    {
+      "i": 9654,
+      "n": "Grade 2 Wheel of Productivity",
+      "cat": "Aetherial Wheels",
+      "type": "Miscellany",
+      "phases": [
+        {
+          "part": "Aetherial Wheel",
+          "step": 1,
+          "of": 1,
+          "items": [[5066,1,3],[12914,1,3],[12531,1,3],[10099,1,3]]
+        }
+      ]
+    },
+    {
+      "i": 9655,
+      "n": "Grade 2 Wheel of Industry",
+      "cat": "Aetherial Wheels",
+      "type": "Miscellany",
+      "phases": [
+        {
+          "part": "Aetherial Wheel",
+          "step": 1,
+          "of": 1,
+          "items": [[5066,1,3],[12914,1,3],[12531,1,3],[10099,1,3]]
+        }
+      ]
+    },
+    {
+      "i": 9656,
+      "n": "Grade 2 Wheel of Longeing",
+      "cat": "Aetherial Wheels",
+      "type": "Miscellany",
+      "phases": [
+        {
+          "part": "Aetherial Wheel",
+          "step": 1,
+          "of": 1,
+          "items": [[5066,1,3],[12914,1,3],[12531,1,3],[10099,1,3]]
+        }
+      ]
+    },
+    {
+      "i": 9657,
+      "n": "Grade 2 Wheel of Rivalry",
+      "cat": "Aetherial Wheels",
+      "type": "Miscellany",
+      "phases": [
+        {
+          "part": "Aetherial Wheel",
+          "step": 1,
+          "of": 1,
+          "items": [[5066,1,3],[12914,1,3],[12531,1,3],[10099,1,3]]
+        }
+      ]
+    },
+    {
+      "i": 9658,
+      "n": "Grade 2 Wheel of Company",
+      "cat": "Aetherial Wheels",
+      "type": "Miscellany",
+      "phases": [
+        {
+          "part": "Aetherial Wheel",
+          "step": 1,
+          "of": 1,
+          "items": [[5066,1,3],[12914,1,3],[12531,1,3],[10099,1,3]]
+        }
+      ]
+    },
+    {
+      "i": 12215,
+      "n": "Grade 2 Wheel of Recreation",
+      "cat": "Aetherial Wheels",
+      "type": "Miscellany",
+      "phases": [
+        {
+          "part": "Aetherial Wheel",
+          "step": 1,
+          "of": 1,
+          "items": [[5066,1,3],[12914,1,3],[12531,1,3],[10099,1,3]]
+        }
+      ]
+    },
+    {
+      "i": 9659,
+      "n": "Grade 2 Wheel of Initiation",
+      "cat": "Aetherial Wheels",
+      "type": "Miscellany",
+      "phases": [
+        {
+          "part": "Aetherial Wheel",
+          "step": 1,
+          "of": 1,
+          "items": [[5066,1,3],[12918,1,3],[12531,1,3],[10099,1,3]]
+        }
+      ]
+    },
+    {
+      "i": 9660,
+      "n": "Grade 2 Wheel of Capacity",
+      "cat": "Aetherial Wheels",
+      "type": "Miscellany",
+      "phases": [
+        {
+          "part": "Aetherial Wheel",
+          "step": 1,
+          "of": 1,
+          "items": [[5066,1,3],[12918,1,3],[12531,1,3],[10099,1,3]]
+        }
+      ]
+    },
+    {
+      "i": 9661,
+      "n": "Grade 2 Wheel of Observation",
+      "cat": "Aetherial Wheels",
+      "type": "Miscellany",
+      "phases": [
+        {
+          "part": "Aetherial Wheel",
+          "step": 1,
+          "of": 1,
+          "items": [[5066,1,3],[12918,1,3],[12531,1,3],[10099,1,3]]
+        }
+      ]
+    },
+    {
+      "i": 9662,
+      "n": "Grade 2 Wheel of Efficiency",
+      "cat": "Aetherial Wheels",
+      "type": "Miscellany",
+      "phases": [
+        {
+          "part": "Aetherial Wheel",
+          "step": 1,
+          "of": 1,
+          "items": [[5066,1,3],[12918,1,3],[12531,1,3],[10099,1,3]]
+        }
+      ]
+    },
+    {
+      "i": 9663,
+      "n": "Grade 2 Wheel of Precision",
+      "cat": "Aetherial Wheels",
+      "type": "Miscellany",
+      "phases": [
+        {
+          "part": "Aetherial Wheel",
+          "step": 1,
+          "of": 1,
+          "items": [[5066,1,3],[12918,1,3],[12531,1,3],[10099,1,3]]
+        }
+      ]
+    },
+    {
+      "i": 9664,
+      "n": "Grade 2 Wheel of Dedication",
+      "cat": "Aetherial Wheels",
+      "type": "Miscellany",
+      "phases": [
+        {
+          "part": "Aetherial Wheel",
+          "step": 1,
+          "of": 1,
+          "items": [[5066,1,3],[12918,1,3],[12531,1,3],[10099,1,3]]
+        }
+      ]
+    },
+    {
+      "i": 9665,
+      "n": "Grade 2 Wheel of Nutriment",
+      "cat": "Aetherial Wheels",
+      "type": "Miscellany",
+      "phases": [
+        {
+          "part": "Aetherial Wheel",
+          "step": 1,
+          "of": 1,
+          "items": [[5066,1,3],[12916,1,3],[12531,1,3],[10099,1,3]]
+        }
+      ]
+    },
+    {
+      "i": 9666,
+      "n": "Grade 2 Wheel of Permanence",
+      "cat": "Aetherial Wheels",
+      "type": "Miscellany",
+      "phases": [
+        {
+          "part": "Aetherial Wheel",
+          "step": 1,
+          "of": 1,
+          "items": [[5066,1,3],[12916,1,3],[12531,1,3],[10099,1,3]]
+        }
+      ]
+    },
+    {
+      "i": 9667,
+      "n": "Grade 2 Wheel of Swiftness",
+      "cat": "Aetherial Wheels",
+      "type": "Miscellany",
+      "phases": [
+        {
+          "part": "Aetherial Wheel",
+          "step": 1,
+          "of": 1,
+          "items": [[5066,1,3],[12916,1,3],[12531,1,3],[10099,1,3]]
+        }
+      ]
+    },
+    {
+      "i": 9668,
+      "n": "Grade 2 Wheel of Pilgrimage",
+      "cat": "Aetherial Wheels",
+      "type": "Miscellany",
+      "phases": [
+        {
+          "part": "Aetherial Wheel",
+          "step": 1,
+          "of": 1,
+          "items": [[5066,1,3],[12916,1,3],[12531,1,3],[10099,1,3]]
+        }
+      ]
+    },
+    {
+      "i": 9669,
+      "n": "Grade 3 Wheel of Confrontation",
+      "cat": "Aetherial Wheels",
+      "type": "Miscellany",
+      "phases": [
+        {
+          "part": "Aetherial Wheel",
+          "step": 1,
+          "of": 1,
+          "items": [[5066,1,3],[12915,1,3],[12531,1,3],[10099,1,3]]
+        }
+      ]
+    },
+    {
+      "i": 9670,
+      "n": "Grade 3 Wheel of Productivity",
+      "cat": "Aetherial Wheels",
+      "type": "Miscellany",
+      "phases": [
+        {
+          "part": "Aetherial Wheel",
+          "step": 1,
+          "of": 1,
+          "items": [[5066,1,3],[12915,1,3],[12531,1,3],[10099,1,3]]
+        }
+      ]
+    },
+    {
+      "i": 9671,
+      "n": "Grade 3 Wheel of Industry",
+      "cat": "Aetherial Wheels",
+      "type": "Miscellany",
+      "phases": [
+        {
+          "part": "Aetherial Wheel",
+          "step": 1,
+          "of": 1,
+          "items": [[5066,1,3],[12915,1,3],[12531,1,3],[10099,1,3]]
+        }
+      ]
+    },
+    {
+      "i": 9672,
+      "n": "Grade 3 Wheel of Longeing",
+      "cat": "Aetherial Wheels",
+      "type": "Miscellany",
+      "phases": [
+        {
+          "part": "Aetherial Wheel",
+          "step": 1,
+          "of": 1,
+          "items": [[5066,1,3],[12915,1,3],[12531,1,3],[10099,1,3]]
+        }
+      ]
+    },
+    {
+      "i": 9673,
+      "n": "Grade 3 Wheel of Rivalry",
+      "cat": "Aetherial Wheels",
+      "type": "Miscellany",
+      "phases": [
+        {
+          "part": "Aetherial Wheel",
+          "step": 1,
+          "of": 1,
+          "items": [[5066,1,3],[12915,1,3],[12531,1,3],[10099,1,3]]
+        }
+      ]
+    },
+    {
+      "i": 9674,
+      "n": "Grade 3 Wheel of Company",
+      "cat": "Aetherial Wheels",
+      "type": "Miscellany",
+      "phases": [
+        {
+          "part": "Aetherial Wheel",
+          "step": 1,
+          "of": 1,
+          "items": [[5066,1,3],[12915,1,3],[12531,1,3],[10099,1,3]]
+        }
+      ]
+    },
+    {
+      "i": 12216,
+      "n": "Grade 3 Wheel of Recreation",
+      "cat": "Aetherial Wheels",
+      "type": "Miscellany",
+      "phases": [
+        {
+          "part": "Aetherial Wheel",
+          "step": 1,
+          "of": 1,
+          "items": [[5066,1,3],[12915,1,3],[12531,1,3],[10099,1,3]]
+        }
+      ]
+    },
+    {
+      "i": 9676,
+      "n": "Grade 3 Wheel of Capacity",
+      "cat": "Aetherial Wheels",
+      "type": "Miscellany",
+      "phases": [
+        {
+          "part": "Aetherial Wheel",
+          "step": 1,
+          "of": 1,
+          "items": [[5066,1,3],[12919,1,3],[12531,1,3],[10099,1,3]]
+        }
+      ]
+    },
+    {
+      "i": 9677,
+      "n": "Grade 3 Wheel of Observation",
+      "cat": "Aetherial Wheels",
+      "type": "Miscellany",
+      "phases": [
+        {
+          "part": "Aetherial Wheel",
+          "step": 1,
+          "of": 1,
+          "items": [[5066,1,3],[12919,1,3],[12531,1,3],[10099,1,3]]
+        }
+      ]
+    },
+    {
+      "i": 9678,
+      "n": "Grade 3 Wheel of Efficiency",
+      "cat": "Aetherial Wheels",
+      "type": "Miscellany",
+      "phases": [
+        {
+          "part": "Aetherial Wheel",
+          "step": 1,
+          "of": 1,
+          "items": [[5066,1,3],[12919,1,3],[12531,1,3],[10099,1,3]]
+        }
+      ]
+    },
+    {
+      "i": 9679,
+      "n": "Grade 3 Wheel of Precision",
+      "cat": "Aetherial Wheels",
+      "type": "Miscellany",
+      "phases": [
+        {
+          "part": "Aetherial Wheel",
+          "step": 1,
+          "of": 1,
+          "items": [[5066,1,3],[12919,1,3],[12531,1,3],[10099,1,3]]
+        }
+      ]
+    },
+    {
+      "i": 9680,
+      "n": "Grade 3 Wheel of Dedication",
+      "cat": "Aetherial Wheels",
+      "type": "Miscellany",
+      "phases": [
+        {
+          "part": "Aetherial Wheel",
+          "step": 1,
+          "of": 1,
+          "items": [[5066,1,3],[12919,1,3],[12531,1,3],[10099,1,3]]
+        }
+      ]
+    },
+    {
+      "i": 9681,
+      "n": "Grade 3 Wheel of Nutriment",
+      "cat": "Aetherial Wheels",
+      "type": "Miscellany",
+      "phases": [
+        {
+          "part": "Aetherial Wheel",
+          "step": 1,
+          "of": 1,
+          "items": [[5066,1,3],[12917,1,3],[12531,1,3],[10099,1,3]]
+        }
+      ]
+    },
+    {
+      "i": 9682,
+      "n": "Grade 3 Wheel of Permanence",
+      "cat": "Aetherial Wheels",
+      "type": "Miscellany",
+      "phases": [
+        {
+          "part": "Aetherial Wheel",
+          "step": 1,
+          "of": 1,
+          "items": [[5066,1,3],[12917,1,3],[12531,1,3],[10099,1,3]]
+        }
+      ]
+    },
+    {
+      "i": 9684,
+      "n": "Grade 3 Wheel of Pilgrimage",
+      "cat": "Aetherial Wheels",
+      "type": "Miscellany",
+      "phases": [
+        {
+          "part": "Aetherial Wheel",
+          "step": 1,
+          "of": 1,
+          "items": [[5066,1,3],[12917,1,3],[12531,1,3],[10099,1,3]]
+        }
+      ]
+    },
+    {
+      "i": 10156,
+      "n": "Bronco-type Hull",
+      "cat": "Airships & Submersibles",
+      "type": "Airship Hull",
+      "phases": [
+        {
+          "part": "Airship Hull",
+          "step": 1,
+          "of": 3,
+          "items": [[5368,6,3],[5374,6,3],[7018,6,3],[5059,6,3]]
+        },
+        {
+          "part": "Airship Hull",
+          "step": 2,
+          "of": 3,
+          "items": [[5378,6,3],[5091,6,3],[5079,6,3],[5066,6,3]]
+        },
+        {
+          "part": "Airship Hull",
+          "step": 3,
+          "of": 3,
+          "items": [[5094,6,3],[5075,6,3],[5282,6,3],[7026,6,3],[7017,6,3],[5505,6,3]]
+        }
+      ]
+    },
+    {
+      "i": 10157,
+      "n": "Invincible-type Hull",
+      "cat": "Airships & Submersibles",
+      "type": "Airship Hull",
+      "phases": [
+        {
+          "part": "Airship Hull",
+          "step": 1,
+          "of": 3,
+          "items": [[5371,6,3],[5378,6,3],[7018,6,3],[12913,3,3]]
+        },
+        {
+          "part": "Airship Hull",
+          "step": 2,
+          "of": 3,
+          "items": [[5366,3,3],[5092,6,3],[5079,6,3],[5066,6,3],[5505,6,3]]
+        },
+        {
+          "part": "Airship Hull",
+          "step": 3,
+          "of": 3,
+          "items": [[5099,6,3],[5059,6,3],[5067,7,3],[7017,6,3]]
+        }
+      ]
+    },
+    {
+      "i": 10158,
+      "n": "Enterprise-type Hull",
+      "cat": "Airships & Submersibles",
+      "type": "Airship Hull",
+      "phases": [
+        {
+          "part": "Airship Hull",
+          "step": 1,
+          "of": 3,
+          "items": [[5373,8,3],[5378,8,3],[7019,8,3],[12913,3,3]]
+        },
+        {
+          "part": "Airship Hull",
+          "step": 2,
+          "of": 3,
+          "items": [[7606,8,3],[5092,8,3],[5073,8,3],[5066,8,3]]
+        },
+        {
+          "part": "Airship Hull",
+          "step": 3,
+          "of": 3,
+          "items": [[5094,8,3],[5059,8,3],[5287,8,3],[12231,3,3],[7017,6,3],[5506,3,3]]
+        }
+      ]
+    },
+    {
+      "i": 10159,
+      "n": "Invincible II-type Hull",
+      "cat": "Airships & Submersibles",
+      "type": "Airship Hull",
+      "phases": [
+        {
+          "part": "Airship Hull",
+          "step": 1,
+          "of": 3,
+          "items": [[5371,8,3],[5378,8,3],[7018,8,3],[12913,3,3]]
+        },
+        {
+          "part": "Airship Hull",
+          "step": 2,
+          "of": 3,
+          "items": [[12580,4,3],[5094,8,3],[5074,8,3],[5067,8,3],[5506,4,3]]
+        },
+        {
+          "part": "Airship Hull",
+          "step": 3,
+          "of": 3,
+          "items": [[5094,10,3],[12519,6,3],[12912,3,3],[7017,10,3]]
+        }
+      ]
+    },
+    {
+      "i": 10160,
+      "n": "Odyssey-type Hull",
+      "cat": "Airships & Submersibles",
+      "type": "Airship Hull",
+      "phases": [
+        {
+          "part": "Airship Hull",
+          "step": 1,
+          "of": 3,
+          "items": [[5376,8,3],[7606,8,3],[7020,8,3],[12913,3,3]]
+        },
+        {
+          "part": "Airship Hull",
+          "step": 2,
+          "of": 3,
+          "items": [[12581,4,3],[5091,8,3],[5075,8,3],[12519,4,3]]
+        },
+        {
+          "part": "Airship Hull",
+          "step": 3,
+          "of": 3,
+          "items": [[5095,7,3],[12519,4,3],[12233,3,3],[12231,3,3],[7017,8,3],[5507,3,3]]
+        }
+      ]
+    },
+    {
+      "i": 10161,
+      "n": "Tatanora-type Hull",
+      "cat": "Airships & Submersibles",
+      "type": "Airship Hull",
+      "phases": [
+        {
+          "part": "Airship Hull",
+          "step": 1,
+          "of": 3,
+          "items": [[12583,8,3],[7606,4,3],[7020,8,3],[12913,3,3]]
+        },
+        {
+          "part": "Airship Hull",
+          "step": 2,
+          "of": 3,
+          "items": [[12232,3,3],[5095,8,3],[12526,8,3],[5067,8,3],[5506,3,3]]
+        },
+        {
+          "part": "Airship Hull",
+          "step": 3,
+          "of": 3,
+          "items": [[5094,8,3],[12525,4,3],[12912,3,3],[12233,3,3],[7017,8,3]]
+        }
+      ]
+    },
+    {
+      "i": 10162,
+      "n": "Bronco-type Sail",
+      "cat": "Airships & Submersibles",
+      "type": "Airship Rigging",
+      "phases": [
+        {
+          "part": "Airship Rigging",
+          "step": 1,
+          "of": 3,
+          "items": [[5376,7,3],[5061,7,3],[7018,7,3],[5092,7,3]]
+        },
+        {
+          "part": "Airship Rigging",
+          "step": 2,
+          "of": 3,
+          "items": [[5057,7,3],[5092,7,3],[5058,7,3],[5093,7,3]]
+        },
+        {
+          "part": "Airship Rigging",
+          "step": 3,
+          "of": 3,
+          "items": [[5060,2,3],[5093,4,3],[7608,2,3],[5289,2,3],[7026,4,3],[5330,2,3]]
+        }
+      ]
+    },
+    {
+      "i": 10163,
+      "n": "Invincible-type Propellers",
+      "cat": "Airships & Submersibles",
+      "type": "Airship Rigging",
+      "phases": [
+        {
+          "part": "Airship Rigging",
+          "step": 1,
+          "of": 3,
+          "items": [[5379,4,3],[5061,7,3],[7018,7,3],[5092,7,3]]
+        },
+        {
+          "part": "Airship Rigging",
+          "step": 2,
+          "of": 3,
+          "items": [[5058,7,3],[5093,7,3],[5060,4,3],[5094,7,3]]
+        },
+        {
+          "part": "Airship Rigging",
+          "step": 3,
+          "of": 3,
+          "items": [[5060,4,3],[12913,3,3],[5093,7,3],[5066,7,3]]
+        }
+      ]
+    },
+    {
+      "i": 10164,
+      "n": "Enterprise-type Bladder",
+      "cat": "Airships & Submersibles",
+      "type": "Airship Rigging",
+      "phases": [
+        {
+          "part": "Airship Rigging",
+          "step": 1,
+          "of": 3,
+          "items": [[5379,4,3],[12913,3,3],[7019,7,3],[5093,7,3]]
+        },
+        {
+          "part": "Airship Rigging",
+          "step": 2,
+          "of": 3,
+          "items": [[5058,7,3],[5093,7,3],[5059,7,3],[5095,7,3]]
+        },
+        {
+          "part": "Airship Rigging",
+          "step": 3,
+          "of": 3,
+          "items": [[5060,6,3],[5099,6,3],[12563,6,3],[12231,3,3]]
+        }
+      ]
+    },
+    {
+      "i": 10165,
+      "n": "Invincible II-type Propellers",
+      "cat": "Airships & Submersibles",
+      "type": "Airship Rigging",
+      "phases": [
+        {
+          "part": "Airship Rigging",
+          "step": 1,
+          "of": 3,
+          "items": [[7606,4,3],[7019,10,3],[5061,10,3],[5099,10,3]]
+        },
+        {
+          "part": "Airship Rigging",
+          "step": 2,
+          "of": 3,
+          "items": [[5058,10,3],[5093,10,3],[5094,10,3],[5060,10,3]]
+        },
+        {
+          "part": "Airship Rigging",
+          "step": 3,
+          "of": 3,
+          "items": [[12913,3,3],[12519,4,3],[5095,4,3],[12912,3,3]]
+        }
+      ]
+    },
+    {
+      "i": 10166,
+      "n": "Odyssey-type Bladders",
+      "cat": "Airships & Submersibles",
+      "type": "Airship Rigging",
+      "phases": [
+        {
+          "part": "Airship Rigging",
+          "step": 1,
+          "of": 3,
+          "items": [[7606,4,3],[12913,3,3],[7020,10,3],[5094,10,3]]
+        },
+        {
+          "part": "Airship Rigging",
+          "step": 2,
+          "of": 3,
+          "items": [[5058,10,3],[5093,10,3],[5059,10,3],[5095,10,3]]
+        },
+        {
+          "part": "Airship Rigging",
+          "step": 3,
+          "of": 3,
+          "items": [[5060,4,3],[5095,4,3],[12564,6,3],[12233,3,3],[12231,3,3]]
+        }
+      ]
+    },
+    {
+      "i": 10167,
+      "n": "Tatanora-type Propellers",
+      "cat": "Airships & Submersibles",
+      "type": "Airship Rigging",
+      "phases": [
+        {
+          "part": "Airship Rigging",
+          "step": 1,
+          "of": 3,
+          "items": [[12232,3,3],[7020,10,3],[5061,10,3],[5094,10,3]]
+        },
+        {
+          "part": "Airship Rigging",
+          "step": 2,
+          "of": 3,
+          "items": [[12526,10,3],[5094,10,3],[5060,6,3],[5095,10,3]]
+        },
+        {
+          "part": "Airship Rigging",
+          "step": 3,
+          "of": 3,
+          "items": [[12519,5,3],[12525,5,3],[5095,5,3],[12913,3,3],[12912,3,3]]
+        }
+      ]
+    },
+    {
+      "i": 10168,
+      "n": "Bronco-type Forecastle",
+      "cat": "Airships & Submersibles",
+      "type": "Airship Forecastle",
+      "phases": [
+        {
+          "part": "Airship Forecastle",
+          "step": 1,
+          "of": 3,
+          "items": [[5058,8,3],[5093,8,3],[7023,8,3],[5059,8,3]]
+        },
+        {
+          "part": "Airship Forecastle",
+          "step": 2,
+          "of": 3,
+          "items": [[5092,8,3],[5058,8,3],[7022,8,3],[5060,2,3]]
+        },
+        {"part":"Airship Forecastle","step":3,"of":3,"items":[[5099,10,3],[5075,2,3],[5064,10,3]]}
+      ]
+    },
+    {
+      "i": 10169,
+      "n": "Invincible-type Forecastle",
+      "cat": "Airships & Submersibles",
+      "type": "Airship Forecastle",
+      "phases": [
+        {
+          "part": "Airship Forecastle",
+          "step": 1,
+          "of": 3,
+          "items": [[5058,10,3],[5093,10,3],[7023,10,3],[12913,3,3]]
+        },
+        {"part":"Airship Forecastle","step":2,"of":3,"items":[[5093,10,3],[7022,10,3],[5060,4,3]]},
+        {"part":"Airship Forecastle","step":3,"of":3,"items":[[7606,3,3],[5099,10,3],[5064,10,3]]}
+      ]
+    },
+    {
+      "i": 10170,
+      "n": "Enterprise-type Forecastle",
+      "cat": "Airships & Submersibles",
+      "type": "Airship Forecastle",
+      "phases": [
+        {
+          "part": "Airship Forecastle",
+          "step": 1,
+          "of": 3,
+          "items": [[5058,10,3],[5094,10,3],[7023,10,3],[12913,3,3]]
+        },
+        {
+          "part": "Airship Forecastle",
+          "step": 2,
+          "of": 3,
+          "items": [[5093,10,3],[12519,6,3],[7022,10,3],[5060,3,3]]
+        },
+        {
+          "part": "Airship Forecastle",
+          "step": 3,
+          "of": 3,
+          "items": [[5099,10,3],[5075,3,3],[5065,10,3],[5067,6,3],[5512,10,3]]
+        }
+      ]
+    },
+    {
+      "i": 10171,
+      "n": "Invincible II-type Forecastle",
+      "cat": "Airships & Submersibles",
+      "type": "Airship Forecastle",
+      "phases": [
+        {
+          "part": "Airship Forecastle",
+          "step": 1,
+          "of": 3,
+          "items": [[5093,10,3],[5058,10,3],[7023,10,3],[12913,3,3]]
+        },
+        {
+          "part": "Airship Forecastle",
+          "step": 2,
+          "of": 3,
+          "items": [[5093,10,3],[12519,6,3],[7023,10,3],[5060,4,3]]
+        },
+        {
+          "part": "Airship Forecastle",
+          "step": 3,
+          "of": 3,
+          "items": [[12580,4,3],[5095,10,3],[12912,3,3],[5067,4,3]]
+        }
+      ]
+    },
+    {
+      "i": 10172,
+      "n": "Odyssey-type Forecastle",
+      "cat": "Airships & Submersibles",
+      "type": "Airship Forecastle",
+      "phases": [
+        {
+          "part": "Airship Forecastle",
+          "step": 1,
+          "of": 3,
+          "items": [[5093,10,3],[5060,7,3],[7023,10,3],[12913,3,3]]
+        },
+        {
+          "part": "Airship Forecastle",
+          "step": 2,
+          "of": 3,
+          "items": [[5094,10,3],[12519,6,3],[7023,10,3],[5060,6,3]]
+        },
+        {
+          "part": "Airship Forecastle",
+          "step": 3,
+          "of": 3,
+          "items": [[5094,6,3],[5084,6,3],[5075,6,3],[12912,3,3],[12520,5,3]]
+        }
+      ]
+    },
+    {
+      "i": 10173,
+      "n": "Tatanora-type Forecastle",
+      "cat": "Airships & Submersibles",
+      "type": "Airship Forecastle",
+      "phases": [
+        {
+          "part": "Airship Forecastle",
+          "step": 1,
+          "of": 3,
+          "items": [[5099,10,3],[12526,10,3],[7023,10,3],[12913,3,3]]
+        },
+        {
+          "part": "Airship Forecastle",
+          "step": 2,
+          "of": 3,
+          "items": [[5095,10,3],[12525,6,3],[7023,10,3],[5060,4,3]]
+        },
+        {
+          "part": "Airship Forecastle",
+          "step": 3,
+          "of": 3,
+          "items": [[12232,3,3],[5095,10,3],[12519,6,3],[12912,3,3]]
+        }
+      ]
+    },
+    {
+      "i": 10174,
+      "n": "Bronco-type Aftcastle",
+      "cat": "Airships & Submersibles",
+      "type": "Airship Aftcastle",
+      "phases": [
+        {
+          "part": "Airship Aftcastle",
+          "step": 1,
+          "of": 3,
+          "items": [[5093,8,3],[5059,8,3],[5058,8,3],[7023,8,3]]
+        },
+        {
+          "part": "Airship Aftcastle",
+          "step": 2,
+          "of": 3,
+          "items": [[5058,10,3],[5060,2,3],[5092,10,3],[7022,10,3]]
+        },
+        {"part":"Airship Aftcastle","step":3,"of":3,"items":[[5099,10,3],[5075,4,3],[5064,10,3]]}
+      ]
+    },
+    {
+      "i": 10175,
+      "n": "Invincible-type Aftcastle",
+      "cat": "Airships & Submersibles",
+      "type": "Airship Aftcastle",
+      "phases": [
+        {
+          "part": "Airship Aftcastle",
+          "step": 1,
+          "of": 3,
+          "items": [[5093,8,3],[12913,3,3],[5058,8,3],[7023,8,3]]
+        },
+        {
+          "part": "Airship Aftcastle",
+          "step": 2,
+          "of": 3,
+          "items": [[5058,10,3],[5060,3,3],[7022,10,3],[5059,10,3]]
+        },
+        {
+          "part": "Airship Aftcastle",
+          "step": 3,
+          "of": 3,
+          "items": [[7606,3,3],[5099,10,3],[5059,10,3],[5064,10,3]]
+        }
+      ]
+    },
+    {
+      "i": 10176,
+      "n": "Enterprise-type Aftcastle",
+      "cat": "Airships & Submersibles",
+      "type": "Airship Aftcastle",
+      "phases": [
+        {
+          "part": "Airship Aftcastle",
+          "step": 1,
+          "of": 3,
+          "items": [[5093,8,3],[5059,8,3],[5058,8,3],[12913,3,3]]
+        },
+        {
+          "part": "Airship Aftcastle",
+          "step": 2,
+          "of": 3,
+          "items": [[5099,10,3],[12519,6,3],[7023,10,3],[5060,3,3]]
+        },
+        {
+          "part": "Airship Aftcastle",
+          "step": 3,
+          "of": 3,
+          "items": [[5099,10,3],[7607,6,3],[5075,6,3],[5065,10,3],[5512,10,3]]
+        }
+      ]
+    },
+    {
+      "i": 10177,
+      "n": "Invincible II-type Aftcastle",
+      "cat": "Airships & Submersibles",
+      "type": "Airship Aftcastle",
+      "phases": [
+        {
+          "part": "Airship Aftcastle",
+          "step": 1,
+          "of": 3,
+          "items": [[5093,10,3],[5058,10,3],[7023,10,3],[12913,3,3]]
+        },
+        {
+          "part": "Airship Aftcastle",
+          "step": 2,
+          "of": 3,
+          "items": [[5093,10,3],[12519,6,3],[7023,10,3],[5060,4,3]]
+        },
+        {
+          "part": "Airship Aftcastle",
+          "step": 3,
+          "of": 3,
+          "items": [[12580,4,3],[5094,6,3],[5060,6,3],[12912,3,3],[5067,4,3]]
+        }
+      ]
+    },
+    {
+      "i": 10178,
+      "n": "Odyssey-type Aftcastle",
+      "cat": "Airships & Submersibles",
+      "type": "Airship Aftcastle",
+      "phases": [
+        {
+          "part": "Airship Aftcastle",
+          "step": 1,
+          "of": 3,
+          "items": [[5099,10,3],[5065,10,3],[7023,10,3],[12913,3,3]]
+        },
+        {
+          "part": "Airship Aftcastle",
+          "step": 2,
+          "of": 3,
+          "items": [[5094,10,3],[12519,6,3],[7023,10,3],[5060,10,3]]
+        },
+        {
+          "part": "Airship Aftcastle",
+          "step": 3,
+          "of": 3,
+          "items": [[5094,10,3],[7607,3,3],[5075,10,3],[12520,6,3],[12912,3,3]]
+        }
+      ]
+    },
+    {
+      "i": 10179,
+      "n": "Tatanora-type Aftcastle",
+      "cat": "Airships & Submersibles",
+      "type": "Airship Aftcastle",
+      "phases": [
+        {
+          "part": "Airship Aftcastle",
+          "step": 1,
+          "of": 3,
+          "items": [[5094,10,3],[12526,10,3],[7023,10,3],[12913,3,3]]
+        },
+        {
+          "part": "Airship Aftcastle",
+          "step": 2,
+          "of": 3,
+          "items": [[5095,10,3],[12525,6,3],[7023,10,3],[5060,4,3]]
+        },
+        {
+          "part": "Airship Aftcastle",
+          "step": 3,
+          "of": 3,
+          "items": [[12232,3,3],[5095,6,3],[12522,6,3],[12912,3,3],[12233,3,3]]
+        }
+      ]
+    },
+    {
+      "i": 14003,
+      "n": "Viltgance-type Hull",
+      "cat": "Airships & Submersibles",
+      "type": "Airship Hull",
+      "phases": [
+        {
+          "part": "Airship Hull",
+          "step": 1,
+          "of": 3,
+          "items": [[12581,4,3],[12583,4,3],[7020,4,3],[14935,2,3]]
+        },
+        {
+          "part": "Airship Hull",
+          "step": 2,
+          "of": 3,
+          "items": [[13758,1,3],[12526,2,3],[12521,4,3],[5507,4,3]]
+        },
+        {
+          "part": "Airship Hull",
+          "step": 3,
+          "of": 3,
+          "items": [[5095,4,3],[12525,4,3],[12233,4,3],[7017,4,3]]
+        }
+      ]
+    },
+    {
+      "i": 14004,
+      "n": "Viltgance-type Aetherwings",
+      "cat": "Airships & Submersibles",
+      "type": "Airship Rigging",
+      "phases": [
+        {
+          "part": "Airship Rigging",
+          "step": 1,
+          "of": 3,
+          "items": [[13758,1,3],[12518,4,3],[14935,2,3],[5094,4,3]]
+        },
+        {
+          "part": "Airship Rigging",
+          "step": 2,
+          "of": 3,
+          "items": [[5094,4,3],[12526,2,3],[5095,2,3],[12519,2,3]]
+        },
+        {
+          "part": "Airship Rigging",
+          "step": 3,
+          "of": 3,
+          "items": [[12525,4,3],[14935,2,3],[12566,4,3],[12231,2,3]]
+        }
+      ]
+    },
+    {
+      "i": 14005,
+      "n": "Viltgance-type Forecastle",
+      "cat": "Airships & Submersibles",
+      "type": "Airship Forecastle",
+      "phases": [
+        {
+          "part": "Airship Forecastle",
+          "step": 1,
+          "of": 3,
+          "items": [[5094,4,3],[12526,2,3],[12519,4,3],[14935,2,3]]
+        },
+        {
+          "part": "Airship Forecastle",
+          "step": 2,
+          "of": 3,
+          "items": [[5095,4,3],[12525,4,3],[12524,2,3],[12522,4,3]]
+        },
+        {
+          "part": "Airship Forecastle",
+          "step": 3,
+          "of": 3,
+          "items": [[13758,1,3],[5095,4,3],[12912,2,3],[12521,4,3]]
+        }
+      ]
+    },
+    {
+      "i": 14006,
+      "n": "Viltgance-type Aftcastle",
+      "cat": "Airships & Submersibles",
+      "type": "Airship Aftcastle",
+      "phases": [
+        {
+          "part": "Airship Aftcastle",
+          "step": 1,
+          "of": 3,
+          "items": [[5094,4,3],[12526,2,3],[12525,4,3],[14935,2,3]]
+        },
+        {
+          "part": "Airship Aftcastle",
+          "step": 2,
+          "of": 3,
+          "items": [[5095,4,3],[12525,4,3],[7023,4,3],[12519,4,3]]
+        },
+        {
+          "part": "Airship Aftcastle",
+          "step": 3,
+          "of": 3,
+          "items": [[13758,1,3],[12522,4,3],[12233,3,3],[12231,3,3]]
+        }
+      ]
+    },
+    {
+      "i": 21794,
+      "n": "Shark-class Pressure Hull",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Hull",
+      "phases": [
+        {
+          "part": "Submersible Hull",
+          "step": 1,
+          "of": 3,
+          "items": [[5371,6,3],[5378,6,3],[7018,6,3],[5059,6,3]]
+        },
+        {
+          "part": "Submersible Hull",
+          "step": 2,
+          "of": 3,
+          "items": [[5366,3,3],[5092,6,3],[5079,6,3],[5066,6,3],[5505,6,3]]
+        },
+        {
+          "part": "Submersible Hull",
+          "step": 3,
+          "of": 3,
+          "items": [[5099,6,3],[5059,6,3],[5067,7,3],[7017,6,3]]
+        }
+      ]
+    },
+    {
+      "i": 21795,
+      "n": "Shark-class Stern",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Stern",
+      "phases": [
+        {
+          "part": "Submersible Stern",
+          "step": 1,
+          "of": 3,
+          "items": [[5093,8,3],[5059,6,3],[5058,8,3],[7023,8,3]]
+        },
+        {
+          "part": "Submersible Stern",
+          "step": 2,
+          "of": 3,
+          "items": [[5058,10,3],[5060,3,3],[7022,10,3],[5059,10,3]]
+        },
+        {
+          "part": "Submersible Stern",
+          "step": 3,
+          "of": 3,
+          "items": [[7606,3,3],[5099,10,3],[5059,10,3],[5064,10,3]]
+        }
+      ]
+    },
+    {
+      "i": 21792,
+      "n": "Shark-class Bow",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Bow",
+      "phases": [
+        {
+          "part": "Submersible Bow",
+          "step": 1,
+          "of": 3,
+          "items": [[5058,10,3],[5093,10,3],[7023,10,3],[5059,6,3]]
+        },
+        {"part":"Submersible Bow","step":2,"of":3,"items":[[5093,10,3],[7022,10,3],[5060,4,3]]},
+        {"part":"Submersible Bow","step":3,"of":3,"items":[[7606,3,3],[5099,10,3],[5064,10,3]]}
+      ]
+    },
+    {
+      "i": 21793,
+      "n": "Shark-class Bridge",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Bridge",
+      "phases": [
+        {
+          "part": "Submersible Bridge",
+          "step": 1,
+          "of": 3,
+          "items": [[5379,4,3],[5061,7,3],[7018,7,3],[5092,7,3]]
+        },
+        {
+          "part": "Submersible Bridge",
+          "step": 2,
+          "of": 3,
+          "items": [[5058,7,3],[5093,7,3],[5060,4,3],[5094,7,3]]
+        },
+        {
+          "part": "Submersible Bridge",
+          "step": 3,
+          "of": 3,
+          "items": [[5060,4,3],[5059,6,3],[5093,7,3],[5066,7,3]]
+        }
+      ]
+    },
+    {
+      "i": 21798,
+      "n": "Unkiu-class Pressure Hull",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Hull",
+      "phases": [
+        {
+          "part": "Submersible Hull",
+          "step": 1,
+          "of": 3,
+          "items": [[5373,8,3],[5378,8,3],[7019,8,3],[12913,3,3]]
+        },
+        {
+          "part": "Submersible Hull",
+          "step": 2,
+          "of": 3,
+          "items": [[7606,8,3],[5092,8,3],[5073,8,3],[5066,8,3]]
+        },
+        {
+          "part": "Submersible Hull",
+          "step": 3,
+          "of": 3,
+          "items": [[5094,8,3],[5059,8,3],[5287,8,3],[12231,3,3],[7017,6,3],[5506,3,3]]
+        }
+      ]
+    },
+    {
+      "i": 21799,
+      "n": "Unkiu-class Stern",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Stern",
+      "phases": [
+        {
+          "part": "Submersible Stern",
+          "step": 1,
+          "of": 3,
+          "items": [[5093,8,3],[5059,8,3],[5058,8,3],[12913,3,3]]
+        },
+        {
+          "part": "Submersible Stern",
+          "step": 2,
+          "of": 3,
+          "items": [[5099,10,3],[12519,6,3],[7023,10,3],[5060,3,3]]
+        },
+        {
+          "part": "Submersible Stern",
+          "step": 3,
+          "of": 3,
+          "items": [[5099,10,3],[7607,6,3],[5075,6,3],[5065,10,3],[5512,10,3]]
+        }
+      ]
+    },
+    {
+      "i": 21796,
+      "n": "Unkiu-class Bow",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Bow",
+      "phases": [
+        {
+          "part": "Submersible Bow",
+          "step": 1,
+          "of": 3,
+          "items": [[5058,10,3],[5094,10,3],[7023,10,3],[12913,3,3]]
+        },
+        {
+          "part": "Submersible Bow",
+          "step": 2,
+          "of": 3,
+          "items": [[5093,10,3],[12519,6,3],[7022,10,3],[5060,3,3]]
+        },
+        {
+          "part": "Submersible Bow",
+          "step": 3,
+          "of": 3,
+          "items": [[5099,10,3],[5075,3,3],[5065,10,3],[5067,6,3],[5512,10,3]]
+        }
+      ]
+    },
+    {
+      "i": 21797,
+      "n": "Unkiu-class Bridge",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Bridge",
+      "phases": [
+        {
+          "part": "Submersible Bridge",
+          "step": 1,
+          "of": 3,
+          "items": [[5379,4,3],[12913,3,3],[7019,7,3],[5093,7,3]]
+        },
+        {
+          "part": "Submersible Bridge",
+          "step": 2,
+          "of": 3,
+          "items": [[5058,7,3],[5093,7,3],[5059,7,3],[5095,7,3]]
+        },
+        {
+          "part": "Submersible Bridge",
+          "step": 3,
+          "of": 3,
+          "items": [[5060,6,3],[5099,6,3],[12563,6,3],[12231,3,3]]
+        }
+      ]
+    },
+    {
+      "i": 22528,
+      "n": "Whale-class Pressure Hull",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Hull",
+      "phases": [
+        {
+          "part": "Submersible Hull",
+          "step": 1,
+          "of": 3,
+          "items": [[5371,8,3],[5378,8,3],[7018,8,3],[12913,3,3]]
+        },
+        {
+          "part": "Submersible Hull",
+          "step": 2,
+          "of": 3,
+          "items": [[12580,4,3],[5094,8,3],[5074,8,3],[5067,8,3],[5506,4,3]]
+        },
+        {
+          "part": "Submersible Hull",
+          "step": 3,
+          "of": 3,
+          "items": [[5094,10,3],[12519,6,3],[12912,3,3],[7017,10,3]]
+        }
+      ]
+    },
+    {
+      "i": 22529,
+      "n": "Whale-class Stern",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Stern",
+      "phases": [
+        {
+          "part": "Submersible Stern",
+          "step": 1,
+          "of": 3,
+          "items": [[7606,4,3],[7019,10,3],[5061,10,3],[5099,10,3]]
+        },
+        {
+          "part": "Submersible Stern",
+          "step": 2,
+          "of": 3,
+          "items": [[5058,10,3],[5093,10,3],[5094,10,3],[5060,10,3]]
+        },
+        {
+          "part": "Submersible Stern",
+          "step": 3,
+          "of": 3,
+          "items": [[12913,3,3],[12519,4,3],[5095,4,3],[12912,3,3]]
+        }
+      ]
+    },
+    {
+      "i": 22526,
+      "n": "Whale-class Bow",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Bow",
+      "phases": [
+        {
+          "part": "Submersible Bow",
+          "step": 1,
+          "of": 3,
+          "items": [[5093,10,3],[5058,10,3],[7023,10,3],[12913,3,3]]
+        },
+        {
+          "part": "Submersible Bow",
+          "step": 2,
+          "of": 3,
+          "items": [[5093,10,3],[12519,6,3],[7023,10,3],[5060,4,3]]
+        },
+        {
+          "part": "Submersible Bow",
+          "step": 3,
+          "of": 3,
+          "items": [[12580,4,3],[5095,10,3],[12912,3,3],[5067,4,3]]
+        }
+      ]
+    },
+    {
+      "i": 22527,
+      "n": "Whale-class Bridge",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Bridge",
+      "phases": [
+        {
+          "part": "Submersible Bridge",
+          "step": 1,
+          "of": 3,
+          "items": [[5093,10,3],[5058,10,3],[7023,10,3],[12913,3,3]]
+        },
+        {
+          "part": "Submersible Bridge",
+          "step": 2,
+          "of": 3,
+          "items": [[5093,10,3],[12519,6,3],[7023,10,3],[5060,4,3]]
+        },
+        {
+          "part": "Submersible Bridge",
+          "step": 3,
+          "of": 3,
+          "items": [[12580,4,3],[5094,6,3],[5060,6,3],[12912,3,3],[5067,4,3]]
+        }
+      ]
+    },
+    {
+      "i": 23905,
+      "n": "Coelacanth-class Pressure Hull",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Hull",
+      "phases": [
+        {
+          "part": "Submersible Hull",
+          "step": 1,
+          "of": 3,
+          "items": [[5094,10,3],[5074,6,3],[12519,10,3],[12913,3,3]]
+        },
+        {
+          "part": "Submersible Hull",
+          "step": 2,
+          "of": 3,
+          "items": [[5095,10,3],[12519,6,3],[12581,10,3],[5506,4,3]]
+        },
+        {
+          "part": "Submersible Hull",
+          "step": 3,
+          "of": 3,
+          "items": [[12525,10,3],[7023,10,3],[12520,6,3],[12522,6,3]]
+        }
+      ]
+    },
+    {
+      "i": 23906,
+      "n": "Coelacanth-class Stern",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Stern",
+      "phases": [
+        {"part":"Submersible Stern","step":1,"of":3,"items":[[5094,10,3],[12519,6,3],[7023,10,3]]},
+        {"part":"Submersible Stern","step":2,"of":3,"items":[[12519,10,3],[5095,10,3],[12520,10,3]]},
+        {
+          "part": "Submersible Stern",
+          "step": 3,
+          "of": 3,
+          "items": [[12525,10,3],[5095,10,3],[12522,10,3],[5069,5,3],[12912,3,3]]
+        }
+      ]
+    },
+    {
+      "i": 23903,
+      "n": "Coelacanth-class Bow",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Bow",
+      "phases": [
+        {"part":"Submersible Bow","step":1,"of":3,"items":[[5094,10,3],[12519,6,3],[7023,10,3]]},
+        {"part":"Submersible Bow","step":2,"of":3,"items":[[12525,10,3],[5095,10,3],[7023,10,3]]},
+        {
+          "part": "Submersible Bow",
+          "step": 3,
+          "of": 3,
+          "items": [[5060,6,3],[5074,10,3],[5095,10,3],[12232,3,3],[5067,6,3]]
+        }
+      ]
+    },
+    {
+      "i": 23904,
+      "n": "Coelacanth-class Bridge",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Bridge",
+      "phases": [
+        {
+          "part": "Submersible Bridge",
+          "step": 1,
+          "of": 3,
+          "items": [[5094,10,3],[12519,6,3],[9359,4,3],[7023,10,3]]
+        },
+        {
+          "part": "Submersible Bridge",
+          "step": 2,
+          "of": 3,
+          "items": [[12519,10,3],[5074,6,3],[5095,6,3],[12232,3,3]]
+        },
+        {
+          "part": "Submersible Bridge",
+          "step": 3,
+          "of": 3,
+          "items": [[12525,10,3],[5095,6,3],[5068,10,3],[12541,4,3],[5190,2,3]]
+        }
+      ]
+    },
+    {
+      "i": 24346,
+      "n": "Syldra-class Pressure Hull",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Hull",
+      "phases": [
+        {
+          "part": "Submersible Hull",
+          "step": 1,
+          "of": 3,
+          "items": [[12530,5,3],[5075,3,3],[12520,6,3],[14935,2,3]]
+        },
+        {
+          "part": "Submersible Hull",
+          "step": 2,
+          "of": 3,
+          "items": [[12519,10,3],[12583,7,3],[12581,10,3],[5506,4,3]]
+        },
+        {
+          "part": "Submersible Hull",
+          "step": 3,
+          "of": 3,
+          "items": [[25009,3,3],[5095,5,3],[13758,2,3],[12522,6,3]]
+        }
+      ]
+    },
+    {
+      "i": 24347,
+      "n": "Syldra-class Stern",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Stern",
+      "phases": [
+        {
+          "part": "Submersible Stern",
+          "step": 1,
+          "of": 3,
+          "items": [[12525,10,3],[5061,10,3],[5094,7,3],[12519,10,3]]
+        },
+        {
+          "part": "Submersible Stern",
+          "step": 2,
+          "of": 3,
+          "items": [[12583,10,3],[7607,3,3],[5095,5,3],[12520,6,3]]
+        },
+        {
+          "part": "Submersible Stern",
+          "step": 3,
+          "of": 3,
+          "items": [[25009,3,3],[12526,5,3],[13758,2,3],[12522,5,3]]
+        }
+      ]
+    },
+    {
+      "i": 24344,
+      "n": "Syldra-class Bow",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Bow",
+      "phases": [
+        {
+          "part": "Submersible Bow",
+          "step": 1,
+          "of": 3,
+          "items": [[5075,3,3],[5095,5,3],[7023,10,3],[12519,10,3]]
+        },
+        {
+          "part": "Submersible Bow",
+          "step": 2,
+          "of": 3,
+          "items": [[5060,5,3],[12519,10,3],[5095,5,3],[12520,6,3]]
+        },
+        {
+          "part": "Submersible Bow",
+          "step": 3,
+          "of": 3,
+          "items": [[25009,3,3],[12526,5,3],[12530,5,3],[12522,5,3]]
+        }
+      ]
+    },
+    {
+      "i": 24345,
+      "n": "Syldra-class Bridge",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Bridge",
+      "phases": [
+        {
+          "part": "Submersible Bridge",
+          "step": 1,
+          "of": 3,
+          "items": [[12519,10,3],[5094,10,3],[12522,10,3],[5069,5,3]]
+        },
+        {
+          "part": "Submersible Bridge",
+          "step": 2,
+          "of": 3,
+          "items": [[5075,3,3],[12525,10,3],[5095,5,3],[12583,5,3]]
+        },
+        {
+          "part": "Submersible Bridge",
+          "step": 3,
+          "of": 3,
+          "items": [[25009,3,3],[13758,2,3],[12530,5,3],[12522,10,3]]
+        }
+      ]
+    },
+    {
+      "i": 24350,
+      "n": "Modified Shark-class Pressure Hull",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Hull",
+      "phases": [
+        {"part":"Submersible Hull","step":1,"of":3,"items":[[26510,1,1],[14935,3,3]]},
+        {
+          "part": "Submersible Hull",
+          "step": 2,
+          "of": 3,
+          "items": [[26530,3,3],[5093,8,3],[5079,6,3],[5067,8,3],[5506,6,3]]
+        },
+        {
+          "part": "Submersible Hull",
+          "step": 3,
+          "of": 3,
+          "items": [[26532,3,3],[9360,8,3],[7017,10,3],[19967,5,3],[12602,6,3]]
+        }
+      ]
+    },
+    {
+      "i": 24351,
+      "n": "Modified Shark-class Stern",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Stern",
+      "phases": [
+        {"part":"Submersible Stern","step":1,"of":3,"items":[[26511,1,1],[14935,3,3]]},
+        {
+          "part": "Submersible Stern",
+          "step": 2,
+          "of": 3,
+          "items": [[26530,3,3],[7607,3,3],[7022,10,3],[12525,10,3]]
+        },
+        {
+          "part": "Submersible Stern",
+          "step": 3,
+          "of": 3,
+          "items": [[26532,3,3],[12525,10,3],[12521,10,3],[19967,4,3],[12602,6,3]]
+        }
+      ]
+    },
+    {
+      "i": 24348,
+      "n": "Modified Shark-class Bow",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Bow",
+      "phases": [
+        {"part":"Submersible Bow","step":1,"of":3,"items":[[26508,1,1],[14935,3,3]]},
+        {"part":"Submersible Bow","step":2,"of":3,"items":[[26530,3,3],[7022,10,3],[7607,4,3]]},
+        {
+          "part": "Submersible Bow",
+          "step": 3,
+          "of": 3,
+          "items": [[26532,3,3],[12521,10,3],[19967,4,3],[12602,6,3]]
+        }
+      ]
+    },
+    {
+      "i": 24349,
+      "n": "Modified Shark-class Bridge",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Bridge",
+      "phases": [
+        {"part":"Submersible Bridge","step":1,"of":3,"items":[[26509,1,1],[14935,3,3]]},
+        {
+          "part": "Submersible Bridge",
+          "step": 2,
+          "of": 3,
+          "items": [[26530,3,3],[5059,7,3],[7607,4,3],[5095,7,3]]
+        },
+        {
+          "part": "Submersible Bridge",
+          "step": 3,
+          "of": 3,
+          "items": [[26532,3,3],[7607,4,3],[5067,7,3],[19967,2,3],[12602,6,3]]
+        }
+      ]
+    },
+    {
+      "i": 24354,
+      "n": "Modified Unkiu-class Pressure Hull",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Hull",
+      "phases": [
+        {"part":"Submersible Hull","step":1,"of":3,"items":[[26514,1,1],[14935,3,3]]},
+        {
+          "part": "Submersible Hull",
+          "step": 2,
+          "of": 3,
+          "items": [[26530,3,3],[5093,8,3],[5074,8,3],[5067,8,3]]
+        },
+        {
+          "part": "Submersible Hull",
+          "step": 3,
+          "of": 3,
+          "items": [[26532,3,3],[5095,8,3],[19993,8,3],[12231,3,3],[5507,4,3],[19967,5,3],[12602,6,3]]
+        }
+      ]
+    },
+    {
+      "i": 24355,
+      "n": "Modified Unkiu-class Stern",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Stern",
+      "phases": [
+        {"part":"Submersible Stern","step":1,"of":3,"items":[[26515,1,1],[14935,3,3]]},
+        {
+          "part": "Submersible Stern",
+          "step": 2,
+          "of": 3,
+          "items": [[26530,3,3],[14146,4,3],[7023,10,3],[7607,3,3]]
+        },
+        {
+          "part": "Submersible Stern",
+          "step": 3,
+          "of": 3,
+          "items": [[26532,3,3],[12523,6,3],[5069,10,3],[16908,10,3],[19967,4,3],[12602,6,3]]
+        }
+      ]
+    },
+    {
+      "i": 24352,
+      "n": "Modified Unkiu-class Bow",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Bow",
+      "phases": [
+        {"part":"Submersible Bow","step":1,"of":3,"items":[[26512,1,1],[14935,3,3]]},
+        {
+          "part": "Submersible Bow",
+          "step": 2,
+          "of": 3,
+          "items": [[26530,3,3],[14146,6,3],[7022,10,3],[7607,4,3]]
+        },
+        {
+          "part": "Submersible Bow",
+          "step": 3,
+          "of": 3,
+          "items": [[26532,3,3],[5069,10,3],[9360,6,3],[16908,10,3],[19967,4,3],[12602,6,3]]
+        }
+      ]
+    },
+    {
+      "i": 24353,
+      "n": "Modified Unkiu-class Bridge",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Bridge",
+      "phases": [
+        {"part":"Submersible Bridge","step":1,"of":3,"items":[[26513,1,1],[14935,3,3]]},
+        {
+          "part": "Submersible Bridge",
+          "step": 2,
+          "of": 3,
+          "items": [[26530,3,3],[5099,7,3],[12525,7,3],[12528,6,3]]
+        },
+        {
+          "part": "Submersible Bridge",
+          "step": 3,
+          "of": 3,
+          "items": [[26532,3,3],[12565,6,3],[12231,3,3],[19967,2,3],[12602,6,3]]
+        }
+      ]
+    },
+    {
+      "i": 24358,
+      "n": "Modified Whale-class Pressure Hull",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Hull",
+      "phases": [
+        {"part":"Submersible Hull","step":1,"of":3,"items":[[26518,1,1],[14935,3,3]]},
+        {
+          "part": "Submersible Hull",
+          "step": 2,
+          "of": 3,
+          "items": [[26530,3,3],[19925,4,3],[5095,8,3],[9360,8,3],[5507,4,3]]
+        },
+        {
+          "part": "Submersible Hull",
+          "step": 3,
+          "of": 3,
+          "items": [[26532,3,3],[14146,6,3],[7017,10,3],[19967,5,3],[12602,6,3]]
+        }
+      ]
+    },
+    {
+      "i": 24359,
+      "n": "Modified Whale-class Stern",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Stern",
+      "phases": [
+        {"part":"Submersible Stern","step":1,"of":3,"items":[[26519,1,1],[14935,3,3]]},
+        {
+          "part": "Submersible Stern",
+          "step": 2,
+          "of": 3,
+          "items": [[26530,3,3],[5059,10,3],[5099,10,3],[7607,3,3]]
+        },
+        {
+          "part": "Submersible Stern",
+          "step": 3,
+          "of": 3,
+          "items": [[26532,3,3],[12528,5,3],[14146,4,3],[19967,4,3],[12602,6,3]]
+        }
+      ]
+    },
+    {
+      "i": 24356,
+      "n": "Modified Whale-class Bow",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Bow",
+      "phases": [
+        {"part":"Submersible Bow","step":1,"of":3,"items":[[26516,1,1],[14935,3,3]]},
+        {
+          "part": "Submersible Bow",
+          "step": 2,
+          "of": 3,
+          "items": [[26530,3,3],[14146,6,3],[7023,10,3],[7607,4,3]]
+        },
+        {
+          "part": "Submersible Bow",
+          "step": 3,
+          "of": 3,
+          "items": [[26532,3,3],[12528,10,3],[9360,6,3],[19967,4,3],[12602,6,3]]
+        }
+      ]
+    },
+    {
+      "i": 24357,
+      "n": "Modified Whale-class Bridge",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Bridge",
+      "phases": [
+        {"part":"Submersible Bridge","step":1,"of":3,"items":[[26517,1,1],[14935,3,3]]},
+        {
+          "part": "Submersible Bridge",
+          "step": 2,
+          "of": 3,
+          "items": [[26530,3,3],[14146,6,3],[7023,10,3],[7607,4,3]]
+        },
+        {
+          "part": "Submersible Bridge",
+          "step": 3,
+          "of": 3,
+          "items": [[26532,3,3],[5095,7,3],[7607,4,3],[9360,4,3],[19967,2,3],[12602,6,3]]
+        }
+      ]
+    },
+    {
+      "i": 24362,
+      "n": "Modified Coelacanth-class Pressure Hull",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Hull",
+      "phases": [
+        {"part":"Submersible Hull","step":1,"of":3,"items":[[26522,1,1],[14935,3,3]]},
+        {
+          "part": "Submersible Hull",
+          "step": 2,
+          "of": 3,
+          "items": [[26530,3,3],[12528,10,3],[14146,6,3],[5507,4,3]]
+        },
+        {
+          "part": "Submersible Hull",
+          "step": 3,
+          "of": 3,
+          "items": [[26532,3,3],[19938,6,3],[12522,6,3],[19967,5,3],[12602,6,3]]
+        }
+      ]
+    },
+    {
+      "i": 24363,
+      "n": "Modified Coelacanth-class Stern",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Stern",
+      "phases": [
+        {"part":"Submersible Stern","step":1,"of":3,"items":[[26523,1,1],[14935,3,3]]},
+        {"part":"Submersible Stern","step":2,"of":3,"items":[[26530,3,3],[14146,4,3],[19938,6,3]]},
+        {
+          "part": "Submersible Stern",
+          "step": 3,
+          "of": 3,
+          "items": [[26532,3,3],[19947,10,3],[12522,10,3],[14149,5,3],[19967,4,3],[12602,6,3]]
+        }
+      ]
+    },
+    {
+      "i": 24360,
+      "n": "Modified Coelacanth-class Bow",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Bow",
+      "phases": [
+        {"part":"Submersible Bow","step":1,"of":3,"items":[[26520,1,1],[14935,3,3]]},
+        {"part":"Submersible Bow","step":2,"of":3,"items":[[26530,3,3],[19947,10,3],[12528,10,3]]},
+        {
+          "part": "Submersible Bow",
+          "step": 3,
+          "of": 3,
+          "items": [[26532,3,3],[7607,4,3],[12528,10,3],[12232,3,3],[19967,4,3],[12602,6,3]]
+        }
+      ]
+    },
+    {
+      "i": 24361,
+      "n": "Modified Coelacanth-class Bridge",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Bridge",
+      "phases": [
+        {"part":"Submersible Bridge","step":1,"of":3,"items":[[26521,1,1],[14935,3,3]]},
+        {
+          "part": "Submersible Bridge",
+          "step": 2,
+          "of": 3,
+          "items": [[26530,3,3],[12232,3,3],[14146,6,3],[12528,6,3]]
+        },
+        {
+          "part": "Submersible Bridge",
+          "step": 3,
+          "of": 3,
+          "items": [[26532,3,3],[19947,10,3],[12528,6,3],[19962,2,3],[19967,2,3],[12602,6,3]]
+        }
+      ]
+    },
+    {
+      "i": 24366,
+      "n": "Modified Syldra-class Pressure Hull",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Hull",
+      "phases": [
+        {"part":"Submersible Hull","step":1,"of":3,"items":[[26526,1,1],[14935,3,3]]},
+        {
+          "part": "Submersible Hull",
+          "step": 2,
+          "of": 3,
+          "items": [[26530,3,3],[14146,6,3],[12582,10,3],[5507,4,3]]
+        },
+        {
+          "part": "Submersible Hull",
+          "step": 3,
+          "of": 3,
+          "items": [[26532,3,3],[12528,10,3],[13758,2,3],[19967,5,3],[12602,6,3]]
+        }
+      ]
+    },
+    {
+      "i": 24367,
+      "n": "Modified Syldra-class Stern",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Stern",
+      "phases": [
+        {"part":"Submersible Stern","step":1,"of":3,"items":[[26527,1,1],[14935,3,3]]},
+        {
+          "part": "Submersible Stern",
+          "step": 2,
+          "of": 3,
+          "items": [[26530,3,3],[12523,6,3],[12528,5,3],[19938,6,3]]
+        },
+        {
+          "part": "Submersible Stern",
+          "step": 3,
+          "of": 3,
+          "items": [[26532,3,3],[12526,5,3],[13758,2,3],[19967,4,3],[12602,6,3]]
+        }
+      ]
+    },
+    {
+      "i": 24364,
+      "n": "Modified Syldra-class Bow",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Bow",
+      "phases": [
+        {"part":"Submersible Bow","step":1,"of":3,"items":[[26524,1,1],[14935,3,3]]},
+        {
+          "part": "Submersible Bow",
+          "step": 2,
+          "of": 3,
+          "items": [[26530,3,3],[7607,4,3],[14146,6,3],[19938,6,3]]
+        },
+        {
+          "part": "Submersible Bow",
+          "step": 3,
+          "of": 3,
+          "items": [[26532,3,3],[12526,5,3],[12530,5,3],[19967,4,3],[12602,6,3]]
+        }
+      ]
+    },
+    {
+      "i": 24365,
+      "n": "Modified Syldra-class Bridge",
+      "cat": "Airships & Submersibles",
+      "type": "Submersible Bridge",
+      "phases": [
+        {"part":"Submersible Bridge","step":1,"of":3,"items":[[26525,1,1],[14935,3,3]]},
+        {
+          "part": "Submersible Bridge",
+          "step": 2,
+          "of": 3,
+          "items": [[26530,3,3],[8029,3,3],[19947,10,3],[12528,5,3]]
+        },
+        {
+          "part": "Submersible Bridge",
+          "step": 3,
+          "of": 3,
+          "items": [[26532,3,3],[13758,2,3],[12530,5,3],[19967,2,3],[12602,6,3]]
+        }
+      ]
+    },
+    {
+      "i": 10361,
+      "n": "Small Merchant's Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[5367,10,3],[7018,10,3],[7009,10,3],[7014,10,3],[5229,10,3],[5395,10,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[5368,10,3],[7018,10,3],[7013,10,3],[7027,10,3],[5393,15,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[5371,10,3],[7019,10,3],[7016,10,3],[7017,6,3],[7008,10,3],[7010,10,3]]
+        },
+        {
+          "part": "Roof",
+          "step": 1,
+          "of": 3,
+          "items": [[5364,10,3],[5371,10,3],[5373,10,3],[7019,10,3],[5505,6,3]]
+        },
+        {
+          "part": "Roof",
+          "step": 2,
+          "of": 3,
+          "items": [[5367,10,3],[5368,10,3],[7020,6,3],[7023,10,3],[5505,6,3]]
+        },
+        {
+          "part": "Roof",
+          "step": 3,
+          "of": 3,
+          "items": [[5371,6,3],[7020,10,3],[7023,10,3],[7009,10,3],[7026,6,3],[5512,3,3]]
+        },
+        {
+          "part": "Door",
+          "step": 1,
+          "of": 1,
+          "items": [[5374,7,3],[5058,6,3],[7024,6,3],[7009,7,3],[5512,7,3]]
+        },
+        {"part":"Window","step":1,"of":1,"items":[[5378,8,3],[7024,6,3],[7009,6,3],[5512,6,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[5057,25,3],[5058,25,3],[5066,25,3],[7009,25,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[5367,6,3],[5058,6,3],[5067,4,3],[5512,6,3]]},
+        {
+          "part": "Roof Decoration",
+          "step": 1,
+          "of": 1,
+          "items": [[5093,4,3],[5067,4,3],[5280,4,3],[7025,4,3],[5512,4,3]]
+        },
+        {
+          "part": "Wall Decoration",
+          "step": 1,
+          "of": 1,
+          "items": [[5374,6,3],[5057,7,3],[5336,7,3],[7026,6,3]]
+        }
+      ]
+    },
+    {
+      "i": 10362,
+      "n": "Medium Merchant's Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[5367,30,3],[7018,30,3],[7009,30,3],[7014,30,3],[5229,30,3],[5395,30,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[5368,30,3],[7018,30,3],[7013,30,3],[7027,30,3],[5393,40,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[5371,30,3],[7019,30,3],[7016,30,3],[7017,15,3],[7008,30,3],[7010,30,3]]
+        },
+        {
+          "part": "Roof",
+          "step": 1,
+          "of": 3,
+          "items": [[5364,30,3],[5371,30,3],[5373,30,3],[7019,30,3],[5505,15,3]]
+        },
+        {
+          "part": "Roof",
+          "step": 2,
+          "of": 3,
+          "items": [[5367,30,3],[5368,30,3],[7020,15,3],[7023,30,3],[5505,15,3]]
+        },
+        {
+          "part": "Roof",
+          "step": 3,
+          "of": 3,
+          "items": [[5371,15,3],[7020,30,3],[7023,30,3],[7009,30,3],[7026,15,3],[5512,8,3]]
+        },
+        {
+          "part": "Door",
+          "step": 1,
+          "of": 1,
+          "items": [[5374,7,3],[5058,6,3],[7024,6,3],[7009,7,3],[5512,7,3]]
+        },
+        {"part":"Window","step":1,"of":1,"items":[[5378,8,3],[7024,6,3],[7009,6,3],[5512,6,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[5057,25,3],[5058,25,3],[5066,25,3],[7009,25,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[5367,6,3],[5058,6,3],[5067,4,3],[5512,6,3]]},
+        {
+          "part": "Roof Decoration",
+          "step": 1,
+          "of": 1,
+          "items": [[5093,4,3],[5067,4,3],[5280,4,3],[7025,4,3],[5512,4,3]]
+        },
+        {
+          "part": "Wall Decoration",
+          "step": 1,
+          "of": 1,
+          "items": [[5374,6,3],[5057,7,3],[5336,7,3],[7026,6,3]]
+        }
+      ]
+    },
+    {
+      "i": 10363,
+      "n": "Large Merchant's Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[5367,55,3],[7018,55,3],[7009,55,3],[7014,55,3],[5229,55,3],[5395,55,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[5368,55,3],[7018,55,3],[7013,55,3],[7027,55,3],[5393,65,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[5371,55,3],[7019,55,3],[7016,55,3],[7017,25,3],[7008,55,3],[7010,55,3]]
+        },
+        {
+          "part": "Roof",
+          "step": 1,
+          "of": 3,
+          "items": [[5364,55,3],[5371,55,3],[5373,55,3],[7019,55,3],[5505,25,3]]
+        },
+        {
+          "part": "Roof",
+          "step": 2,
+          "of": 3,
+          "items": [[5367,55,3],[5368,55,3],[7020,25,3],[7023,55,3],[5505,25,3]]
+        },
+        {
+          "part": "Roof",
+          "step": 3,
+          "of": 3,
+          "items": [[5371,25,3],[7020,55,3],[7023,55,3],[7009,55,3],[7026,25,3],[5512,15,3]]
+        },
+        {
+          "part": "Door",
+          "step": 1,
+          "of": 1,
+          "items": [[5374,7,3],[5058,6,3],[7024,6,3],[7009,7,3],[5512,7,3]]
+        },
+        {"part":"Window","step":1,"of":1,"items":[[5378,8,3],[7024,6,3],[7009,6,3],[5512,6,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[5057,25,3],[5058,25,3],[5066,25,3],[7009,25,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[5367,6,3],[5058,6,3],[5067,4,3],[5512,6,3]]},
+        {
+          "part": "Roof Decoration",
+          "step": 1,
+          "of": 1,
+          "items": [[5093,4,3],[5067,4,3],[5280,4,3],[7025,4,3],[5512,4,3]]
+        },
+        {
+          "part": "Wall Decoration",
+          "step": 1,
+          "of": 1,
+          "items": [[5374,6,3],[5057,7,3],[5336,7,3],[7026,6,3]]
+        }
+      ]
+    },
+    {
+      "i": 10364,
+      "n": "Small Eatery Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[5367,10,3],[7018,10,3],[7009,10,3],[7014,10,3],[5229,10,3],[5395,10,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[5368,10,3],[7018,10,3],[7013,10,3],[7027,10,3],[5393,15,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[5371,10,3],[7019,10,3],[7016,10,3],[7017,6,3],[7008,10,3],[7010,10,3]]
+        },
+        {
+          "part": "Roof",
+          "step": 1,
+          "of": 3,
+          "items": [[5364,10,3],[5371,10,3],[5373,10,3],[7019,10,3],[5505,6,3]]
+        },
+        {
+          "part": "Roof",
+          "step": 2,
+          "of": 3,
+          "items": [[5367,10,3],[5368,10,3],[7020,6,3],[7023,10,3],[5505,6,3]]
+        },
+        {
+          "part": "Roof",
+          "step": 3,
+          "of": 3,
+          "items": [[5371,6,3],[7020,10,3],[7023,10,3],[7009,10,3],[7026,6,3],[5512,3,3]]
+        },
+        {
+          "part": "Door",
+          "step": 1,
+          "of": 1,
+          "items": [[5366,2,3],[12519,2,3],[7024,6,3],[7009,7,3],[5512,7,3]]
+        },
+        {"part":"Window","step":1,"of":1,"items":[[5366,4,3],[7024,6,3],[7009,6,3],[5512,6,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[12519,7,3],[5058,15,3],[5066,15,3],[7009,25,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[5366,4,3],[5058,6,3],[5067,4,3],[5512,6,3]]},
+        {
+          "part": "Roof Decoration",
+          "step": 1,
+          "of": 1,
+          "items": [[12580,2,3],[12519,8,3],[5094,8,3],[5063,8,3]]
+        },
+        {
+          "part": "Wall Decoration",
+          "step": 1,
+          "of": 1,
+          "items": [[5366,3,3],[5059,4,3],[5336,7,3],[7026,6,3]]
+        }
+      ]
+    },
+    {
+      "i": 10365,
+      "n": "Medium Eatery Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[5367,30,3],[7018,30,3],[7009,30,3],[7014,30,3],[5229,30,3],[5395,30,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[5368,30,3],[7018,30,3],[7013,30,3],[7027,30,3],[5393,40,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[5371,30,3],[7019,30,3],[7016,30,3],[7017,15,3],[7008,30,3],[7010,30,3]]
+        },
+        {
+          "part": "Roof",
+          "step": 1,
+          "of": 3,
+          "items": [[5364,30,3],[5371,30,3],[5373,30,3],[7019,30,3],[5505,15,3]]
+        },
+        {
+          "part": "Roof",
+          "step": 2,
+          "of": 3,
+          "items": [[5367,30,3],[5368,30,3],[7020,15,3],[7023,30,3],[5505,15,3]]
+        },
+        {
+          "part": "Roof",
+          "step": 3,
+          "of": 3,
+          "items": [[5371,15,3],[7020,30,3],[7023,30,3],[7009,30,3],[7026,15,3],[5512,8,3]]
+        },
+        {
+          "part": "Door",
+          "step": 1,
+          "of": 1,
+          "items": [[5366,2,3],[12519,2,3],[7024,6,3],[7009,7,3],[5512,7,3]]
+        },
+        {"part":"Window","step":1,"of":1,"items":[[5366,4,3],[7024,6,3],[7009,6,3],[5512,6,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[12519,7,3],[5058,15,3],[5066,15,3],[7009,25,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[5366,4,3],[5058,6,3],[5067,4,3],[5512,6,3]]},
+        {
+          "part": "Roof Decoration",
+          "step": 1,
+          "of": 1,
+          "items": [[12580,2,3],[12519,8,3],[5094,8,3],[5063,8,3]]
+        },
+        {
+          "part": "Wall Decoration",
+          "step": 1,
+          "of": 1,
+          "items": [[5366,3,3],[5059,4,3],[5336,7,3],[7026,6,3]]
+        }
+      ]
+    },
+    {
+      "i": 10366,
+      "n": "Large Eatery Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[5367,55,3],[7018,55,3],[7009,55,3],[7014,55,3],[5229,55,3],[5395,55,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[5368,55,3],[7018,55,3],[7013,55,3],[7027,55,3],[5393,65,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[5371,55,3],[7019,55,3],[7016,55,3],[7017,25,3],[7008,55,3],[7010,55,3]]
+        },
+        {
+          "part": "Roof",
+          "step": 1,
+          "of": 3,
+          "items": [[5364,55,3],[5371,55,3],[5373,55,3],[7019,55,3],[5505,25,3]]
+        },
+        {
+          "part": "Roof",
+          "step": 2,
+          "of": 3,
+          "items": [[5367,55,3],[5368,55,3],[7020,25,3],[7023,55,3],[5505,25,3]]
+        },
+        {
+          "part": "Roof",
+          "step": 3,
+          "of": 3,
+          "items": [[5371,25,3],[7020,55,3],[7023,55,3],[7009,55,3],[7026,25,3],[5512,15,3]]
+        },
+        {
+          "part": "Door",
+          "step": 1,
+          "of": 1,
+          "items": [[5366,2,3],[12519,2,3],[7024,6,3],[7009,7,3],[5512,7,3]]
+        },
+        {"part":"Window","step":1,"of":1,"items":[[5366,4,3],[7024,6,3],[7009,6,3],[5512,6,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[12519,7,3],[5058,15,3],[5066,15,3],[7009,25,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[5366,4,3],[5058,6,3],[5067,4,3],[5512,6,3]]},
+        {
+          "part": "Roof Decoration",
+          "step": 1,
+          "of": 1,
+          "items": [[12580,2,3],[12519,8,3],[5094,8,3],[5063,8,3]]
+        },
+        {
+          "part": "Wall Decoration",
+          "step": 1,
+          "of": 1,
+          "items": [[5366,3,3],[5059,4,3],[5336,7,3],[7026,6,3]]
+        }
+      ]
+    },
+    {
+      "i": 10367,
+      "n": "Small Outfitter's Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[5367,10,3],[7018,10,3],[7009,10,3],[7014,10,3],[5229,10,3],[5395,10,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[5368,10,3],[7018,10,3],[7013,10,3],[7027,10,3],[5393,15,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[5371,10,3],[7019,10,3],[7016,10,3],[7017,6,3],[7008,10,3],[7010,10,3]]
+        },
+        {
+          "part": "Roof",
+          "step": 1,
+          "of": 3,
+          "items": [[5364,10,3],[5371,10,3],[5373,10,3],[7019,10,3],[5505,6,3]]
+        },
+        {
+          "part": "Roof",
+          "step": 2,
+          "of": 3,
+          "items": [[5367,10,3],[5368,10,3],[7020,6,3],[7023,10,3],[5505,6,3]]
+        },
+        {
+          "part": "Roof",
+          "step": 3,
+          "of": 3,
+          "items": [[5371,6,3],[7020,10,3],[7023,10,3],[7009,10,3],[7026,6,3],[5512,3,3]]
+        },
+        {
+          "part": "Door",
+          "step": 1,
+          "of": 1,
+          "items": [[12580,1,3],[12519,2,3],[7024,2,3],[7009,7,3],[5512,7,3]]
+        },
+        {
+          "part": "Window",
+          "step": 1,
+          "of": 1,
+          "items": [[12580,2,3],[7024,6,3],[7025,6,3],[5512,6,3],[5514,6,3],[7029,6,3]]
+        },
+        {"part":"Fence","step":1,"of":1,"items":[[12519,7,3],[5059,15,3],[5067,3,3],[7009,25,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[5366,6,3],[12524,6,3],[5067,3,3],[5512,6,3]]},
+        {
+          "part": "Roof Decoration",
+          "step": 1,
+          "of": 1,
+          "items": [[12580,2,3],[5075,6,3],[12519,6,3],[5066,10,3],[5512,7,3]]
+        },
+        {
+          "part": "Wall Decoration",
+          "step": 1,
+          "of": 1,
+          "items": [[12580,1,3],[5094,6,3],[5075,3,3],[5230,15,3]]
+        }
+      ]
+    },
+    {
+      "i": 10368,
+      "n": "Medium Outfitter's Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[5367,30,3],[7018,30,3],[7009,30,3],[7014,30,3],[5229,30,3],[5395,30,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[5368,30,3],[7018,30,3],[7013,30,3],[7027,30,3],[5393,40,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[5371,30,3],[7019,30,3],[7016,30,3],[7017,15,3],[7008,30,3],[7010,30,3]]
+        },
+        {
+          "part": "Roof",
+          "step": 1,
+          "of": 3,
+          "items": [[5364,30,3],[5371,30,3],[5373,30,3],[7019,30,3],[5505,15,3]]
+        },
+        {
+          "part": "Roof",
+          "step": 2,
+          "of": 3,
+          "items": [[5367,30,3],[5368,30,3],[7020,15,3],[7023,30,3],[5505,15,3]]
+        },
+        {
+          "part": "Roof",
+          "step": 3,
+          "of": 3,
+          "items": [[5371,15,3],[7020,30,3],[7023,30,3],[7009,30,3],[7026,15,3],[5512,8,3]]
+        },
+        {
+          "part": "Door",
+          "step": 1,
+          "of": 1,
+          "items": [[12580,1,3],[12519,2,3],[7024,2,3],[7009,7,3],[5512,7,3]]
+        },
+        {
+          "part": "Window",
+          "step": 1,
+          "of": 1,
+          "items": [[12580,2,3],[7024,6,3],[7025,6,3],[5512,6,3],[5514,6,3],[7029,6,3]]
+        },
+        {"part":"Fence","step":1,"of":1,"items":[[12519,7,3],[5059,15,3],[5067,3,3],[7009,25,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[5366,6,3],[12524,6,3],[5067,3,3],[5512,6,3]]},
+        {
+          "part": "Roof Decoration",
+          "step": 1,
+          "of": 1,
+          "items": [[12580,2,3],[5075,6,3],[12519,6,3],[5066,10,3],[5512,7,3]]
+        },
+        {
+          "part": "Wall Decoration",
+          "step": 1,
+          "of": 1,
+          "items": [[12580,1,3],[5094,6,3],[5075,3,3],[5230,15,3]]
+        }
+      ]
+    },
+    {
+      "i": 10369,
+      "n": "Large Outfitter's Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[5367,55,3],[7018,55,3],[7009,55,3],[7014,55,3],[5229,55,3],[5395,55,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[5368,55,3],[7018,55,3],[7013,55,3],[7027,55,3],[5393,65,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[5371,55,3],[7019,55,3],[7016,55,3],[7017,25,3],[7008,55,3],[7010,55,3]]
+        },
+        {
+          "part": "Roof",
+          "step": 1,
+          "of": 3,
+          "items": [[5364,55,3],[5371,55,3],[5373,55,3],[7019,55,3],[5505,25,3]]
+        },
+        {
+          "part": "Roof",
+          "step": 2,
+          "of": 3,
+          "items": [[5367,55,3],[5368,55,3],[7020,25,3],[7023,55,3],[5505,25,3]]
+        },
+        {
+          "part": "Roof",
+          "step": 3,
+          "of": 3,
+          "items": [[5371,25,3],[7020,55,3],[7023,55,3],[7009,55,3],[7026,25,3],[5512,15,3]]
+        },
+        {
+          "part": "Door",
+          "step": 1,
+          "of": 1,
+          "items": [[12580,1,3],[12519,2,3],[7024,2,3],[7009,7,3],[5512,7,3]]
+        },
+        {
+          "part": "Window",
+          "step": 1,
+          "of": 1,
+          "items": [[12580,2,3],[7024,6,3],[7025,6,3],[5512,6,3],[5514,6,3],[7029,6,3]]
+        },
+        {"part":"Fence","step":1,"of":1,"items":[[12519,7,3],[5059,15,3],[5067,3,3],[7009,25,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[5366,6,3],[12524,6,3],[5067,3,3],[5512,6,3]]},
+        {
+          "part": "Roof Decoration",
+          "step": 1,
+          "of": 1,
+          "items": [[12580,2,3],[5075,6,3],[12519,6,3],[5066,10,3],[5512,7,3]]
+        },
+        {
+          "part": "Wall Decoration",
+          "step": 1,
+          "of": 1,
+          "items": [[12580,1,3],[5094,6,3],[5075,3,3],[5230,15,3]]
+        }
+      ]
+    },
+    {
+      "i": 10370,
+      "n": "Small Arms Supplier's Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[5367,10,3],[7018,10,3],[7009,10,3],[7014,10,3],[5229,10,3],[5395,10,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[5368,10,3],[7018,10,3],[7013,10,3],[7027,10,3],[5393,15,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[5371,10,3],[7019,10,3],[7016,10,3],[7017,6,3],[7008,10,3],[7010,10,3]]
+        },
+        {
+          "part": "Roof",
+          "step": 1,
+          "of": 3,
+          "items": [[5364,10,3],[5371,10,3],[5373,10,3],[7019,10,3],[5505,6,3]]
+        },
+        {
+          "part": "Roof",
+          "step": 2,
+          "of": 3,
+          "items": [[5367,10,3],[5368,10,3],[7020,6,3],[7023,10,3],[5505,6,3]]
+        },
+        {
+          "part": "Roof",
+          "step": 3,
+          "of": 3,
+          "items": [[5371,6,3],[7020,10,3],[7023,10,3],[7009,10,3],[7026,6,3],[5512,3,3]]
+        },
+        {
+          "part": "Door",
+          "step": 1,
+          "of": 1,
+          "items": [[12581,2,3],[12519,2,3],[7024,6,3],[7009,7,3],[5512,7,3]]
+        },
+        {
+          "part": "Window",
+          "step": 1,
+          "of": 1,
+          "items": [[12581,4,3],[7024,6,3],[7026,6,3],[5512,6,3],[5514,6,3],[7029,6,3]]
+        },
+        {"part":"Fence","step":1,"of":1,"items":[[12519,7,3],[5059,15,3],[5067,3,3],[7009,25,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[5366,6,3],[12524,6,3],[5196,6,3],[5067,4,3]]},
+        {
+          "part": "Roof Decoration",
+          "step": 1,
+          "of": 1,
+          "items": [[12524,6,3],[12519,4,3],[12564,4,3],[12590,4,3],[5512,7,3]]
+        },
+        {
+          "part": "Wall Decoration",
+          "step": 1,
+          "of": 1,
+          "items": [[12581,3,3],[5094,6,3],[12519,3,3],[7016,8,3]]
+        }
+      ]
+    },
+    {
+      "i": 10371,
+      "n": "Medium Arms Supplier's Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[5367,30,3],[7018,30,3],[7009,30,3],[7014,30,3],[5229,30,3],[5395,30,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[5368,30,3],[7018,30,3],[7013,30,3],[7027,30,3],[5393,40,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[5371,30,3],[7019,30,3],[7016,30,3],[7017,15,3],[7008,30,3],[7010,30,3]]
+        },
+        {
+          "part": "Roof",
+          "step": 1,
+          "of": 3,
+          "items": [[5364,30,3],[5371,30,3],[5373,30,3],[7019,30,3],[5505,15,3]]
+        },
+        {
+          "part": "Roof",
+          "step": 2,
+          "of": 3,
+          "items": [[5367,30,3],[5368,30,3],[7020,15,3],[7023,30,3],[5505,15,3]]
+        },
+        {
+          "part": "Roof",
+          "step": 3,
+          "of": 3,
+          "items": [[5371,15,3],[7020,30,3],[7023,30,3],[7009,30,3],[7026,15,3],[5512,8,3]]
+        },
+        {
+          "part": "Door",
+          "step": 1,
+          "of": 1,
+          "items": [[12581,2,3],[12519,2,3],[7024,6,3],[7009,7,3],[5512,7,3]]
+        },
+        {
+          "part": "Window",
+          "step": 1,
+          "of": 1,
+          "items": [[12581,4,3],[7024,6,3],[7026,6,3],[5512,6,3],[5514,6,3],[7029,6,3]]
+        },
+        {"part":"Fence","step":1,"of":1,"items":[[12519,7,3],[5059,15,3],[5067,3,3],[7009,25,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[5366,6,3],[12524,6,3],[5196,6,3],[5067,4,3]]},
+        {
+          "part": "Roof Decoration",
+          "step": 1,
+          "of": 1,
+          "items": [[12524,6,3],[12519,4,3],[12564,4,3],[12590,4,3],[5512,7,3]]
+        },
+        {
+          "part": "Wall Decoration",
+          "step": 1,
+          "of": 1,
+          "items": [[12581,3,3],[5094,6,3],[12519,3,3],[7016,8,3]]
+        }
+      ]
+    },
+    {
+      "i": 10372,
+      "n": "Large Arms Supplier's Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[5367,55,3],[7018,55,3],[7009,55,3],[7014,55,3],[5229,55,3],[5395,55,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[5368,55,3],[7018,55,3],[7013,55,3],[7027,55,3],[5393,65,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[5371,55,3],[7019,55,3],[7016,55,3],[7017,25,3],[7008,55,3],[7010,55,3]]
+        },
+        {
+          "part": "Roof",
+          "step": 1,
+          "of": 3,
+          "items": [[5364,55,3],[5371,55,3],[5373,55,3],[7019,55,3],[5505,25,3]]
+        },
+        {
+          "part": "Roof",
+          "step": 2,
+          "of": 3,
+          "items": [[5367,55,3],[5368,55,3],[7020,25,3],[7023,55,3],[5505,25,3]]
+        },
+        {
+          "part": "Roof",
+          "step": 3,
+          "of": 3,
+          "items": [[5371,25,3],[7020,55,3],[7023,55,3],[7009,55,3],[7026,25,3],[5512,15,3]]
+        },
+        {
+          "part": "Door",
+          "step": 1,
+          "of": 1,
+          "items": [[12581,2,3],[12519,2,3],[7024,6,3],[7009,7,3],[5512,7,3]]
+        },
+        {
+          "part": "Window",
+          "step": 1,
+          "of": 1,
+          "items": [[12581,4,3],[7024,6,3],[7026,6,3],[5512,6,3],[5514,6,3],[7029,6,3]]
+        },
+        {"part":"Fence","step":1,"of":1,"items":[[12519,7,3],[5059,15,3],[5067,3,3],[7009,25,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[5366,6,3],[12524,6,3],[5196,6,3],[5067,4,3]]},
+        {
+          "part": "Roof Decoration",
+          "step": 1,
+          "of": 1,
+          "items": [[12524,6,3],[12519,4,3],[12564,4,3],[12590,4,3],[5512,7,3]]
+        },
+        {
+          "part": "Wall Decoration",
+          "step": 1,
+          "of": 1,
+          "items": [[12581,3,3],[5094,6,3],[12519,3,3],[7016,8,3]]
+        }
+      ]
+    },
+    {
+      "i": 13092,
+      "n": "Microscopically Small Mogwalls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[5366,5,3],[7018,5,3],[7014,5,3],[9518,5,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[12580,5,3],[7020,5,3],[7027,5,3],[5394,5,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[12581,5,3],[7010,5,3],[5514,5,3],[7030,5,3]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[5378,5,3],[12580,5,3],[7019,5,3],[5505,5,3]]},
+        {"part":"Roof","step":2,"of":3,"items":[[12581,5,3],[12582,5,3],[7020,5,3],[5505,5,3]]},
+        {"part":"Roof","step":3,"of":3,"items":[[12582,5,3],[7009,5,3],[5514,5,3],[7030,5,3]]},
+        {"part":"Door","step":1,"of":1,"items":[[13758,3,3],[7024,3,3],[5512,3,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[13758,3,3],[5512,3,3],[12578,3,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[13091,1,3],[5158,3,3],[12578,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[13758,3,3],[12525,3,3],[12579,3,3]]},
+        {"part":"Roof Decoration","step":1,"of":1,"items":[[13091,1,3],[5158,3,3],[12579,3,3]]},
+        {"part":"Wall Decoration","step":1,"of":1,"items":[[13758,3,3],[12591,1,3],[12579,3,3]]}
+      ]
+    },
+    {
+      "i": 13093,
+      "n": "Middlingly Medium Mogwalls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[5366,5,9],[7018,5,9],[7014,5,9],[9518,5,9]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[12580,5,9],[7020,5,9],[7027,5,9],[5394,5,9]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[12581,5,9],[7010,5,9],[5514,5,9],[7030,5,9]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[5378,5,9],[12580,5,9],[7019,5,9],[5505,5,9]]},
+        {"part":"Roof","step":2,"of":3,"items":[[12581,5,9],[12582,5,9],[7020,5,9],[5505,5,9]]},
+        {"part":"Roof","step":3,"of":3,"items":[[12582,5,9],[7009,5,9],[5514,5,9],[7030,5,9]]},
+        {"part":"Door","step":1,"of":1,"items":[[13758,3,3],[7024,3,3],[5512,3,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[13758,3,3],[5512,3,3],[12578,3,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[13091,1,3],[5158,3,3],[12578,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[13758,3,3],[12525,3,3],[12579,3,3]]},
+        {"part":"Roof Decoration","step":1,"of":1,"items":[[13091,1,3],[5158,3,3],[12579,3,3]]},
+        {"part":"Wall Decoration","step":1,"of":1,"items":[[13758,3,3],[12591,1,3],[12579,3,3]]}
+      ]
+    },
+    {
+      "i": 13094,
+      "n": "Monstrously Large Mogwalls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[5366,5,15],[7018,5,15],[7014,5,15],[9518,5,15]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[12580,5,15],[7020,5,15],[7027,5,15],[5394,5,15]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[12581,5,15],[7010,5,15],[5514,5,15],[7030,5,15]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[5378,5,15],[12580,5,15],[7019,5,15],[5505,5,15]]},
+        {"part":"Roof","step":2,"of":3,"items":[[12581,5,15],[12582,5,15],[7020,5,15],[5505,5,15]]},
+        {"part":"Roof","step":3,"of":3,"items":[[12582,5,15],[7009,5,15],[5514,5,15],[7030,5,15]]},
+        {"part":"Door","step":1,"of":1,"items":[[13758,3,3],[7024,3,3],[5512,3,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[13758,3,3],[5512,3,3],[12578,3,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[13091,1,3],[5158,3,3],[12578,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[13758,3,3],[12525,3,3],[12579,3,3]]},
+        {"part":"Roof Decoration","step":1,"of":1,"items":[[13091,1,3],[5158,3,3],[12579,3,3]]},
+        {"part":"Wall Decoration","step":1,"of":1,"items":[[13758,3,3],[12591,1,3],[12579,3,3]]}
+      ]
+    },
+    {
+      "i": 15950,
+      "n": "Chocobo Cottage Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[12580,3,3],[7020,3,3],[7014,3,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[12583,3,3],[7020,3,3],[7027,3,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[12584,1,3],[7010,3,3],[7012,3,3]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[12582,3,3],[7020,3,3],[5508,1,3]]},
+        {"part":"Roof","step":2,"of":3,"items":[[14158,1,3],[7020,3,3],[5508,1,3]]},
+        {"part":"Roof","step":3,"of":3,"items":[[14157,1,3],[5359,3,3],[7012,3,3]]},
+        {"part":"Door","step":1,"of":1,"items":[[14935,1,3],[7024,3,3],[14159,3,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[12232,1,3],[5512,3,3],[14159,3,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[5158,3,3],[7012,3,3],[14159,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[12582,3,3],[13758,1,3]]},
+        {"part":"Roof Decoration","step":1,"of":1,"items":[[12525,3,3],[7009,3,3],[14159,3,3]]},
+        {"part":"Wall Decoration","step":1,"of":1,"items":[[12582,3,3],[7012,3,3],[14159,3,3]]}
+      ]
+    },
+    {
+      "i": 15951,
+      "n": "Chocobo House Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[12580,3,9],[7020,3,9],[7014,3,9]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[12583,3,9],[7020,3,9],[7027,3,9]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[12584,1,9],[7010,3,9],[7012,3,9]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[12582,3,9],[7020,3,9],[5508,1,9]]},
+        {"part":"Roof","step":2,"of":3,"items":[[14158,1,9],[7020,3,9],[5508,1,9]]},
+        {"part":"Roof","step":3,"of":3,"items":[[14157,1,9],[5359,3,9],[7014,3,9],[7012,3,9]]},
+        {"part":"Door","step":1,"of":1,"items":[[14935,1,3],[7024,3,3],[14159,3,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[12232,1,3],[5512,3,3],[14159,3,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[5158,3,3],[7012,3,3],[14159,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[12582,3,3],[13758,1,3]]},
+        {"part":"Roof Decoration","step":1,"of":1,"items":[[12525,3,3],[7009,3,3],[14159,3,3]]},
+        {"part":"Wall Decoration","step":1,"of":1,"items":[[12582,3,3],[7012,3,3],[14159,3,3]]}
+      ]
+    },
+    {
+      "i": 15952,
+      "n": "Chocobo Mansion Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[12580,3,15],[7020,3,15],[7014,3,15]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[12583,3,15],[7020,3,15],[7027,3,15]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[12584,1,15],[7010,3,15],[7012,3,15]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[12582,3,15],[7020,3,15],[5508,1,15]]},
+        {"part":"Roof","step":2,"of":3,"items":[[14158,1,15],[7020,3,15],[5508,1,15]]},
+        {"part":"Roof","step":3,"of":3,"items":[[14157,1,15],[5359,3,15],[7014,3,15],[7012,3,15]]},
+        {"part":"Door","step":1,"of":1,"items":[[14935,1,3],[7024,3,3],[14159,3,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[12232,1,3],[5512,3,3],[14159,3,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[5158,3,3],[7012,3,3],[14159,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[12582,3,3],[13758,1,3]]},
+        {"part":"Roof Decoration","step":1,"of":1,"items":[[12525,3,3],[7009,3,3],[14159,3,3]]},
+        {"part":"Wall Decoration","step":1,"of":1,"items":[[12582,3,3],[7012,3,3],[14159,3,3]]}
+      ]
+    },
+    {
+      "i": 17004,
+      "n": "Paissa Cottage Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[12583,3,3],[7020,3,3],[7014,3,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[12584,1,3],[7020,3,3],[7027,3,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[5375,1,3],[7016,3,3],[17548,3,3]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[12582,3,3],[7020,3,3],[5508,1,3]]},
+        {"part":"Roof","step":2,"of":3,"items":[[14158,1,3],[7020,3,3],[5508,1,3]]},
+        {"part":"Roof","step":3,"of":3,"items":[[14157,1,3],[17548,3,3],[7012,3,3]]},
+        {"part":"Door","step":1,"of":1,"items":[[12582,3,3],[7024,3,3],[5512,3,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[12232,1,3],[5512,3,3],[14159,3,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[5158,3,3],[7012,3,3],[17548,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[12582,3,3],[14157,1,3],[17548,3,3]]}
+      ]
+    },
+    {
+      "i": 17005,
+      "n": "Paissa House Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[12583,3,9],[7020,3,9],[7014,3,9]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[12584,1,9],[7020,3,9],[7027,3,9]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[5375,1,9],[7016,3,9],[17548,3,9]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[12582,3,9],[7020,3,9],[5508,1,9]]},
+        {"part":"Roof","step":2,"of":3,"items":[[14158,1,9],[7020,3,9],[5508,1,9]]},
+        {"part":"Roof","step":3,"of":3,"items":[[14157,1,9],[17548,3,9],[7012,3,9]]},
+        {"part":"Door","step":1,"of":1,"items":[[12582,3,3],[7024,3,3],[5512,3,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[12232,1,3],[5512,3,3],[14159,3,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[5158,3,3],[7012,3,3],[17548,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[12582,3,3],[14157,1,3],[17548,3,3]]}
+      ]
+    },
+    {
+      "i": 17006,
+      "n": "Paissa Mansion Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[12583,3,15],[7020,3,15],[7014,3,15]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[12584,1,15],[7020,3,15],[7027,3,15]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[5375,1,15],[7016,3,15],[17548,3,15]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[12582,3,15],[7020,3,15],[5508,1,15]]},
+        {"part":"Roof","step":2,"of":3,"items":[[14158,1,15],[7020,3,15],[5508,1,15]]},
+        {"part":"Roof","step":3,"of":3,"items":[[14157,1,15],[17548,3,15],[7012,3,15]]},
+        {"part":"Door","step":1,"of":1,"items":[[12582,3,3],[7024,3,3],[5512,3,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[12232,1,3],[5512,3,3],[14159,3,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[5158,3,3],[7012,3,3],[17548,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[12582,3,3],[14157,1,3],[17548,3,3]]}
+      ]
+    },
+    {
+      "i": 19767,
+      "n": "Carbuncle Cottage Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[14157,3,3],[7020,3,3],[20007,3,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[19925,3,3],[19939,3,3],[19974,3,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[19926,3,3],[19909,3,3],[12544,3,3]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[19925,3,3],[7020,3,3],[5508,3,3]]},
+        {"part":"Roof","step":2,"of":3,"items":[[19926,3,3],[19939,3,3],[19906,3,3]]},
+        {"part":"Roof","step":3,"of":3,"items":[[5372,3,3],[12544,3,3],[20007,3,3]]},
+        {"part":"Door","step":1,"of":1,"items":[[5372,3,3],[19927,1,3],[7024,3,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[14158,3,3],[5512,3,3],[19930,3,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[19927,1,3],[19941,3,3],[12544,3,3],[20007,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[5372,3,3],[19928,1,3],[12544,3,3]]}
+      ]
+    },
+    {
+      "i": 19768,
+      "n": "Carbuncle House Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[14157,3,9],[7020,3,9],[20007,3,9]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[19925,3,9],[19939,3,9],[19974,3,9]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[19926,3,9],[19909,3,9],[12544,3,9]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[19925,3,9],[7020,3,9],[5508,3,9]]},
+        {"part":"Roof","step":2,"of":3,"items":[[19926,3,9],[19939,3,9],[19906,3,9]]},
+        {"part":"Roof","step":3,"of":3,"items":[[5372,3,9],[12544,3,9],[20007,3,9]]},
+        {"part":"Door","step":1,"of":1,"items":[[5372,3,3],[19927,1,3],[7024,3,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[14158,3,3],[5512,3,3],[19930,3,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[19927,1,3],[19941,3,3],[12544,3,3],[20007,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[5372,3,3],[19928,1,3],[12544,3,3]]}
+      ]
+    },
+    {
+      "i": 19769,
+      "n": "Carbuncle Mansion Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[14157,3,15],[7020,3,15],[20007,3,15]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[19925,3,15],[19939,3,15],[19974,3,15]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[19926,3,15],[19909,3,15],[12544,3,15]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[19925,3,15],[7020,3,15],[5508,3,15]]},
+        {"part":"Roof","step":2,"of":3,"items":[[19926,3,15],[19939,3,15],[19906,3,15]]},
+        {"part":"Roof","step":3,"of":3,"items":[[5372,3,15],[12544,3,15],[20007,3,15]]},
+        {"part":"Door","step":1,"of":1,"items":[[5372,3,3],[19927,1,3],[7024,3,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[14158,3,3],[5512,3,3],[19930,3,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[19927,1,3],[19941,3,3],[12544,3,3],[20007,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[5372,3,3],[19928,1,3],[12544,3,3]]}
+      ]
+    },
+    {
+      "i": 20723,
+      "n": "Small Shirogane Castle Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[19928,3,3],[5127,3,3],[19909,3,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[19928,3,3],[5127,3,3],[19909,3,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[19928,3,3],[5127,3,3],[19909,3,3]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[19927,3,3],[20007,3,3],[5069,5,3]]},
+        {"part":"Roof","step":2,"of":3,"items":[[19927,3,3],[20007,3,3],[5069,5,3]]},
+        {"part":"Roof","step":3,"of":3,"items":[[19927,3,3],[20007,3,3],[5069,5,3]]},
+        {"part":"Door","step":1,"of":1,"items":[[19928,3,3],[19906,3,3],[12520,3,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[19928,3,3],[19930,3,3],[19927,2,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[19927,2,3],[20007,3,3],[5127,2,3],[19945,1,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[19928,2,3],[12603,2,3],[12533,3,3]]}
+      ]
+    },
+    {
+      "i": 20724,
+      "n": "Medium Shirogane Castle Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[19928,3,9],[5127,3,9],[19909,3,9]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[19928,3,9],[5127,3,9],[19909,3,9]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[19928,3,9],[5127,3,9],[19909,3,9]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[19927,3,9],[20007,3,9],[5069,5,9]]},
+        {"part":"Roof","step":2,"of":3,"items":[[19927,3,9],[20007,3,9],[5069,5,9]]},
+        {"part":"Roof","step":3,"of":3,"items":[[19927,3,9],[20007,3,9],[5069,5,9]]},
+        {"part":"Door","step":1,"of":1,"items":[[19928,3,3],[19906,3,3],[12520,3,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[19928,3,3],[19930,3,3],[19927,2,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[19927,2,3],[20007,3,3],[5127,2,3],[19945,1,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[19928,2,3],[12603,2,3],[12533,3,3]]}
+      ]
+    },
+    {
+      "i": 20725,
+      "n": "Large Shirogane Castle Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[19928,3,15],[5127,3,15],[19909,3,15]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[19928,3,15],[5127,3,15],[19909,3,15]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[19928,3,15],[5127,3,15],[19909,3,15]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[19927,3,15],[20007,3,15],[5069,5,15]]},
+        {"part":"Roof","step":2,"of":3,"items":[[19927,3,15],[20007,3,15],[5069,5,15]]},
+        {"part":"Roof","step":3,"of":3,"items":[[19927,3,15],[20007,3,15],[5069,5,15]]},
+        {"part":"Door","step":1,"of":1,"items":[[19928,3,3],[19906,3,3],[12520,3,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[19928,3,3],[19930,3,3],[19927,2,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[19927,2,3],[20007,3,3],[5127,2,3],[19945,1,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[19928,2,3],[12603,2,3],[12533,3,3]]}
+      ]
+    },
+    {
+      "i": 22533,
+      "n": "Odder Otter Cottage Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[19933,3,3],[19987,5,3],[19943,3,3],[19909,3,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[19927,5,3],[19997,5,3],[19956,3,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[19927,5,3],[19947,3,3],[5342,5,3]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[19932,5,3],[19945,3,3],[19906,3,3]]},
+        {"part":"Roof","step":2,"of":3,"items":[[19928,5,3],[19980,3,3],[19995,3,3],[19947,3,3]]},
+        {"part":"Roof","step":3,"of":3,"items":[[19928,3,3],[9360,5,3],[5342,30,3]]},
+        {"part":"Door","step":1,"of":1,"items":[[19927,3,3],[19947,3,3],[19995,2,3],[5342,2,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[19927,3,3],[19932,3,3],[19947,2,3],[9360,2,3]]},
+        {
+          "part": "Fence",
+          "step": 1,
+          "of": 1,
+          "items": [[5365,2,3],[19928,3,3],[19952,2,3],[19980,2,3],[5342,15,3]]
+        },
+        {
+          "part": "Signboard",
+          "step": 1,
+          "of": 1,
+          "items": [[9360,3,3],[19943,2,3],[19945,2,3],[19952,3,3]]
+        }
+      ]
+    },
+    {
+      "i": 22534,
+      "n": "Odder Otter House Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[19933,3,9],[19987,5,9],[19943,3,9],[19909,3,9]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[19927,5,9],[19997,5,9],[19956,3,9]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[19927,5,9],[19947,3,9],[5342,5,9]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[19932,5,9],[19945,3,9],[19906,3,9]]},
+        {"part":"Roof","step":2,"of":3,"items":[[19928,5,9],[19980,3,9],[19995,3,9],[19947,3,9]]},
+        {"part":"Roof","step":3,"of":3,"items":[[19928,3,9],[9360,5,9],[5342,30,9]]},
+        {"part":"Door","step":1,"of":1,"items":[[19927,3,3],[19947,3,3],[19995,2,3],[5342,2,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[19927,3,3],[19932,3,3],[19947,2,3],[9360,2,3]]},
+        {
+          "part": "Fence",
+          "step": 1,
+          "of": 1,
+          "items": [[5365,2,3],[19928,3,3],[19952,2,3],[19980,2,3],[5342,15,3]]
+        },
+        {
+          "part": "Signboard",
+          "step": 1,
+          "of": 1,
+          "items": [[9360,3,3],[19943,2,3],[19945,2,3],[19952,3,3]]
+        }
+      ]
+    },
+    {
+      "i": 22535,
+      "n": "Odder Otter Mansion Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[19933,3,15],[19987,5,15],[19943,3,15],[19909,3,15]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[19927,5,15],[19997,5,15],[19956,3,15]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[19927,5,15],[19947,3,15],[5342,5,15]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[19932,5,15],[19945,3,15],[19906,3,15]]},
+        {
+          "part": "Roof",
+          "step": 2,
+          "of": 3,
+          "items": [[19928,5,15],[19980,3,15],[19995,3,15],[19947,3,15]]
+        },
+        {"part":"Roof","step":3,"of":3,"items":[[19928,3,15],[9360,5,15],[5342,30,15]]},
+        {"part":"Door","step":1,"of":1,"items":[[19927,3,3],[19947,3,3],[19995,2,3],[5342,2,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[19927,3,3],[19932,3,3],[19947,2,3],[9360,2,3]]},
+        {
+          "part": "Fence",
+          "step": 1,
+          "of": 1,
+          "items": [[5365,2,3],[19928,3,3],[19952,2,3],[19980,2,3],[5342,15,3]]
+        },
+        {
+          "part": "Signboard",
+          "step": 1,
+          "of": 1,
+          "items": [[9360,3,3],[19943,2,3],[19945,2,3],[19952,3,3]]
+        }
+      ]
+    },
+    {
+      "i": 28172,
+      "n": "Trader's Cottage Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[27689,3,3],[27697,3,3],[27775,3,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[27690,3,3],[27708,3,3],[27749,3,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[27691,3,3],[27683,3,3],[27740,3,3]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[27689,3,3],[27746,3,3],[27706,3,3]]},
+        {"part":"Roof","step":2,"of":3,"items":[[27690,3,3],[27775,3,3],[27708,3,3]]},
+        {"part":"Roof","step":3,"of":3,"items":[[27691,3,3],[27685,3,3],[27710,3,3]]},
+        {"part":"Door","step":1,"of":1,"items":[[27689,3,3],[27707,3,3],[27738,3,3],[16908,3,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[27690,3,3],[27708,3,3],[16908,2,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[27691,3,3],[27711,2,3],[27698,3,3],[27765,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[27691,3,3],[27710,2,3],[27752,3,3]]}
+      ]
+    },
+    {
+      "i": 28173,
+      "n": "Trader's House Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[27689,3,9],[27697,3,9],[27775,3,9]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[27690,3,9],[27708,3,9],[27749,3,9]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[27691,3,9],[27683,3,9],[27740,3,9]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[27689,3,9],[27746,3,9],[27706,3,9]]},
+        {"part":"Roof","step":2,"of":3,"items":[[27690,3,9],[27775,3,9],[27708,3,9]]},
+        {"part":"Roof","step":3,"of":3,"items":[[27691,3,9],[27685,3,9],[27710,3,9],[16908,2,3]]},
+        {"part":"Door","step":1,"of":1,"items":[[27689,3,3],[27707,3,3],[27738,3,3],[16908,3,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[27690,3,3],[27708,3,3],[16908,2,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[27691,3,3],[27711,2,3],[27698,3,3],[27765,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[27691,3,3],[27710,2,3],[27752,3,3]]}
+      ]
+    },
+    {
+      "i": 28174,
+      "n": "Trader's Mansion Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[27689,3,15],[27697,3,15],[27775,3,15]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[27690,3,15],[27708,3,15],[27749,3,15]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[27691,3,15],[27683,3,15],[27740,3,15]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[27689,3,15],[27746,3,15],[27706,3,15]]},
+        {"part":"Roof","step":2,"of":3,"items":[[27690,3,15],[27775,3,15],[27708,3,15]]},
+        {"part":"Roof","step":3,"of":3,"items":[[27691,3,15],[27685,3,15],[27710,3,15],[16908,3,3]]},
+        {"part":"Door","step":1,"of":1,"items":[[27689,3,3],[27707,3,3],[27738,3,3],[16908,3,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[27690,3,3],[27708,3,3],[16908,2,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[27691,3,3],[27711,2,3],[27698,3,3],[27765,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[27691,3,3],[27710,2,3],[27752,3,3]]}
+      ]
+    },
+    {
+      "i": 28957,
+      "n": "Half-timbered Cottage Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[27691,3,3],[27685,3,3],[27775,3,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[27692,3,3],[27713,3,3],[27752,3,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[27693,3,3],[27703,3,3],[27742,3,3],[27778,3,3]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[27691,3,3],[27758,3,3],[27711,3,3]]},
+        {"part":"Roof","step":2,"of":3,"items":[[27692,3,3],[27775,3,3],[27714,3,3]]},
+        {"part":"Roof","step":3,"of":3,"items":[[27693,3,3],[27701,3,3],[27715,3,3],[16908,2,3]]},
+        {"part":"Door","step":1,"of":1,"items":[[27691,3,3],[27712,3,3],[27741,3,3],[16908,3,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[27692,3,3],[27713,3,3],[16908,2,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[27693,3,3],[27714,2,3],[27703,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[27693,3,3],[27715,2,3],[27755,3,3]]}
+      ]
+    },
+    {
+      "i": 28958,
+      "n": "Half-timbered House Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[27691,3,9],[27685,3,9],[27775,3,9]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[27692,3,9],[27713,3,9],[27752,3,9]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[27693,3,9],[27703,3,9],[27742,3,9],[27778,3,9]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[27691,3,9],[27758,3,9],[27711,3,9]]},
+        {"part":"Roof","step":2,"of":3,"items":[[27692,3,9],[27775,3,9],[27714,3,9]]},
+        {"part":"Roof","step":3,"of":3,"items":[[27693,3,9],[27701,3,9],[27715,3,9],[16908,2,3]]},
+        {"part":"Door","step":1,"of":1,"items":[[27691,3,3],[27712,3,3],[27741,3,3],[16908,3,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[27692,3,3],[27713,3,3],[16908,2,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[27693,3,3],[27714,2,3],[27703,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[27693,3,3],[27715,2,3],[27755,3,3]]}
+      ]
+    },
+    {
+      "i": 28959,
+      "n": "Half-timbered Mansion Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[27691,3,15],[27685,3,15],[27775,3,15]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[27692,3,15],[27713,3,15],[27752,3,15]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[27693,3,15],[27703,3,15],[27742,3,15],[27778,3,15]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[27691,3,15],[27758,3,15],[27711,3,15]]},
+        {"part":"Roof","step":2,"of":3,"items":[[27692,3,15],[27775,3,15],[27714,3,15]]},
+        {"part":"Roof","step":3,"of":3,"items":[[27693,3,15],[27701,3,15],[27715,3,15],[16908,3,3]]},
+        {"part":"Door","step":1,"of":1,"items":[[27691,3,3],[27712,3,3],[27741,3,3],[16908,3,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[27692,3,3],[27713,3,3],[16908,2,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[27693,3,3],[27714,2,3],[27703,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[27693,3,3],[27715,2,3],[27755,3,3]]}
+      ]
+    },
+    {
+      "i": 30375,
+      "n": "Small Smithy Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[27691,3,3],[27685,3,3],[27775,3,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[27692,3,3],[27713,3,3],[27751,3,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[27714,3,3],[27703,3,3],[27742,3,3]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[27691,3,3],[27775,3,3],[27711,3,3]]},
+        {"part":"Roof","step":2,"of":3,"items":[[27692,3,3],[27757,3,3],[27714,3,3]]},
+        {"part":"Roof","step":3,"of":3,"items":[[27714,3,3],[27703,3,3],[27715,3,3],[16908,2,3]]},
+        {"part":"Door","step":1,"of":1,"items":[[27706,3,3],[27712,3,3],[27741,3,3],[16908,3,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[27692,3,3],[27713,3,3],[16908,2,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[27714,3,3],[27693,2,3],[27703,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[27693,3,3],[27715,2,3],[27757,3,3]]}
+      ]
+    },
+    {
+      "i": 30376,
+      "n": "Medium Smithy Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[27691,3,9],[27685,3,9],[27775,3,9]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[27692,3,9],[27713,3,9],[27751,3,9]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[27714,3,9],[27703,3,9],[27742,3,9]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[27691,3,9],[27775,3,9],[27711,3,9]]},
+        {"part":"Roof","step":2,"of":3,"items":[[27692,3,9],[27757,3,9],[27714,3,9]]},
+        {"part":"Roof","step":3,"of":3,"items":[[27714,3,9],[27703,3,9],[27715,3,9],[16908,2,3]]},
+        {"part":"Door","step":1,"of":1,"items":[[27706,3,3],[27712,3,3],[27741,3,3],[16908,3,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[27692,3,3],[27713,3,3],[16908,2,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[27714,3,3],[27693,2,3],[27703,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[27693,3,3],[27715,2,3],[27757,3,3]]}
+      ]
+    },
+    {
+      "i": 30377,
+      "n": "Large Smithy Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[27691,3,15],[27685,3,15],[27775,3,15]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[27692,3,15],[27713,3,15],[27751,3,15]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[27714,3,15],[27703,3,15],[27742,3,15]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[27691,3,15],[27775,3,15],[27711,3,15]]},
+        {"part":"Roof","step":2,"of":3,"items":[[27692,3,15],[27757,3,15],[27714,3,15]]},
+        {"part":"Roof","step":3,"of":3,"items":[[27714,3,15],[27703,3,15],[27715,3,15],[16908,3,3]]},
+        {"part":"Door","step":1,"of":1,"items":[[27706,3,3],[27712,3,3],[27741,3,3],[16908,3,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[27692,3,3],[27713,3,3],[16908,2,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[27714,3,3],[27693,2,3],[27703,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[27693,3,3],[27715,2,3],[27757,3,3]]}
+      ]
+    },
+    {
+      "i": 32255,
+      "n": "Small Florist's Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[27691,3,3],[27685,3,3],[27775,3,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[27692,3,3],[27686,3,3],[27713,3,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[27693,3,3],[27778,3,3],[27742,3,3]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[27691,3,3],[27775,3,3],[27711,3,3]]},
+        {"part":"Roof","step":2,"of":3,"items":[[27692,3,3],[27757,3,3],[27714,3,3]]},
+        {"part":"Roof","step":3,"of":3,"items":[[27693,3,3],[27703,3,3],[27715,3,3],[16908,2,3]]},
+        {"part":"Door","step":1,"of":1,"items":[[27691,3,3],[27712,3,3],[27739,3,3],[16908,2,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[27692,3,3],[27713,3,3],[16908,2,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[27693,3,3],[27687,3,3],[27703,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[27693,3,3],[27715,3,3],[27757,3,3]]}
+      ]
+    },
+    {
+      "i": 32256,
+      "n": "Medium Florist's Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[27691,3,9],[27685,3,9],[27775,3,9]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[27692,3,9],[27686,3,9],[27713,3,9]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[27693,3,9],[27778,3,9],[27742,3,9]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[27691,3,9],[27775,3,9],[27711,3,9]]},
+        {"part":"Roof","step":2,"of":3,"items":[[27692,3,9],[27757,3,9],[27714,3,9]]},
+        {"part":"Roof","step":3,"of":3,"items":[[27693,3,9],[27703,3,9],[27715,3,9],[16908,2,3]]},
+        {"part":"Door","step":1,"of":1,"items":[[27691,3,3],[27712,3,3],[27739,3,3],[16908,2,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[27692,3,3],[27713,3,3],[16908,2,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[27693,3,3],[27687,3,3],[27703,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[27693,3,3],[27715,3,3],[27757,3,3]]}
+      ]
+    },
+    {
+      "i": 32257,
+      "n": "Large Florist's Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[27691,3,15],[27685,3,15],[27775,3,15]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[27692,3,15],[27686,3,15],[27713,3,15]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[27693,3,15],[27778,3,15],[27742,3,15]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[27691,3,15],[27775,3,15],[27711,3,15]]},
+        {"part":"Roof","step":2,"of":3,"items":[[27692,3,15],[27757,3,15],[27714,3,15]]},
+        {"part":"Roof","step":3,"of":3,"items":[[27693,3,15],[27703,3,15],[27715,3,15],[16908,2,3]]},
+        {"part":"Door","step":1,"of":1,"items":[[27691,3,3],[27712,3,3],[27739,3,3],[16908,2,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[27692,3,3],[27713,3,3],[16908,2,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[27693,3,3],[27687,3,3],[27703,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[27693,3,3],[27715,3,3],[27757,3,3]]}
+      ]
+    },
+    {
+      "i": 33245,
+      "n": "Small Forge's Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[27690,3,3],[27684,3,3],[27775,3,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[27691,3,3],[27713,3,3],[27751,3,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[27714,3,3],[27703,3,3],[27742,3,3]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[27690,3,3],[27775,3,3],[27711,3,3]]},
+        {"part":"Roof","step":2,"of":3,"items":[[27691,3,3],[27701,3,3],[27714,3,3]]},
+        {"part":"Roof","step":3,"of":3,"items":[[27714,3,3],[27757,3,3],[27715,3,3],[16908,2,3]]},
+        {"part":"Door","step":1,"of":1,"items":[[27706,3,3],[27713,3,3],[27693,3,3],[16908,2,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[27739,3,3],[27713,3,3],[16908,2,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[27715,3,3],[27693,2,3],[27703,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[27692,3,3],[27714,2,3],[27757,3,3]]}
+      ]
+    },
+    {
+      "i": 33246,
+      "n": "Medium Forge's Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[27690,3,9],[27684,3,9],[27775,3,9]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[27691,3,9],[27713,3,9],[27751,3,9]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[27714,3,9],[27703,3,9],[27742,3,9]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[27690,3,9],[27775,3,9],[27711,3,9]]},
+        {"part":"Roof","step":2,"of":3,"items":[[27691,3,9],[27701,3,9],[27714,3,9]]},
+        {"part":"Roof","step":3,"of":3,"items":[[27714,3,9],[27757,3,9],[27715,3,9],[16908,2,3]]},
+        {"part":"Door","step":1,"of":1,"items":[[27706,3,3],[27713,3,3],[27693,3,3],[16908,2,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[27739,3,3],[27713,3,3],[16908,2,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[27715,3,3],[27693,2,3],[27703,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[27692,3,3],[27714,2,3],[27757,3,3]]}
+      ]
+    },
+    {
+      "i": 33247,
+      "n": "Large Forge's Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[27690,3,15],[27684,3,15],[27775,3,15]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[27691,3,15],[27713,3,15],[27701,3,15]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[27714,3,15],[27703,3,15],[27742,3,15]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[27690,3,15],[27775,3,15],[27711,3,15]]},
+        {"part":"Roof","step":2,"of":3,"items":[[27691,3,15],[27701,3,15],[27714,3,15]]},
+        {"part":"Roof","step":3,"of":3,"items":[[27714,3,15],[27757,3,15],[27715,3,15],[16908,2,3]]},
+        {"part":"Door","step":1,"of":1,"items":[[27706,3,3],[27713,3,3],[27693,3,3],[16908,2,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[27739,3,3],[27713,3,3],[16908,2,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[27715,3,3],[27693,2,3],[27703,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[27692,3,3],[27714,2,3],[27757,3,3]]}
+      ]
+    },
+    {
+      "i": 35812,
+      "n": "Small Cafe Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[36196,3,3],[36191,3,3],[36239,3,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[36198,3,3],[36169,3,3],[36163,3,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[36170,3,3],[36208,3,3],[36077,3,3]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[36196,3,3],[36239,3,3],[36247,3,3]]},
+        {"part":"Roof","step":2,"of":3,"items":[[36198,3,3],[36164,3,3],[36169,3,3]]},
+        {"part":"Roof","step":3,"of":3,"items":[[36170,3,3],[36078,3,3],[36183,3,3],[16908,2,3]]},
+        {"part":"Door","step":1,"of":1,"items":[[36163,3,3],[36169,3,3],[36198,3,3],[16908,2,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[36247,3,3],[36183,3,3],[16908,2,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[36184,3,3],[36198,3,3],[36164,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[36196,3,3],[36170,3,3],[36208,3,3]]}
+      ]
+    },
+    {
+      "i": 35813,
+      "n": "Medium Cafe Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[36196,3,9],[36191,3,9],[36239,3,9]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[36198,3,9],[36169,3,9],[36163,3,9]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[36170,3,9],[36208,3,9],[36077,3,9]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[36196,3,9],[36239,3,9],[36247,3,9]]},
+        {"part":"Roof","step":2,"of":3,"items":[[36198,3,9],[36164,3,9],[36169,3,9]]},
+        {"part":"Roof","step":3,"of":3,"items":[[36170,3,9],[36078,3,9],[36183,3,9],[16908,2,3]]},
+        {"part":"Door","step":1,"of":1,"items":[[36163,3,3],[36169,3,3],[36198,3,3],[16908,2,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[36247,3,3],[36183,3,3],[16908,2,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[36184,3,3],[36198,3,3],[36164,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[36196,3,3],[36170,3,3],[36208,3,3]]}
+      ]
+    },
+    {
+      "i": 35814,
+      "n": "Large Cafe Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[36196,3,15],[36191,3,15],[36239,3,15]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[36198,3,15],[36169,3,15],[36163,3,15]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[36170,3,15],[36208,3,15],[36077,3,15]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[36196,3,15],[36239,3,15],[36247,3,15]]},
+        {"part":"Roof","step":2,"of":3,"items":[[36198,3,15],[36164,3,15],[36169,3,15]]},
+        {"part":"Roof","step":3,"of":3,"items":[[36170,3,15],[36078,3,15],[36183,3,15],[16908,2,3]]},
+        {"part":"Door","step":1,"of":1,"items":[[36163,3,3],[36169,3,3],[36198,3,3],[16908,2,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[36247,3,3],[36183,3,3],[16908,2,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[36184,3,3],[36198,3,3],[36164,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[36196,3,3],[36170,3,3],[36208,3,3]]}
+      ]
+    },
+    {
+      "i": 37344,
+      "n": "Gingerbread Cottage Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[36191,3,3],[36239,3,3],[36087,3,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[36198,3,3],[36096,3,3],[36077,3,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[36095,3,3],[36061,3,3],[36080,3,3]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[36191,3,3],[36239,3,3],[36087,3,3]]},
+        {"part":"Roof","step":2,"of":3,"items":[[36198,3,3],[36096,3,3],[36077,3,3]]},
+        {"part":"Roof","step":3,"of":3,"items":[[7962,1,3],[36061,3,3],[36080,3,3],[36239,3,3]]},
+        {"part":"Door","step":1,"of":1,"items":[[36061,3,3],[36080,3,3],[36087,3,3],[36239,3,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[36080,3,3],[36077,3,3],[36239,3,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[36080,3,3],[36077,3,3],[36239,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[36061,3,3],[36080,3,3],[36239,3,3]]}
+      ]
+    },
+    {
+      "i": 37345,
+      "n": "Gingerbread House Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[36191,3,9],[36239,3,9],[36087,3,9]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[36198,3,9],[36096,3,9],[36077,3,9]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[36095,3,9],[36061,3,9],[36080,3,9]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[36191,3,9],[36239,3,9],[36087,3,9]]},
+        {"part":"Roof","step":2,"of":3,"items":[[36198,3,9],[36096,3,9],[36077,3,9]]},
+        {"part":"Roof","step":3,"of":3,"items":[[7962,1,9],[36061,3,9],[36080,3,9],[36239,3,3]]},
+        {"part":"Door","step":1,"of":1,"items":[[36061,3,3],[36080,3,3],[36087,3,3],[36239,3,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[36080,3,3],[36077,3,3],[36239,3,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[36080,3,3],[36077,3,3],[36239,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[36061,3,3],[36080,3,3],[36239,3,3]]}
+      ]
+    },
+    {
+      "i": 37346,
+      "n": "Gingerbread Mansion Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[36191,3,15],[36239,3,15],[36087,3,15]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[36198,3,15],[36096,3,15],[36077,3,15]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[36095,3,15],[36061,3,15],[36080,3,15]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[36191,3,15],[36239,3,15],[36087,3,15]]},
+        {"part":"Roof","step":2,"of":3,"items":[[36198,3,15],[36096,3,15],[36077,3,15]]},
+        {"part":"Roof","step":3,"of":3,"items":[[7962,1,15],[36061,3,15],[36080,3,15],[36239,3,3]]},
+        {"part":"Door","step":1,"of":1,"items":[[36061,3,3],[36080,3,3],[36087,3,3],[36239,3,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[36080,3,3],[36077,3,3],[36239,3,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[36080,3,3],[36077,3,3],[36239,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[36061,3,3],[36080,3,3],[36239,3,3]]}
+      ]
+    },
+    {
+      "i": 38953,
+      "n": "Sukiya-zukuri Cottage Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[19931,3,3],[19943,3,3],[7008,3,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[19926,3,3],[36183,3,3],[7016,3,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[36198,3,3],[5365,3,3],[7016,3,3]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[19931,3,3],[36164,3,3],[7015,3,3]]},
+        {"part":"Roof","step":2,"of":3,"items":[[19926,3,3],[36192,3,3],[7015,3,3]]},
+        {"part":"Roof","step":3,"of":3,"items":[[36198,3,3],[5365,3,3],[36169,3,3],[7015,3,3]]},
+        {"part":"Door","step":1,"of":1,"items":[[36198,3,3],[36208,3,3],[7016,3,3],[7015,3,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[36198,3,3],[36183,3,3],[16908,2,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[36198,3,3],[5365,3,3],[7015,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[36198,3,3],[7016,3,3],[7015,3,3]]}
+      ]
+    },
+    {
+      "i": 38954,
+      "n": "Sukiya-zukuri House Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[19931,3,9],[19943,3,9],[7008,3,9]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[19926,3,9],[36183,3,9],[7016,3,9]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[36198,3,9],[5365,3,9],[7016,3,9]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[19931,3,9],[36164,3,9],[7015,3,9]]},
+        {"part":"Roof","step":2,"of":3,"items":[[19926,3,9],[36192,3,9],[7015,3,9]]},
+        {"part":"Roof","step":3,"of":3,"items":[[36198,3,9],[5365,3,9],[36169,3,9],[7015,3,3]]},
+        {"part":"Door","step":1,"of":1,"items":[[36198,3,3],[36208,3,3],[7016,3,3],[7015,3,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[36198,3,3],[36183,3,3],[16908,2,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[36198,3,3],[5365,3,3],[7015,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[36198,3,3],[7016,3,3],[7015,3,3]]}
+      ]
+    },
+    {
+      "i": 38955,
+      "n": "Sukiya-zukuri Mansion Walls",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[19931,3,15],[19943,3,15],[7008,3,15]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[19926,3,15],[36183,3,15],[7016,3,15]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[36198,3,15],[5365,3,15],[7016,3,15]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[19931,3,15],[36164,3,15],[7015,3,15]]},
+        {"part":"Roof","step":2,"of":3,"items":[[19926,3,15],[36192,3,15],[7015,3,15]]},
+        {"part":"Roof","step":3,"of":3,"items":[[36198,3,15],[5365,3,15],[36169,3,15],[7015,3,3]]},
+        {"part":"Door","step":1,"of":1,"items":[[36198,3,3],[36208,3,3],[7016,3,3],[7015,3,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[36198,3,3],[36183,3,3],[16908,2,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[36198,3,3],[5365,3,3],[7015,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[36198,3,3],[7016,3,3],[7015,3,3]]}
+      ]
+    },
+    {
+      "i": 41810,
+      "n": "Country Cottage Wall",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[44019,3,3],[44015,3,3],[44049,3,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[44030,3,3],[43993,3,3],[7013,2,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[44020,3,3],[43997,3,3],[44016,3,3]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[44019,3,3],[43992,3,3],[44059,3,3]]},
+        {"part":"Roof","step":2,"of":3,"items":[[44020,3,3],[44016,3,3],[44049,3,3]]},
+        {"part":"Roof","step":3,"of":3,"items":[[44021,3,3],[43998,3,3],[44008,3,3],[16908,2,3]]},
+        {"part":"Door","step":1,"of":1,"items":[[44019,3,3],[43999,3,3],[44016,3,3],[16908,2,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[44020,3,3],[44008,3,3],[16908,2,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[44019,3,3],[43997,3,3],[44049,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[44020,3,3],[43999,3,3],[44008,3,3]]}
+      ]
+    },
+    {
+      "i": 41811,
+      "n": "Country House Wall",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[44019,3,9],[44015,3,9],[44049,3,9]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[44030,3,9],[43993,3,9],[7013,2,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[44020,3,9],[43997,3,9],[44016,3,9]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[44019,3,9],[43992,3,9],[44059,3,9]]},
+        {"part":"Roof","step":2,"of":3,"items":[[44020,3,9],[44016,3,9],[44049,3,9]]},
+        {"part":"Roof","step":3,"of":3,"items":[[44021,3,9],[43998,3,9],[44008,3,9],[16908,2,3]]},
+        {"part":"Door","step":1,"of":1,"items":[[44019,3,3],[43999,3,3],[44016,3,3],[16908,2,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[44020,3,3],[44008,3,3],[16908,2,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[44019,3,3],[43997,3,3],[44049,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[44020,3,3],[43999,3,3],[44008,3,3]]}
+      ]
+    },
+    {
+      "i": 41812,
+      "n": "Country Mansion Wall",
+      "cat": "Housing",
+      "type": "Exterior Wall",
+      "phases": [
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 1,
+          "of": 3,
+          "items": [[44019,3,15],[44015,3,15],[44049,3,15]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 2,
+          "of": 3,
+          "items": [[44030,3,15],[43993,3,15],[7013,2,3]]
+        },
+        {
+          "part": "Exterior Wall (Single)",
+          "step": 3,
+          "of": 3,
+          "items": [[44020,3,15],[43997,3,15],[44016,3,15]]
+        },
+        {"part":"Roof","step":1,"of":3,"items":[[44019,3,15],[43992,3,15],[44059,3,15]]},
+        {"part":"Roof","step":2,"of":3,"items":[[44020,3,15],[44016,3,15],[44049,3,15]]},
+        {"part":"Roof","step":3,"of":3,"items":[[44021,3,15],[43998,3,15],[44008,3,15],[16908,2,3]]},
+        {"part":"Door","step":1,"of":1,"items":[[44019,3,3],[43999,3,3],[44016,3,3],[16908,2,3]]},
+        {"part":"Window","step":1,"of":1,"items":[[44020,3,3],[44008,3,3],[16908,2,3]]},
+        {"part":"Fence","step":1,"of":1,"items":[[44019,3,3],[43997,3,3],[44049,3,3]]},
+        {"part":"Signboard","step":1,"of":1,"items":[[44020,3,3],[43999,3,3],[44008,3,3]]}
+      ]
+    }
+  ],
+  "recipes": {
+    "5056": {"y":1,"job":"BSM","lvl":1,"g":[[5106,2],[5107,1]],"cx":[[2,1]]},
+    "5057": {"y":1,"job":"BSM","lvl":16,"g":[[5111,3]],"cx":[[2,1]]},
+    "5058": {"y":1,"job":"BSM","lvl":26,"g":[[5528,1],[5111,2]],"cx":[[2,2]]},
+    "5059": {"y":1,"job":"BSM","lvl":42,"g":[[5116,2],[5111,1]],"cx":[[2,5]]},
+    "5060": {"y":1,"job":"BSM","lvl":50,"g":[[5061,2],[5530,9]],"cx":[[14,1]]},
+    "5061": {"y":1,"job":"BSM","lvl":50,"g":[[5121,3]],"cx":[[8,3]]},
+    "5063": {"y":1,"job":"GSM","lvl":14,"g":[[5106,2],[5110,1]],"cx":[[4,1]]},
+    "5064": {"y":1,"job":"GSM","lvl":23,"g":[[5113,3]],"cx":[[4,2]]},
+    "5065": {"y":1,"job":"BSM","lvl":38,"g":[[5114,3]],"cx":[[2,4]]},
+    "5066": {"y":1,"job":"GSM","lvl":42,"g":[[5115,4]],"cx":[[4,5]]},
+    "5067": {"y":1,"job":"GSM","lvl":50,"g":[[5068,2],[5119,9]],"cx":[[16,1]]},
+    "5068": {"y":1,"job":"GSM","lvl":50,"g":[[5118,3],[5106,1]],"cx":[[10,3]]},
+    "5069": {"y":1,"job":"GSM","lvl":50,"g":[[7598,1],[7589,1],[5118,1]],"cx":[[16,2],[14,1]]},
+    "5073": {"y":1,"job":"ARM","lvl":27,"g":[[5058,2]],"cx":[[3,3]]},
+    "5074": {"y":1,"job":"ARM","lvl":43,"g":[[5059,2]],"cx":[[3,5]]},
+    "5075": {"y":1,"job":"ARM","lvl":50,"g":[[5061,2]],"cx":[[9,3]]},
+    "5079": {"y":1,"job":"ARM","lvl":38,"g":[[5065,2]],"cx":[[3,4]]},
+    "5084": {"y":1,"job":"ARM","lvl":43,"g":[[5059,1]],"cx":[[3,5]]},
+    "5091": {"y":1,"job":"BSM","lvl":3,"g":[[5056,1]],"cx":[[2,1]]},
+    "5092": {"y":1,"job":"BSM","lvl":18,"g":[[5057,1]],"cx":[[2,1]]},
+    "5093": {"y":1,"job":"BSM","lvl":29,"g":[[5058,1]],"cx":[[2,3]]},
+    "5094": {"y":1,"job":"BSM","lvl":43,"g":[[5059,1]],"cx":[[2,5]]},
+    "5095": {"y":1,"job":"BSM","lvl":50,"g":[[5061,1]],"cx":[[8,3]]},
+    "5099": {"y":1,"job":"BSM","lvl":39,"g":[[5065,1]],"cx":[[2,5]]},
+    "5186": {"y":1,"job":"GSM","lvl":41,"g":[[5145,1]],"cx":[[4,5]]},
+    "5190": {"y":1,"job":"GSM","lvl":50,"g":[[7601,1],[5149,1]],"cx":[[16,2],[14,1]]},
+    "5196": {"y":1,"job":"GSM","lvl":40,"g":[[5168,1]],"cx":[[4,5]]},
+    "5262": {"y":1,"job":"GSM","lvl":40,"g":[[5263,1]],"cx":[[4,5]]},
+    "5280": {"y":1,"job":"LTW","lvl":26,"g":[[5300,1],[5524,1]],"cx":[[5,2]]},
+    "5282": {"y":1,"job":"LTW","lvl":33,"g":[[5303,1],[5524,1]],"cx":[[5,4]]},
+    "5287": {"y":1,"job":"LTW","lvl":43,"g":[[5314,1],[5525,1]],"cx":[[11,1]]},
+    "5288": {"y":1,"job":"LTW","lvl":50,"g":[[5316,1],[5525,1]],"cx":[[11,3]]},
+    "5289": {"y":1,"job":"LTW","lvl":50,"g":[[5288,2],[5531,9]],"cx":[[17,1]]},
+    "5330": {"y":1,"job":"WVR","lvl":50,"g":[[5338,2],[5501,9]],"cx":[[18,1]]},
+    "5333": {"y":2,"job":"WVR","lvl":1,"g":[[5341,2]],"cx":[[6,1]]},
+    "5334": {"y":2,"job":"WVR","lvl":12,"g":[[5343,2]],"cx":[[6,1]]},
+    "5336": {"y":2,"job":"WVR","lvl":32,"g":[[5346,2]],"cx":[[6,2]]},
+    "5338": {"y":2,"job":"WVR","lvl":50,"g":[[5350,2],[5491,1]],"cx":[[12,3]]},
+    "5364": {"y":1,"job":"CRP","lvl":10,"g":[[5383,3]],"cx":[[4,1]]},
+    "5366": {"y":1,"job":"CRP","lvl":51,"g":[[5384,5]],"cx":[[10,3]]},
+    "5367": {"y":1,"job":"CRP","lvl":16,"g":[[5385,3]],"cx":[[4,1]]},
+    "5368": {"y":1,"job":"CRP","lvl":21,"g":[[5386,3]],"cx":[[4,2]]},
+    "5371": {"y":1,"job":"CRP","lvl":25,"g":[[5388,3]],"cx":[[4,2]]},
+    "5372": {"y":1,"job":"CRP","lvl":64,"g":[[5389,4]],"cx":[[10,4]]},
+    "5373": {"y":1,"job":"CRP","lvl":32,"g":[[5390,3]],"cx":[[4,3]]},
+    "5374": {"y":1,"job":"CRP","lvl":39,"g":[[5391,3]],"cx":[[4,5]]},
+    "5375": {"y":1,"job":"CRP","lvl":60,"g":[[5392,3],[16731,2],[9366,9]],"cx":[[16,3],[15,3]]},
+    "5376": {"y":1,"job":"CRP","lvl":45,"g":[[5393,3]],"cx":[[4,6]]},
+    "5378": {"y":1,"job":"CRP","lvl":50,"g":[[5395,3]],"cx":[[10,3]]},
+    "5379": {"y":1,"job":"CRP","lvl":50,"g":[[5378,2],[5532,9]],"cx":[[16,1]]},
+    "5480": {"y":1,"job":"ALC","lvl":50,"g":[[5273,3],[5494,1]],"cx":[[13,3]]},
+    "5485": {"y":1,"job":"ALC","lvl":29,"g":[[5346,2]],"cx":[[7,3]]},
+    "5487": {"y":1,"job":"ALC","lvl":1,"g":[[5488,1]],"cx":[[7,1]]},
+    "5505": {"y":1,"job":"ALC","lvl":30,"g":[[5436,2]],"cx":[[7,3]]},
+    "5506": {"y":1,"job":"ALC","lvl":51,"g":[[12635,3],[5558,2]],"cx":[[13,3]]},
+    "5507": {"y":1,"job":"ALC","lvl":55,"g":[[12636,3],[5553,2],[12629,2]],"cx":[[13,4]]},
+    "5508": {"y":1,"job":"ALC","lvl":59,"g":[[12627,3],[5449,2],[5448,2]],"cx":[[13,5]]},
+    "5512": {"y":1,"job":"ALC","lvl":28,"g":[[5523,1],[5522,1]],"cx":[[7,3]]},
+    "5515": {"y":1,"job":"ALC","lvl":10,"g":[[5516,3]],"cx":[[7,1]]},
+    "5522": {"y":1,"job":"ALC","lvl":25,"g":[[5491,1],[5518,1]],"cx":[[7,2]]},
+    "7009": {"y":1,"job":"GSM","lvl":30,"g":[[7008,3]],"cx":[[4,3]]},
+    "7013": {"y":1,"job":"ALC","lvl":18,"g":[[5229,2],[5513,1]],"cx":[[7,1]]},
+    "7014": {"y":1,"job":"ALC","lvl":39,"g":[[5526,1],[5231,2],[5513,1]],"cx":[[7,5]]},
+    "7015": {"y":1,"job":"ALC","lvl":11,"g":[[5513,2],[5342,1]],"cx":[[7,1]]},
+    "7016": {"y":1,"job":"ALC","lvl":20,"g":[[5230,2],[5267,1],[5487,1]],"cx":[[7,1]]},
+    "7017": {"y":1,"job":"ALC","lvl":41,"g":[[5143,2],[5485,1],[5728,1]],"cx":[[7,5]]},
+    "7018": {"y":1,"job":"BSM","lvl":16,"g":[[5057,1]],"cx":[[2,1]]},
+    "7019": {"y":1,"job":"BSM","lvl":27,"g":[[5058,1]],"cx":[[2,3]]},
+    "7020": {"y":1,"job":"BSM","lvl":44,"g":[[5059,1]],"cx":[[2,5]]},
+    "7022": {"y":1,"job":"ARM","lvl":27,"g":[[5058,1]],"cx":[[3,3]]},
+    "7023": {"y":1,"job":"ARM","lvl":44,"g":[[5059,1]],"cx":[[3,5]]},
+    "7024": {"y":1,"job":"ARM","lvl":26,"g":[[5058,1]],"cx":[[3,2]]},
+    "7025": {"y":1,"job":"WVR","lvl":18,"g":[[5334,2],[5333,1],[5515,1]],"cx":[[6,1]]},
+    "7026": {"y":1,"job":"WVR","lvl":36,"g":[[5336,2],[5334,1],[5515,1]],"cx":[[6,4]]},
+    "7027": {"y":1,"job":"WVR","lvl":42,"g":[[5347,2],[5526,1],[5522,1]],"cx":[[6,5]]},
+    "7606": {"y":1,"job":"CRP","lvl":50,"g":[[7596,1],[7590,1]],"cx":[[16,2],[15,1]]},
+    "7607": {"y":1,"job":"BSM","lvl":50,"g":[[7597,1],[7588,1],[5116,1]],"cx":[[14,2],[17,1]]},
+    "7608": {"y":1,"job":"LTW","lvl":50,"g":[[7599,1],[7591,1]],"cx":[[17,2],[16,1]]},
+    "7962": {
+      "y": 1,
+      "job": "CUL",
+      "lvl": 50,
+      "g": [[4816,1],[4809,1],[4808,1],[4812,1],[5371,1]],
+      "cx": [[2,6],[7,6]]
+    },
+    "8029": {"y":1,"job":"ARM","lvl":50,"g":[[7597,1],[7588,1],[5116,1]],"cx":[[15,2],[17,1]]},
+    "9359": {"y":1,"job":"GSM","lvl":50,"g":[[5120,3]],"cx":[[16,2],[14,1]]},
+    "9360": {"y":1,"job":"GSM","lvl":50,"g":[[5120,2],[9369,9]],"cx":[[16,2],[14,2]]},
+    "12231": {"y":1,"job":"WVR","lvl":53,"g":[[12220,3],[5501,9]],"cx":[[18,1],[16,1]]},
+    "12232": {"y":1,"job":"CRP","lvl":56,"g":[[12221,3],[5532,9]],"cx":[[16,2],[15,1]]},
+    "12233": {"y":1,"job":"LTW","lvl":55,"g":[[12222,3],[5531,9],[5525,3]],"cx":[[17,1],[16,1]]},
+    "12518": {"y":1,"job":"BSM","lvl":51,"g":[[12531,5],[5114,1]],"cx":[[8,3]]},
+    "12519": {"y":1,"job":"BSM","lvl":52,"g":[[12534,4],[12518,1]],"cx":[[8,3]]},
+    "12520": {"y":1,"job":"GSM","lvl":54,"g":[[12532,5],[5113,1]],"cx":[[10,4]]},
+    "12521": {"y":1,"job":"GSM","lvl":56,"g":[[12535,4],[12520,1]],"cx":[[10,5]]},
+    "12522": {"y":1,"job":"GSM","lvl":58,"g":[[12533,5],[5118,1]],"cx":[[10,5]]},
+    "12523": {"y":3,"job":"GSM","lvl":60,"g":[[12536,2],[12522,1],[5163,1],[12932,5]],"cx":[[16,2],[14,2]]},
+    "12524": {"y":1,"job":"BSM","lvl":54,"g":[[12537,5],[5111,1],[5526,1]],"cx":[[8,4]]},
+    "12525": {"y":1,"job":"BSM","lvl":56,"g":[[12539,4],[12524,1]],"cx":[[8,5]]},
+    "12526": {"y":1,"job":"BSM","lvl":58,"g":[[12538,5],[5121,1]],"cx":[[8,5]]},
+    "12528": {"y":1,"job":"BSM","lvl":51,"g":[[12518,1]],"cx":[[8,3]]},
+    "12530": {"y":1,"job":"BSM","lvl":58,"g":[[12526,1]],"cx":[[8,5]]},
+    "12541": {"y":1,"job":"GSM","lvl":53,"g":[[12551,3],[5262,1]],"cx":[[10,4]]},
+    "12544": {"y":1,"job":"GSM","lvl":55,"g":[[12554,3],[5262,1]],"cx":[[10,4]]},
+    "12548": {"y":1,"job":"GSM","lvl":60,"g":[[12558,3],[12561,1]],"cx":[[10,6]]},
+    "12561": {"y":1,"job":"GSM","lvl":56,"g":[[12539,3]],"cx":[[10,5]]},
+    "12563": {"y":1,"job":"LTW","lvl":52,"g":[[12569,3],[12882,1]],"cx":[[11,3]]},
+    "12564": {"y":1,"job":"LTW","lvl":54,"g":[[12570,3],[12578,1]],"cx":[[11,4]]},
+    "12565": {"y":1,"job":"LTW","lvl":56,"g":[[12571,3],[12578,1]],"cx":[[11,5]]},
+    "12566": {"y":1,"job":"LTW","lvl":58,"g":[[12572,3],[12578,1]],"cx":[[11,5]]},
+    "12580": {"y":1,"job":"CRP","lvl":52,"g":[[5366,1],[12604,2]],"cx":[[10,3]]},
+    "12581": {"y":1,"job":"CRP","lvl":54,"g":[[12578,5]],"cx":[[10,4]]},
+    "12582": {"y":1,"job":"CRP","lvl":56,"g":[[12581,1],[12605,2]],"cx":[[10,5]]},
+    "12583": {"y":1,"job":"CRP","lvl":58,"g":[[12579,5]],"cx":[[10,5]]},
+    "12584": {"y":3,"job":"CRP","lvl":60,"g":[[12583,2],[12933,5],[12606,1]],"cx":[[16,2],[15,2]]},
+    "12590": {"y":1,"job":"WVR","lvl":54,"g":[[12595,2],[5336,1]],"cx":[[12,2]]},
+    "12591": {"y":1,"job":"WVR","lvl":56,"g":[[12590,1],[12605,2]],"cx":[[12,5]]},
+    "12595": {"y":2,"job":"WVR","lvl":54,"g":[[12598,3],[5346,2]],"cx":[[12,2]]},
+    "12602": {"y":1,"job":"ALC","lvl":54,"g":[[12532,4],[12629,2],[12631,1]],"cx":[[13,4]]},
+    "12603": {"y":1,"job":"ALC","lvl":58,"g":[[12533,4],[12630,2],[12632,1]],"cx":[[13,5]]},
+    "12604": {"y":3,"job":"ALC","lvl":52,"g":[[12631,2],[12943,2]],"cx":[[13,3]]},
+    "12605": {"y":3,"job":"ALC","lvl":56,"g":[[12632,2],[12944,2]],"cx":[[13,5]]},
+    "12606": {"y":4,"job":"ALC","lvl":60,"g":[[12634,2],[5226,2],[12609,1]],"cx":[[19,2],[18,1]]},
+    "12608": {"y":1,"job":"ALC","lvl":58,"g":[[12642,3],[12629,1],[5159,2]],"cx":[[13,5]]},
+    "12895": {"y":3,"job":"CUL","lvl":53,"g":[[12888,5]],"cx":[[2,7]]},
+    "12912": {"y":1,"job":"GSM","lvl":54,"g":[[12223,3],[5261,9]],"cx":[[16,1],[14,1]]},
+    "12913": {"y":1,"job":"BSM","lvl":52,"g":[[12224,3],[5530,9],[5116,3]],"cx":[[14,1],[17,1]]},
+    "12914": {"y":3,"job":"ALC","lvl":51,"g":[[12225,3],[12628,2]],"cx":[[19,1],[18,1]]},
+    "12915": {"y":3,"job":"ALC","lvl":60,"g":[[12226,3],[12606,1],[12936,3]],"cx":[[19,2],[18,1]]},
+    "12916": {"y":3,"job":"ALC","lvl":51,"g":[[12227,3],[12628,2]],"cx":[[19,1],[18,1]]},
+    "12917": {"y":3,"job":"ALC","lvl":60,"g":[[12228,3],[12606,1],[12936,3]],"cx":[[19,2],[18,1]]},
+    "12918": {"y":3,"job":"ALC","lvl":51,"g":[[12229,3],[12628,2]],"cx":[[19,1],[18,1]]},
+    "12919": {"y":3,"job":"ALC","lvl":60,"g":[[12230,3],[12606,1],[12936,3]],"cx":[[19,2],[18,1]]},
+    "13091": {"y":1,"job":"ALC","lvl":60,"g":[[13756,1],[12608,3]],"cx":[[19,2],[18,2]]},
+    "13758": {"y":1,"job":"CRP","lvl":60,"g":[[12232,1],[12606,1],[12937,1]],"cx":[[16,2],[15,1]]},
+    "14146": {"y":1,"job":"BSM","lvl":60,"g":[[14147,2],[14148,3],[12534,2]],"cx":[[14,3],[17,2]]},
+    "14149": {"y":1,"job":"GSM","lvl":60,"g":[[14150,2],[14151,3],[5111,3]],"cx":[[16,3],[14,2]]},
+    "14157": {"y":1,"job":"CRP","lvl":60,"g":[[14957,3],[9366,2],[14164,2]],"cx":[[16,3],[15,2]]},
+    "14158": {"y":1,"job":"CRP","lvl":60,"g":[[14159,3]],"cx":[[10,7],[9,7]]},
+    "14935": {"y":1,"job":"BSM","lvl":60,"g":[[12224,3],[13750,2],[5116,2],[5530,9]],"cx":[[14,2],[17,2]]},
+    "16908": {"y":1,"job":"ALC","lvl":60,"g":[[15649,1],[5339,1],[5523,3],[5522,1]],"cx":[[13,7],[12,7]]},
+    "19906": {"y":1,"job":"ALC","lvl":64,"g":[[19924,2],[19908,1],[19922,1]],"cx":[[13,4]]},
+    "19909": {"y":3,"job":"ALC","lvl":66,"g":[[19869,5],[19872,1]],"cx":[[13,5]]},
+    "19925": {"y":1,"job":"CRP","lvl":61,"g":[[19930,4]],"cx":[[10,3]]},
+    "19926": {"y":1,"job":"CRP","lvl":62,"g":[[19931,4]],"cx":[[10,3]]},
+    "19927": {"y":1,"job":"CRP","lvl":66,"g":[[19932,4]],"cx":[[10,5]]},
+    "19928": {"y":1,"job":"CRP","lvl":68,"g":[[19933,4]],"cx":[[10,5]]},
+    "19938": {"y":1,"job":"GSM","lvl":61,"g":[[19950,4],[5106,1]],"cx":[[10,3]]},
+    "19939": {"y":1,"job":"BSM","lvl":61,"g":[[19950,4],[5111,1]],"cx":[[8,3]]},
+    "19941": {"y":1,"job":"BSM","lvl":62,"g":[[19951,4],[19939,1]],"cx":[[8,3]]},
+    "19943": {"y":1,"job":"BSM","lvl":64,"g":[[19953,4],[5111,1]],"cx":[[8,4]]},
+    "19945": {"y":1,"job":"BSM","lvl":66,"g":[[19955,4],[19943,1]],"cx":[[8,5]]},
+    "19947": {"y":1,"job":"BSM","lvl":68,"g":[[19957,4],[5116,1]],"cx":[[8,5]]},
+    "19962": {"y":1,"job":"GSM","lvl":61,"g":[[19968,3],[5232,1]],"cx":[[10,3]]},
+    "19967": {"y":1,"job":"GSM","lvl":70,"g":[[19973,3],[5232,1]],"cx":[[10,6]]},
+    "19974": {"y":1,"job":"WVR","lvl":61,"g":[[19975,3]],"cx":[[12,2]]},
+    "19975": {"y":3,"job":"WVR","lvl":61,"g":[[19976,4]],"cx":[[12,1]]},
+    "19978": {"y":3,"job":"WVR","lvl":62,"g":[[19979,4]],"cx":[[12,1]]},
+    "19980": {"y":1,"job":"WVR","lvl":64,"g":[[19981,2],[19978,1]],"cx":[[12,2]]},
+    "19981": {"y":2,"job":"WVR","lvl":64,"g":[[19982,4]],"cx":[[12,2]]},
+    "19987": {"y":1,"job":"WVR","lvl":68,"g":[[19988,3]],"cx":[[12,3]]},
+    "19988": {"y":3,"job":"WVR","lvl":68,"g":[[19989,4],[5491,1]],"cx":[[12,2]]},
+    "19993": {"y":1,"job":"LTW","lvl":61,"g":[[19999,3],[19910,1]],"cx":[[11,3]]},
+    "19995": {"y":1,"job":"LTW","lvl":64,"g":[[20001,3],[19910,1]],"cx":[[11,4]]},
+    "19997": {"y":1,"job":"LTW","lvl":68,"g":[[20003,3],[19909,1]],"cx":[[11,5]]},
+    "25009": {"y":1,"job":"BSM","lvl":60,"g":[[25008,3],[5530,9],[5116,3]],"cx":[[8,7],[11,7]]},
+    "26530": {"y":1,"job":"CRP","lvl":70,"g":[[26529,3],[5532,9]],"cx":[[10,6],[9,6]]},
+    "26532": {"y":1,"job":"BSM","lvl":70,"g":[[26531,3],[5530,9]],"cx":[[8,6],[11,6]]},
+    "27689": {"y":1,"job":"CRP","lvl":71,"g":[[27683,4]],"cx":[[10,6]]},
+    "27690": {"y":1,"job":"CRP","lvl":72,"g":[[27684,4]],"cx":[[10,6]]},
+    "27691": {"y":1,"job":"CRP","lvl":74,"g":[[27685,4]],"cx":[[10,7]]},
+    "27692": {"y":1,"job":"CRP","lvl":76,"g":[[27686,4]],"cx":[[10,7]]},
+    "27693": {"y":1,"job":"CRP","lvl":78,"g":[[27687,4]],"cx":[[10,7]]},
+    "27706": {"y":1,"job":"BSM","lvl":71,"g":[[27696,4],[5106,1]],"cx":[[8,6]]},
+    "27707": {"y":1,"job":"GSM","lvl":71,"g":[[27696,4],[5118,1]],"cx":[[10,6]]},
+    "27708": {"y":1,"job":"BSM","lvl":72,"g":[[27697,4],[5106,1]],"cx":[[8,6]]},
+    "27710": {"y":1,"job":"GSM","lvl":74,"g":[[27699,4],[5113,1]],"cx":[[10,7]]},
+    "27711": {"y":1,"job":"BSM","lvl":74,"g":[[27698,4],[5232,1]],"cx":[[8,7]]},
+    "27712": {"y":1,"job":"GSM","lvl":76,"g":[[27700,4],[12537,1]],"cx":[[10,7]]},
+    "27713": {"y":1,"job":"BSM","lvl":76,"g":[[27701,4],[12537,1]],"cx":[[8,7]]},
+    "27714": {"y":1,"job":"BSM","lvl":78,"g":[[27703,4],[12534,1]],"cx":[[8,7]]},
+    "27715": {"y":1,"job":"GSM","lvl":78,"g":[[27702,4],[12531,1]],"cx":[[10,7]]},
+    "27738": {"y":1,"job":"LTW","lvl":71,"g":[[27732,4],[27817,1]],"cx":[[11,6]]},
+    "27739": {"y":1,"job":"LTW","lvl":72,"g":[[27733,4],[27817,1]],"cx":[[11,6]]},
+    "27740": {"y":1,"job":"LTW","lvl":74,"g":[[27734,4],[27817,1]],"cx":[[11,7]]},
+    "27741": {"y":1,"job":"LTW","lvl":76,"g":[[27735,4],[27817,1]],"cx":[[11,7]]},
+    "27742": {"y":1,"job":"LTW","lvl":78,"g":[[27736,4],[27817,1]],"cx":[[11,7]]},
+    "27746": {"y":3,"job":"WVR","lvl":71,"g":[[27747,4]],"cx":[[12,3]]},
+    "27749": {"y":3,"job":"WVR","lvl":72,"g":[[27750,4],[5491,1]],"cx":[[12,3]]},
+    "27751": {"y":1,"job":"WVR","lvl":74,"g":[[27752,3]],"cx":[[12,4]]},
+    "27752": {"y":3,"job":"WVR","lvl":74,"g":[[27753,4]],"cx":[[12,3]]},
+    "27755": {"y":3,"job":"WVR","lvl":76,"g":[[27756,4],[27777,1]],"cx":[[12,3]]},
+    "27757": {"y":1,"job":"WVR","lvl":78,"g":[[27758,3]],"cx":[[12,4]]},
+    "27758": {"y":3,"job":"WVR","lvl":78,"g":[[27759,4]],"cx":[[12,3]]},
+    "27765": {"y":1,"job":"ALC","lvl":71,"g":[[27763,2],[27764,2],[12891,1]],"cx":[[13,6]]},
+    "27775": {"y":1,"job":"ALC","lvl":75,"g":[[27773,2],[27774,2]],"cx":[[13,7]]},
+    "27777": {"y":1,"job":"ALC","lvl":76,"g":[[27776,1],[19907,1]],"cx":[[13,7]]},
+    "27778": {"y":1,"job":"ALC","lvl":76,"g":[[27763,2],[27774,2],[27782,1]],"cx":[[13,7]]},
+    "36061": {
+      "y": 3,
+      "job": "CUL",
+      "lvl": 89,
+      "g": [[36094,3],[36077,1],[36080,1],[36256,1],[12895,1]],
+      "cx": [[8,8],[13,8]]
+    },
+    "36077": {"y":3,"job":"CUL","lvl":81,"g":[[36083,6]],"cx":[[8,8]]},
+    "36078": {"y":3,"job":"CUL","lvl":81,"g":[[36084,6]],"cx":[[8,8]]},
+    "36080": {"y":3,"job":"CUL","lvl":82,"g":[[36086,6]],"cx":[[8,8]]},
+    "36169": {"y":1,"job":"BSM","lvl":82,"g":[[36163,5],[5113,1]],"cx":[[8,8]]},
+    "36170": {"y":1,"job":"BSM","lvl":84,"g":[[36164,5],[5107,1]],"cx":[[8,8]]},
+    "36183": {"y":1,"job":"GSM","lvl":82,"g":[[36175,5],[5107,1]],"cx":[[10,8]]},
+    "36184": {"y":1,"job":"GSM","lvl":84,"g":[[36176,5],[5110,1]],"cx":[[10,8]]},
+    "36196": {"y":1,"job":"CRP","lvl":81,"g":[[36190,5]],"cx":[[10,8]]},
+    "36198": {"y":1,"job":"CRP","lvl":84,"g":[[36192,5]],"cx":[[10,8]]},
+    "36208": {"y":1,"job":"WVR","lvl":81,"g":[[36202,5]],"cx":[[12,8]]},
+    "36239": {"y":1,"job":"ALC","lvl":85,"g":[[36257,3],[36258,1]],"cx":[[13,8]]},
+    "36247": {"y":1,"job":"LTW","lvl":81,"g":[[36242,4],[27817,1]],"cx":[[11,8]]},
+    "43997": {"y":1,"job":"BSM","lvl":91,"g":[[43992,5],[19957,1]],"cx":[[8,8]]},
+    "43998": {"y":1,"job":"BSM","lvl":92,"g":[[43993,5],[36163,1]],"cx":[[8,8]]},
+    "43999": {"y":1,"job":"BSM","lvl":94,"g":[[43994,5],[5116,1]],"cx":[[8,8]]},
+    "44008": {"y":1,"job":"GSM","lvl":91,"g":[[44002,5],[36162,1]],"cx":[[10,8]]},
+    "44019": {"y":1,"job":"CRP","lvl":91,"g":[[44014,5]],"cx":[[10,8]]},
+    "44020": {"y":1,"job":"CRP","lvl":92,"g":[[44015,5]],"cx":[[10,8]]},
+    "44021": {"y":1,"job":"CRP","lvl":94,"g":[[44016,5]],"cx":[[10,8]]},
+    "44030": {"y":1,"job":"WVR","lvl":92,"g":[[44025,5]],"cx":[[12,8]]},
+    "44049": {"y":1,"job":"ALC","lvl":91,"g":[[43979,4],[44068,2]],"cx":[[13,8]]},
+    "44059": {"y":1,"job":"LTW","lvl":92,"g":[[44054,4],[36241,1]],"cx":[[11,8]]}
+  },
+  "names": {
+    "2": "Fire Shard",
+    "3": "Ice Shard",
+    "4": "Wind Shard",
+    "5": "Earth Shard",
+    "6": "Lightning Shard",
+    "7": "Water Shard",
+    "8": "Fire Crystal",
+    "9": "Ice Crystal",
+    "10": "Wind Crystal",
+    "11": "Earth Crystal",
+    "12": "Lightning Crystal",
+    "13": "Water Crystal",
+    "14": "Fire Cluster",
+    "15": "Ice Cluster",
+    "16": "Wind Cluster",
+    "17": "Earth Cluster",
+    "18": "Lightning Cluster",
+    "19": "Water Cluster",
+    "4808": "Lowland Grapes",
+    "4809": "La Noscean Orange",
+    "4812": "Pixie Plums",
+    "4816": "Prickly Pineapple",
+    "5056": "Bronze Ingot",
+    "5057": "Iron Ingot",
+    "5058": "Steel Ingot",
+    "5059": "Cobalt Ingot",
+    "5060": "Darksteel Ingot",
+    "5061": "Darksteel Nugget",
+    "5063": "Brass Ingot",
+    "5064": "Silver Ingot",
+    "5065": "Mythril Ingot",
+    "5066": "Electrum Ingot",
+    "5067": "Rose Gold Ingot",
+    "5068": "Rose Gold Nugget",
+    "5069": "Gold Ingot",
+    "5073": "Steel Plate",
+    "5074": "Cobalt Plate",
+    "5075": "Darksteel Plate",
+    "5079": "Mythril Plate",
+    "5084": "Cobalt Rings",
+    "5091": "Bronze Rivets",
+    "5092": "Iron Rivets",
+    "5093": "Steel Rivets",
+    "5094": "Cobalt Rivets",
+    "5095": "Darksteel Rivets",
+    "5099": "Mythril Rivets",
+    "5106": "Copper Ore",
+    "5107": "Tin Ore",
+    "5110": "Zinc Ore",
+    "5111": "Iron Ore",
+    "5113": "Silver Ore",
+    "5114": "Mythril Ore",
+    "5115": "Electrum Ore",
+    "5116": "Cobalt Ore",
+    "5118": "Gold Ore",
+    "5119": "Peacock Ore",
+    "5120": "Platinum Ore",
+    "5121": "Darksteel Ore",
+    "5127": "Wyrm Obsidian",
+    "5143": "Raw Amber",
+    "5145": "Raw Turquoise",
+    "5149": "Raw Topaz",
+    "5158": "Astral Rock",
+    "5159": "Red Quartz",
+    "5163": "Violet Quartz",
+    "5168": "Jade",
+    "5186": "Turquoise",
+    "5190": "Topaz",
+    "5196": "Jadeite",
+    "5226": "Astral Moraine",
+    "5229": "Mudstone",
+    "5230": "Limestone",
+    "5231": "Siltstone",
+    "5232": "Stiperstone",
+    "5261": "Aqueous Whetstone",
+    "5262": "Basilisk Whetstone",
+    "5263": "Basilisk Egg",
+    "5267": "Fine Sand",
+    "5273": "Gold Sand",
+    "5280": "Toad Leather",
+    "5282": "Boar Leather",
+    "5287": "Uraeus Leather",
+    "5288": "Hippogryph Leather",
+    "5289": "Hard Hippogryph Leather",
+    "5300": "Gigantoad Skin",
+    "5303": "Boar Hide",
+    "5314": "Uraeus Skin",
+    "5316": "Hippogryph Skin",
+    "5330": "Vanya Silk",
+    "5333": "Hempen Yarn",
+    "5334": "Cotton Yarn",
+    "5336": "Linen Yarn",
+    "5338": "Silk Thread",
+    "5339": "Carbon Fiber",
+    "5341": "Moko Grass",
+    "5342": "Straw",
+    "5343": "Cotton Boll",
+    "5346": "Flax",
+    "5347": "Fleece",
+    "5350": "Silkworm Cocoon",
+    "5359": "Chocobo Feather",
+    "5364": "Ash Lumber",
+    "5365": "Bamboo Stick",
+    "5366": "Cedar Lumber",
+    "5367": "Elm Lumber",
+    "5368": "Yew Lumber",
+    "5371": "Walnut Lumber",
+    "5372": "Pine Lumber",
+    "5373": "Oak Lumber",
+    "5374": "Mahogany Lumber",
+    "5375": "Teak Lumber",
+    "5376": "Rosewood Lumber",
+    "5378": "Spruce Lumber",
+    "5379": "Treated Spruce Lumber",
+    "5383": "Ash Log",
+    "5384": "Cedar Log",
+    "5385": "Elm Log",
+    "5386": "Yew Log",
+    "5388": "Walnut Log",
+    "5389": "Pine Log",
+    "5390": "Oak Log",
+    "5391": "Mahogany Log",
+    "5392": "Teak Log",
+    "5393": "Rosewood Log",
+    "5394": "Ebony Log",
+    "5395": "Spruce Log",
+    "5436": "Aldgoat Horn",
+    "5448": "Biast Scales",
+    "5449": "Drake Scales",
+    "5480": "Enchanted Gold Ink",
+    "5485": "Linseed Oil",
+    "5487": "Distilled Water",
+    "5488": "Muddy Water",
+    "5491": "Effervescent Water",
+    "5494": "Spoken Blood",
+    "5501": "Potash",
+    "5505": "Horn Glue",
+    "5506": "Void Glue",
+    "5507": "Wing Glue",
+    "5508": "Scale Glue",
+    "5512": "Clear Glass Lens",
+    "5513": "Potter's Clay",
+    "5514": "Humus",
+    "5515": "Beeswax",
+    "5516": "Beehive Chip",
+    "5518": "Rock Salt",
+    "5522": "Natron",
+    "5523": "Silex",
+    "5524": "Alumen",
+    "5525": "Black Alumen",
+    "5526": "Grenade Ash",
+    "5528": "Bomb Ash",
+    "5530": "Coke",
+    "5531": "Animal Fat",
+    "5532": "Hardened Sap",
+    "5553": "Ahriman Wing",
+    "5558": "Pudding Flesh",
+    "5728": "Terebinth",
+    "7008": "Granite",
+    "7009": "Cut Stone",
+    "7010": "Marble",
+    "7012": "Maiden Grass",
+    "7013": "Firebricks",
+    "7014": "Clinker Bricks",
+    "7015": "Roof Tile",
+    "7016": "Mortar",
+    "7017": "Varnish",
+    "7018": "Iron Nails",
+    "7019": "Steel Nails",
+    "7020": "Cobalt Nails",
+    "7022": "Steel Joint Plate",
+    "7023": "Cobalt Joint Plate",
+    "7024": "Steel Hinge",
+    "7025": "Cotton Canvas",
+    "7026": "Linen Canvas",
+    "7027": "Felt Lining",
+    "7029": "Island Seedling",
+    "7030": "Shroud Seedling",
+    "7588": "Ferberite",
+    "7589": "Native Gold",
+    "7590": "Scarlet Sap",
+    "7591": "Shroud Tea Leaves",
+    "7596": "Petrified Log",
+    "7597": "Scheelite",
+    "7598": "Raziqsand",
+    "7599": "Saurian Skin",
+    "7601": "Emery",
+    "7606": "Ancient Lumber",
+    "7607": "Wolfram Ingot",
+    "7608": "Saurian Leather",
+    "7962": "Assorted Fruit",
+    "8029": "Wolfram Square",
+    "9359": "Platinum Nugget",
+    "9360": "Platinum Ingot",
+    "9366": "Borax",
+    "9369": "Raziqsap",
+    "9462": "Level 2 Aetherial Wheel Stand",
+    "9463": "Level 3 Aetherial Wheel Stand",
+    "9464": "Level 4 Aetherial Wheel Stand",
+    "9465": "Level 5 Aetherial Wheel Stand",
+    "9466": "Level 6 Aetherial Wheel Stand",
+    "9518": "Cypress Log",
+    "9653": "Grade 2 Wheel of Confrontation",
+    "9654": "Grade 2 Wheel of Productivity",
+    "9655": "Grade 2 Wheel of Industry",
+    "9656": "Grade 2 Wheel of Longeing",
+    "9657": "Grade 2 Wheel of Rivalry",
+    "9658": "Grade 2 Wheel of Company",
+    "9659": "Grade 2 Wheel of Initiation",
+    "9660": "Grade 2 Wheel of Capacity",
+    "9661": "Grade 2 Wheel of Observation",
+    "9662": "Grade 2 Wheel of Efficiency",
+    "9663": "Grade 2 Wheel of Precision",
+    "9664": "Grade 2 Wheel of Dedication",
+    "9665": "Grade 2 Wheel of Nutriment",
+    "9666": "Grade 2 Wheel of Permanence",
+    "9667": "Grade 2 Wheel of Swiftness",
+    "9668": "Grade 2 Wheel of Pilgrimage",
+    "9669": "Grade 3 Wheel of Confrontation",
+    "9670": "Grade 3 Wheel of Productivity",
+    "9671": "Grade 3 Wheel of Industry",
+    "9672": "Grade 3 Wheel of Longeing",
+    "9673": "Grade 3 Wheel of Rivalry",
+    "9674": "Grade 3 Wheel of Company",
+    "9676": "Grade 3 Wheel of Capacity",
+    "9677": "Grade 3 Wheel of Observation",
+    "9678": "Grade 3 Wheel of Efficiency",
+    "9679": "Grade 3 Wheel of Precision",
+    "9680": "Grade 3 Wheel of Dedication",
+    "9681": "Grade 3 Wheel of Nutriment",
+    "9682": "Grade 3 Wheel of Permanence",
+    "9684": "Grade 3 Wheel of Pilgrimage",
+    "10099": "Unaspected Crystal",
+    "10156": "Bronco-type Hull",
+    "10157": "Invincible-type Hull",
+    "10158": "Enterprise-type Hull",
+    "10159": "Invincible II-type Hull",
+    "10160": "Odyssey-type Hull",
+    "10161": "Tatanora-type Hull",
+    "10162": "Bronco-type Sail",
+    "10163": "Invincible-type Propellers",
+    "10164": "Enterprise-type Bladder",
+    "10165": "Invincible II-type Propellers",
+    "10166": "Odyssey-type Bladders",
+    "10167": "Tatanora-type Propellers",
+    "10168": "Bronco-type Forecastle",
+    "10169": "Invincible-type Forecastle",
+    "10170": "Enterprise-type Forecastle",
+    "10171": "Invincible II-type Forecastle",
+    "10172": "Odyssey-type Forecastle",
+    "10173": "Tatanora-type Forecastle",
+    "10174": "Bronco-type Aftcastle",
+    "10175": "Invincible-type Aftcastle",
+    "10176": "Enterprise-type Aftcastle",
+    "10177": "Invincible II-type Aftcastle",
+    "10178": "Odyssey-type Aftcastle",
+    "10179": "Tatanora-type Aftcastle",
+    "10361": "Small Merchant's Walls",
+    "10362": "Medium Merchant's Walls",
+    "10363": "Large Merchant's Walls",
+    "10364": "Small Eatery Walls",
+    "10365": "Medium Eatery Walls",
+    "10366": "Large Eatery Walls",
+    "10367": "Small Outfitter's Walls",
+    "10368": "Medium Outfitter's Walls",
+    "10369": "Large Outfitter's Walls",
+    "10370": "Small Arms Supplier's Walls",
+    "10371": "Medium Arms Supplier's Walls",
+    "10372": "Large Arms Supplier's Walls",
+    "12215": "Grade 2 Wheel of Recreation",
+    "12216": "Grade 3 Wheel of Recreation",
+    "12220": "Red Moko Grass",
+    "12221": "Cassia Log",
+    "12222": "Chemically Treated Chimera Hide",
+    "12223": "Raw Celestine",
+    "12224": "Vivianite",
+    "12225": "Deep-red Crystal",
+    "12226": "Deep-red Cluster",
+    "12227": "Deep-green Crystal",
+    "12228": "Deep-green Cluster",
+    "12229": "Deep-blue Crystal",
+    "12230": "Deep-blue Cluster",
+    "12231": "Farreach Canvas",
+    "12232": "Cassia Lumber",
+    "12233": "High Allagan Chimera Leather",
+    "12518": "Mythrite Nugget",
+    "12519": "Mythrite Ingot",
+    "12520": "Hardsilver Nugget",
+    "12521": "Hardsilver Ingot",
+    "12522": "Aurum Regis Nugget",
+    "12523": "Aurum Regis Ingot",
+    "12524": "Titanium Nugget",
+    "12525": "Titanium Ingot",
+    "12526": "Adamantite Nugget",
+    "12528": "Mythrite Rivets",
+    "12530": "Adamantite Rivets",
+    "12531": "Mythrite Sand",
+    "12532": "Hardsilver Sand",
+    "12533": "Aurum Regis Sand",
+    "12534": "Mythrite Ore",
+    "12535": "Hardsilver Ore",
+    "12536": "Aurum Regis Ore",
+    "12537": "Titanium Ore",
+    "12538": "Adamantite Ore",
+    "12539": "Cloud Mica",
+    "12541": "Larimar",
+    "12544": "Star Ruby",
+    "12548": "Chrysolite",
+    "12551": "Raw Larimar",
+    "12554": "Raw Star Ruby",
+    "12558": "Raw Chrysolite",
+    "12561": "Cloud Mica Whetstone",
+    "12563": "Wyvern Leather",
+    "12564": "Dhalmel Leather",
+    "12565": "Dragon Leather",
+    "12566": "Amphiptere Leather",
+    "12569": "Wyvern Skin",
+    "12570": "Dhalmel Hide",
+    "12571": "Dragon Skin",
+    "12572": "Amphiptere Skin",
+    "12578": "Dark Chestnut Log",
+    "12579": "Birch Log",
+    "12580": "Holy Cedar Lumber",
+    "12581": "Dark Chestnut Lumber",
+    "12582": "Hallowed Chestnut Lumber",
+    "12583": "Birch Lumber",
+    "12584": "Astral Birch Lumber",
+    "12590": "Ramie Cloth",
+    "12591": "Hallowed Ramie Cloth",
+    "12595": "Ramie Thread",
+    "12598": "Stalk of Ramie",
+    "12602": "Enchanted Hardsilver Ink",
+    "12603": "Enchanted Aurum Regis Ink",
+    "12604": "Holy Water",
+    "12605": "Hallowed Water",
+    "12606": "Astral Oil",
+    "12608": "Growth Formula Zeta",
+    "12609": "Bear Fat",
+    "12627": "Dragon Scale",
+    "12628": "Deepeye Tears",
+    "12629": "Dhalmel Saliva",
+    "12630": "Dragon Blood",
+    "12631": "Dravanian Spring Water",
+    "12632": "Abalathian Spring Water",
+    "12634": "Seventh Heaven",
+    "12635": "Gelato Flesh",
+    "12636": "Wyvern Wing",
+    "12642": "Rue",
+    "12882": "Coerthan Tea Leaves",
+    "12888": "Yak Milk",
+    "12891": "Birch Sap",
+    "12895": "Fermented Butter",
+    "12912": "Celestine",
+    "12913": "Garlond Steel",
+    "12914": "Deep-red Enchanted Ink",
+    "12915": "Superior Deep-red Enchanted Ink",
+    "12916": "Deep-green Enchanted Ink",
+    "12917": "Superior Deep-green Enchanted Ink",
+    "12918": "Deep-blue Enchanted Ink",
+    "12919": "Superior Deep-blue Enchanted Ink",
+    "12932": "Raziqcoat",
+    "12933": "Dryad Sap",
+    "12936": "Duskborne Aethersand",
+    "12937": "Dawnborne Aethersand",
+    "12943": "Dravanian Mistletoe",
+    "12944": "Abalathian Mistletoe",
+    "13091": "Dravanian Down Tree",
+    "13092": "Microscopically Small Mogwalls",
+    "13093": "Middlingly Medium Mogwalls",
+    "13094": "Monstrously Large Mogwalls",
+    "13750": "Sphalerite",
+    "13756": "Dravanian Mote",
+    "13758": "Cassia Block",
+    "14003": "Viltgance-type Hull",
+    "14004": "Viltgance-type Aetherwings",
+    "14005": "Viltgance-type Forecastle",
+    "14006": "Viltgance-type Aftcastle",
+    "14146": "High Mythrite Ingot",
+    "14147": "Eikon Mythrite",
+    "14148": "Lumythrite Ore",
+    "14149": "Eikon Iron Ingot",
+    "14150": "Eikon Metal",
+    "14151": "Smithsonite Ore",
+    "14157": "Treated Camphorwood Lumber",
+    "14158": "Camphorwood Lumber",
+    "14159": "Camphorwood Log",
+    "14164": "Gobcraft Resin",
+    "14935": "Galvanized Garlond Steel",
+    "14957": "Old-growth Camphorwood Log",
+    "15649": "Glass Fiber",
+    "15950": "Chocobo Cottage Walls",
+    "15951": "Chocobo House Walls",
+    "15952": "Chocobo Mansion Walls",
+    "16731": "Goblacquer",
+    "16908": "Tempered Glass",
+    "17004": "Paissa Cottage Walls",
+    "17005": "Paissa House Walls",
+    "17006": "Paissa Mansion Walls",
+    "17548": "Cloud Acorn",
+    "19767": "Carbuncle Cottage Walls",
+    "19768": "Carbuncle House Walls",
+    "19769": "Carbuncle Mansion Walls",
+    "19869": "Persimmon",
+    "19872": "Crescent Spring Water",
+    "19906": "Beetle Glue",
+    "19907": "Ala Mhigan Salt Crystal",
+    "19908": "Pine Resin",
+    "19909": "Persimmon Tannin",
+    "19910": "Gyr Abanian Alumen",
+    "19922": "Moth Scales",
+    "19924": "Rhino Beetle Carapace",
+    "19925": "Beech Lumber",
+    "19926": "Larch Lumber",
+    "19927": "Persimmon Lumber",
+    "19928": "Zelkova Lumber",
+    "19930": "Beech Log",
+    "19931": "Larch Log",
+    "19932": "Persimmon Log",
+    "19933": "Zelkova Log",
+    "19938": "Koppranickel Nugget",
+    "19939": "High Steel Nugget",
+    "19941": "High Steel Ingot",
+    "19943": "Oroshigane Ingot",
+    "19945": "Tama-hagane Ingot",
+    "19947": "Molybdenum Ingot",
+    "19950": "Koppranickel Sand",
+    "19951": "Koppranickel Ore",
+    "19952": "Durium Sand",
+    "19953": "Doman Iron Ore",
+    "19955": "Doman Iron Sand",
+    "19956": "Palladium Sand",
+    "19957": "Molybdenum Ore",
+    "19962": "Triphane",
+    "19967": "Rhodonite",
+    "19968": "Raw Triphane",
+    "19973": "Raw Rhodonite",
+    "19974": "Bloodhempen Cloth",
+    "19975": "Bloodhempen Yarn",
+    "19976": "Bloodhemp",
+    "19978": "Ruby Cotton Yarn",
+    "19979": "Ruby Cotton Boll",
+    "19980": "Kudzu Cloth",
+    "19981": "Kudzu Thread",
+    "19982": "Kudzu Vine",
+    "19987": "Twinsilk",
+    "19988": "Twinthread",
+    "19989": "Twincoon",
+    "19993": "Gagana Leather",
+    "19995": "Tiger Leather",
+    "19997": "Gazelle Leather",
+    "19999": "Gagana Skin",
+    "20001": "Tiger Skin",
+    "20003": "Gazelle Hide",
+    "20007": "Slate",
+    "20723": "Small Shirogane Castle Walls",
+    "20724": "Medium Shirogane Castle Walls",
+    "20725": "Large Shirogane Castle Walls",
+    "21792": "Shark-class Bow",
+    "21793": "Shark-class Bridge",
+    "21794": "Shark-class Pressure Hull",
+    "21795": "Shark-class Stern",
+    "21796": "Unkiu-class Bow",
+    "21797": "Unkiu-class Bridge",
+    "21798": "Unkiu-class Pressure Hull",
+    "21799": "Unkiu-class Stern",
+    "22526": "Whale-class Bow",
+    "22527": "Whale-class Bridge",
+    "22528": "Whale-class Pressure Hull",
+    "22529": "Whale-class Stern",
+    "22533": "Odder Otter Cottage Walls",
+    "22534": "Odder Otter House Walls",
+    "22535": "Odder Otter Mansion Walls",
+    "23903": "Coelacanth-class Bow",
+    "23904": "Coelacanth-class Bridge",
+    "23905": "Coelacanth-class Pressure Hull",
+    "23906": "Coelacanth-class Stern",
+    "24344": "Syldra-class Bow",
+    "24345": "Syldra-class Bridge",
+    "24346": "Syldra-class Pressure Hull",
+    "24347": "Syldra-class Stern",
+    "24348": "Modified Shark-class Bow",
+    "24349": "Modified Shark-class Bridge",
+    "24350": "Modified Shark-class Pressure Hull",
+    "24351": "Modified Shark-class Stern",
+    "24352": "Modified Unkiu-class Bow",
+    "24353": "Modified Unkiu-class Bridge",
+    "24354": "Modified Unkiu-class Pressure Hull",
+    "24355": "Modified Unkiu-class Stern",
+    "24356": "Modified Whale-class Bow",
+    "24357": "Modified Whale-class Bridge",
+    "24358": "Modified Whale-class Pressure Hull",
+    "24359": "Modified Whale-class Stern",
+    "24360": "Modified Coelacanth-class Bow",
+    "24361": "Modified Coelacanth-class Bridge",
+    "24362": "Modified Coelacanth-class Pressure Hull",
+    "24363": "Modified Coelacanth-class Stern",
+    "24364": "Modified Syldra-class Bow",
+    "24365": "Modified Syldra-class Bridge",
+    "24366": "Modified Syldra-class Pressure Hull",
+    "24367": "Modified Syldra-class Stern",
+    "25008": "Kamacite Ore",
+    "25009": "Kamacite",
+    "26508": "Shark-class Bow Frame",
+    "26509": "Shark-class Bridge Frame",
+    "26510": "Shark-class Pressure Hull Frame",
+    "26511": "Shark-class Stern Frame",
+    "26512": "Unkiu-class Bow Frame",
+    "26513": "Unkiu-class Bridge Frame",
+    "26514": "Unkiu-class Pressure Hull Frame",
+    "26515": "Unkiu-class Stern Frame",
+    "26516": "Whale-class Bow Frame",
+    "26517": "Whale-class Bridge Frame",
+    "26518": "Whale-class Pressure Hull Frame",
+    "26519": "Whale-class Stern Frame",
+    "26520": "Coelacanth-class Bow Frame",
+    "26521": "Coelacanth-class Bridge Frame",
+    "26522": "Coelacanth-class Pressure Hull Frame",
+    "26523": "Coelacanth-class Stern Frame",
+    "26524": "Syldra-class Bow Frame",
+    "26525": "Syldra-class Bridge Frame",
+    "26526": "Syldra-class Pressure Hull Frame",
+    "26527": "Syldra-class Stern Frame",
+    "26529": "Cryptomeria Log",
+    "26530": "Cryptomeria Lumber",
+    "26531": "Pure Titanium Ore",
+    "26532": "Pure Titanium Plate",
+    "27683": "White Oak Log",
+    "27684": "Miracle Apple Log",
+    "27685": "White Ash Log",
+    "27686": "Sandteak Log",
+    "27687": "Lignum Vitae Log",
+    "27689": "White Oak Lumber",
+    "27690": "Miracle Apple Lumber",
+    "27691": "White Ash Lumber",
+    "27692": "Sandteak Lumber",
+    "27693": "Lignum Vitae Lumber",
+    "27696": "Truegold Sand",
+    "27697": "Truegold Ore",
+    "27698": "Bluespirit Ore",
+    "27699": "Manasilver Sand",
+    "27700": "Titancopper Sand",
+    "27701": "Titancopper Ore",
+    "27702": "Dimythrite Sand",
+    "27703": "Dimythrite Ore",
+    "27706": "Deepgold Nugget",
+    "27707": "Stonegold Nugget",
+    "27708": "Deepgold Ingot",
+    "27710": "Manasilver Nugget",
+    "27711": "Bluespirit Tile",
+    "27712": "Titanbronze Nugget",
+    "27713": "Titanbronze Ingot",
+    "27714": "Dwarven Mythril Ingot",
+    "27715": "Dwarven Mythril Nugget",
+    "27732": "Smilodon Skin",
+    "27733": "Green Glider Skin",
+    "27734": "Atrociraptor Skin",
+    "27735": "Zonure Skin",
+    "27736": "Sea Swallow Skin",
+    "27738": "Smilodon Leather",
+    "27739": "Green Glider Leather",
+    "27740": "Atrociraptor Leather",
+    "27741": "Zonure Leather",
+    "27742": "Sea Swallow Leather",
+    "27746": "Bright Linen Yarn",
+    "27747": "Bright Flax",
+    "27749": "Iridescent Silk Thread",
+    "27750": "Iridescent Cocoon",
+    "27751": "Pixie Cotton",
+    "27752": "Pixie Floss",
+    "27753": "Pixie Floss Boll",
+    "27755": "Ovim Wool Yarn",
+    "27756": "Ovim Fleece",
+    "27757": "Dwarven Cotton",
+    "27758": "Dwarven Cotton Thread",
+    "27759": "Dwarven Cotton Boll",
+    "27763": "Hoptrap Leaf",
+    "27764": "Silkmoth Scales",
+    "27765": "Growth Formula Iota",
+    "27773": "Vampire Cup Vine",
+    "27774": "Vampire Vine Sap",
+    "27775": "Starch Glue",
+    "27776": "Extra Effervescent Water",
+    "27777": "Refined Natron",
+    "27778": "Growth Formula Kappa",
+    "27782": "Underground Spring Water",
+    "27817": "Yellow Alumen",
+    "28172": "Trader's Cottage Walls",
+    "28173": "Trader's House Walls",
+    "28174": "Trader's Mansion Walls",
+    "28957": "Half-timbered Cottage Walls",
+    "28958": "Half-timbered House Walls",
+    "28959": "Half-timbered Mansion Walls",
+    "30375": "Small Smithy Walls",
+    "30376": "Medium Smithy Walls",
+    "30377": "Large Smithy Walls",
+    "32255": "Small Florist's Walls",
+    "32256": "Medium Florist's Walls",
+    "32257": "Large Florist's Walls",
+    "33245": "Small Forge's Walls",
+    "33246": "Medium Forge's Walls",
+    "33247": "Large Forge's Walls",
+    "35812": "Small Cafe Walls",
+    "35813": "Medium Cafe Walls",
+    "35814": "Large Cafe Walls",
+    "36061": "Sideritis Cookie",
+    "36077": "Dark Rye Flour",
+    "36078": "Northern Sea Salt",
+    "36080": "Palm Sugar",
+    "36083": "Dark Rye",
+    "36084": "Sharlayan Rock Salt",
+    "36086": "Palm Syrup",
+    "36087": "Coconut",
+    "36094": "Sideritis Leaves",
+    "36095": "Elder Nutmeg Seeds",
+    "36096": "Sykon",
+    "36162": "High Durium Sand",
+    "36163": "High Durium Ore",
+    "36164": "Bismuth Ore",
+    "36169": "High Durium Ingot",
+    "36170": "Bismuth Ingot",
+    "36175": "Pewter Ore",
+    "36176": "Phrygian Gold Ore",
+    "36183": "Pewter Ingot",
+    "36184": "Phrygian Gold Ingot",
+    "36190": "Horse Chestnut Log",
+    "36191": "Palm Log",
+    "36192": "Red Pine Log",
+    "36196": "Horse Chestnut Lumber",
+    "36198": "Red Pine Lumber",
+    "36202": "Dark Hemp",
+    "36208": "Dark Hempen Cloth",
+    "36239": "Moon Gel",
+    "36241": "Eblan Alumen",
+    "36242": "Gaja Hide",
+    "36247": "Gaja Leather",
+    "36256": "Egg of Elpis",
+    "36257": "Mousse Flesh",
+    "36258": "Lunatender Blossom",
+    "37344": "Gingerbread Cottage Walls",
+    "37345": "Gingerbread House Walls",
+    "37346": "Gingerbread Mansion Walls",
+    "38953": "Sukiya-zukuri Cottage Walls",
+    "38954": "Sukiya-zukuri House Walls",
+    "38955": "Sukiya-zukuri Mansion Walls",
+    "41810": "Country Cottage Wall",
+    "41811": "Country House Wall",
+    "41812": "Country Mansion Wall",
+    "43979": "Royal Maple Sap",
+    "43992": "Mountain Chromite Ore",
+    "43993": "Ruthenium Ore",
+    "43994": "Cobalt Tungsten Ore",
+    "43997": "Mountain Chromite Ingot",
+    "43998": "Ruthenium Ingot",
+    "43999": "Cobalt Tungsten Ingot",
+    "44002": "Lar Ore",
+    "44008": "Lar Ingot",
+    "44014": "Ginseng Log",
+    "44015": "Ceiba Log",
+    "44016": "Dark Mahogany Log",
+    "44019": "Ginseng Lumber",
+    "44020": "Ceiba Lumber",
+    "44021": "Dark Mahogany Lumber",
+    "44025": "Mountain Flax",
+    "44030": "Mountain Linen",
+    "44049": "Growth Formula Lambda",
+    "44054": "Hammerhead Crocodile Skin",
+    "44059": "Hammerhead Crocodile Leather",
+    "44068": "Poison Frog Secretions"
+  }
+}

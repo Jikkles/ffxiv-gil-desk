@@ -40,7 +40,7 @@ node tools/rebake.js
 ```
 
 That downloads fresh data into `tools/.cache/` (about 45 MB, ignored by git), rebuilds all three
-datasets, and writes them into `index.html`. Then:
+datasets, writes them into `src/data/`, and rebuilds `index.html` from `src/`. Then:
 
 1. Open `index.html` and look at the three tabs.
 2. Read what the rebake printed — anything marked **WARNING** or **note** needs a look (below).
@@ -70,9 +70,9 @@ cached), `build-subs.js`, `build-workshop.js`, `build-duties.js`, then `apply.js
 | `build-subs.js` | the above | `SUB` — seas, sectors, loot per visit, parts, rank bonuses |
 | `build-workshop.js` | the above | `WS` — every FC project, its phases, the recipes under its turn-ins |
 | `build-duties.js` | the above + the Currencies tab's potsherd shops + Universalis EU/NA prices | `DUTY` — worthwhile drops with rates or exchange costs |
-| `apply.js` | the three outputs | writes `SUB`, `WS`, `DUTY` into their tabs; adds any missing icons and search names; rebuilds `RECIPE_INDEX` |
+| `apply.js` | the three outputs | writes `SUB`, `WS`, `DUTY` to `src/data/submersibles.json`, `workshop.json`, `duties.json`; adds any missing icons and search names; rebuilds `RECIPE_INDEX`; runs `build.js` |
 
-`apply.js` only replaces those constants. Every other tab, and all the page code, is untouched.
+`apply.js` only replaces those files in `src/data/`. Every other tab, and all the page code, is untouched.
 
 ## When a human is needed
 
@@ -88,7 +88,8 @@ Most patches need nothing but the command. Things that do need a small edit:
   does not rebuild. Until that tab is updated its exchange will not appear.
 - **A whole new kind of content** (another Occult Crescent–style zone with its own coffer export).
   Add a `coffers(...)` call in `build-duties.js`, a group name to `MIN` and `GROUP_ORDER`, and the
-  same group to `GROUPS` in the Duties tab inside `index.html`, so it gets a sidebar entry and a card.
+  same group to `GROUPS` in `src/tabs/duties.html`, so it gets a sidebar entry and a card, then run
+  `node tools/build.js`.
 - **A new notorious monster drop worth money.** FATE rewards have no loot records; add a line to `FATE`.
 - **A new sea.** Nothing to do — it is picked up automatically, and the Submersibles tab names it
   from the game data. If `build-subs.js` notes sectors without breakpoints, SubmarineTracker has not

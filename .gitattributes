@@ -1,0 +1,3 @@
+# LF everywhere, on every machine: index.html is built from src/, and a Windows checkout
+# with CRLF would otherwise build a different file than GitHub's Linux runner does.
+* text=auto eol=lf

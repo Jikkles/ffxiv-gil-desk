@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Retainers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/*__UI_CSS__*/
+/* ---- retainers only ---- */
+/* Hold the sort arrow's space whether or not it is showing, so re-sorting the
+   table cannot change a header's width and shuffle every column sideways. */
+thead th span{display:inline-block;min-width:.8em}
+/* The source line is the longest thing in the row. Left to size itself it drags
+   the sticky first column wide enough to push the table into a sideways scroll
+   and slide the next column under it, so it is capped and ellipsised instead -
+   the full text is on the hover title. */
+.name>.t{max-width:250px;padding-left:0}
+/* Tier lists run long on the drops that repeat across many tiers, and left to
+   size themselves they push Daily gil - the column the table sorts on - off the
+   right edge. Capped and ellipsised; the full list is on the hover title. */
+tbody td:nth-child(3){max-width:150px;overflow:hidden;text-overflow:ellipsis}
+</style>
+<script>try{var __t=localStorage.getItem("gildesk:theme:v1");document.documentElement.setAttribute("data-theme",__t==="light"?"light":"dark");}catch(e){document.documentElement.setAttribute("data-theme","dark");}</script>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="sgroup">
+      <div class="slabel">Filter items</div>
+      <div class="field">
+      <label>&#128269;</label>
+      <input id="search" placeholder="search name…" autocomplete="off">
+    </div>
+    </div>
+    <div class="sgroup">
+      <div class="slabel">Server</div>
+      <div class="field sel">
+      <label>Sell on</label>
+      <select id="home"></select>
+    </div>
+      <button class="btn primary wide" id="refresh">&#8635; Refresh</button>
+    </div>
+    <div class="sgroup">
+      <div class="slabel">Marketboard settings</div>
+      <label class="chk" title="Only drops with no other source in the game"><input type="checkbox" id="exclOnly"> Venture-exclusive only</label>
+      <label class="chk" title="Hide drops with no recorded sales in the last 30 days"><input type="checkbox" id="soldOnly"> Only what is actually selling</label>
+    </div>
+    <div class="sgroup">
+      <div class="slabel">Filters</div>
+      <div class="field sel">
+      <label>Venture</label>
+      <select id="vfilter">
+        <option value="all">All four ventures</option>
+        <option value="Field Exploration">Field &mdash; combat</option>
+        <option value="Highland Exploration">Highland &mdash; Miner</option>
+        <option value="Woodland Exploration">Woodland &mdash; Botanist</option>
+        <option value="Waterside Exploration">Waterside &mdash; Fisher</option>
+      </select>
+    </div>
+      <div class="field sel">
+      <label>Tax</label>
+      <select id="tax">
+        <option value="0.05" selected>5%</option>
+        <option value="0.03">3%</option>
+        <option value="0.02">2%</option>
+      </select>
+    </div>
+    </div>
+    <div class="sgroup">
+      <div class="scancard"><span class="dot"></span>Last scan<br><b id="lastScan"></b></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="hero">
+      <div class="hicon">&#129523;</div>
+      <div>
+        <h1><b>Retainers</b></h1>
+        <p class="sub">What the four 18-hour exploration ventures are worth running for: every minion and material they bring back that carries real value, priced live against the market board. Drops that <b>nothing else in the game</b> can give you are marked as such.</p>
+      </div>
+      <div class="kpis" id="kpis"></div>
+    </div>
+
+    <div class="status" id="status">Loading venture reward prices…</div>
+    <div id="errbox"></div>
+
+    <div class="tablewrap"><table id="tbl" hidden>
+      <thead><tr>
+        <th data-k="name" style="cursor:default">Item</th>
+        <th data-k="venture">Venture <span></span></th>
+        <th data-k="tier" style="cursor:default">Tier(s)</th>
+        <th data-k="now" title="Cheapest listing on your home world">Sell now <span></span></th>
+        <th data-k="avg" title="Average sale price across your data centre over 30 days">Avg 30d <span></span></th>
+        <th data-k="trend" title="Which way the price is moving: the newer half of the sales history against the older half">Trend <span></span></th>
+        <th data-k="vel" title="Units sold a day across your data centre, over 30 days of history — a stack of 99 counts as 99, not as one sale">Units/day <span></span></th>
+        <th data-k="daily" data-sorted title="Avg 30d after tax multiplied by units sold a day">Daily gil <span>&#9662;</span></th>
+      </tr></thead>
+      <tbody id="rows"></tbody>
+    </table></div>
+
+    <p class="foot">
+      Rows marked <b>only from this venture</b> are verified to have no other source in the game: not craftable, not sold by a vendor, not a quest, duty or gathering drop, and not returned by a different venture type. The rest are worth listing anyway &mdash; the two neon wall lights and the stone partition off the level-100 Field venture run into the millions &mdash; but they can also be had elsewhere, and each row says where. Drops worth only a few thousand gil are left off entirely: they are venture rewards, but not a reason to run one. Roman numerals are the venture tier; a higher tier needs a higher-level retainer.
+      Sell now = cheapest listing on <span class="homename">Spriggan</span>.
+      Avg 30d, Trend, Units/day and Daily gil are measured across <span id="scopeName">Chaos</span> &mdash; these items sell a handful of times a month on any one world, which is too thin to read a direction from, so the wider market is the honest signal.
+      Daily gil = Avg 30d &times; (1 &minus; tax) &times; Units/day.
+      Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>.
+    </p>
+  </main>
+</div>
+<script>
+const ICON_INDEX = /*__ICON_INDEX__*/;
+/*__UI_JS__*/
+
+let state={home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],query:"",tax:0.05,sortKey:"daily",sortDir:-1,mkt:null,hist:null,rows:null,scopeDc:"Chaos",
+  venture:"all",exclOnly:false,soldOnly:false,summary:""};
+
+/* What the four 18-hour exploration ventures drop that is worth anything.
+   x = nothing else in the game produces it. o = it drops here but can be had
+   elsewhere too, and says where. Cheap filler (Tengu Doll, Odder Otter and the
+   rest, all a few thousand gil or less) is left out, as are the materials with a
+   vendor or map route of their own - a venture reward, but not a reason to run
+   one. vl is only needed when a drop spans several ventures. */
+const VITEMS=[
+  {i:35970,n:"Flag",v:"Field Exploration",t:"XXVI-XXVIII",c:"Minion",x:1},
+  {i:36856,n:"Clockwork Novus D",v:"Field Exploration",t:"XXVIII-XXIX",c:"Minion",x:1},
+  {i:8199,n:"Tiny Tapir",v:"Field Exploration",t:"XIV, XV, XIX, XXIV",c:"Minion",x:1},
+  {i:44119,n:"Horizontal Neon Wall Light",v:"Field Exploration",t:"XXXI",c:"Wall-mounted",o:"Occult Crescent overworld coffers"},
+  {i:44111,n:"Stone Partition",v:"Field Exploration",t:"XXXI",c:"Furnishing",o:"Occult Crescent overworld coffers"},
+  {i:44120,n:"Vertical Neon Wall Light",v:"Field Exploration",t:"XXXI",c:"Wall-mounted",o:"Occult Crescent overworld coffers"},
+  {i:43582,n:"Wind-up Mamool Ja",v:"Highland Exploration",t:"XXXI",c:"Minion",x:1},
+  {i:35987,n:"Wind-up Grebuloff",v:"Highland Exploration",t:"XXVI-XXVIII",c:"Minion",x:1},
+  {i:28627,n:"Wind-up Hobgoblin",v:"Highland Exploration",t:"XXV, XXX",c:"Minion",o:"the Itinerant Moogle, when that event is running"},
+  {i:36852,n:"Wind-up Kangaroo",v:"Highland Exploration",t:"XXVIII-XXIX",c:"Minion",o:"Sack of Silvered Light"},
+  {i:8201,n:"Miniature Minecart",v:"Highland Exploration",t:"XIV-XVII",c:"Minion",o:"haloed sacks, Grand Company seal containers"},
+  {i:12650,n:"Lupin Seedling",v:"Woodland Exploration",t:"XVIII, XIX, XXIV",c:"Reagent",x:1},
+  {i:36855,n:"Chewy",v:"Woodland Exploration",t:"XXVIII-XXIX",c:"Minion",o:"Sack of Silvered Light"},
+  {i:43573,n:"Not-so-bighorn",v:"Woodland Exploration",t:"XXXI",c:"Minion",o:"Sack of Silvered Light"},
+  {i:35986,n:"Greener Gleaner",v:"Woodland Exploration",t:"XXVI-XXVIII",c:"Minion",o:"Sack of Gilded Light"},
+  {i:28618,n:"Bacon Bits",v:"Woodland Exploration",t:"XXV",c:"Minion",o:"the Itinerant Moogle, Light sacks"},
+  {i:9348,n:"Littlefoot",v:"Woodland Exploration",t:"XIV-XVI",c:"Minion",o:"Grand Company seal containers"},
+  {i:35980,n:"Crabe de la Crabe",v:"Waterside Exploration",t:"XXVI-XXVIII",c:"Minion",x:1},
+  {i:36860,n:"Blue-footed Booby",v:"Waterside Exploration",t:"XXVIII",c:"Minion",x:1},
+  {i:43575,n:"Quetzal",v:"Waterside Exploration",t:"XXXI",c:"Minion",x:1},
+  {i:8022,n:"Young Water Lily",v:"Waterside Exploration",t:"XIV, XV",c:"Reagent",x:1},
+  {i:28624,n:"Domakin",v:"Waterside Exploration",t:"XXV",c:"Minion",o:"quick exploration, the Itinerant Moogle"},
+  {i:9347,n:"Fat Cat",v:"Waterside Exploration",t:"XIV-XVII, XIX, XXIV, XXV",c:"Minion",o:"Grand Company seal containers, the Itinerant Moogle"},
+  {i:12061,n:"Gestahl",v:"Waterside Exploration",t:"XVIII, XIX",c:"Minion",o:"haloed sacks, Grand Company seal containers"},
+  {i:7794,n:"Light Steel Plate",v:"Three ventures",t:"XIII",c:"Metal",x:1,
+    vl:["Field Exploration","Highland Exploration","Waterside Exploration"]},
+  {i:7566,n:"Minute Mindflayer",v:"All four",t:"XIII",c:"Minion",o:"Palace of the Dead sacks, Grand Company seal containers",
+    vl:["Field Exploration","Highland Exploration","Woodland Exploration","Waterside Exploration"]}
+];
+const VIDS=VITEMS.map(x=>x.i);
+const VENTURES=[
+  {v:"Field Exploration",cls:"Combat class",ic:"&#9876;&#65039;"},
+  {v:"Highland Exploration",cls:"Miner",ic:"&#9935;&#65039;"},
+  {v:"Woodland Exploration",cls:"Botanist",ic:"&#127807;"},
+  {v:"Waterside Exploration",cls:"Fisher",ic:"&#127907;"}
+];
+
+/*__SHARED_A__*/
+/*__SHARED_B__*/
+/*__SHARED_SHOP__*/
+/*__SHARED_LIST__*/
+/*__SHARED_XW__*/
+
+function side(res,hq){return res?(hq?res.h:res.n):null;}
+function aggPrice(res,hq,scope){const q=side(res,hq);const m=q&&(scope==="world"?q.mw:q.md);return m&&m[0]!=null?m[0]:null;}
+function aggAvg(res,hq,scope){const q=side(res,hq);const a=q?(scope==="world"?q.aw:q.ad):null;return a!=null?a:null;}
+const fmt=n=>n==null||!isFinite(n)?"—":Math.round(n).toLocaleString("en-GB");
+
+function setStatus(h){document.getElementById("status").innerHTML=h;}
+function clearErr(){const b=document.getElementById("errbox");if(b)b.innerHTML="";}
+function showErr(e){const t=document.getElementById("tbl");if(t)t.hidden=true;setStatus("Couldn't reach the market board.");
+  const b=document.getElementById("errbox");if(b)b.innerHTML=`<div class="err"><b>Live prices didn't load.</b> ${e.message||e}. Open this file directly in your browser, or check <a href="https://universalis.app" target="_blank" rel="noopener" style="color:#ffd7db">universalis.app</a>.</div>`;}
+
+async function fetchAgg(scope,ids,onProgress){
+  const ck=`agg:${scope}:${hashIds(ids)}`;const hit=Cache.get(ck,NET.CACHE_TTL_MS);
+  if(hit){if(onProgress)onProgress(1,1);return{out:hit,failed:[],fromCache:true};}
+  const res=await runBatches(ids,async b=>{
+    const r=await tfetch(`https://universalis.app/api/v2/aggregated/${scope}/${b.join(",")}`);
+    if(!r.ok)throw new Error("HTTP "+r.status+" · "+scope);
+    const j=await r.json();const m={};for(const row of(j.results||[]))m[row.itemId]=compressAgg(row);return m;},onProgress);
+  if(!res.failed.length)Cache.set(ck,res.out);
+  return res;}
+async function fetchHist(scope,ids,onProgress){
+  const ck=`hist:${scope}:${hashIds(ids)}`;const hit=Cache.get(ck,NET.CACHE_TTL_MS);
+  if(hit){if(onProgress)onProgress(1,1);return{out:hit,failed:[],fromCache:true};}
+  const res=await runBatches(ids,async b=>{
+    const r=await tfetch(`https://universalis.app/api/v2/history/${scope}/${b.join(",")}?entriesToReturn=${HIST_ENTRIES}&entriesWithin=${HIST_SECS}&statsWithin=${HIST_SECS*1000}`);
+    if(!r.ok)throw new Error("HTTP "+r.status+" · history");
+    const j=await r.json();const src=j.items||(j.itemID?{[j.itemID]:j}:{});
+    const m={};for(const k in src)m[k]=summarizeHist(src[k]);return m;},onProgress);
+  if(!res.failed.length)Cache.set(ck,res.out);
+  return res;}
+async function fetchWorlds(){
+  const hit=Cache.get("worlds",NET.WORLDS_TTL_MS);if(hit)return hit;
+  try{const r=await tfetch("https://universalis.app/api/v2/worlds");const a=await r.json();
+    const m={};for(const w of a)m[w.id]=w.name;Cache.set("worlds",m);return m;}catch(e){return{39:"Omega",71:"Moogle",80:"Cerberus",83:"Louisoix",85:"Spriggan",97:"Ragnarok",400:"Sagittarius",401:"Phantom"};}}
+
+/* One venture-exclusive item. Sell now stays on the home world - that is where
+   the listing would go - but everything that describes how the market behaves is
+   read data-centre wide, because a single world sees these a handful of times a
+   month and a 30-day window that thin cannot carry a trend or a velocity. */
+function priceRow(e){
+  const res=state.mkt?state.mkt[e.i]:null;
+  const now=aggPrice(res,false,"world");
+  const avg=aggAvg(res,false,"dc");
+  /* Units a day over 30 days of history rather than the aggregate's rolling few
+     days, which on something that sells a handful of times a month is mostly a
+     run of zeros. */
+  const vi=vel30(state.hist?state.hist[e.i]:null,false);const vel=vi.perDay;
+  const trend=trend30(state.hist?state.hist[e.i]:null,false);
+  const dcNow=aggPrice(res,false,"dc");
+  const basis=avg!=null?avg:(dcNow!=null?dcNow:now);
+  const net=basis!=null?basis*(1-state.tax):null;
+  return{id:e.i,name:e.n,venture:e.v,vl:e.vl||[e.v],tier:e.t,cat:e.c,excl:!!e.x,other:e.o||null,
+    now,avg,vel,velI:vi,trend,daily:(net!=null&&vel)?net*vel:null};
+}
+function compute(){state.rows=VITEMS.map(priceRow);}
+
+/* What one venture type is worth at a glance: the best thing it drops, whether
+   or not that drop is its own. Ranked
+   on what has genuinely sold, never on a listing - one hopeful price on an item
+   nobody has bought in a month says nothing about what the venture is worth.
+   Only if none of a venture's drops has sold does it fall back to the asking
+   price, and then it says so. */
+function countedRows(){
+  return (state.rows||[]).filter(r=>
+    (!state.exclOnly||r.excl)&&(!state.soldOnly||r.avg!=null));
+}
+function ventureStats(){
+  const rows=countedRows();
+  return VENTURES.map(g=>{
+    const rs=rows.filter(r=>r.vl.indexOf(g.v)>=0);
+    let top=null;
+    for(const r of rs){if(r.avg==null)continue;
+      if(!top||r.avg>top.val)top={row:r,val:r.avg,sold:1};}
+    if(!top)for(const r of rs){if(r.now==null)continue;
+      if(!top||r.now>top.val)top={row:r,val:r.now,sold:0};}
+    const flow=rs.reduce((s,r)=>s+(r.daily||0),0);
+    return{...g,count:rs.length,top,flow};})
+    .sort((a,b)=>((b.top?b.top.val:-1)-(a.top?a.top.val:-1)));
+}
+function renderKpis(){
+  const cards=ventureStats();
+  document.getElementById("kpis").innerHTML=cards.map((c,i)=>{
+    const label=(i===0?"Best &middot; ":"")+c.v.replace(" Exploration","");
+    const sub=c.top
+      ? `${c.cls} &middot; ${c.top.row.name}${c.top.sold?"":" &middot; asking"}`
+      : `${c.cls} &middot; no market data`;
+    const tip=`${c.count} drop${c.count===1?"":"s"} worth listing`+
+      (c.flow?` · ${fmt(c.flow)} gil a day traded across ${state.scopeDc}`:"")+
+      (c.top&&!c.top.sold?" · nothing here has sold in 30 days, so this is the asking price":"");
+    return `<div class="kpi" title="${tip}"><div class="ki">${c.ic}</div><div class="kbody">`+
+      `<div class="k">${label}</div>`+
+      `<div class="v gil">${c.top?fmt(c.top.val):"—"}</div>`+
+      `<div class="s">${sub}</div></div></div>`;}).join("");
+}
+
+function visibleRows(){
+  let r=countedRows();
+  if(state.venture!=="all")r=r.filter(x=>x.vl.indexOf(state.venture)>=0);
+  if(state.query){const q=state.query.toLowerCase();
+    r=r.filter(x=>x.name.toLowerCase().includes(q)||x.venture.toLowerCase().includes(q)||catLabel(x.cat).toLowerCase().includes(q)
+      ||(x.excl?"only here exclusive":"also from "+x.other).toLowerCase().includes(q));}
+  const k=state.sortKey,d=state.sortDir;
+  return r.slice().sort((a,b)=>{
+    if(k==="name"||k==="venture"||k==="tier")return d*String(a[k]).localeCompare(String(b[k]));
+    if(k==="trend"){const av=a.trend?a.trend.pct:null,bv=b.trend?b.trend.pct:null;
+      if(av==null&&bv==null)return 0;if(av==null)return 1;if(bv==null)return -1;return d*(av-bv);}
+    const av=a[k],bv=b[k];
+    if(av==null&&bv==null)return 0;if(av==null)return 1;if(bv==null)return -1;
+    return d*(av-bv);});
+}
+function render(){
+  const rows=visibleRows();
+  const tbl=document.getElementById("tbl");
+  tbl.hidden=!rows.length;
+  document.getElementById("rows").innerHTML=rows.map(r=>
+    `<tr class="row">`+
+      `<td><div class="name"><span class="n">`+
+        `<button class="shopbtn" data-shopitem="${r.id}" title="Add this item to shopping list">🛒</button>`+
+        `<button class="listbtn" data-listadd="${r.id}" title="Add to a saved list">📋</button>`+
+        `<button class="xwbtn" data-xw="${r.id}" data-xwname="${xesc(r.name)}" title="Compare this item's price and stock on every world">🌐</button>`+
+        `${iconHTML(r.id)}<a href="https://universalis.app/market/${r.id}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">${r.name}</a>`+
+        `<span class="pill ${catSlug(r.cat)}" title="${r.cat}">${catLabel(r.cat)}</span></span>`+
+        `<span class="t" title="${r.excl?"Nothing else in the game produces this":"Also obtainable from "+r.other}">`+
+          `${r.excl?(r.vl.length>1?"Only from these ventures":"Only from this venture"):"Also from "+r.other}</span></div></td>`+
+      `<td title="${r.vl.join(", ")}">${r.venture}</td>`+
+      `<td title="Venture tier ${r.tier}">${r.tier}</td>`+
+      `<td>${fmt(r.now)}</td>`+
+      `<td>${fmt(r.avg)}</td>`+
+      `<td>${trendChip(r.trend)}</td>`+
+      `<td>${r.vel?velCell(r.velI):"—"}</td>`+
+      `<td>${fmt(r.daily)}</td>`+
+    `</tr>`).join("");
+  renderKpis();
+  setStatus(rows.length?state.summary:"Nothing matches these filters.");
+}
+
+function updateScanTime(){const el=document.getElementById("lastScan");if(!el)return;const now=new Date();el._scanTime=now;function tick(){if(!el._scanTime)return;const age=(Date.now()-el._scanTime)/1000;el.textContent=el._scanTime.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit",second:"2-digit"});el.style.color=age<1800?"var(--win)":"var(--loss)";}tick();if(el._ticker)clearInterval(el._ticker);el._ticker=setInterval(tick,30000);}
+async function load(){
+  const btn=document.getElementById("refresh");btn.disabled=true;clearErr();
+  try{
+    setStatus("Fetching world list…");
+    await refreshTopology();buildHomeSelect(document.getElementById("home"),state.home);
+    state.worlds=await fetchWorlds();
+    for(const[id,nm]of Object.entries(state.worlds))if(nm===state.home)state.homeId=+id;
+    state.scopeDc=dcOfWorld(state.home)||state.dc;
+    document.getElementById("scopeName").textContent=state.scopeDc;
+    const sell=await fetchAgg(state.home,VIDS,(d,t)=>setStatus(`Pricing ${VIDS.length} venture rewards on ${state.home}… ${d}/${t} batches`));
+    state.mkt=sell.out;
+    const hist=await fetchHist(state.scopeDc,VIDS,(d,t)=>setStatus(`Reading ${state.scopeDc} sales history… ${d}/${t} batches`));
+    state.hist=hist.out;
+    compute();render();updateScanTime();
+    state.summary=`Priced <b>${VITEMS.length}</b> venture rewards on <b>${state.home}</b>, with ${state.scopeDc}-wide sales behind the trend and the daily rate.`;
+    setStatus(state.summary);
+    finishStatus([sell,hist]);
+  }catch(e){showErr(e);}finally{btn.disabled=false;}
+}
+
+buildHomeSelect(document.getElementById("home"),state.home);
+document.getElementById("home").addEventListener("change",e=>{homeChanged(e.target.value);load();});
+document.getElementById("search").addEventListener("input",e=>{state.query=e.target.value;if(state.rows)render();});
+document.getElementById("vfilter").addEventListener("change",e=>{state.venture=e.target.value;if(state.rows)render();});
+document.getElementById("exclOnly").addEventListener("change",e=>{state.exclOnly=e.target.checked;if(state.rows)render();});
+document.getElementById("soldOnly").addEventListener("change",e=>{state.soldOnly=e.target.checked;if(state.rows)render();});
+document.getElementById("tax").addEventListener("change",e=>{state.tax=+e.target.value;if(state.rows){compute();render();}});
+document.getElementById("refresh").addEventListener("click",load);
+
+document.querySelectorAll("thead th[data-k]").forEach(th=>{
+  if(th.style.cursor==="default")return;
+  th.addEventListener("click",()=>{
+    const k=th.dataset.k;
+    if(state.sortKey===k)state.sortDir*=-1;else{state.sortKey=k;state.sortDir=(k==="venture")?1:-1;}
+    document.querySelectorAll("thead th").forEach(x=>{x.removeAttribute("data-sorted");const s=x.querySelector("span");if(s)s.textContent="";});
+    th.setAttribute("data-sorted","");th.querySelector("span").textContent=state.sortDir<0?"▾":"▴";
+    render();
+  });
+});
+
+load();
+</script>
+</body>
+</html>

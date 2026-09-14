@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Workshop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/*__UI_CSS__*/
+/* ---- workshop only: the phase tree, same grid as the Dashboard's craft tree ---- */
+tr.detail>td{background:var(--bg2);border-bottom:1px solid var(--line);padding:0;border-left:none}
+.tree{padding:12px 16px 14px}
+.thead{display:grid;grid-template-columns:1fr 132px 152px 132px 112px;gap:18px;font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);padding:0 6px 6px;border-bottom:1px solid var(--line)}
+.thead .r{text-align:center}
+.node{display:grid;grid-template-columns:1fr 132px 152px 132px 112px;gap:18px;align-items:center;padding:5px 6px;border-radius:7px;font-family:"JetBrains Mono",monospace;font-size:13px}
+.node:hover{background:var(--row-hover)} .node.clickable{cursor:pointer}
+.nlabel{display:flex;align-items:center;gap:7px;font-family:"Inter",sans-serif;min-width:0}
+.nlabel .iconbox{width:22px;height:22px;border-radius:6px}
+.nlabel .iconbox img{width:22px;height:22px}
+.nlabel .iconbox .fallback{font-size:11px}
+.ntoggle{width:14px;flex:none;display:inline-flex;justify-content:center;color:var(--faint)}
+.ntoggle .c{display:inline-block;width:0;height:0;border-left:5px solid var(--faint);border-top:3.5px solid transparent;border-bottom:3.5px solid transparent;transition:transform .15s}
+.ntoggle.open .c{transform:rotate(90deg);border-left-color:var(--aether)}
+.ntoggle.leaf{color:var(--line2)} .nqty{color:var(--muted);font-family:"JetBrains Mono",monospace;margin-right:4px}
+.nsets{color:var(--faint);font-family:"JetBrains Mono",monospace;font-size:10.5px;margin-left:6px}
+.price{text-align:center} .price.cheap{color:var(--win)} .price.dim{color:var(--faint)}
+.server{text-align:right;font-size:12px} .server.home{color:var(--win)} .server.hop{color:var(--hop)} .server.dim{color:var(--faint)}
+.qtag{font-size:9px;color:var(--faint)} .qtag.hq{color:var(--gil)}
+.badge{font-family:"JetBrains Mono",monospace;font-size:9px;color:var(--win);border:1px solid var(--win-line);border-radius:5px;padding:1px 5px;margin-left:6px}
+.line{text-align:center;font-weight:500}
+/* one heading per phase, the way the workshop itself hands the project out */
+.phase{display:flex;align-items:baseline;gap:10px;margin:12px 6px 4px;padding-top:9px;border-top:1px dashed var(--line);
+  font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--aether)}
+.phase:first-of-type{border-top:none;margin-top:6px;padding-top:0}
+.phase .pc{margin-left:auto;color:var(--muted);letter-spacing:0;text-transform:none;font-size:11.5px}
+.tfoot{display:flex;flex-wrap:wrap;gap:6px 20px;margin-top:12px;padding-top:11px;border-top:1px solid var(--line);font-family:"JetBrains Mono",monospace;font-size:12.5px}
+.tfoot .lab{color:var(--faint);text-transform:uppercase;font-size:10px;letter-spacing:.1em;margin-right:6px} .tfoot b{font-weight:500}
+.forecast{color:var(--muted);font-size:11px;font-family:"JetBrains Mono",monospace}
+.forecast b{color:var(--gil)}
+.pill.wheel{color:#d8a0f0;border-color:#4a3357;background:#d8a0f012}
+:root[data-theme="light"] .pill.wheel{color:#8e44ad;border-color:#dfc2ec}
+@media(max-width:1100px){
+  .thead{grid-template-columns:1fr 78px 84px 72px;gap:8px} .thead .hcraft,.node .ncraft{display:none}
+  .node{grid-template-columns:1fr 78px 84px 72px;gap:8px}
+}
+</style>
+<script>try{var __t=localStorage.getItem("gildesk:theme:v1");document.documentElement.setAttribute("data-theme",__t==="light"?"light":"dark");}catch(e){document.documentElement.setAttribute("data-theme","dark");}</script>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="sgroup">
+      <div class="slabel">Filter items</div>
+      <div class="field inline"><label>&#128269;</label><input id="search" type="text" placeholder="search name…" autocomplete="off"></div>
+    </div>
+    <div class="sgroup">
+      <div class="slabel">Server</div>
+      <div class="field sel"><label for="home">Sell on</label><select id="home"></select></div>
+      <div class="field dcwrap"><label>Mats from</label>
+        <input type="hidden" id="dc" value="Chaos">
+        <button type="button" class="dcbtn" id="dcBtn" title="Choose which data centres to price materials across">Chaos <span class="dccar">&#9662;</span></button>
+        <div class="dcmenu" id="dcMenu" hidden></div></div>
+      <button class="btn primary wide" id="refresh">&#8635; Refresh</button>
+    </div>
+    <div class="sgroup">
+      <div class="slabel">Marketboard settings</div>
+      <label class="chk" title="Hide projects nobody has bought on your world in the last 30 days"><input type="checkbox" id="hideNo" checked> Hide no-sales</label>
+      <label class="chk"><input type="checkbox" id="hideOutlier"> Hide &#9888; outliers</label>
+    </div>
+    <div class="sgroup">
+      <div class="slabel">Filters</div>
+      <div class="field sel"><label for="basis">Profit vs</label><select id="basis"><option value="avg30" selected>30-day avg</option><option value="listing">Current low</option></select></div>
+      <div class="field sel" title="Precraft-optimised crafts any turn-in that is cheaper to make than to buy, all the way down. Buy turn-ins prices every turn-in item straight off the board."><label for="matbasis">Mat cost</label><select id="matbasis"><option value="opt" selected>Precraft-optimised</option><option value="buyall">Buy turn-ins</option></select></div>
+      <div class="field sel"><label for="tax">Tax</label><select id="tax"><option value="0.05">5%</option><option value="0.03">3%</option><option value="0">0%</option></select></div>
+    </div>
+    <div class="sgroup">
+      <div class="slabel">Categories</div>
+      <select id="grp" hidden><option value="all">All projects</option><option value="sub">Submersible parts</option><option value="air">Airship parts</option><option value="house">Housing exteriors</option><option value="wheel">Aetherial wheels</option></select>
+      <div class="snav" id="catNav"></div>
+    </div>
+    <div class="sgroup">
+      <div class="scancard"><span class="dot"></span>Last scan<br><b id="lastScan">&mdash;</b></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="hero">
+      <div class="hicon">&#128736;&#65039;</div>
+      <div>
+        <h1><b>Workshop</b></h1>
+        <p class="sub">All <b id="nItems">162</b> Free Company workshop projects &mdash; submersible and airship parts, housing exteriors and aetherial wheels &mdash; costed from turn-ins bought on <b class="dcname">Chaos</b> against what the finished project sells for on <b class="homename">Spriggan</b>. Click a project for its phases and the recipe under every turn-in.</p>
+      </div>
+      <div class="kpis">
+        <div class="kpi"><div class="ki">&#129689;</div><div class="kbody"><div class="k">Best profit / project</div><div class="v gil" id="kpiBest">&mdash;</div><div class="s" id="kpiBestName">waiting for data&hellip;</div></div></div>
+        <div class="kpi"><div class="ki">&#128197;</div><div class="kbody"><div class="k">Daily profit ceiling</div><div class="v cy" id="kpiDaily">&mdash;</div><div class="s">visible projects, 30-day <span class="homename">Spriggan</span> rate</div></div></div>
+        <div class="kpi"><div class="ki">&#128451;&#65039;</div><div class="kbody"><div class="k" title="Rows marked ⚠ are not counted">Profitable / shown</div><div class="v" id="kpiCount">&mdash;</div><div class="s" id="kpiFresh">&mdash;</div></div></div>
+      </div>
+    </div>
+
+    <div class="status" id="status">Loading&hellip;</div>
+    <div id="errbox"></div>
+
+    <div class="tablewrap">
+      <table id="tbl" hidden>
+        <thead><tr>
+          <th data-k="name" style="cursor:default">Item</th>
+          <th data-k="sell" title="Cheapest listing on your home world, with how long ago that world last reported">Sell now <span></span></th>
+          <th data-k="avg30" title="Quantity-weighted average of actual sales on your home world over 30 days">Avg 30d <span></span></th>
+          <th data-k="trend" title="Which way the price is moving: the newer half of the sales history against the older half">Trend <span></span></th>
+          <th data-k="cost" class="hide">Mat cost <span></span><i id="costMode" style="display:block;font-style:normal;font-weight:400;font-size:9px;letter-spacing:.06em;color:var(--faint);text-transform:none">optimised</i></th>
+          <th data-k="profit" data-sorted>Profit/unit <span>&#9662;</span></th>
+          <th data-k="margin">Margin <span></span></th>
+          <th data-k="vel" title="Units sold a day on your home world over 30 days">Units/day <span></span></th>
+          <th data-k="daily" title="Profit per project multiplied by units sold a day">Gil/day <span></span></th>
+        </tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+
+    <p class="foot">Projects are read from the game&rsquo;s own <b>CompanyCraftSequence</b>, <b>CompanyCraftPart</b>, <b>CompanyCraftProcess</b> and <b>CompanyCraftSupplyItem</b> tables, so every phase, set size and set count is exactly what the workshop asks for. Recipes under each turn-in come from Teamcraft&rsquo;s public data. Mat cost counts every turn-in across every phase; under <b>Precraft-optimised</b> a turn-in that is cheaper to craft than to buy is costed as crafted, recursively, including its crystals. Turn-ins accept either quality, so each is priced at whichever of NQ and HQ is cheaper.
+      A project also needs its <b>draft</b> (bought with company credits) and a workshop, and several members can hand in at once &mdash; none of that costs gil, so none of it is counted here. Finished projects only ever sell NQ.
+      Gil/day = profit per project &times; the units that sell a day on <span class="homename">Spriggan</span> over 30 days &mdash; a ranking, not a promise: these are slow, lumpy markets. Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>.</p>
+  </main>
+</div>
+
+<script>
+const ICON_INDEX = /*__ICON_INDEX__*/;
+const RECIPE_INDEX = /*__RECIPE_INDEX__*/;
+/*__UI_JS__*/
+
+/* the workshop data: projects -> phases -> [item, per set, sets]; recipes under
+   every turn-in as {y: yields, g: [[id, amount]], cx: crystals, job, lvl} */
+const WS = /*@json data/workshop.json*/null;
+const PROJ = WS.projects, RECIPES = WS.recipes, NAMES = WS.names;
+const PROJ_BY_ID = {}; for (const p of PROJ) PROJ_BY_ID[p.i] = p;
+const PROJ_IDS = PROJ.map(p => p.i);
+const isCrystal = id => id >= 2 && id <= 19;
+/* every turn-in, everything under it, and the crystals the recipes burn */
+const MAT_IDS = (() => {
+  const s = new Set();
+  const add = id => { if (s.has(id)) return; s.add(id); const r = RECIPES[id]; if (r) { for (const [g] of r.g) add(g); for (const [c] of r.cx) s.add(c); } };
+  for (const p of PROJ) for (const ph of p.phases) for (const [id] of ph.items) add(id);
+  return [...s];
+})();
+const CHAOS_FALLBACK = {39:"Omega",71:"Moogle",80:"Cerberus",83:"Louisoix",85:"Spriggan",97:"Ragnarok",400:"Sagittarius",401:"Phantom"};
+const fmt = n => n == null || !isFinite(n) ? "—" : Math.round(n).toLocaleString("en-GB");
+const fmtK = n => { if (n == null || !isFinite(n)) return "—"; if (Math.abs(n) >= 1e6) return (n / 1e6).toFixed(2) + "M"; if (Math.abs(n) >= 1e3) return (n / 1e3).toFixed(1) + "k"; return Math.round(n).toString(); };
+const ago = ms => { if (!ms) return "no uploads"; const s = (Date.now() - ms) / 1000; if (s < 3600) return Math.round(s / 60) + "m ago"; if (s < 86400) return Math.round(s / 3600) + "h ago"; return Math.round(s / 86400) + "d ago"; };
+
+let state = {home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],tax:0.05,group:"all",hideNo:true,hideOutlier:false,query:"",basis:"avg30",matBasis:"opt",
+  sortKey:"profit",sortDir:-1,worlds:null,sell:null,hist:null,chaos:null,rows:null,expanded:new Set(),tree:new Set(),_best:{},_hops:{}};
+
+function side(res,hq){return res?(hq?res.h:res.n):null;}
+function aggPrice(res,hq,scope){const q=side(res,hq);const m=q&&(scope==="world"?q.mw:q.md);return m&&m[0]!=null?{price:m[0],worldId:m[1]!=null?m[1]:null}:{price:null,worldId:null};}
+function aggUpload(res){return(res&&res.u)||0;}
+function wname(id){return(state.worlds&&state.worlds[id])||CHAOS_FALLBACK[id]||(id?("world "+id):"—");}
+function avg30(s){if(!s)return{avg:null,n:0};
+  if(s.n&&s.n[0]!=null)return{avg:s.n[0],n:s.n[1]};
+  if(s.a&&s.a[0]!=null)return{avg:s.a[0],n:s.a[1]};
+  return{avg:null,n:0};}
+
+/*__SHARED_A__*/
+/*__SHARED_B__*/
+/*__SHARED_SHOP__*/
+/*__SHARED_LIST__*/
+/*__SHARED_XW__*/
+
+async function fetchAgg(scope,ids,onProgress){
+  const ck=`agg:${scope}:${hashIds(ids)}`;const hit=Cache.get(ck,NET.CACHE_TTL_MS);
+  if(hit){if(onProgress)onProgress(1,1);return{out:hit,failed:[],fromCache:true};}
+  const res=await runBatches(ids,async b=>{
+    const r=await tfetch(`https://universalis.app/api/v2/aggregated/${scope}/${b.join(",")}`);
+    if(!r.ok)throw new Error("HTTP "+r.status+" · "+scope);
+    const j=await r.json();const m={};for(const row of(j.results||[]))m[row.itemId]=compressAgg(row);return m;},onProgress);
+  if(!res.failed.length)Cache.set(ck,res.out);
+  return res;}
+async function fetchHist(scope,ids,onProgress){
+  const ck=`hist:${scope}:${hashIds(ids)}`;const hit=Cache.get(ck,NET.CACHE_TTL_MS);
+  if(hit){if(onProgress)onProgress(1,1);return{out:hit,failed:[],fromCache:true};}
+  const res=await runBatches(ids,async b=>{
+    const r=await tfetch(`https://universalis.app/api/v2/history/${scope}/${b.join(",")}?entriesToReturn=${HIST_ENTRIES}&entriesWithin=${HIST_SECS}&statsWithin=${HIST_SECS*1000}`);
+    if(!r.ok)throw new Error("HTTP "+r.status+" · history");
+    const j=await r.json();const src=j.items||(j.itemID?{[j.itemID]:j}:{});
+    const m={};for(const k in src)m[k]=summarizeHist(src[k]);return m;},onProgress);
+  if(!res.failed.length)Cache.set(ck,res.out);
+  return res;}
+async function fetchWorlds(){
+  const hit=Cache.get("worlds",NET.WORLDS_TTL_MS);if(hit)return hit;
+  try{const r=await tfetch("https://universalis.app/api/v2/worlds");const a=await r.json();
+    const m={};for(const w of a)m[w.id]=w.name;Cache.set("worlds",m);return m;
+  }catch(e){return{...CHAOS_FALLBACK};}}
+
+/* ---- costing ----
+   A turn-in takes either quality, so it is bought at whichever listing is
+   cheaper; crafting it is its recipe's materials at their own best, plus
+   the crystals, divided by what one craft yields. */
+function buyOf(id){
+  const res=state.chaos?state.chaos[id]:null;
+  const n=aggPrice(res,false,"dc"),h=aggPrice(res,true,"dc");
+  const hq=h.price!=null&&(n.price==null||h.price<n.price);
+  const m=hq?h:n;
+  return{price:m.price,worldId:m.worldId,world:m.price!=null?wname(m.worldId):null,hop:(m.worldId!=null&&m.worldId!==state.homeId),hq};
+}
+function crystalCost(r){let s=0;for(const[c,a]of r.cx){const b=buyOf(c).price;if(b!=null)s+=b*a;}return s;}
+function craftUnit(id){const r=RECIPES[id];if(!r)return null;let s=crystalCost(r);
+  for(const[g,a]of r.g){const b=bestOf(g);if(b==null)return null;s+=b*a;}return s/r.y;}
+function bestOf(id){if(id in state._best)return state._best[id];state._best[id]=null;
+  const b=buyOf(id).price,c=RECIPES[id]?craftUnit(id):null;
+  const best=b==null?c:(c==null?b:Math.min(b,c));state._best[id]=best;return best;}
+function hopsOf(id){if(id in state._hops)return state._hops[id];state._hops[id]=0;
+  const r=RECIPES[id],b=buyOf(id),c=r?craftUnit(id):null;let v;
+  if(c!=null&&(b.price==null||c<b.price)){v=0;for(const[g]of r.g)v+=hopsOf(g);}
+  else v=(b.price!=null&&b.hop)?1:0;
+  state._hops[id]=v;return v;}
+/* what the whole project asks for, summed across every phase */
+function turnIns(p){const t={};for(const ph of p.phases)for(const[id,set,sets]of ph.items)t[id]=(t[id]||0)+set*sets;return t;}
+const KIND={sub:["submersible","tool"],air:["airship","minion"],house:["housing","furniture"],wheel:["wheel","wheel"]};
+function groupOf(p){if(p.cat==="Housing")return"house";if(p.cat==="Aetherial Wheels")return"wheel";return /^Submersible/.test(p.type)?"sub":"air";}
+
+async function load(){const btn=document.getElementById("refresh");btn.disabled=true;clearErr();
+  try{setStatus("Fetching world list…");
+    await refreshTopology();buildHomeSelect(document.getElementById("home"),state.home);setDcs(state.dcs);
+    state.worlds=await fetchWorlds();
+    for(const[id,nmw]of Object.entries(state.worlds))if(nmw===state.home)state.homeId=+id;
+    const prog=l=>(d,t)=>setStatus(`${l}… ${d}/${t} batches`);
+    const[sell,hist,chaos]=await Promise.all([
+      fetchAgg(state.home,PROJ_IDS,prog("Pricing projects on "+state.home)),
+      fetchHist(state.home,PROJ_IDS,prog("Reading 30-day history")),
+      fetchMarket(MAT_IDS,prog("Pricing turn-ins ("+dcLabel()+")"))]);
+    state.sell=sell.out;state.hist=hist.out;state.chaos=chaos.out;
+    compute();render();updateScanTime();
+    finishStatus([sell,hist,chaos]);
+  }catch(e){showErr(e);}finally{btn.disabled=false;}}
+
+function compute(){state._best={};state._hops={};const rows=[];
+  const opt=state.matBasis!=="buyall";
+  for(const p of PROJ){const id=p.i;
+    const listing=aggPrice(state.sell[id],false,"world").price;
+    const a=avg30(state.hist[id]);const tr30=trend30(state.hist[id],false);
+    const v30=vel30(state.hist[id],false);const vel=v30.perDay;
+    const basis=state.basis==="avg30"?(a.avg!=null?a.avg:listing):(listing!=null?listing:a.avg);
+    /* a project nobody has bought in a month has no price, only an asking price */
+    const unsold=a.avg==null;
+    const outlier=unsold||listing==null||listing>a.avg*2.5||listing<a.avg*0.4;
+    const t=turnIns(p);
+    let buyAll=0,buyMissing=false,optCost=0,optMissing=false,fresh=aggUpload(state.sell[id]),buyHop=0,optHop=0,kinds=0;
+    for(const[mid,q]of Object.entries(t)){kinds++;
+      const b=buyOf(+mid);if(b.price==null)buyMissing=true;else{buyAll+=b.price*q;if(b.hop)buyHop++;}
+      const best=bestOf(+mid);if(best==null)optMissing=true;else optCost+=best*q;
+      optHop+=hopsOf(+mid);
+      fresh=Math.max(fresh,aggUpload(state.chaos[mid]));}
+    const cost=opt?(optMissing?null:optCost):(buyMissing?null:buyAll);
+    const net=basis!=null?basis*(1-state.tax):null;
+    const profit=(net!=null&&cost!=null)?net-cost:null;
+    const margin=(profit!=null&&basis)?profit/basis:null;
+    const daily=(profit!=null)?profit*vel:null;
+    const g=groupOf(p);
+    rows.push({id,name:p.n,unsold,p,group:g,kind:KIND[g],note:`${p.type} · ${p.phases.length} phase${p.phases.length===1?"":"s"} · ${kinds} turn-in${kinds===1?"":"s"}`,
+      sell:listing,avg30:a.avg,n30:a.n,trendT:tr30,trend:tr30?tr30.pct:null,outlier,cost,costBuyAll:buyMissing?null:buyAll,costOpt:optMissing?null:optCost,
+      profit,margin,vel,velI:v30,daily,hop:opt?optHop:buyHop,upload:fresh});}
+  state.rows=rows;state.rowById={};for(const r of rows)state.rowById[r.id]=r;}
+
+function visibleRows(){const q=state.query.trim().toLowerCase();
+  let rows=state.rows.filter(r=>{if(state.group!=="all"&&r.group!==state.group)return false;if(state.hideNo&&!(r.vel>0))return false;if(state.hideOutlier&&r.outlier)return false;
+    if(q&&!(r.name.toLowerCase().includes(q)||r.note.toLowerCase().includes(q)))return false;return true;});
+  rows.sort((a,b)=>{const k=state.sortKey;let av=a[k],bv=b[k];if(k==="name")return a.name.localeCompare(b.name)*(state.sortDir*-1);av=(av==null||!isFinite(av))?-Infinity:av;bv=(bv==null||!isFinite(bv))?-Infinity:bv;return(av-bv)*state.sortDir;});
+  return rows;}
+
+const nameOf=id=>NAMES[id]||("#"+id);
+function nodeHTML(id,amount,path,depth,sets){
+  const r=RECIPES[id],buy=buyOf(id),craft=r?craftUnit(id):null,best=bestOf(id);
+  const open=state.tree.has(path),hasKids=!!r;
+  const buyCheaper=(craft==null)||(buy.price!=null&&buy.price<=craft);
+  const buyCls=buy.price==null?"dim":(buyCheaper?"cheap":"dim"),craftCls=(craft!=null&&!buyCheaper)?"cheap":"dim";
+  const bavg=buyAvg(state.chaos[id],buy.hq);const stk=stockBadge(buy.price,bavg);
+  const saveBadge=(r&&craft!=null&&buy.price!=null&&craft<buy.price)?`<span class="badge">craft −${fmtK(buy.price-craft)}</span>`:"";
+  const setTag=sets?`<span class="nsets">${sets[1]} set${sets[1]===1?"":"s"} of ${sets[0]}</span>`:"";
+  const jobTag=r&&depth===0&&r.job?`<span class="nsets">${r.job} ${r.lvl}</span>`:"";
+  let h=`<div class="node${hasKids?' clickable':''}" ${hasKids?`data-np="${path}"`:''} style="padding-left:${depth*20+6}px">
+    <div class="nlabel"><button class="shopbtn sm" data-shopmat="${id}|${Math.ceil(amount)}" title="Add ${Math.ceil(amount)}× to shopping list">+</button><button class="listbtn sm" data-listadd="${id}" title="Add to a saved list">📋</button><button class="xwbtn sm" data-xw="${id}" data-xwname="${xesc(nameOf(id))}" data-xwqty="${Math.ceil(amount)}" title="Compare this item's price and stock on every world">🌐</button>${teamcraftHTML(id,'sm')}<span class="ntoggle ${hasKids?'has':'leaf'} ${open?'open':''}">${hasKids?'<span class="c"></span>':'·'}</span>${iconHTML(id)}
+      <span><span class="nqty">${fmt(amount)}×</span>${nameOf(id)}${setTag}${jobTag}${saveBadge}${stk}</span></div>
+    <div class="price ${buyCls}">${buy.price!=null?'buy '+fmt(buy.price)+' <span class="qtag '+(buy.hq?'hq':'')+'">'+(buy.hq?'HQ':'NQ')+'</span>':'<span class="dim">no listing</span>'}${bavg!=null?'<span class="navg">avg '+fmtK(bavg)+'</span>':''}</div>
+    <div class="server ${buy.price==null?'dim':(buy.hop?'hop':'home')}">${buy.price!=null?buy.world+(buy.hop?' · hop':''):'—'}</div>
+    <div class="price ${craftCls} ncraft">${craft!=null?'craft '+fmt(craft):'<span class="dim">—</span>'}</div>
+    <div class="line">${fmt(best!=null?best*amount:null)}</div></div>`;
+  if(hasKids&&open)for(const[g,a]of r.g)h+=nodeHTML(g,a*amount/r.y,path+">"+g,depth+1,null);
+  return h;
+}
+function treeHTML(r){const p=r.p;let body="";
+  p.phases.forEach((ph,pi)=>{
+    let phCost=0,miss=false;for(const[id,set,sets]of ph.items){const b=bestOf(id);if(b==null)miss=true;else phCost+=b*set*sets;}
+    body+=`<div class="phase"><span>${ph.part}${ph.of>1?` &middot; phase ${ph.step} of ${ph.of}`:""}</span><span class="pc">${miss?"some turn-ins unpriced":"best "+fmt(phCost)}</span></div>`;
+    for(const[id,set,sets]of ph.items)body+=nodeHTML(id,set*sets,r.id+">"+pi+">"+id,0,[set,sets]);
+  });
+  const opt=state.matBasis!=="buyall",live=' <span class="dim" title="This is the basis the table is costing against right now">← in use</span>';
+  const save=(r.costBuyAll!=null&&r.costOpt!=null)?r.costBuyAll-r.costOpt:0;
+  return `<div class="tree">
+    <div class="thead"><div>Hand these in, phase by phase &rarr; 1&times; ${r.name}</div><div class="r">Buy (${dcLabel()})</div><div class="r">Buy on</div><div class="r hcraft">Craft it</div><div class="r">Line (best)</div></div>
+    ${body}
+    <div class="tfoot">
+      <span><span class="lab">Buy turn-ins</span><b>${fmt(r.costBuyAll)}</b>${opt?'':live}</span>
+      <span><span class="lab">Precraft-optimised</span><b class="${save>0?'profit win':''}">${fmt(r.costOpt)}${save>0?` (save ${fmtK(save)})`:''}</b>${opt?live:''}</span>
+      <span><span class="lab">Sell now·${state.home}</span><b>${r.sell==null?'—':fmt(r.sell)}</b></span>
+      <span><span class="lab">Avg 30d</span><b>${r.avg30==null?'—':fmt(r.avg30)+` (${r.n30} sold)`}</b></span>
+      <span><span class="lab">Trend</span><b>${trendChip(r.trendT)}</b></span>
+      <span><span class="lab">Profit/unit</span><b class="${r.profit==null?'':(r.profit>=0?'profit win':'profit loss')}">${r.profit==null?'—':fmt(r.profit)}</b></span>
+    </div></div>`;
+}
+
+function updateScanTime(){const el=document.getElementById("lastScan");if(!el)return;el._scanTime=new Date();
+  function tick(){if(!el._scanTime)return;const age=(Date.now()-el._scanTime)/1000;el.textContent=el._scanTime.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit",second:"2-digit"});el.style.color=age<1800?"var(--win)":"var(--loss)";}
+  tick();if(el._ticker)clearInterval(el._ticker);el._ticker=setInterval(tick,30000);}
+function render(){if(!state.rows)return;const rows=visibleRows();const total=rows.length;
+  const tb=document.getElementById("rows");tb.innerHTML="";
+  for(const r of rows){const open=state.expanded.has(r.id);
+    const tr=document.createElement("tr");tr.className="row"+(open?" open":"");
+    const cls=r.profit==null?"":(r.profit>=0?"win":"loss");
+    const warn=r.outlier?` <span class="warn" title="${r.unsold?"Nothing has sold on "+state.home+" in 30 days, so this is an asking price, not a market.":"No current listing, or the listing sits far from the 30-day average."} Treat this row’s pricing as unreliable.">⚠</span>`:"";
+    tr.innerHTML=`<td><div class="name rich"><span class="rowtools"><button class="shopbtn" data-shopitem="${r.id}" title="Add every turn-in to the shopping list">🛒</button><button class="listbtn" data-listadd="${r.id}" title="Add to a saved list">📋</button><button class="xwbtn" data-xw="${r.id}" data-xwname="${xesc(r.name)}" title="Compare this item's price and stock on every world">🌐</button></span><span class="caret"></span>${iconHTML(r.id)}<span class="nmeta"><span class="n">${r.name} <span class="pill ${r.kind[1]}">${r.kind[0]}</span></span><span class="t">${r.note}</span></span></div></td>
+      <td>${fmt(r.sell)}${warn}${agePill(r.upload)}</td>
+      <td>${fmt(r.avg30)}${r.avg30!=null?` <span class="q">${r.n30}×</span>`:''}</td>
+      <td>${trendChip(r.trendT)}</td>
+      <td class="hide">${fmt(r.cost)}</td>
+      <td class="profit ${cls}">${r.profit==null?'—':fmt(r.profit)}</td>
+      <td>${r.margin==null?'—':Math.round(r.margin*100)+'%'}</td>
+      <td>${velCell(r.velI)}</td>
+      <td class="forecast">${r.daily!=null&&r.daily>0?"<b>"+fmtK(Math.round(r.daily))+"</b>/day":"—"}</td>`;
+    tr.dataset.id=r.id;tb.appendChild(tr);
+    if(open){const dr=document.createElement("tr");dr.className="detail";dr.dataset.id=r.id;const td=document.createElement("td");td.colSpan=9;td.innerHTML=treeHTML(r);dr.appendChild(td);tb.appendChild(dr);}}
+  document.getElementById("tbl").hidden=false;
+  /* the cards only count what is backed by real sales, so a hopeful listing
+     on something that never sells cannot headline the page */
+  const prof=rows.filter(r=>r.profit!=null&&r.profit>0&&!r.outlier).sort((a,b)=>b.profit-a.profit);const best=prof[0];
+  document.getElementById("kpiBest").textContent=best?fmtK(best.profit)+" g":"—";
+  document.getElementById("kpiBestName").textContent=best?best.name:"nothing profitable in view";
+  const ds=prof.reduce((s,r)=>s+(r.daily||0),0);document.getElementById("kpiDaily").textContent=ds?fmtK(ds)+" g":"—";
+  document.getElementById("kpiCount").textContent=prof.length+" / "+total;
+  document.getElementById("kpiFresh").textContent="freshest data "+ago(Math.max(0,...rows.map(r=>r.upload||0)));
+  setStatus(total?`Sell vs <b>${state.home}</b> · profit on <b>${state.basis==="avg30"?"30-day avg":"current low"}</b> · turn-ins <b>${state.matBasis==="buyall"?"bought whole":"precraft-optimised"}</b>, cheapest on ${dcLabel()} · ${total} project${total===1?"":"s"} · tax ${Math.round(state.tax*100)}% · click a project, then any craftable turn-in to go deeper`:"No projects match these filters.");
+}
+function setStatus(h){document.getElementById("status").innerHTML=h;}
+function clearErr(){document.getElementById("errbox").innerHTML="";}
+function showErr(e){document.getElementById("tbl").hidden=true;setStatus("Couldn't reach the market board.");
+  document.getElementById("errbox").innerHTML=`<div class="err"><b>Live prices didn't load.</b> ${e.message||e}. Open this file directly in your browser, or check <a href="https://universalis.app" target="_blank" rel="noopener" style="color:#ffd7db">universalis.app</a>.</div>`;}
+
+document.getElementById("nItems").textContent=PROJ.length;
+document.getElementById("grp").addEventListener("change",e=>{state.group=e.target.value;render();syncCatNav();});
+const CAT_ICONS={all:"▦",sub:"🚢",air:"🎈",house:"🏠",wheel:"☸️"};
+function buildCatNav(){const sel=document.getElementById("grp"),nav=document.getElementById("catNav");nav.innerHTML="";
+  for(const o of sel.options){const b=document.createElement("button");b.type="button";b.dataset.cat=o.value;
+    const n=o.value==="all"?PROJ.length:PROJ.filter(p=>groupOf(p)===o.value).length;
+    b.innerHTML='<span class="ic">'+(CAT_ICONS[o.value]||"▪")+'</span><span>'+o.textContent+'</span><span class="q" style="margin-left:auto">'+n+'</span>';
+    b.addEventListener("click",()=>{if(sel.value===o.value)return;sel.value=o.value;sel.dispatchEvent(new Event("change",{bubbles:true}));});
+    nav.appendChild(b);}
+  syncCatNav();}
+function syncCatNav(){const sel=document.getElementById("grp");for(const b of document.querySelectorAll("#catNav button"))b.setAttribute("aria-current",String(b.dataset.cat===sel.value));}
+buildCatNav();
+document.getElementById("search").addEventListener("input",e=>{state.query=e.target.value;if(state.rows)render();});
+document.getElementById("basis").addEventListener("change",e=>{state.basis=e.target.value;if(state.rows){compute();render();}});
+buildHomeSelect(document.getElementById("home"),state.home);
+document.getElementById("home").addEventListener("change",e=>{homeChanged(e.target.value);load();});
+initDcPicker(()=>load());
+document.getElementById("matbasis").addEventListener("change",e=>{state.matBasis=e.target.value;
+  const m=document.getElementById("costMode");if(m)m.textContent=state.matBasis==="buyall"?"buy-all":"optimised";
+  if(state.rows){compute();render();}});
+document.getElementById("tax").addEventListener("change",e=>{state.tax=parseFloat(e.target.value);if(state.rows){compute();render();}});
+document.getElementById("hideNo").addEventListener("change",e=>{state.hideNo=e.target.checked;if(state.rows)render();});
+document.getElementById("hideOutlier").addEventListener("change",e=>{state.hideOutlier=e.target.checked;if(state.rows)render();});
+document.getElementById("refresh").addEventListener("click",load);
+document.querySelectorAll("thead th[data-k]").forEach(th=>{if(th.style.cursor==="default")return;
+  th.addEventListener("click",()=>{const k=th.dataset.k;if(state.sortKey===k)state.sortDir*=-1;else{state.sortKey=k;state.sortDir=-1;}
+    document.querySelectorAll("thead th").forEach(x=>{x.removeAttribute("data-sorted");const s=x.querySelector("span");if(s)s.textContent="";});
+    th.setAttribute("data-sorted","");th.querySelector("span").textContent=state.sortDir<0?"▾":"▴";if(state.rows)render();});});
+
+/* ===== settings persistence + delegated row expansion ===== */
+(function(){
+  const SKEY="gildesk:workshop:settings";
+  function collect(){const s={};document.querySelectorAll("select[id],input[id]").forEach(el=>{
+    if(el.id==="search"||el.type==="button")return;s[el.id]=el.type==="checkbox"?el.checked:el.value;});return s;}
+  document.addEventListener("change",()=>{try{localStorage.setItem(SKEY,JSON.stringify(collect()));}catch(e){}});
+  try{const s=JSON.parse(localStorage.getItem(SKEY)||"{}");
+    for(const[id,v]of Object.entries(s)){const el=document.getElementById(id);if(!el)continue;
+      if(el.type==="checkbox")el.checked=!!v;else el.value=v;
+      if(id==="home"){state.home=el.value;syncHomeNames();continue;}
+      if(id==="dc"){setDcs(el.value);continue;}
+      el.dispatchEvent(new Event("change"));}
+  }catch(e){}
+  syncDcNames();syncHomeNames();
+  const tb=document.getElementById("rows");
+  tb.addEventListener("click",e=>{
+    if(e.target.closest("button,a"))return;
+    const np=e.target.closest("[data-np]");
+    if(np){e.stopPropagation();const p=np.dataset.np;
+      if(state.tree.has(p))state.tree.delete(p);else state.tree.add(p);
+      const dr=np.closest("tr.detail");
+      if(dr){const r=state.rowById&&state.rowById[+dr.dataset.id];if(r)dr.firstElementChild.innerHTML=treeHTML(r);}
+      return;}
+    const tr=e.target.closest("tr.row");if(!tr)return;
+    const id=+tr.dataset.id;const r=state.rowById&&state.rowById[id];if(!r)return;
+    if(state.expanded.has(id)){state.expanded.delete(id);tr.classList.remove("open");
+      const nx=tr.nextElementSibling;if(nx&&nx.classList.contains("detail"))nx.remove();}
+    else{state.expanded.add(id);tr.classList.add("open");
+      const dr=document.createElement("tr");dr.className="detail";dr.dataset.id=id;
+      const td=document.createElement("td");td.colSpan=9;td.innerHTML=treeHTML(r);dr.appendChild(td);tr.after(dr);}
+  });
+})();
+
+/* ===== shopping list + saved-list glue ===== */
+window.__shopEntry=(id,amount)=>{const b=buyOf(id);return{id:+id,name:nameOf(id),qty:+amount,unit:b.price,worldId:b.worldId,world:b.world,hq:b.hq,avg:Shop.avgFrom(state.chaos[id],b.hq)};};
+/* under the optimised basis the list holds what you actually buy: a turn-in
+   cheaper to craft is broken into its own materials instead */
+function shopLeaves(id,amount,into,seen){
+  const r=RECIPES[id],b=buyOf(id),c=r?craftUnit(id):null;
+  if(state.matBasis!=="buyall"&&c!=null&&(b.price==null||c<b.price)&&seen.indexOf(id)<0){
+    for(const[g,a]of r.g)shopLeaves(g,amount*a/r.y,into,seen.concat([id]));
+    for(const[cx,a]of r.cx)if(!isCrystal(cx))into[cx]=(into[cx]||0)+amount*a/r.y;
+    return;}
+  into[id]=(into[id]||0)+amount;}
+window.__shopAddItem=pid=>{if(!state.chaos)return Shop.toast("Refresh prices first");const p=PROJ_BY_ID[+pid];if(!p)return;
+  const into={};for(const[id,q]of Object.entries(turnIns(p)))shopLeaves(+id,q,into,[]);
+  Shop.add(Object.keys(into).map(id=>__shopEntry(+id,Math.max(1,Math.ceil(into[id]-1e-9)))),p.n);};
+window.__shopAddMat=s=>{if(!state.chaos)return Shop.toast("Refresh prices first");const i=s.lastIndexOf("|");Shop.add([__shopEntry(+s.slice(0,i),+s.slice(i+1))],null);};
+/* a project goes to a list as one flat recipe - every turn-in, every phase -
+   with the real recipes under each turn-in, so the list can price it the same way */
+window.__listEntry=id=>{
+  id=+id;
+  const rec={},walk=i=>{const r=RECIPES[i];if(!r||rec[i])return;
+    rec[i]={name:nameOf(i),yields:r.y,ingredients:r.g.map(([g,a])=>({id:g,name:nameOf(g),amount:a}))};
+    for(const[g]of r.g)walk(g);};
+  const p=PROJ_BY_ID[id];
+  if(p){const t=turnIns(p);
+    rec[id]={name:p.n,yields:1,ingredients:Object.entries(t).map(([g,a])=>({id:+g,name:nameOf(+g),amount:a}))};
+    for(const g of Object.keys(t))walk(+g);
+    return{id,name:p.n,kind:"workshop",group:"workshop",q:"nq",note:p.type+" · FC workshop",recipes:rec,src:"Workshop"};}
+  walk(id);
+  return{id,name:nameOf(id),kind:RECIPES[id]?"precraft":"materials",group:"materials",q:"nq",note:RECIPES[id]?"Craftable turn-in":"Raw material",recipes:rec,src:"Workshop"};
+};
+</script>
+</body>
+</html>

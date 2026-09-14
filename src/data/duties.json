@@ -1,0 +1,4751 @@
+{
+  "groups": ["Dungeons","Deep dungeons","Variant & Criterion","Eureka","Bozja","Occult Crescent"],
+  "items": [
+    {
+      "i": 27912,
+      "n": "A Long Fall Orchestrion Roll",
+      "c": "Orchestrion Roll",
+      "src": [
+        {"g":"Dungeons","p":"The Twinning","f":"Shadowbringers dungeon chests","pct":9.329,"n":8687},
+        {"g":"Deep dungeons","p":"Eureka Orthos","f":"Gold-tinged Sack","pct":0.985,"n":7920},
+        {"g":"Deep dungeons","p":"Eureka Orthos","f":"Silver-tinged Sack","pct":0.547,"n":14806}
+      ]
+    },
+    {
+      "i": 24998,
+      "n": "Absolute Lance",
+      "c": "Lancer's Arm",
+      "src": [{"g":"Eureka","p":"Eureka Hydatos","f":"gold bunny coffer","pct":10.921,"n":1749}]
+    },
+    {
+      "i": 43570,
+      "n": "Air-wheeler M9",
+      "c": "Minion",
+      "src": [{"g":"Dungeons","p":"Vanguard","f":"Dawntrail dungeon chests","pct":5.073,"n":55792}]
+    },
+    {
+      "i": 21941,
+      "n": "Ala Mhigan Gown",
+      "c": "Body",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "silver treasure coffer",
+          "pct": 1.634,
+          "n": 135881
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.161,
+          "n": 836762
+        },
+        {"g":"Bozja","p":"Bozjan Southern Front","f":"Southern Front Lockbox","pct":0.09,"n":175738},
+        {"g":"Bozja","p":"Zadnor","f":"Zadnor Lockbox","pct":0.056,"n":270821}
+      ]
+    },
+    {
+      "i": 39471,
+      "n": "Allagan Barding",
+      "c": "Other",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Gold-tinged Sack","pct":6.263,"n":7920}]
+    },
+    {
+      "i": 39388,
+      "n": "Allagan Terminal Alpha",
+      "c": "Wall-mounted",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Silver-tinged Sack","pct":2.202,"n":14806}]
+    },
+    {
+      "i": 28146,
+      "n": "Allagan Tomestone of Frivolity",
+      "c": "Tabletop",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Silver-tinged Sack","pct":0.507,"n":14806}]
+    },
+    {
+      "i": 43585,
+      "n": "Ambrose the Unfinished",
+      "c": "Minion",
+      "src": [{"g":"Dungeons","p":"Origenics","f":"Dawntrail dungeon chests","pct":5.189,"n":31576}]
+    },
+    {
+      "i": 30096,
+      "n": "Ancient One",
+      "c": "Minion",
+      "src": [
+        {
+          "g": "Dungeons",
+          "p": "Anamnesis Anyder",
+          "f": "Shadowbringers dungeon chests",
+          "pct": 4.977,
+          "n": 8829
+        },
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Gilded Light",
+          "pct": 0.158,
+          "n": 49374
+        }
+      ]
+    },
+    {
+      "i": 33691,
+      "n": "Anteater",
+      "c": "Minion",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Gilded Light",
+          "pct": 0.176,
+          "n": 49374
+        }
+      ]
+    },
+    {
+      "i": 52289,
+      "n": "Antique Lantern",
+      "c": "Miscellany",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "gold pot coffer",
+          "pct": 5.044,
+          "n": 7692
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "gold bunny coffer",
+          "pct": 4.419,
+          "n": 16337
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "silver pot coffer",
+          "pct": 1.917,
+          "n": 16016
+        }
+      ]
+    },
+    {
+      "i": 20476,
+      "n": "Ao Dai",
+      "c": "Body",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "silver treasure coffer",
+          "pct": 0.164,
+          "n": 42732
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.05,
+          "n": 241859
+        }
+      ]
+    },
+    {
+      "i": 36341,
+      "n": "Archangel Wings",
+      "c": "Miscellany",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "silver treasure coffer",
+          "pct": 0.197,
+          "n": 42732
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.059,
+          "n": 241859
+        }
+      ]
+    },
+    {
+      "i": 33901,
+      "n": "Augmented Agonia",
+      "c": "Red Mage's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.123,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 33900,
+      "n": "Augmented Aischune",
+      "c": "Samurai's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.123,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 33891,
+      "n": "Augmented Deima",
+      "c": "Archer's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.128,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 33894,
+      "n": "Augmented Ekplexis",
+      "c": "Machinist's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.15,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 33893,
+      "n": "Augmented Eleos",
+      "c": "Dark Knight's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.123,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 33898,
+      "n": "Augmented Enochlesis",
+      "c": "Scholar's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.133,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 33897,
+      "n": "Augmented Epikairekakia",
+      "c": "Arcanist's Grimoire",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.136,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 33904,
+      "n": "Augmented Eulabeia",
+      "c": "Shield",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.131,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 33899,
+      "n": "Augmented Himeros",
+      "c": "Astrologian's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.103,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 33895,
+      "n": "Augmented Kelesis",
+      "c": "Two–handed Conjurer's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.133,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 33890,
+      "n": "Augmented Menis",
+      "c": "Lancer's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.163,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 33887,
+      "n": "Augmented Misos",
+      "c": "Gladiator's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.112,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 33902,
+      "n": "Augmented Odune",
+      "c": "Gunbreaker's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.12,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 33896,
+      "n": "Augmented Oknos",
+      "c": "Two–handed Thaumaturge's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.139,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 33892,
+      "n": "Augmented Phthonos",
+      "c": "Rogue's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.142,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 33889,
+      "n": "Augmented Thumosis",
+      "c": "Marauder's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.15,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 33903,
+      "n": "Augmented Zelotupia",
+      "c": "Dancer's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.125,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 25040,
+      "n": "Axe of the Demon",
+      "c": "Marauder's Arm",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Gold-tinged Sack","pct":0.265,"n":7920}]
+    },
+    {
+      "i": 25024,
+      "n": "Axe of the Goddess",
+      "c": "Marauder's Arm",
+      "src": [{"g":"Bozja","p":"Zadnor","f":"Zadnor Lockbox","pct":0.105,"n":270821}]
+    },
+    {
+      "i": 38570,
+      "n": "Ballroom Etiquette - Ample Appreciation",
+      "c": "Miscellany",
+      "src": [
+        {
+          "g": "Variant & Criterion",
+          "p": "Sil'dihn variant exchange",
+          "f": "exchange",
+          "cost": 9,
+          "cur": "Sil'dihn Potsherd",
+          "curId": 38533
+        }
+      ]
+    },
+    {
+      "i": 32830,
+      "n": "Ballroom Etiquette - Decadent Decoration",
+      "c": "Miscellany",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "silver treasure coffer",
+          "pct": 0.161,
+          "n": 42732
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.051,
+          "n": 241859
+        }
+      ]
+    },
+    {
+      "i": 47983,
+      "n": "Ballroom Etiquette - Fashion Forward",
+      "c": "Miscellany",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "gold bunny coffer",
+          "pct": 5.376,
+          "n": 22655
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "gold pot coffer",
+          "pct": 5.32,
+          "n": 18252
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "silver pot coffer",
+          "pct": 1.916,
+          "n": 39083
+        }
+      ]
+    },
+    {
+      "i": 41462,
+      "n": "Ballroom Etiquette - Humble Triumph",
+      "c": "Miscellany",
+      "src": [
+        {
+          "g": "Variant & Criterion",
+          "p": "Aloalo variant exchange",
+          "f": "exchange",
+          "cost": 9,
+          "cur": "Aloalo Potsherd",
+          "curId": 41078
+        }
+      ]
+    },
+    {
+      "i": 23366,
+      "n": "Ballroom Etiquette - Insufficient Petticoats",
+      "c": "Miscellany",
+      "src": [
+        {"g":"Eureka","p":"Eureka Pagos","f":"Cold-warped Lockbox","pct":3.956,"n":11703},
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "silver treasure coffer",
+          "pct": 1.205,
+          "n": 135881
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.133,
+          "n": 836762
+        }
+      ]
+    },
+    {
+      "i": 25001,
+      "n": "Ballroom Etiquette - Overzealous Affirmations",
+      "c": "Miscellany",
+      "src": [
+        {"g":"Eureka","p":"Eureka Hydatos","f":"Moisture-warped Lockbox","pct":1.557,"n":1590720},
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "silver treasure coffer",
+          "pct": 0.197,
+          "n": 42732
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.053,
+          "n": 241859
+        }
+      ]
+    },
+    {
+      "i": 31402,
+      "n": "Ballroom Etiquette - Pointed Misgivings",
+      "c": "Miscellany",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "silver treasure coffer",
+          "pct": 1.25,
+          "n": 135881
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.125,
+          "n": 836762
+        },
+        {
+          "g": "Bozja",
+          "p": "Bozjan Cluster exchange",
+          "f": "exchange",
+          "cost": 50,
+          "cur": "Bozjan Cluster",
+          "curId": 31135
+        }
+      ]
+    },
+    {
+      "i": 52295,
+      "n": "Ballroom Etiquette - Rearward Regards",
+      "c": "Miscellany",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "gold pot coffer",
+          "pct": 6.019,
+          "n": 7692
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "gold bunny coffer",
+          "pct": 4.774,
+          "n": 16337
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "silver pot coffer",
+          "pct": 1.892,
+          "n": 16016
+        }
+      ]
+    },
+    {
+      "i": 50337,
+      "n": "Ballroom Etiquette - Saving Face",
+      "c": "Miscellany",
+      "src": [
+        {
+          "g": "Variant & Criterion",
+          "p": "Corvosi variant exchange",
+          "f": "exchange",
+          "cost": 9,
+          "cur": "Corvosi Potsherd",
+          "curId": 50434
+        }
+      ]
+    },
+    {
+      "i": 40363,
+      "n": "Ballroom Etiquette - Scrupulous Citations",
+      "c": "Miscellany",
+      "src": [
+        {
+          "g": "Variant & Criterion",
+          "p": "Rokkon variant exchange",
+          "f": "exchange",
+          "cost": 9,
+          "cur": "Rokkon Potsherd",
+          "curId": 39884
+        }
+      ]
+    },
+    {
+      "i": 36012,
+      "n": "Barding of Divine Light",
+      "c": "Other",
+      "src": [
+        {"g":"Deep dungeons","p":"Eureka Orthos","f":"Bronze-tinged Sack","pct":0.662,"n":13298},
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.131,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 36011,
+      "n": "Barding of Eternal Darkness",
+      "c": "Other",
+      "src": [
+        {"g":"Deep dungeons","p":"Eureka Orthos","f":"Bronze-tinged Sack","pct":0.602,"n":13298},
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.174,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 48173,
+      "n": "Bastard Sword of Sanctifying Light",
+      "c": "Gladiator's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.128,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 30263,
+      "n": "Bedlam's Brink Orchestrion Roll",
+      "c": "Orchestrion Roll",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Gilded Light",
+          "pct": 0.172,
+          "n": 49374
+        },
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.136,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 23342,
+      "n": "Behemoth Pelt",
+      "c": "Leather",
+      "src": [{"g":"Eureka","p":"Eureka Pagos","f":"Third Impact (Behemoth)","fate":1}]
+    },
+    {
+      "i": 33695,
+      "n": "Benben Stone",
+      "c": "Minion",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Gilded Light",
+          "pct": 0.134,
+          "n": 49374
+        }
+      ]
+    },
+    {
+      "i": 24293,
+      "n": "Beneath Bloodied Banners Orchestrion Roll",
+      "c": "Orchestrion Roll",
+      "src": [
+        {
+          "g": "Dungeons",
+          "p": "Halatali (Hard)",
+          "f": "A Realm Reborn dungeon chests",
+          "pct": 9.861,
+          "n": 5329
+        }
+      ]
+    },
+    {
+      "i": 48162,
+      "n": "Black Embroidered Parasol",
+      "c": "Miscellany",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "gold pot coffer",
+          "pct": 3.901,
+          "n": 18252
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "gold bunny coffer",
+          "pct": 3.721,
+          "n": 22655
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "silver pot coffer",
+          "pct": 1.909,
+          "n": 39083
+        }
+      ]
+    },
+    {
+      "i": 48186,
+      "n": "Blade of Sanctifying Light",
+      "c": "Samurai's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.125,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 6666,
+      "n": "Blazing Inferno Wall Lamp",
+      "c": "Wall-mounted",
+      "src": [{"g":"Bozja","p":"Bozjan Southern Front","f":"Southern Front Lockbox","pct":0.06,"n":175738}]
+    },
+    {
+      "i": 36121,
+      "n": "Blitzring",
+      "c": "Ring",
+      "src": [{"g":"Eureka","p":"Eureka Pagos","f":"Hear Ye, Hear Ye (King Arthro)","fate":1}]
+    },
+    {
+      "i": 31665,
+      "n": "Blood on the Wind Orchestrion Roll",
+      "c": "Orchestrion Roll",
+      "src": [
+        {
+          "g": "Bozja",
+          "p": "Bozjan Cluster exchange",
+          "f": "exchange",
+          "cost": 25,
+          "cur": "Bozjan Cluster",
+          "curId": 31135
+        }
+      ]
+    },
+    {
+      "i": 46847,
+      "n": "Blue Pixie Parasol",
+      "c": "Miscellany",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of First Light",
+          "pct": 0.546,
+          "n": 34448
+        }
+      ]
+    },
+    {
+      "i": 12112,
+      "n": "Boundless Expanse Fountain",
+      "c": "Outdoor Furnishing",
+      "src": [{"g":"Bozja","p":"Bozjan Southern Front","f":"Southern Front Lockbox","pct":0.06,"n":175738}]
+    },
+    {
+      "i": 15602,
+      "n": "Bow of the Round",
+      "c": "Archer's Arm",
+      "src": [{"g":"Deep dungeons","p":"Heaven-on-High","f":"Platinum-haloed Sack","pct":0.611,"n":6548}]
+    },
+    {
+      "i": 23214,
+      "n": "Burning Hakutaku Eye",
+      "c": "Reagent",
+      "src": [{"g":"Eureka","p":"Eureka Pagos","f":"gold bunny coffer","pct":21.453,"n":592}]
+    },
+    {
+      "i": 21924,
+      "n": "Byakko Barding",
+      "c": "Other",
+      "src": [
+        {
+          "g": "Bozja",
+          "p": "Bozjan Southern Front",
+          "f": "Southern Front Lockbox",
+          "pct": 0.103,
+          "n": 175738
+        },
+        {"g":"Bozja","p":"Zadnor","f":"Zadnor Lockbox","pct":0.027,"n":270821}
+      ]
+    },
+    {
+      "i": 21817,
+      "n": "Byakko Throne",
+      "c": "Furnishing",
+      "src": [{"g":"Bozja","p":"Zadnor","f":"Zadnor Lockbox","pct":0.062,"n":270821}]
+    },
+    {
+      "i": 32801,
+      "n": "Calfskin Rider's Bottoms",
+      "c": "Legs",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Silvered Light",
+          "pct": 0.162,
+          "n": 52374
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "silver treasure coffer",
+          "pct": 0.157,
+          "n": 42732
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.058,
+          "n": 241859
+        }
+      ]
+    },
+    {
+      "i": 32798,
+      "n": "Calfskin Rider's Cap",
+      "c": "Head",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "silver treasure coffer",
+          "pct": 0.154,
+          "n": 42732
+        },
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Silvered Light",
+          "pct": 0.132,
+          "n": 52374
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.044,
+          "n": 241859
+        }
+      ]
+    },
+    {
+      "i": 32799,
+      "n": "Calfskin Rider's Jacket",
+      "c": "Body",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "silver treasure coffer",
+          "pct": 0.185,
+          "n": 42732
+        },
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Silvered Light",
+          "pct": 0.176,
+          "n": 52374
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.055,
+          "n": 241859
+        }
+      ]
+    },
+    {
+      "i": 32802,
+      "n": "Calfskin Rider's Shoes",
+      "c": "Feet",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "silver treasure coffer",
+          "pct": 0.168,
+          "n": 42732
+        },
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Silvered Light",
+          "pct": 0.122,
+          "n": 52374
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.054,
+          "n": 241859
+        }
+      ]
+    },
+    {
+      "i": 48181,
+      "n": "Cane of Sanctifying Light",
+      "c": "Two–handed Conjurer's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.15,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 17612,
+      "n": "Cane of the Fiend",
+      "c": "Two–handed Conjurer's Arm",
+      "src": [{"g":"Deep dungeons","p":"Heaven-on-High","f":"Platinum-haloed Sack","pct":0.443,"n":6548}]
+    },
+    {
+      "i": 25030,
+      "n": "Cane of the Goddess",
+      "c": "Two–handed Conjurer's Arm",
+      "src": [{"g":"Bozja","p":"Zadnor","f":"Zadnor Lockbox","pct":0.114,"n":270821}]
+    },
+    {
+      "i": 15606,
+      "n": "Cane of the Round",
+      "c": "Two–handed Conjurer's Arm",
+      "src": [{"g":"Deep dungeons","p":"Heaven-on-High","f":"Platinum-haloed Sack","pct":0.397,"n":6548}]
+    },
+    {
+      "i": 36353,
+      "n": "Carrots of Happiness Orchestrion Roll",
+      "c": "Orchestrion Roll",
+      "src": [{"g":"Dungeons","p":"Smileton","f":"Endwalker dungeon chests","pct":8.494,"n":7541}]
+    },
+    {
+      "i": 22973,
+      "n": "Cassie Earring",
+      "c": "Earrings",
+      "src": [{"g":"Eureka","p":"Eureka Pagos","f":"Cassie and the Copycats (Copycat Cassie)","fate":1}]
+    },
+    {
+      "i": 24819,
+      "n": "Ceto's Claw",
+      "c": "Bone",
+      "src": [{"g":"Eureka","p":"Eureka Hydatos","f":"Stone-cold Killer (Ceto)","fate":1}]
+    },
+    {
+      "i": 22561,
+      "n": "Chainmail Hanger",
+      "c": "Tabletop",
+      "src": [{"g":"Eureka","p":"Eureka Pagos","f":"Cold-warped Lockbox","pct":5.93,"n":11703}]
+    },
+    {
+      "i": 36855,
+      "n": "Chewy",
+      "c": "Minion",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Silvered Light",
+          "pct": 0.317,
+          "n": 52374
+        }
+      ]
+    },
+    {
+      "i": 40374,
+      "n": "Chimpanzee",
+      "c": "Minion",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Silvered Light",
+          "pct": 0.3,
+          "n": 52374
+        }
+      ]
+    },
+    {
+      "i": 48184,
+      "n": "Codex of Sanctifying Light",
+      "c": "Scholar's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.133,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 52264,
+      "n": "Colibri Callado Whistle",
+      "c": "Other",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "gold pot coffer",
+          "pct": 1.014,
+          "n": 7692
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "gold bunny coffer",
+          "pct": 0.973,
+          "n": 16337
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "silver treasure coffer",
+          "pct": 0.374,
+          "n": 42732
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.147,
+          "n": 241859
+        }
+      ]
+    },
+    {
+      "i": 3189,
+      "n": "Coliseum Galerus",
+      "c": "Body",
+      "src": [
+        {
+          "g": "Dungeons",
+          "p": "Dzemael Darkhold",
+          "f": "A Realm Reborn dungeon chests",
+          "pct": 50.083,
+          "n": 49291
+        }
+      ]
+    },
+    {
+      "i": 30102,
+      "n": "Construct 14 Identification Key",
+      "c": "Other",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "silver treasure coffer",
+          "pct": 1.215,
+          "n": 135881
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.117,
+          "n": 836762
+        },
+        {
+          "g": "Bozja",
+          "p": "Bozjan Cluster exchange",
+          "f": "exchange",
+          "cost": 180,
+          "cur": "Bozjan Cluster",
+          "curId": 31135
+        }
+      ]
+    },
+    {
+      "i": 23027,
+      "n": "Copycat Bulb",
+      "c": "Minion",
+      "src": [{"g":"Eureka","p":"Eureka Pagos","f":"gold bunny coffer","pct":14.02,"n":592}]
+    },
+    {
+      "i": 39474,
+      "n": "Corgi",
+      "c": "Minion",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Silvered Light",
+          "pct": 0.296,
+          "n": 52374
+        }
+      ]
+    },
+    {
+      "i": 22542,
+      "n": "Crossed Halberds",
+      "c": "Wall-mounted",
+      "src": [{"g":"Eureka","p":"Eureka Pagos","f":"Cold-warped Lockbox","pct":5.973,"n":11703}]
+    },
+    {
+      "i": 29681,
+      "n": "Crystallized Coral",
+      "c": "Tabletop",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Silver-tinged Sack","pct":0.493,"n":14806}]
+    },
+    {
+      "i": 27288,
+      "n": "Crystarium Wall Chronometer",
+      "c": "Wall-mounted",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Gilded Light",
+          "pct": 0.156,
+          "n": 49374
+        }
+      ]
+    },
+    {
+      "i": 48178,
+      "n": "Daggers of Sanctifying Light",
+      "c": "Rogue's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.139,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 30055,
+      "n": "Dalmascan Draped Top",
+      "c": "Body",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "silver treasure coffer",
+          "pct": 1.233,
+          "n": 135881
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.126,
+          "n": 836762
+        }
+      ]
+    },
+    {
+      "i": 15592,
+      "n": "Dead Hive Cane",
+      "c": "Two–handed Conjurer's Arm",
+      "src": [{"g":"Deep dungeons","p":"Palace of the Dead","f":"Gold-trimmed Sack","pct":0.635,"n":6774}]
+    },
+    {
+      "i": 15590,
+      "n": "Dead Hive Claymore",
+      "c": "Dark Knight's Arm",
+      "src": [{"g":"Deep dungeons","p":"Palace of the Dead","f":"Gold-trimmed Sack","pct":0.635,"n":6774}]
+    },
+    {
+      "i": 15587,
+      "n": "Dead Hive Spear",
+      "c": "Lancer's Arm",
+      "src": [{"g":"Deep dungeons","p":"Palace of the Dead","f":"Gold-trimmed Sack","pct":0.517,"n":6774}]
+    },
+    {
+      "i": 33684,
+      "n": "Deinonychus Horn",
+      "c": "Other",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "silver treasure coffer",
+          "pct": 0.782,
+          "n": 135881
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.082,
+          "n": 836762
+        }
+      ]
+    },
+    {
+      "i": 33673,
+      "n": "Diamond Barding",
+      "c": "Other",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Bronze-tinged Sack","pct":0.617,"n":13298}]
+    },
+    {
+      "i": 8836,
+      "n": "Diamond Chandelier",
+      "c": "Ceiling Light",
+      "src": [
+        {
+          "g": "Bozja",
+          "p": "Bozjan Southern Front",
+          "f": "Southern Front Lockbox",
+          "pct": 0.057,
+          "n": 175738
+        }
+      ]
+    },
+    {
+      "i": 31666,
+      "n": "Discord: Imperial (Zodiac Age Version) Orchestrion Roll",
+      "c": "Orchestrion Roll",
+      "src": [
+        {
+          "g": "Bozja",
+          "p": "Bozjan Cluster exchange",
+          "f": "exchange",
+          "cost": 25,
+          "cur": "Bozjan Cluster",
+          "curId": 31135
+        }
+      ]
+    },
+    {
+      "i": 23023,
+      "n": "Dodo Horn",
+      "c": "Other",
+      "src": [
+        {"g":"Deep dungeons","p":"Heaven-on-High","f":"Platinum-haloed Sack","pct":3.161,"n":6548},
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "silver treasure coffer",
+          "pct": 0.03,
+          "n": 42732
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.012,
+          "n": 241859
+        }
+      ]
+    },
+    {
+      "i": 32856,
+      "n": "Drippy",
+      "c": "Minion",
+      "src": [
+        {
+          "g": "Dungeons",
+          "p": "Matoya's Relict",
+          "f": "Shadowbringers dungeon chests",
+          "pct": 3.997,
+          "n": 16970
+        },
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Gilded Light",
+          "pct": 0.166,
+          "n": 49374
+        }
+      ]
+    },
+    {
+      "i": 25028,
+      "n": "Edge of the Goddess",
+      "c": "Dark Knight's Arm",
+      "src": [{"g":"Bozja","p":"Zadnor","f":"Zadnor Lockbox","pct":0.115,"n":270821}]
+    },
+    {
+      "i": 24219,
+      "n": "Eldthurs Horn",
+      "c": "Other",
+      "src": [
+        {"g":"Eureka","p":"Eureka Pyros","f":"gold bunny coffer","pct":7.216,"n":1372},
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "silver treasure coffer",
+          "pct": 1.242,
+          "n": 135881
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.125,
+          "n": 836762
+        }
+      ]
+    },
+    {
+      "i": 32232,
+      "n": "Elemental Wheel",
+      "c": "Wall-mounted",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Gilded Light",
+          "pct": 0.17,
+          "n": 49374
+        }
+      ]
+    },
+    {
+      "i": 32823,
+      "n": "Emerald Barding",
+      "c": "Other",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Bronze-tinged Sack","pct":0.609,"n":13298}]
+    },
+    {
+      "i": 30872,
+      "n": "Ephemeral Necromancer",
+      "c": "Minion",
+      "src": [
+        {
+          "g": "Dungeons",
+          "p": "The Heroes' Gauntlet",
+          "f": "Shadowbringers dungeon chests",
+          "pct": 5.413,
+          "n": 14982
+        }
+      ]
+    },
+    {
+      "i": 24630,
+      "n": "Eurekan Petrel Horn",
+      "c": "Other",
+      "src": [
+        {"g":"Eureka","p":"Eureka Hydatos","f":"gold bunny coffer","pct":10.12,"n":1749},
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "silver treasure coffer",
+          "pct": 1.278,
+          "n": 135881
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.133,
+          "n": 836762
+        }
+      ]
+    },
+    {
+      "i": 40375,
+      "n": "Exciting Dynamite",
+      "c": "Minion",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Silvered Light",
+          "pct": 0.305,
+          "n": 52374
+        }
+      ]
+    },
+    {
+      "i": 12082,
+      "n": "Expanse Barding",
+      "c": "Other",
+      "src": [{"g":"Bozja","p":"Zadnor","f":"Zadnor Lockbox","pct":0.1,"n":270821}]
+    },
+    {
+      "i": 23318,
+      "n": "Far East of Eorzea Orchestrion Roll",
+      "c": "Orchestrion Roll",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Empyrean potsherd exchange",
+          "f": "exchange",
+          "cost": 10,
+          "cur": "Empyrean Potsherd",
+          "curId": 23164
+        }
+      ]
+    },
+    {
+      "i": 16813,
+      "n": "Fog of Phantom Orchestrion Roll",
+      "c": "Orchestrion Roll",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Gelmorran potsherd exchange",
+          "f": "exchange",
+          "cost": 5,
+          "cur": "Gelmorran Potsherd",
+          "curId": 15422
+        }
+      ]
+    },
+    {
+      "i": 46831,
+      "n": "Forgiven Mimicry Resonator",
+      "c": "Other",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of First Light",
+          "pct": 0.247,
+          "n": 34448
+        }
+      ]
+    },
+    {
+      "i": 48096,
+      "n": "Fortune Carrot",
+      "c": "Miscellany",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "gold bunny coffer",
+          "pct": 5.344,
+          "n": 16337
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "gold pot coffer",
+          "pct": 4.394,
+          "n": 7692
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "gold bunny coffer",
+          "pct": 4.308,
+          "n": 22655
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "silver treasure coffer",
+          "pct": 3.55,
+          "n": 42732
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "gold pot coffer",
+          "pct": 3.545,
+          "n": 18252
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "silver pot coffer",
+          "pct": 1.748,
+          "n": 16016
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "silver pot coffer",
+          "pct": 1.517,
+          "n": 39083
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "silver treasure coffer",
+          "pct": 1.253,
+          "n": 135881
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "bronze treasure coffer",
+          "pct": 1.091,
+          "n": 241859
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.988,
+          "n": 836762
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "bronze pot coffer",
+          "pct": 0.898,
+          "n": 20035
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "bronze pot coffer",
+          "pct": 0.82,
+          "n": 49364
+        }
+      ]
+    },
+    {
+      "i": 41591,
+      "n": "Free Spirit's Backless Loafers",
+      "c": "Feet",
+      "src": [
+        {
+          "g": "Variant & Criterion",
+          "p": "Aloalo variant exchange",
+          "f": "exchange",
+          "cost": 9,
+          "cur": "Aloalo Potsherd",
+          "curId": 41078
+        }
+      ]
+    },
+    {
+      "i": 41590,
+      "n": "Free Spirit's Cropped Slops",
+      "c": "Legs",
+      "src": [
+        {
+          "g": "Variant & Criterion",
+          "p": "Aloalo variant exchange",
+          "f": "exchange",
+          "cost": 12,
+          "cur": "Aloalo Potsherd",
+          "curId": 41078
+        }
+      ]
+    },
+    {
+      "i": 41587,
+      "n": "Free Spirit's Hat",
+      "c": "Head",
+      "src": [
+        {
+          "g": "Variant & Criterion",
+          "p": "Aloalo variant exchange",
+          "f": "exchange",
+          "cost": 15,
+          "cur": "Aloalo Potsherd",
+          "curId": 41078
+        }
+      ]
+    },
+    {
+      "i": 41588,
+      "n": "Free Spirit's Jacket",
+      "c": "Body",
+      "src": [
+        {
+          "g": "Variant & Criterion",
+          "p": "Aloalo variant exchange",
+          "f": "exchange",
+          "cost": 27,
+          "cur": "Aloalo Potsherd",
+          "curId": 41078
+        }
+      ]
+    },
+    {
+      "i": 41589,
+      "n": "Free Spirit's Ringbands",
+      "c": "Hands",
+      "src": [
+        {
+          "g": "Variant & Criterion",
+          "p": "Aloalo variant exchange",
+          "f": "exchange",
+          "cost": 9,
+          "cur": "Aloalo Potsherd",
+          "curId": 41078
+        }
+      ]
+    },
+    {
+      "i": 32846,
+      "n": "Gabriel Mark III Identification Key",
+      "c": "Other",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "silver treasure coffer",
+          "pct": 0.798,
+          "n": 135881
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.086,
+          "n": 836762
+        }
+      ]
+    },
+    {
+      "i": 49821,
+      "n": "Gallant Shepherd",
+      "c": "Minion",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Gold Piece exchange",
+          "f": "exchange",
+          "cost": 1600,
+          "cur": "Enlightenment Gold Piece",
+          "curId": 45044
+        }
+      ]
+    },
+    {
+      "i": 13115,
+      "n": "General-purpose Jet Black Dye",
+      "c": "Dye",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Palace of the Dead",
+          "f": "Silver-trimmed Sack",
+          "pct": 2.854,
+          "n": 8691
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "silver treasure coffer",
+          "pct": 2.118,
+          "n": 42732
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "silver treasure coffer",
+          "pct": 1.862,
+          "n": 135881
+        },
+        {"g":"Deep dungeons","p":"Eureka Orthos","f":"Gold-tinged Sack","pct":1.187,"n":7920},
+        {"g":"Deep dungeons","p":"Heaven-on-High","f":"Platinum-haloed Sack","pct":0.916,"n":6548},
+        {"g":"Deep dungeons","p":"Heaven-on-High","f":"Gold-haloed Sack","pct":0.562,"n":17071},
+        {"g":"Deep dungeons","p":"Eureka Orthos","f":"Silver-tinged Sack","pct":0.52,"n":14806},
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.249,
+          "n": 241859
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.187,
+          "n": 836762
+        },
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Gilded Light",
+          "pct": 0.172,
+          "n": 49374
+        },
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.133,
+          "n": 36727
+        },
+        {"g":"Bozja","p":"Zadnor","f":"Zadnor Lockbox","pct":0.105,"n":270821},
+        {
+          "g": "Bozja",
+          "p": "Bozjan Southern Front",
+          "f": "Southern Front Lockbox",
+          "pct": 0.075,
+          "n": 175738
+        }
+      ]
+    },
+    {
+      "i": 13114,
+      "n": "General-purpose Pure White Dye",
+      "c": "Dye",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Palace of the Dead",
+          "f": "Silver-trimmed Sack",
+          "pct": 2.784,
+          "n": 8691
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "silver treasure coffer",
+          "pct": 2.12,
+          "n": 42732
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "silver treasure coffer",
+          "pct": 1.817,
+          "n": 135881
+        },
+        {"g":"Deep dungeons","p":"Eureka Orthos","f":"Gold-tinged Sack","pct":1.01,"n":7920},
+        {"g":"Deep dungeons","p":"Heaven-on-High","f":"Platinum-haloed Sack","pct":0.962,"n":6548},
+        {"g":"Deep dungeons","p":"Eureka Orthos","f":"Silver-tinged Sack","pct":0.486,"n":14806},
+        {"g":"Deep dungeons","p":"Heaven-on-High","f":"Gold-haloed Sack","pct":0.48,"n":17071},
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.219,
+          "n": 241859
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.182,
+          "n": 836762
+        },
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Gilded Light",
+          "pct": 0.162,
+          "n": 49374
+        },
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.131,
+          "n": 36727
+        },
+        {"g":"Bozja","p":"Zadnor","f":"Zadnor Lockbox","pct":0.099,"n":270821},
+        {
+          "g": "Bozja",
+          "p": "Bozjan Southern Front",
+          "f": "Southern Front Lockbox",
+          "pct": 0.068,
+          "n": 175738
+        }
+      ]
+    },
+    {
+      "i": 23888,
+      "n": "Glass Jars",
+      "c": "Tabletop",
+      "src": [{"g":"Eureka","p":"Eureka Pyros","f":"Pyros Lockbox","pct":1.028,"n":385720}]
+    },
+    {
+      "i": 24818,
+      "n": "Goldemar's Horn",
+      "c": "Bone",
+      "src": [{"g":"Eureka","p":"Eureka Hydatos","f":"Duty-free (Goldemar)","fate":1}]
+    },
+    {
+      "i": 48179,
+      "n": "Greatsword of Sanctifying Light",
+      "c": "Dark Knight's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.128,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 28635,
+      "n": "Greatwood Planter",
+      "c": "Furnishing",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Gilded Light",
+          "pct": 0.188,
+          "n": 49374
+        }
+      ]
+    },
+    {
+      "i": 48183,
+      "n": "Grimoire of Sanctifying Light",
+      "c": "Arcanist's Grimoire",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.128,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 48188,
+      "n": "Gunblade of Sanctifying Light",
+      "c": "Gunbreaker's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.123,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 28616,
+      "n": "Hades Barding",
+      "c": "Other",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.155,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 15565,
+      "n": "High Adjudicator's Staff",
+      "c": "Two–handed Thaumaturge's Arm",
+      "src": [{"g":"Deep dungeons","p":"Palace of the Dead","f":"Gold-trimmed Sack","pct":0.635,"n":6774}]
+    },
+    {
+      "i": 12083,
+      "n": "Hive Barding",
+      "c": "Other",
+      "src": [{"g":"Bozja","p":"Zadnor","f":"Zadnor Lockbox","pct":0.1,"n":270821}]
+    },
+    {
+      "i": 39610,
+      "n": "Holy Consult Orchestrion Roll",
+      "c": "Orchestrion Roll",
+      "src": [
+        {
+          "g": "Dungeons",
+          "p": "Hullbreaker Isle (Hard)",
+          "f": "Heavensward dungeon chests",
+          "pct": 25.772,
+          "n": 7209
+        }
+      ]
+    },
+    {
+      "i": 15427,
+      "n": "Horde Barding",
+      "c": "Other",
+      "src": [{"g":"Bozja","p":"Zadnor","f":"Zadnor Lockbox","pct":0.096,"n":270821}]
+    },
+    {
+      "i": 44119,
+      "n": "Horizontal Neon Wall Light",
+      "c": "Wall-mounted",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "silver treasure coffer",
+          "pct": 0.732,
+          "n": 135881
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.076,
+          "n": 836762
+        }
+      ]
+    },
+    {
+      "i": 8357,
+      "n": "Inferno Battleaxe",
+      "c": "Marauder's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Palace of the Dead",
+          "f": "Silver-trimmed Sack",
+          "pct": 0.587,
+          "n": 8691
+        }
+      ]
+    },
+    {
+      "i": 20358,
+      "n": "Inferno Katana",
+      "c": "Samurai's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Palace of the Dead",
+          "f": "Silver-trimmed Sack",
+          "pct": 0.426,
+          "n": 8691
+        }
+      ]
+    },
+    {
+      "i": 27987,
+      "n": "Innocence Barding",
+      "c": "Other",
+      "src": [
+        {"g":"Deep dungeons","p":"Eureka Orthos","f":"Bronze-tinged Sack","pct":0.647,"n":13298},
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.09,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 25051,
+      "n": "Katana of the Demon",
+      "c": "Samurai's Arm",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Gold-tinged Sack","pct":0.379,"n":7920}]
+    },
+    {
+      "i": 48143,
+      "n": "Knowledge Crystal Replica",
+      "c": "Furnishing",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Gold Piece exchange",
+          "f": "exchange",
+          "cost": 960,
+          "cur": "Enlightenment Gold Piece",
+          "curId": 45044
+        }
+      ]
+    },
+    {
+      "i": 48175,
+      "n": "Labrys of Sanctifying Light",
+      "c": "Marauder's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.147,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 24285,
+      "n": "Lamebrix's Dice",
+      "c": "Miscellany",
+      "src": [{"g":"Eureka","p":"Eureka Pyros","f":"Thirty Whacks (Lamebrix Strikebocks)","fate":1}]
+    },
+    {
+      "i": 47891,
+      "n": "Lix Temple Chain",
+      "c": "Head",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Silver Piece exchange",
+          "f": "exchange",
+          "cost": 1000,
+          "cur": "Enlightenment Silver Piece",
+          "curId": 45043
+        }
+      ]
+    },
+    {
+      "i": 48177,
+      "n": "Longbow of Sanctifying Light",
+      "c": "Archer's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.123,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 23037,
+      "n": "Lunar Barding",
+      "c": "Other",
+      "src": [
+        {"g":"Deep dungeons","p":"Eureka Orthos","f":"Bronze-tinged Sack","pct":0.534,"n":13298},
+        {
+          "g": "Bozja",
+          "p": "Bozjan Southern Front",
+          "f": "Southern Front Lockbox",
+          "pct": 0.098,
+          "n": 175738
+        },
+        {"g":"Bozja","p":"Zadnor","f":"Zadnor Lockbox","pct":0.014,"n":270821}
+      ]
+    },
+    {
+      "i": 26782,
+      "n": "Magicked Bed",
+      "c": "Other",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "silver treasure coffer",
+          "pct": 0.161,
+          "n": 42732
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.062,
+          "n": 241859
+        }
+      ]
+    },
+    {
+      "i": 8389,
+      "n": "Majestic Moggle Mogtome",
+      "c": "Arcanist's Grimoire",
+      "src": [{"g":"Deep dungeons","p":"Palace of the Dead","f":"Gold-trimmed Sack","pct":0.753,"n":6774}]
+    },
+    {
+      "i": 8388,
+      "n": "Maleficent Moggle Mogstaff",
+      "c": "Two–handed Thaumaturge's Arm",
+      "src": [{"g":"Deep dungeons","p":"Palace of the Dead","f":"Gold-trimmed Sack","pct":0.62,"n":6774}]
+    },
+    {
+      "i": 20370,
+      "n": "Maliferous Moggle Mogtana",
+      "c": "Samurai's Arm",
+      "src": [{"g":"Deep dungeons","p":"Palace of the Dead","f":"Gold-trimmed Sack","pct":0.664,"n":6774}]
+    },
+    {
+      "i": 8384,
+      "n": "Malignant Moggle Mogaxe",
+      "c": "Marauder's Arm",
+      "src": [{"g":"Deep dungeons","p":"Palace of the Dead","f":"Gold-trimmed Sack","pct":0.517,"n":6774}]
+    },
+    {
+      "i": 20371,
+      "n": "Manipulative Moggle Mogfoil",
+      "c": "Red Mage's Arm",
+      "src": [{"g":"Deep dungeons","p":"Palace of the Dead","f":"Gold-trimmed Sack","pct":0.59,"n":6774}]
+    },
+    {
+      "i": 41595,
+      "n": "Martial Artist's Sleeveless Vest",
+      "c": "Body",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Gilded Light",
+          "pct": 0.18,
+          "n": 49374
+        }
+      ]
+    },
+    {
+      "i": 8385,
+      "n": "Melancholy Moggle Mogfork",
+      "c": "Lancer's Arm",
+      "src": [{"g":"Deep dungeons","p":"Palace of the Dead","f":"Gold-trimmed Sack","pct":0.723,"n":6774}]
+    },
+    {
+      "i": 46778,
+      "n": "Micro Crow",
+      "c": "Minion",
+      "src": [
+        {
+          "g": "Dungeons",
+          "p": "The Meso Terminal",
+          "f": "Dawntrail dungeon chests",
+          "pct": 4.889,
+          "n": 239867
+        }
+      ]
+    },
+    {
+      "i": 15914,
+      "n": "Mighty Moggle Mogrod",
+      "c": "Two–handed Conjurer's Arm",
+      "src": [{"g":"Deep dungeons","p":"Palace of the Dead","f":"Gold-trimmed Sack","pct":0.694,"n":6774}]
+    },
+    {
+      "i": 15562,
+      "n": "Mighty Thunderclap",
+      "c": "Dark Knight's Arm",
+      "src": [{"g":"Deep dungeons","p":"Palace of the Dead","f":"Gold-trimmed Sack","pct":0.679,"n":6774}]
+    },
+    {
+      "i": 15561,
+      "n": "Mighty Thundersparks",
+      "c": "Rogue's Arm",
+      "src": [{"g":"Deep dungeons","p":"Palace of the Dead","f":"Gold-trimmed Sack","pct":0.753,"n":6774}]
+    },
+    {
+      "i": 15558,
+      "n": "Mighty Thunderstorm",
+      "c": "Marauder's Arm",
+      "src": [{"g":"Deep dungeons","p":"Palace of the Dead","f":"Gold-trimmed Sack","pct":0.635,"n":6774}]
+    },
+    {
+      "i": 15556,
+      "n": "Mighty Thunderstrike",
+      "c": "Gladiator's Arm",
+      "src": [{"g":"Deep dungeons","p":"Palace of the Dead","f":"Gold-trimmed Sack","pct":0.635,"n":6774}]
+    },
+    {
+      "i": 20378,
+      "n": "Mighty Thunderstroke",
+      "c": "Samurai's Arm",
+      "src": [{"g":"Deep dungeons","p":"Palace of the Dead","f":"Gold-trimmed Sack","pct":0.59,"n":6774}]
+    },
+    {
+      "i": 43583,
+      "n": "Mischief Maker",
+      "c": "Minion",
+      "src": [
+        {
+          "g": "Dungeons",
+          "p": "The Strayborough Deadwalk",
+          "f": "Dawntrail dungeon chests",
+          "pct": 4.857,
+          "n": 55961
+        }
+      ]
+    },
+    {
+      "i": 39473,
+      "n": "Modern Aesthetics - A Close Shave",
+      "c": "Miscellany",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Bronze-tinged Sack","pct":1.105,"n":13298}]
+    },
+    {
+      "i": 40601,
+      "n": "Modern Aesthetics - Ambitious Ends",
+      "c": "Miscellany",
+      "src": [
+        {
+          "g": "Variant & Criterion",
+          "p": "Rokkon variant exchange",
+          "f": "exchange",
+          "cost": 6,
+          "cur": "Rokkon Potsherd",
+          "curId": 39884
+        }
+      ]
+    },
+    {
+      "i": 33706,
+      "n": "Modern Aesthetics - Both Ways",
+      "c": "Miscellany",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "silver treasure coffer",
+          "pct": 1.306,
+          "n": 135881
+        },
+        {"g":"Bozja","p":"Zadnor","f":"Zadnor Lockbox","pct":0.201,"n":270821},
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.127,
+          "n": 836762
+        }
+      ]
+    },
+    {
+      "i": 52440,
+      "n": "Modern Aesthetics - Bun and the Beautiful",
+      "c": "Miscellany",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "silver treasure coffer",
+          "pct": 2.148,
+          "n": 42732
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.411,
+          "n": 241859
+        }
+      ]
+    },
+    {
+      "i": 32835,
+      "n": "Modern Aesthetics - Early to Rise",
+      "c": "Miscellany",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "silver treasure coffer",
+          "pct": 1.243,
+          "n": 135881
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.125,
+          "n": 836762
+        }
+      ]
+    },
+    {
+      "i": 24233,
+      "n": "Modern Aesthetics - Form and Function",
+      "c": "Miscellany",
+      "src": [
+        {"g":"Eureka","p":"Eureka Pyros","f":"gold bunny coffer","pct":20.262,"n":1372},
+        {"g":"Eureka","p":"Eureka Pyros","f":"silver bunny coffer","pct":3.08,"n":6006},
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "silver treasure coffer",
+          "pct": 1.272,
+          "n": 135881
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.127,
+          "n": 836762
+        }
+      ]
+    },
+    {
+      "i": 23369,
+      "n": "Modern Aesthetics - Gyr Abanian Plait",
+      "c": "Miscellany",
+      "src": [
+        {"g":"Deep dungeons","p":"Heaven-on-High","f":"Silver-haloed Sack","pct":0.869,"n":16576},
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "silver treasure coffer",
+          "pct": 0.161,
+          "n": 42732
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.053,
+          "n": 241859
+        }
+      ]
+    },
+    {
+      "i": 16703,
+      "n": "Modern Aesthetics - Samsonian Locks",
+      "c": "Miscellany",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "silver treasure coffer",
+          "pct": 0.138,
+          "n": 42732
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.054,
+          "n": 241859
+        }
+      ]
+    },
+    {
+      "i": 46798,
+      "n": "Modern Aesthetics - Simple and Clean",
+      "c": "Miscellany",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Gilded Light",
+          "pct": 0.16,
+          "n": 49374
+        },
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.144,
+          "n": 36727
+        },
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Silvered Light",
+          "pct": 0.134,
+          "n": 52374
+        }
+      ]
+    },
+    {
+      "i": 41465,
+      "n": "Modern Aesthetics - The Bold and the Braid",
+      "c": "Miscellany",
+      "src": [
+        {
+          "g": "Variant & Criterion",
+          "p": "Aloalo variant exchange",
+          "f": "exchange",
+          "cost": 6,
+          "cur": "Aloalo Potsherd",
+          "curId": 41078
+        }
+      ]
+    },
+    {
+      "i": 31407,
+      "n": "Modern Aesthetics - Wind Caller",
+      "c": "Miscellany",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "silver treasure coffer",
+          "pct": 0.807,
+          "n": 135881
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.085,
+          "n": 836762
+        },
+        {
+          "g": "Bozja",
+          "p": "Bozjan Cluster exchange",
+          "f": "exchange",
+          "cost": 150,
+          "cur": "Bozjan Cluster",
+          "curId": 31135
+        }
+      ]
+    },
+    {
+      "i": 24817,
+      "n": "Molech's Horn",
+      "c": "Bone",
+      "src": [{"g":"Eureka","p":"Eureka Hydatos","f":"Bullheaded Berserker (Molech)","fate":1}]
+    },
+    {
+      "i": 10535,
+      "n": "Moonlit Moggle Moglobe",
+      "c": "Astrologian's Arm",
+      "src": [{"g":"Deep dungeons","p":"Palace of the Dead","f":"Gold-trimmed Sack","pct":0.797,"n":6774}]
+    },
+    {
+      "i": 8382,
+      "n": "Morbid Moggle Mogblade",
+      "c": "Gladiator's Arm",
+      "src": [{"g":"Deep dungeons","p":"Palace of the Dead","f":"Gold-trimmed Sack","pct":0.679,"n":6774}]
+    },
+    {
+      "i": 27910,
+      "n": "Mortal Instants Orchestrion Roll",
+      "c": "Orchestrion Roll",
+      "src": [{"g":"Dungeons","p":"Amaurot","f":"Shadowbringers dungeon chests","pct":9.664,"n":12905}]
+    },
+    {
+      "i": 8390,
+      "n": "Munificent Moggle Mogtome",
+      "c": "Scholar's Arm",
+      "src": [{"g":"Deep dungeons","p":"Palace of the Dead","f":"Gold-trimmed Sack","pct":0.989,"n":6774}]
+    },
+    {
+      "i": 8383,
+      "n": "Murderous Moggle Mogfists",
+      "c": "Pugilist's Arm",
+      "src": [{"g":"Deep dungeons","p":"Palace of the Dead","f":"Gold-trimmed Sack","pct":0.62,"n":6774}]
+    },
+    {
+      "i": 16564,
+      "n": "Night Pegasus Whistle",
+      "c": "Other",
+      "src": [{"g":"Deep dungeons","p":"Palace of the Dead","f":"Gold-trimmed Sack","pct":3.558,"n":6774}]
+    },
+    {
+      "i": 38223,
+      "n": "Noir Hat",
+      "c": "Head",
+      "src": [
+        {
+          "g": "Variant & Criterion",
+          "p": "Sil'dihn variant exchange",
+          "f": "exchange",
+          "cost": 15,
+          "cur": "Sil'dihn Potsherd",
+          "curId": 38533
+        }
+      ]
+    },
+    {
+      "i": 38225,
+      "n": "Noir Leather Gloves",
+      "c": "Hands",
+      "src": [
+        {
+          "g": "Variant & Criterion",
+          "p": "Sil'dihn variant exchange",
+          "f": "exchange",
+          "cost": 9,
+          "cur": "Sil'dihn Potsherd",
+          "curId": 38533
+        }
+      ]
+    },
+    {
+      "i": 38224,
+      "n": "Noir Longcoat",
+      "c": "Body",
+      "src": [
+        {
+          "g": "Variant & Criterion",
+          "p": "Sil'dihn variant exchange",
+          "f": "exchange",
+          "cost": 27,
+          "cur": "Sil'dihn Potsherd",
+          "curId": 38533
+        }
+      ]
+    },
+    {
+      "i": 38227,
+      "n": "Noir Shoes",
+      "c": "Feet",
+      "src": [
+        {
+          "g": "Variant & Criterion",
+          "p": "Sil'dihn variant exchange",
+          "f": "exchange",
+          "cost": 9,
+          "cur": "Sil'dihn Potsherd",
+          "curId": 38533
+        }
+      ]
+    },
+    {
+      "i": 38226,
+      "n": "Noir Slacks",
+      "c": "Legs",
+      "src": [
+        {
+          "g": "Variant & Criterion",
+          "p": "Sil'dihn variant exchange",
+          "f": "exchange",
+          "cost": 12,
+          "cur": "Sil'dihn Potsherd",
+          "curId": 38533
+        }
+      ]
+    },
+    {
+      "i": 16815,
+      "n": "Notice of Death Orchestrion Roll",
+      "c": "Orchestrion Roll",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Gelmorran potsherd exchange",
+          "f": "exchange",
+          "cost": 10,
+          "cur": "Gelmorran Potsherd",
+          "curId": 15422
+        }
+      ]
+    },
+    {
+      "i": 41662,
+      "n": "O Speaker, Slumber Orchestrion Roll",
+      "c": "Orchestrion Roll",
+      "src": [
+        {
+          "g": "Variant & Criterion",
+          "p": "Aloalo variant exchange",
+          "f": "exchange",
+          "cost": 9,
+          "cur": "Aloalo Potsherd",
+          "curId": 41078
+        }
+      ]
+    },
+    {
+      "i": 49828,
+      "n": "Occult Bracelet of Blood",
+      "c": "Bracelets",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "silver treasure coffer",
+          "pct": 0.033,
+          "n": 42732
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.012,
+          "n": 241859
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "silver treasure coffer",
+          "pct": 0.011,
+          "n": 135881
+        }
+      ]
+    },
+    {
+      "i": 49833,
+      "n": "Occult Bracelet of Magic",
+      "c": "Bracelets",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "silver treasure coffer",
+          "pct": 0.03,
+          "n": 42732
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "silver treasure coffer",
+          "pct": 0.01,
+          "n": 135881
+        }
+      ]
+    },
+    {
+      "i": 50423,
+      "n": "Occult Compass",
+      "c": "Tabletop",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Gold Piece exchange",
+          "f": "exchange",
+          "cost": 960,
+          "cur": "Enlightenment Gold Piece",
+          "curId": 45044
+        }
+      ]
+    },
+    {
+      "i": 49826,
+      "n": "Occult Earrings of Blood",
+      "c": "Earrings",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "silver treasure coffer",
+          "pct": 0.04,
+          "n": 42732
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.015,
+          "n": 241859
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "silver treasure coffer",
+          "pct": 0.013,
+          "n": 135881
+        }
+      ]
+    },
+    {
+      "i": 49831,
+      "n": "Occult Earrings of Magic",
+      "c": "Earrings",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "silver treasure coffer",
+          "pct": 0.035,
+          "n": 42732
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.015,
+          "n": 241859
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "silver treasure coffer",
+          "pct": 0.013,
+          "n": 135881
+        }
+      ]
+    },
+    {
+      "i": 49827,
+      "n": "Occult Necklace of Blood",
+      "c": "Necklace",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "silver treasure coffer",
+          "pct": 0.035,
+          "n": 42732
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.013,
+          "n": 241859
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "silver treasure coffer",
+          "pct": 0.012,
+          "n": 135881
+        }
+      ]
+    },
+    {
+      "i": 49832,
+      "n": "Occult Necklace of Magic",
+      "c": "Necklace",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "silver treasure coffer",
+          "pct": 0.047,
+          "n": 42732
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "silver treasure coffer",
+          "pct": 0.014,
+          "n": 135881
+        }
+      ]
+    },
+    {
+      "i": 50424,
+      "n": "Occult Pyramicula",
+      "c": "Tabletop",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Gold Piece exchange",
+          "f": "exchange",
+          "cost": 960,
+          "cur": "Enlightenment Gold Piece",
+          "curId": 45044
+        }
+      ]
+    },
+    {
+      "i": 49829,
+      "n": "Occult Ring of Blood",
+      "c": "Ring",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "gold pot coffer",
+          "pct": 4.94,
+          "n": 7692
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "gold pot coffer",
+          "pct": 3.194,
+          "n": 18252
+        }
+      ]
+    },
+    {
+      "i": 49830,
+      "n": "Occult Ring of Deep Blood",
+      "c": "Ring",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "gold bunny coffer",
+          "pct": 9.996,
+          "n": 16337
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "gold bunny coffer",
+          "pct": 7.235,
+          "n": 22655
+        }
+      ]
+    },
+    {
+      "i": 47335,
+      "n": "Ornamental Shrublet Horn",
+      "c": "Other",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Silvered Light",
+          "pct": 0.271,
+          "n": 52374
+        }
+      ]
+    },
+    {
+      "i": 36911,
+      "n": "Orthos Craklaw Horn",
+      "c": "Other",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Gold-tinged Sack","pct":3.384,"n":7920}]
+    },
+    {
+      "i": 24858,
+      "n": "Penthesilea's Spear",
+      "c": "Lancer's Arm",
+      "src": [{"g":"Eureka","p":"Eureka Hydatos","f":"gold bunny coffer","pct":10.12,"n":1749}]
+    },
+    {
+      "i": 43569,
+      "n": "Petit Punutiy",
+      "c": "Minion",
+      "src": [{"g":"Dungeons","p":"Ihuykatumu","f":"Dawntrail dungeon chests","pct":5.18,"n":40171}]
+    },
+    {
+      "i": 47334,
+      "n": "Pilgrim's Protector Horn",
+      "c": "Other",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of First Light",
+          "pct": 0.296,
+          "n": 34448
+        }
+      ]
+    },
+    {
+      "i": 48180,
+      "n": "Pistol of Sanctifying Light",
+      "c": "Machinist's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.166,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 33037,
+      "n": "Pleasant Dot Parasol",
+      "c": "Miscellany",
+      "src": [
+        {
+          "g": "Bozja",
+          "p": "Bozjan Cluster exchange",
+          "f": "exchange",
+          "cost": 25,
+          "cur": "Bozjan Cluster",
+          "curId": 31135
+        }
+      ]
+    },
+    {
+      "i": 3556,
+      "n": "Plundered Gauntlets",
+      "c": "Hands",
+      "src": [
+        {"g":"Dungeons","p":"Sastasha","f":"A Realm Reborn dungeon chests","pct":34.373,"n":24297},
+        {
+          "g": "Dungeons",
+          "p": "Copperbell Mines",
+          "f": "A Realm Reborn dungeon chests",
+          "pct": 33.717,
+          "n": 36350
+        },
+        {
+          "g": "Dungeons",
+          "p": "The Tam-Tara Deepcroft",
+          "f": "A Realm Reborn dungeon chests",
+          "pct": 33.319,
+          "n": 34758
+        }
+      ]
+    },
+    {
+      "i": 3781,
+      "n": "Plundered Sabatons",
+      "c": "Feet",
+      "src": [
+        {"g":"Dungeons","p":"Sastasha","f":"A Realm Reborn dungeon chests","pct":53.178,"n":24297},
+        {
+          "g": "Dungeons",
+          "p": "Copperbell Mines",
+          "f": "A Realm Reborn dungeon chests",
+          "pct": 32.905,
+          "n": 36350
+        },
+        {
+          "g": "Dungeons",
+          "p": "The Tam-Tara Deepcroft",
+          "f": "A Realm Reborn dungeon chests",
+          "pct": 31.041,
+          "n": 34758
+        }
+      ]
+    },
+    {
+      "i": 7100,
+      "n": "Projection Module",
+      "c": "Rug",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Silver-tinged Sack","pct":0.527,"n":14806}]
+    },
+    {
+      "i": 24011,
+      "n": "Protective Logogram",
+      "c": "Other",
+      "src": [
+        {"g":"Eureka","p":"Eureka Pyros","f":"gold bunny coffer","pct":51.531,"n":1372},
+        {"g":"Eureka","p":"Eureka Hydatos","f":"bronze bunny coffer","pct":32.354,"n":8543}
+      ]
+    },
+    {
+      "i": 38450,
+      "n": "Pterosquirrel",
+      "c": "Minion",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Silvered Light",
+          "pct": 0.317,
+          "n": 52374
+        }
+      ]
+    },
+    {
+      "i": 40369,
+      "n": "Puffin",
+      "c": "Minion",
+      "src": [{"g":"Dungeons","p":"The Aetherfont","f":"Endwalker dungeon chests","pct":4.861,"n":15363}]
+    },
+    {
+      "i": 52278,
+      "n": "Puny Mage",
+      "c": "Minion",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "gold pot coffer",
+          "pct": 5.2,
+          "n": 7692
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "gold bunny coffer",
+          "pct": 4.26,
+          "n": 16337
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "silver pot coffer",
+          "pct": 1.911,
+          "n": 16016
+        }
+      ]
+    },
+    {
+      "i": 7101,
+      "n": "Purification Module",
+      "c": "Rug",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Silver-tinged Sack","pct":0.534,"n":14806}]
+    },
+    {
+      "i": 6537,
+      "n": "Raging Vortex Couch",
+      "c": "Furnishing",
+      "src": [{"g":"Bozja","p":"Bozjan Southern Front","f":"Southern Front Lockbox","pct":0.06,"n":175738}]
+    },
+    {
+      "i": 39504,
+      "n": "Raindrop Defense System",
+      "c": "Miscellany",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Bronze-tinged Sack","pct":1.173,"n":13298}]
+    },
+    {
+      "i": 13849,
+      "n": "Replica Heavy High Allagan Coat",
+      "c": "Body",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Palace of the Dead",
+          "f": "Silver-trimmed Sack",
+          "pct": 0.334,
+          "n": 8691
+        }
+      ]
+    },
+    {
+      "i": 20558,
+      "n": "Reveler's Barding",
+      "c": "Other",
+      "src": [
+        {"g":"Deep dungeons","p":"Heaven-on-High","f":"Silver-haloed Sack","pct":0.477,"n":16576},
+        {"g":"Bozja","p":"Zadnor","f":"Zadnor Lockbox","pct":0.1,"n":270821}
+      ]
+    },
+    {
+      "i": 48182,
+      "n": "Rod of Sanctifying Light",
+      "c": "Two–handed Thaumaturge's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.109,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 43577,
+      "n": "Rororrlo Teh",
+      "c": "Minion",
+      "src": [{"g":"Dungeons","p":"Worqor Zormor","f":"Dawntrail dungeon chests","pct":5.615,"n":43071}]
+    },
+    {
+      "i": 47971,
+      "n": "Royal Hound",
+      "c": "Minion",
+      "src": [{"g":"Dungeons","p":"The Underkeep","f":"Dawntrail dungeon chests","pct":4.864,"n":166443}]
+    },
+    {
+      "i": 29402,
+      "n": "Ruby Barding",
+      "c": "Other",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Bronze-tinged Sack","pct":0.594,"n":13298}]
+    },
+    {
+      "i": 48174,
+      "n": "Sainti of Sanctifying Light",
+      "c": "Pugilist's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.136,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 39313,
+      "n": "Salon Server's Dress Vest",
+      "c": "Body",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "silver treasure coffer",
+          "pct": 0.435,
+          "n": 42732
+        },
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Gilded Light",
+          "pct": 0.15,
+          "n": 49374
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.149,
+          "n": 241859
+        }
+      ]
+    },
+    {
+      "i": 39310,
+      "n": "Salon Server's Gloves",
+      "c": "Hands",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "silver treasure coffer",
+          "pct": 0.332,
+          "n": 42732
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.109,
+          "n": 241859
+        }
+      ]
+    },
+    {
+      "i": 39312,
+      "n": "Salon Server's Shoes",
+      "c": "Feet",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "silver treasure coffer",
+          "pct": 0.454,
+          "n": 42732
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.158,
+          "n": 241859
+        }
+      ]
+    },
+    {
+      "i": 24144,
+      "n": "Samurai Barding",
+      "c": "Other",
+      "src": [{"g":"Eureka","p":"Eureka Pyros","f":"Heat-warped Lockbox","pct":0.476,"n":69682}]
+    },
+    {
+      "i": 47905,
+      "n": "Scherwiz Boots",
+      "c": "Feet",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Gold Piece exchange",
+          "f": "exchange",
+          "cost": 1600,
+          "cur": "Enlightenment Gold Piece",
+          "curId": 45044
+        }
+      ]
+    },
+    {
+      "i": 47902,
+      "n": "Scherwiz Coat",
+      "c": "Body",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Gold Piece exchange",
+          "f": "exchange",
+          "cost": 1600,
+          "cur": "Enlightenment Gold Piece",
+          "curId": 45044
+        }
+      ]
+    },
+    {
+      "i": 47901,
+      "n": "Scherwiz Hairpin",
+      "c": "Head",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Gold Piece exchange",
+          "f": "exchange",
+          "cost": 1600,
+          "cur": "Enlightenment Gold Piece",
+          "curId": 45044
+        }
+      ]
+    },
+    {
+      "i": 47904,
+      "n": "Scherwiz Skirt",
+      "c": "Legs",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Gold Piece exchange",
+          "f": "exchange",
+          "cost": 1600,
+          "cur": "Enlightenment Gold Piece",
+          "curId": 45044
+        }
+      ]
+    },
+    {
+      "i": 47903,
+      "n": "Scherwiz Vambraces",
+      "c": "Hands",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Gold Piece exchange",
+          "f": "exchange",
+          "cost": 1600,
+          "cur": "Enlightenment Gold Piece",
+          "curId": 45044
+        }
+      ]
+    },
+    {
+      "i": 6522,
+      "n": "Seating Module",
+      "c": "Furnishing",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Silver-tinged Sack","pct":0.48,"n":14806}]
+    },
+    {
+      "i": 24322,
+      "n": "Seeing Horde Axe",
+      "c": "Marauder's Arm",
+      "src": [
+        {
+          "g": "Bozja",
+          "p": "Bozjan Southern Front",
+          "f": "Southern Front Lockbox",
+          "pct": 0.098,
+          "n": 175738
+        }
+      ]
+    },
+    {
+      "i": 24320,
+      "n": "Seeing Horde Blade",
+      "c": "Gladiator's Arm",
+      "src": [{"g":"Bozja","p":"Bozjan Southern Front","f":"Southern Front Lockbox","pct":0.09,"n":175738}]
+    },
+    {
+      "i": 24324,
+      "n": "Seeing Horde Bow",
+      "c": "Archer's Arm",
+      "src": [
+        {
+          "g": "Bozja",
+          "p": "Bozjan Southern Front",
+          "f": "Southern Front Lockbox",
+          "pct": 0.098,
+          "n": 175738
+        }
+      ]
+    },
+    {
+      "i": 24328,
+      "n": "Seeing Horde Cane",
+      "c": "Two–handed Conjurer's Arm",
+      "src": [
+        {
+          "g": "Bozja",
+          "p": "Bozjan Southern Front",
+          "f": "Southern Front Lockbox",
+          "pct": 0.105,
+          "n": 175738
+        }
+      ]
+    },
+    {
+      "i": 24330,
+      "n": "Seeing Horde Grimoire",
+      "c": "Arcanist's Grimoire",
+      "src": [
+        {
+          "g": "Bozja",
+          "p": "Bozjan Southern Front",
+          "f": "Southern Front Lockbox",
+          "pct": 0.097,
+          "n": 175738
+        }
+      ]
+    },
+    {
+      "i": 24326,
+      "n": "Seeing Horde Guillotine",
+      "c": "Dark Knight's Arm",
+      "src": [
+        {
+          "g": "Bozja",
+          "p": "Bozjan Southern Front",
+          "f": "Southern Front Lockbox",
+          "pct": 0.092,
+          "n": 175738
+        }
+      ]
+    },
+    {
+      "i": 24327,
+      "n": "Seeing Horde Handgonne",
+      "c": "Machinist's Arm",
+      "src": [
+        {
+          "g": "Bozja",
+          "p": "Bozjan Southern Front",
+          "f": "Southern Front Lockbox",
+          "pct": 0.088,
+          "n": 175738
+        }
+      ]
+    },
+    {
+      "i": 24333,
+      "n": "Seeing Horde Katana",
+      "c": "Samurai's Arm",
+      "src": [{"g":"Bozja","p":"Bozjan Southern Front","f":"Southern Front Lockbox","pct":0.1,"n":175738}]
+    },
+    {
+      "i": 24334,
+      "n": "Seeing Horde Rapier",
+      "c": "Red Mage's Arm",
+      "src": [
+        {
+          "g": "Bozja",
+          "p": "Bozjan Southern Front",
+          "f": "Southern Front Lockbox",
+          "pct": 0.098,
+          "n": 175738
+        }
+      ]
+    },
+    {
+      "i": 24329,
+      "n": "Seeing Horde Rod",
+      "c": "Two–handed Thaumaturge's Arm",
+      "src": [
+        {
+          "g": "Bozja",
+          "p": "Bozjan Southern Front",
+          "f": "Southern Front Lockbox",
+          "pct": 0.106,
+          "n": 175738
+        }
+      ]
+    },
+    {
+      "i": 24335,
+      "n": "Seeing Horde Shield",
+      "c": "Shield",
+      "src": [
+        {
+          "g": "Bozja",
+          "p": "Bozjan Southern Front",
+          "f": "Southern Front Lockbox",
+          "pct": 0.106,
+          "n": 175738
+        }
+      ]
+    },
+    {
+      "i": 24323,
+      "n": "Seeing Horde Spear",
+      "c": "Lancer's Arm",
+      "src": [{"g":"Bozja","p":"Bozjan Southern Front","f":"Southern Front Lockbox","pct":0.1,"n":175738}]
+    },
+    {
+      "i": 24332,
+      "n": "Seeing Horde Star Globe",
+      "c": "Astrologian's Arm",
+      "src": [
+        {
+          "g": "Bozja",
+          "p": "Bozjan Southern Front",
+          "f": "Southern Front Lockbox",
+          "pct": 0.116,
+          "n": 175738
+        }
+      ]
+    },
+    {
+      "i": 24799,
+      "n": "Seiryu Barding",
+      "c": "Other",
+      "src": [
+        {
+          "g": "Bozja",
+          "p": "Bozjan Southern Front",
+          "f": "Southern Front Lockbox",
+          "pct": 0.102,
+          "n": 175738
+        },
+        {"g":"Bozja","p":"Zadnor","f":"Zadnor Lockbox","pct":0.021,"n":270821}
+      ]
+    },
+    {
+      "i": 24495,
+      "n": "Seiryu Statuette",
+      "c": "Tabletop",
+      "src": [{"g":"Bozja","p":"Zadnor","f":"Zadnor Lockbox","pct":0.067,"n":270821}]
+    },
+    {
+      "i": 30851,
+      "n": "Seiryu's Sanctified Cane",
+      "c": "Two–handed Conjurer's Arm",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Gold-tinged Sack","pct":0.316,"n":7920}]
+    },
+    {
+      "i": 30848,
+      "n": "Seiryu's Sanctified Daggers",
+      "c": "Rogue's Arm",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Gold-tinged Sack","pct":0.253,"n":7920}]
+    },
+    {
+      "i": 30855,
+      "n": "Seiryu's Sanctified Ephemeris",
+      "c": "Astrologian's Arm",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Gold-tinged Sack","pct":0.24,"n":7920}]
+    },
+    {
+      "i": 30856,
+      "n": "Seiryu's Sanctified Katana",
+      "c": "Samurai's Arm",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Gold-tinged Sack","pct":0.24,"n":7920}]
+    },
+    {
+      "i": 30849,
+      "n": "Seiryu's Sanctified Spine",
+      "c": "Dark Knight's Arm",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Gold-tinged Sack","pct":0.227,"n":7920}]
+    },
+    {
+      "i": 13089,
+      "n": "Sephirot Tree",
+      "c": "Outdoor Furnishing",
+      "src": [
+        {
+          "g": "Bozja",
+          "p": "Bozjan Southern Front",
+          "f": "Southern Front Lockbox",
+          "pct": 0.057,
+          "n": 175738
+        }
+      ]
+    },
+    {
+      "i": 14080,
+      "n": "Sephirotic Barding",
+      "c": "Other",
+      "src": [{"g":"Bozja","p":"Zadnor","f":"Zadnor Lockbox","pct":0.096,"n":270821}]
+    },
+    {
+      "i": 27911,
+      "n": "Shadows Withal Orchestrion Roll",
+      "c": "Orchestrion Roll",
+      "src": [
+        {
+          "g": "Dungeons",
+          "p": "Akadaemia Anyder",
+          "f": "Shadowbringers dungeon chests",
+          "pct": 9.81,
+          "n": 6475
+        },
+        {"g":"Deep dungeons","p":"Eureka Orthos","f":"Gold-tinged Sack","pct":1.199,"n":7920},
+        {"g":"Deep dungeons","p":"Eureka Orthos","f":"Silver-tinged Sack","pct":0.547,"n":14806}
+      ]
+    },
+    {
+      "i": 48192,
+      "n": "Shield of Sanctifying Light",
+      "c": "Shield",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.158,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 21042,
+      "n": "Shinryu Barding",
+      "c": "Other",
+      "src": [
+        {
+          "g": "Bozja",
+          "p": "Bozjan Southern Front",
+          "f": "Southern Front Lockbox",
+          "pct": 0.096,
+          "n": 175738
+        },
+        {"g":"Bozja","p":"Zadnor","f":"Zadnor Lockbox","pct":0.02,"n":270821}
+      ]
+    },
+    {
+      "i": 30084,
+      "n": "Shinryu's Ephemeral Chakrams",
+      "c": "Dancer's Arm",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Gold-tinged Sack","pct":0.328,"n":7920}]
+    },
+    {
+      "i": 30083,
+      "n": "Shinryu's Ephemeral Gunblade",
+      "c": "Gunbreaker's Arm",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Gold-tinged Sack","pct":0.328,"n":7920}]
+    },
+    {
+      "i": 30081,
+      "n": "Shinryu's Ephemeral Katana",
+      "c": "Samurai's Arm",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Gold-tinged Sack","pct":0.202,"n":7920}]
+    },
+    {
+      "i": 30071,
+      "n": "Shinryu's Ephemeral Lance",
+      "c": "Lancer's Arm",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Gold-tinged Sack","pct":0.24,"n":7920}]
+    },
+    {
+      "i": 30077,
+      "n": "Shinryu's Ephemeral Rod",
+      "c": "Two–handed Thaumaturge's Arm",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Gold-tinged Sack","pct":0.253,"n":7920}]
+    },
+    {
+      "i": 20754,
+      "n": "Shinryu's Wing",
+      "c": "Wall-mounted",
+      "src": [{"g":"Bozja","p":"Zadnor","f":"Zadnor Lockbox","pct":0.059,"n":270821}]
+    },
+    {
+      "i": 40442,
+      "n": "Shishu Bujin Hitatare",
+      "c": "Body",
+      "src": [
+        {
+          "g": "Variant & Criterion",
+          "p": "Rokkon variant exchange",
+          "f": "exchange",
+          "cost": 18,
+          "cur": "Rokkon Potsherd",
+          "curId": 39884
+        }
+      ]
+    },
+    {
+      "i": 40443,
+      "n": "Shishu Bujin Kiribakama",
+      "c": "Legs",
+      "src": [
+        {
+          "g": "Variant & Criterion",
+          "p": "Rokkon variant exchange",
+          "f": "exchange",
+          "cost": 9,
+          "cur": "Rokkon Potsherd",
+          "curId": 39884
+        }
+      ]
+    },
+    {
+      "i": 40447,
+      "n": "Shishu Gozen Hakama",
+      "c": "Legs",
+      "src": [
+        {
+          "g": "Variant & Criterion",
+          "p": "Rokkon variant exchange",
+          "f": "exchange",
+          "cost": 9,
+          "cur": "Rokkon Potsherd",
+          "curId": 39884
+        }
+      ]
+    },
+    {
+      "i": 40445,
+      "n": "Shishu Gozen Kanzashi",
+      "c": "Head",
+      "src": [
+        {
+          "g": "Variant & Criterion",
+          "p": "Rokkon variant exchange",
+          "f": "exchange",
+          "cost": 9,
+          "cur": "Rokkon Potsherd",
+          "curId": 39884
+        }
+      ]
+    },
+    {
+      "i": 40446,
+      "n": "Shishu Gozen Kochiki",
+      "c": "Body",
+      "src": [
+        {
+          "g": "Variant & Criterion",
+          "p": "Rokkon variant exchange",
+          "f": "exchange",
+          "cost": 18,
+          "cur": "Rokkon Potsherd",
+          "curId": 39884
+        }
+      ]
+    },
+    {
+      "i": 40444,
+      "n": "Shishu Obutozori",
+      "c": "Feet",
+      "src": [
+        {
+          "g": "Variant & Criterion",
+          "p": "Rokkon variant exchange",
+          "f": "exchange",
+          "cost": 9,
+          "cur": "Rokkon Potsherd",
+          "curId": 39884
+        }
+      ]
+    },
+    {
+      "i": 44487,
+      "n": "Shshuye",
+      "c": "Minion",
+      "src": [
+        {
+          "g": "Dungeons",
+          "p": "Yuweyawata Field Station",
+          "f": "Dawntrail dungeon chests",
+          "pct": 5.012,
+          "n": 134743
+        }
+      ]
+    },
+    {
+      "i": 24287,
+      "n": "Skoll's Claw",
+      "c": "Bone",
+      "src": [{"g":"Eureka","p":"Eureka Pyros","f":"Heavens' Warg (Skoll)","fate":1}]
+    },
+    {
+      "i": 16557,
+      "n": "Sophic Barding",
+      "c": "Other",
+      "src": [{"g":"Bozja","p":"Zadnor","f":"Zadnor Lockbox","pct":0.095,"n":270821}]
+    },
+    {
+      "i": 43581,
+      "n": "Speaking Stone",
+      "c": "Minion",
+      "src": [
+        {
+          "g": "Dungeons",
+          "p": "The Skydeep Cenote",
+          "f": "Dawntrail dungeon chests",
+          "pct": 5.038,
+          "n": 44110
+        }
+      ]
+    },
+    {
+      "i": 8368,
+      "n": "Spine of the Vortex",
+      "c": "Archer's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Palace of the Dead",
+          "f": "Silver-trimmed Sack",
+          "pct": 0.357,
+          "n": 8691
+        }
+      ]
+    },
+    {
+      "i": 44488,
+      "n": "Spinettesaurus",
+      "c": "Minion",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Silvered Light",
+          "pct": 0.336,
+          "n": 52374
+        }
+      ]
+    },
+    {
+      "i": 25047,
+      "n": "Staff of the Demon",
+      "c": "Two–handed Thaumaturge's Arm",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Gold-tinged Sack","pct":0.215,"n":7920}]
+    },
+    {
+      "i": 44111,
+      "n": "Stone Partition",
+      "c": "Furnishing",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "silver treasure coffer",
+          "pct": 0.749,
+          "n": 135881
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.079,
+          "n": 836762
+        }
+      ]
+    },
+    {
+      "i": 50293,
+      "n": "Story-lover's Armlets",
+      "c": "Hands",
+      "src": [
+        {
+          "g": "Variant & Criterion",
+          "p": "Corvosi variant exchange",
+          "f": "exchange",
+          "cost": 6,
+          "cur": "Corvosi Potsherd",
+          "curId": 50434
+        }
+      ]
+    },
+    {
+      "i": 50291,
+      "n": "Story-lover's Bandana",
+      "c": "Head",
+      "src": [
+        {
+          "g": "Variant & Criterion",
+          "p": "Corvosi variant exchange",
+          "f": "exchange",
+          "cost": 9,
+          "cur": "Corvosi Potsherd",
+          "curId": 50434
+        }
+      ]
+    },
+    {
+      "i": 50295,
+      "n": "Story-lover's Sandals",
+      "c": "Feet",
+      "src": [
+        {
+          "g": "Variant & Criterion",
+          "p": "Corvosi variant exchange",
+          "f": "exchange",
+          "cost": 6,
+          "cur": "Corvosi Potsherd",
+          "curId": 50434
+        }
+      ]
+    },
+    {
+      "i": 50294,
+      "n": "Story-lover's Sarouel",
+      "c": "Legs",
+      "src": [
+        {
+          "g": "Variant & Criterion",
+          "p": "Corvosi variant exchange",
+          "f": "exchange",
+          "cost": 9,
+          "cur": "Corvosi Potsherd",
+          "curId": 50434
+        }
+      ]
+    },
+    {
+      "i": 50292,
+      "n": "Story-lover's Top",
+      "c": "Body",
+      "src": [
+        {
+          "g": "Variant & Criterion",
+          "p": "Corvosi variant exchange",
+          "f": "exchange",
+          "cost": 12,
+          "cur": "Corvosi Potsherd",
+          "curId": 50434
+        }
+      ]
+    },
+    {
+      "i": 50298,
+      "n": "Story-spinner's Chaplets",
+      "c": "Hands",
+      "src": [
+        {
+          "g": "Variant & Criterion",
+          "p": "Corvosi variant exchange",
+          "f": "exchange",
+          "cost": 6,
+          "cur": "Corvosi Potsherd",
+          "curId": 50434
+        }
+      ]
+    },
+    {
+      "i": 50297,
+      "n": "Story-spinner's Chestwrap",
+      "c": "Body",
+      "src": [
+        {
+          "g": "Variant & Criterion",
+          "p": "Corvosi variant exchange",
+          "f": "exchange",
+          "cost": 12,
+          "cur": "Corvosi Potsherd",
+          "curId": 50434
+        }
+      ]
+    },
+    {
+      "i": 50296,
+      "n": "Story-spinner's Headdress",
+      "c": "Head",
+      "src": [
+        {
+          "g": "Variant & Criterion",
+          "p": "Corvosi variant exchange",
+          "f": "exchange",
+          "cost": 9,
+          "cur": "Corvosi Potsherd",
+          "curId": 50434
+        }
+      ]
+    },
+    {
+      "i": 50300,
+      "n": "Story-spinner's Sandals",
+      "c": "Feet",
+      "src": [
+        {
+          "g": "Variant & Criterion",
+          "p": "Corvosi variant exchange",
+          "f": "exchange",
+          "cost": 6,
+          "cur": "Corvosi Potsherd",
+          "curId": 50434
+        }
+      ]
+    },
+    {
+      "i": 50299,
+      "n": "Story-spinner's Sarouel",
+      "c": "Legs",
+      "src": [
+        {
+          "g": "Variant & Criterion",
+          "p": "Corvosi variant exchange",
+          "f": "exchange",
+          "cost": 9,
+          "cur": "Corvosi Potsherd",
+          "curId": 50434
+        }
+      ]
+    },
+    {
+      "i": 23229,
+      "n": "Stuffed Happy Bunny",
+      "c": "Tabletop",
+      "src": [{"g":"Eureka","p":"Eureka Pagos","f":"silver bunny coffer","pct":11.738,"n":10087}]
+    },
+    {
+      "i": 22545,
+      "n": "Stuffed Tsukuyomi",
+      "c": "Tabletop",
+      "src": [{"g":"Bozja","p":"Zadnor","f":"Zadnor Lockbox","pct":0.061,"n":270821}]
+    },
+    {
+      "i": 24143,
+      "n": "Suzaku Barding",
+      "c": "Other",
+      "src": [
+        {"g":"Deep dungeons","p":"Eureka Orthos","f":"Bronze-tinged Sack","pct":0.602,"n":13298},
+        {
+          "g": "Bozja",
+          "p": "Bozjan Southern Front",
+          "f": "Southern Front Lockbox",
+          "pct": 0.096,
+          "n": 175738
+        },
+        {"g":"Bozja","p":"Zadnor","f":"Zadnor Lockbox","pct":0.024,"n":270821}
+      ]
+    },
+    {
+      "i": 23863,
+      "n": "Suzaku Wall Hanging",
+      "c": "Wall-mounted",
+      "src": [{"g":"Bozja","p":"Zadnor","f":"Zadnor Lockbox","pct":0.065,"n":270821}]
+    },
+    {
+      "i": 30835,
+      "n": "Suzaku's Flame-kissed Cane",
+      "c": "Two–handed Conjurer's Arm",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Gold-tinged Sack","pct":0.189,"n":7920}]
+    },
+    {
+      "i": 30840,
+      "n": "Suzaku's Flame-kissed Chokuto",
+      "c": "Samurai's Arm",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Gold-tinged Sack","pct":0.253,"n":7920}]
+    },
+    {
+      "i": 30838,
+      "n": "Suzaku's Flame-kissed Codex",
+      "c": "Scholar's Arm",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Gold-tinged Sack","pct":0.29,"n":7920}]
+    },
+    {
+      "i": 30839,
+      "n": "Suzaku's Flame-kissed Ephemeris",
+      "c": "Astrologian's Arm",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Gold-tinged Sack","pct":0.278,"n":7920}]
+    },
+    {
+      "i": 30829,
+      "n": "Suzaku's Flame-kissed Greataxe",
+      "c": "Marauder's Arm",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Gold-tinged Sack","pct":0.341,"n":7920}]
+    },
+    {
+      "i": 30837,
+      "n": "Suzaku's Flame-kissed Grimoire",
+      "c": "Arcanist's Grimoire",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Gold-tinged Sack","pct":0.391,"n":7920}]
+    },
+    {
+      "i": 30832,
+      "n": "Suzaku's Flame-kissed Kunai",
+      "c": "Rogue's Arm",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Gold-tinged Sack","pct":0.328,"n":7920}]
+    },
+    {
+      "i": 30833,
+      "n": "Suzaku's Flame-kissed Odachi",
+      "c": "Dark Knight's Arm",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Gold-tinged Sack","pct":0.354,"n":7920}]
+    },
+    {
+      "i": 36132,
+      "n": "Suzaku's Flame-kissed Paladin Arms",
+      "c": "Miscellany",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Gold-tinged Sack","pct":0.606,"n":7920}]
+    },
+    {
+      "i": 30828,
+      "n": "Suzaku's Flame-kissed Pinions",
+      "c": "Pugilist's Arm",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Gold-tinged Sack","pct":0.139,"n":7920}]
+    },
+    {
+      "i": 30841,
+      "n": "Suzaku's Flame-kissed Rapier",
+      "c": "Red Mage's Arm",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Gold-tinged Sack","pct":0.391,"n":7920}]
+    },
+    {
+      "i": 30834,
+      "n": "Suzaku's Flame-kissed Revolver",
+      "c": "Machinist's Arm",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Gold-tinged Sack","pct":0.328,"n":7920}]
+    },
+    {
+      "i": 15598,
+      "n": "Sword of the Round",
+      "c": "Gladiator's Arm",
+      "src": [{"g":"Deep dungeons","p":"Heaven-on-High","f":"Platinum-haloed Sack","pct":0.382,"n":6548}]
+    },
+    {
+      "i": 43579,
+      "n": "Tankardtender",
+      "c": "Minion",
+      "src": [{"g":"Dungeons","p":"Tender Valley","f":"Dawntrail dungeon chests","pct":4.989,"n":56466}]
+    },
+    {
+      "i": 48189,
+      "n": "Tathlums of Sanctifying Light",
+      "c": "Dancer's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.133,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 36854,
+      "n": "Teacup Kapikulu",
+      "c": "Minion",
+      "src": [
+        {
+          "g": "Dungeons",
+          "p": "Alzadaal's Legacy",
+          "f": "Endwalker dungeon chests",
+          "pct": 5.614,
+          "n": 14886
+        }
+      ]
+    },
+    {
+      "i": 10394,
+      "n": "Thavnairian Armlets",
+      "c": "Hands",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "silver treasure coffer",
+          "pct": 0.138,
+          "n": 42732
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.053,
+          "n": 241859
+        }
+      ]
+    },
+    {
+      "i": 10393,
+      "n": "Thavnairian Bustier",
+      "c": "Body",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Palace of the Dead",
+          "f": "Bronze-trimmed Sack",
+          "pct": 0.506,
+          "n": 31023
+        },
+        {"g":"Deep dungeons","p":"Heaven-on-High","f":"Silver-haloed Sack","pct":0.495,"n":16576},
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "silver treasure coffer",
+          "pct": 0.152,
+          "n": 42732
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.048,
+          "n": 241859
+        }
+      ]
+    },
+    {
+      "i": 10387,
+      "n": "Thavnairian Turban",
+      "c": "Head",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "silver treasure coffer",
+          "pct": 0.534,
+          "n": 42732
+        },
+        {"g":"Deep dungeons","p":"Heaven-on-High","f":"Silver-haloed Sack","pct":0.525,"n":16576},
+        {
+          "g": "Deep dungeons",
+          "p": "Palace of the Dead",
+          "f": "Bronze-trimmed Sack",
+          "pct": 0.467,
+          "n": 31023
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · North Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.143,
+          "n": 241859
+        }
+      ]
+    },
+    {
+      "i": 46844,
+      "n": "The Faces We Wear - Cat Eye Reading Glasses",
+      "c": "Miscellany",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 1.353,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 44262,
+      "n": "The Faces We Wear - Rose-colored Spectacles",
+      "c": "Miscellany",
+      "src": [
+        {
+          "g": "Variant & Criterion",
+          "p": "Rokkon variant exchange",
+          "f": "exchange",
+          "cost": 3,
+          "cur": "Rokkon Potsherd",
+          "curId": 39884
+        }
+      ]
+    },
+    {
+      "i": 38543,
+      "n": "The Fae's Crown Axe",
+      "c": "Marauder's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.147,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 38549,
+      "n": "The Fae's Crown Cane",
+      "c": "Two–handed Conjurer's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.112,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 38552,
+      "n": "The Fae's Crown Codex",
+      "c": "Scholar's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.125,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 38551,
+      "n": "The Fae's Crown Grimoire",
+      "c": "Arcanist's Grimoire",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.095,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 38547,
+      "n": "The Fae's Crown Guillotine",
+      "c": "Dark Knight's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.128,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 38554,
+      "n": "The Fae's Crown Katana",
+      "c": "Samurai's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.114,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 38545,
+      "n": "The Fae's Crown Longbow",
+      "c": "Archer's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.163,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 38556,
+      "n": "The Fae's Crown Manatrigger",
+      "c": "Gunbreaker's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.128,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 38555,
+      "n": "The Fae's Crown Rapier",
+      "c": "Red Mage's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.139,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 38550,
+      "n": "The Fae's Crown Rod",
+      "c": "Two–handed Thaumaturge's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.133,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 38558,
+      "n": "The Fae's Crown Shield",
+      "c": "Shield",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.131,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 38553,
+      "n": "The Fae's Crown Star Globe",
+      "c": "Astrologian's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.131,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 38541,
+      "n": "The Fae's Crown Sword",
+      "c": "Gladiator's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.147,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 38557,
+      "n": "The Fae's Crown Tathlums",
+      "c": "Dancer's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.144,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 22483,
+      "n": "Their Deadly Mission Orchestrion Roll",
+      "c": "Orchestrion Roll",
+      "src": [
+        {
+          "g": "Dungeons",
+          "p": "The Temple Of The Fist",
+          "f": "Stormblood dungeon chests",
+          "pct": 10.137,
+          "n": 8905
+        }
+      ]
+    },
+    {
+      "i": 47970,
+      "n": "Tipping Tortoise",
+      "c": "Minion",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "gold pot coffer",
+          "pct": 4.745,
+          "n": 18252
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "gold bunny coffer",
+          "pct": 4.732,
+          "n": 22655
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "silver pot coffer",
+          "pct": 1.988,
+          "n": 39083
+        }
+      ]
+    },
+    {
+      "i": 27986,
+      "n": "Titania Barding",
+      "c": "Other",
+      "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Bronze-tinged Sack","pct":0.579,"n":13298}]
+    },
+    {
+      "i": 44486,
+      "n": "Toco Toquito",
+      "c": "Minion",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Silvered Light",
+          "pct": 0.323,
+          "n": 52374
+        }
+      ]
+    },
+    {
+      "i": 33122,
+      "n": "Tomorrow and Tomorrow - Reprise Orchestrion Roll",
+      "c": "Orchestrion Roll",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Gilded Light",
+          "pct": 0.172,
+          "n": 49374
+        },
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.123,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 48185,
+      "n": "Torquetum of Sanctifying Light",
+      "c": "Astrologian's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.136,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 8374,
+      "n": "Tremor Axe",
+      "c": "Marauder's Arm",
+      "src": [{"g":"Deep dungeons","p":"Palace of the Dead","f":"Silver-trimmed Sack","pct":0.61,"n":8691}]
+    },
+    {
+      "i": 30678,
+      "n": "True Barding of Light",
+      "c": "Other",
+      "src": [
+        {"g":"Deep dungeons","p":"Eureka Orthos","f":"Bronze-tinged Sack","pct":0.684,"n":13298},
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.098,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 47900,
+      "n": "Tycoon Bootlets",
+      "c": "Feet",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Gold Piece exchange",
+          "f": "exchange",
+          "cost": 1600,
+          "cur": "Enlightenment Gold Piece",
+          "curId": 45044
+        }
+      ]
+    },
+    {
+      "i": 47898,
+      "n": "Tycoon Dress Gloves",
+      "c": "Hands",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Gold Piece exchange",
+          "f": "exchange",
+          "cost": 1600,
+          "cur": "Enlightenment Gold Piece",
+          "curId": 45044
+        }
+      ]
+    },
+    {
+      "i": 47896,
+      "n": "Tycoon Hairpin",
+      "c": "Head",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Gold Piece exchange",
+          "f": "exchange",
+          "cost": 1600,
+          "cur": "Enlightenment Gold Piece",
+          "curId": 45044
+        }
+      ]
+    },
+    {
+      "i": 47897,
+      "n": "Tycoon Leotard",
+      "c": "Body",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Gold Piece exchange",
+          "f": "exchange",
+          "cost": 1600,
+          "cur": "Enlightenment Gold Piece",
+          "curId": 45044
+        }
+      ]
+    },
+    {
+      "i": 47899,
+      "n": "Tycoon Tights",
+      "c": "Legs",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Gold Piece exchange",
+          "f": "exchange",
+          "cost": 1600,
+          "cur": "Enlightenment Gold Piece",
+          "curId": 45044
+        }
+      ]
+    },
+    {
+      "i": 22482,
+      "n": "Unbreakable (Duality) Orchestrion Roll",
+      "c": "Orchestrion Roll",
+      "src": [
+        {
+          "g": "Dungeons",
+          "p": "The Fractal Continuum (Hard)",
+          "f": "Stormblood dungeon chests",
+          "pct": 9.843,
+          "n": 5509
+        }
+      ]
+    },
+    {
+      "i": 23892,
+      "n": "Verdant Partition",
+      "c": "Furnishing",
+      "src": [
+        {
+          "g": "Dungeons",
+          "p": "Saint Mocianne's Arboretum (Hard)",
+          "f": "Stormblood dungeon chests",
+          "pct": 14.052,
+          "n": 11336
+        }
+      ]
+    },
+    {
+      "i": 44120,
+      "n": "Vertical Neon Wall Light",
+      "c": "Wall-mounted",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "silver treasure coffer",
+          "pct": 0.723,
+          "n": 135881
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "bronze treasure coffer",
+          "pct": 0.075,
+          "n": 836762
+        }
+      ]
+    },
+    {
+      "i": 48191,
+      "n": "War Scythe of Sanctifying Light",
+      "c": "Reaper's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.123,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 48161,
+      "n": "White Embroidered Parasol",
+      "c": "Miscellany",
+      "src": [
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "gold bunny coffer",
+          "pct": 3.672,
+          "n": 22655
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "gold pot coffer",
+          "pct": 3.632,
+          "n": 18252
+        },
+        {
+          "g": "Occult Crescent",
+          "p": "Occult Crescent · South Horn",
+          "f": "silver pot coffer",
+          "pct": 2.085,
+          "n": 39083
+        }
+      ]
+    },
+    {
+      "i": 35974,
+      "n": "Wind-up Anima",
+      "c": "Minion",
+      "src": [
+        {
+          "g": "Dungeons",
+          "p": "The Tower Of Babil",
+          "f": "Endwalker dungeon chests",
+          "pct": 4.342,
+          "n": 23905
+        }
+      ]
+    },
+    {
+      "i": 39478,
+      "n": "Wind-up Cagnazzo ",
+      "c": "Minion",
+      "src": [{"g":"Dungeons","p":"Lapis Manalis","f":"Endwalker dungeon chests","pct":4.485,"n":19188}]
+    },
+    {
+      "i": 46785,
+      "n": "Wind-up Feo Ul",
+      "c": "Minion",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Gilded Light",
+          "pct": 0.492,
+          "n": 49374
+        }
+      ]
+    },
+    {
+      "i": 41477,
+      "n": "Wind-up Golbez",
+      "c": "Minion",
+      "src": [
+        {
+          "g": "Dungeons",
+          "p": "The Lunar Subterrane",
+          "f": "Endwalker dungeon chests",
+          "pct": 5.246,
+          "n": 25260
+        }
+      ]
+    },
+    {
+      "i": 35972,
+      "n": "Wind-up Magus Sisters",
+      "c": "Minion",
+      "src": [{"g":"Dungeons","p":"The Tower Of Zot","f":"Endwalker dungeon chests","pct":4.528,"n":23456}]
+    },
+    {
+      "i": 38448,
+      "n": "Wind-up Scarmiglione",
+      "c": "Minion",
+      "src": [
+        {
+          "g": "Dungeons",
+          "p": "The Fell Court Of Troia",
+          "f": "Endwalker dungeon chests",
+          "pct": 4.926,
+          "n": 13992
+        }
+      ]
+    },
+    {
+      "i": 48190,
+      "n": "Wings of Sanctifying Light",
+      "c": "Sage's Arm",
+      "src": [
+        {
+          "g": "Deep dungeons",
+          "p": "Pilgrim's Traverse",
+          "f": "Sack of Platinum Light",
+          "pct": 0.133,
+          "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 50804,
+      "n": "Worthy Pursuits Orchestrion Roll",
+      "c": "Orchestrion Roll",
+      "src": [
+        {
+          "g": "Variant & Criterion",
+          "p": "Corvosi variant exchange",
+          "f": "exchange",
+          "cost": 9,
+          "cur": "Corvosi Potsherd",
+          "curId": 50434
+        }
+      ]
+    },
+    {
+      "i": 24286,
+      "n": "Ying-Yang's Tissue",
+      "c": "Reagent",
+      "src": [{"g":"Eureka","p":"Eureka Pyros","f":"Haunter of the Dark (Ying-Yang)","fate":1}]
+    },
+    {
+      "i": 24640,
+      "n": "Yukinko Snowflake",
+      "c": "Minion",
+      "src": [
+        {"g":"Eureka","p":"Eureka Hydatos","f":"Moisture-warped Lockbox","pct":0.154,"n":1590720},
+        {"g":"Eureka","p":"Eureka Hydatos","f":"Hydatos Lockbox","pct":0.044,"n":568848}
+      ]
+    },
+    {
+      "i": 17522,
+      "n": "Zurvanite Barding",
+      "c": "Other",
+      "src": [{"g":"Bozja","p":"Zadnor","f":"Zadnor Lockbox","pct":0.101,"n":270821}]
+    }
+  ],
+  "updated": "Sun, 13 Sep 2026 13:21:05 GMT"
+}
