@@ -219,7 +219,9 @@ async function load(){const btn=document.getElementById("refresh");btn.disabled=
     state.worlds=await fetchWorlds();
     for(const[id,nmw]of Object.entries(state.worlds))if(nmw===state.home)state.homeId=+id;
     const prog=l=>(d,t)=>setStatus(`${l}\u2026 ${d}/${t} batches`);
-    const dead=state.skipDead?getDeadList():new Set();
+    /* a shift-click Refresh is a full rescan, dead items included, for this scan only */
+    const full=state.fullScan;state.fullScan=false;
+    const dead=(state.skipDead&&!full)?getDeadList():new Set();
     const finIds=dead.size?FINISHED_IDS.filter(id=>!dead.has(id)):FINISHED_IDS;
     const matIds=dead.size?closureIds(finIds):ALL_IDS;
     const[sell,hist,chaos]=await Promise.all([
@@ -350,7 +352,7 @@ function render(){if(!state.rows)return;let rows=visibleRows();const total=rows.
 function setStatus(h){document.getElementById("status").innerHTML=h;}
 function clearErr(){document.getElementById("errbox").innerHTML="";}
 function showErr(e){document.getElementById("tbl").hidden=true;setStatus("Couldn't reach the market board.");
-  document.getElementById("errbox").innerHTML=`<div class="err"><b>Live prices didn't load.</b> ${e.message||e}. The sandbox may have blocked universalis.app, or it's briefly down. Open this file directly in your browser, or check <a href="https://universalis.app" target="_blank" rel="noopener" style="color:#ffd7db">universalis.app</a>.</div>`;}
+  document.getElementById("errbox").innerHTML=`<div class="err"><b>Live prices didn't load.</b> ${e.message||e}. Universalis may be down or rate-limiting for a moment: wait a minute and press Refresh, or check <a href="https://universalis.app" target="_blank" rel="noopener" style="color:#ffd7db">universalis.app</a>.</div>`;}
 
 document.getElementById("nItems").textContent=FINISHED_IDS.length;
 document.querySelectorAll(".nItemsEcho").forEach(e=>{e.textContent=FINISHED_IDS.length;});
@@ -414,7 +416,7 @@ document.getElementById("status").innerHTML="";syncStartScan();
       el.dispatchEvent(new Event("change"));}
   }catch(e){}}
   document.addEventListener("change",()=>saveSettings());
-  document.addEventListener("click",e=>{if(e.shiftKey&&e.target&&e.target.id==="refresh"){Cache.clear();setStatus("Cache cleared \u00b7 pulling fresh prices\u2026");}},true);
+  document.addEventListener("click",e=>{if(e.shiftKey&&e.target&&e.target.id==="refresh"){Cache.clear();state.fullScan=true;setStatus("Cache cleared \u00b7 rescanning every item, dead ones included\u2026");}},true);
   restoreSettings();syncDcNames();syncHomeNames();
   {const m=document.getElementById("costMode");if(m)m.textContent=state.matBasis==="buyall"?"buy-all":"optimised";}
   /* v12: delegated row expansion — no full re-render per click */

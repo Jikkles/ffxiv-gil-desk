@@ -10,8 +10,9 @@ scrip loops and currency spending. Rather than eyeballing prices item by item, t
 live listings and 30-day sales history for thousands of items at once, prices out every
 material, subtracts market tax, and ranks everything by what it would genuinely net.
 
-It runs entirely in the browser from a single HTML file. No install, no build step, no
-dependencies, no API keys, no accounts, no server.
+It runs entirely in the browser from a single HTML file. Nothing to install or build to use it,
+no dependencies, no API keys, no accounts, no server. (The file itself is assembled from `src/`
+by one script; see [Architecture](#architecture) if you want to change it.)
 
 It works on **every Western and Japanese data centre**: pick your world from the North
 American, European, Japanese and Oceanian list, and tick whichever data centres you want
@@ -51,7 +52,7 @@ profit = (sell price × (1 − tax)) − acquisition cost
 What varies per tab is what "acquisition cost" means — buying materials and crafting, buying
 the finished item on a cheaper world, spending scrips, or spending a currency at a vendor.
 
-Three deliberate choices run through the whole thing:
+Four deliberate choices run through the whole thing:
 
 - **Sales history is the anchor, not listings.** A single inflated listing is not a market.
   The `Avg 30d` column is the quantity-weighted average of *actual sales* over the past month,
@@ -123,6 +124,10 @@ difference between a recipe looking unprofitable and actually being profitable.
 
 Turn on *Hide no-sales* and sort by profit to find what's worth bulk-crafting.
 
+*Skip dead items* (on by default) leaves out anything that has not sold in 30 days, which makes a
+refresh much faster. The dead list rebuilds itself weekly; **shift-click Refresh** for a full
+rescan of every item, dead ones included.
+
 ### Precrafts
 
 Every craftable intermediate in the game (900+), scanned as a deliberately simple one-step flip:
@@ -133,32 +138,6 @@ material shopping list.
 *Deep 30d* swaps the quick recent-average for a true 30-day history pull — slower, but more
 reliable on thin markets. Intermediates with thin HQ markets may show no sales; switching *Sell*
 to NQ often reveals the real bulk market.
-
-### Flips
-
-No crafting involved — pure arbitrage. Scans mounts, minions, hairstyles, outfit coffers and
-emotes (the tradeable `Ballroom Etiquette` manuals) across every world on the data centres you
-have picked, finds the cheapest listing anywhere, and compares it to the 30-day average sale
-price on your home world. The world name is colour-coded: orange means a
-world hop is required, teal means it's already on your world.
-
-Rare, slow-moving items are exactly where current listings lie most, so this tab leans hardest
-on sales history.
-
-### Scrips
-
-Two scrip-flip loops, valued live:
-
-- **Orange** collectibles (lvl 100, 144 scrips) → grade XII materia at 500 scrips
-- **Purple** collectibles (lvl 92–98, 142–198 scrips) → grade XI materia at 250 scrips
-
-Revenue per craft is what those scrips are worth as materia on your home world; profit subtracts
-the material cost. `gil/scrip` uses whichever of the three crafter materia (Competence, Cunning,
-Command) at that grade sells highest, net of tax. Lower-level Purple collectibles give fewer
-scrips but often use much cheaper materials — sorting by profit shows which loop actually wins.
-
-In this tab's recipe trees, precrafts are bought NQ wherever they're listed (you'd rather buy
-than precraft here) and only expanded into their own materials when nothing is for sale.
 
 ### Currencies
 
@@ -179,40 +158,72 @@ potsherds (Gelmorran from Palace of the Dead, Empyrean from Heaven-on-High), whi
 grade V and VI materia. These drop slowly and their rewards are thin on the market board, so set
 **min units/day** to `Any` to see the whole shop.
 
-### Vendors
+### Scrips
 
-Every marketable item an NPC will sell you for plain gil — **4,943** of them — priced against
-the market board on the server you pick. Vendor prices are fixed and never move, so unlike the
-crafting tabs the only variable is what the board pays, which makes anything here a repeatable
-run rather than a one-off snipe.
+Two scrip-flip loops, valued live:
 
-By default the tab shows **only what is turning a profit right now**. That is still around
-1,200 rows on a busy server, so the default sort is **Gil/day** rather than raw margin — a 40M
-margin on something that sells twice a year is worth less than a 5k margin on something that
-shifts thirty a day, and sorting this way sinks the dead stock on its own. The best profit/day
-(profit per unit × units per day) is still shown in the headline cards.
+- **Orange** collectibles (lvl 100, 144 scrips) → grade XII materia at 500 scrips
+- **Purple** collectibles (lvl 92–98, 142–198 scrips) → grade XI materia at 250 scrips
 
-The columns read Item, Bought from, Vendor cost, Sell now, Sell avg 30d, Trend, Profit/unit,
-Margin, Units/day and Gil/day. Trend is pulled only for the rows on screen and fills in just
-after the table draws, since fetching 30 days of sales for all 4,943 items would take fifty
-extra batches. Tick **Show ALL vendor items** to see the whole 4,943 including the losers;
-it's off by default because most vendor stock never sells for more than it costs.
+Revenue per craft is what those scrips are worth as materia on your home world; profit subtracts
+the material cost. `gil/scrip` uses whichever of the three crafter materia (Competence, Cunning,
+Command) at that grade sells highest, net of tax. Lower-level Purple collectibles give fewer
+scrips but often use much cheaper materials — sorting by profit shows which loop actually wins.
 
-**Sell price** has three bases. *Realistic* (the default) takes the lower of the cheapest
-current listing and the 30-day average — you have to undercut the board to sell, but a lone
-silly listing is not a real price. *Cheapest listing* and *30-day average* are also available.
+In this tab's recipe trees, precrafts are bought NQ wherever they're listed (you'd rather buy
+than precraft here) and only expanded into their own materials when nothing is for sale.
 
-A ⚠ chip means the price is not backed by real sales: either nothing has sold on that server in
-30 days, or the listing sits far from the average that did. Most vendor stock hits one of those,
-so the chip is common — the headline figures at the top of the tab ignore those rows entirely,
-and **Hide ⚠ unreliable** drops them from the table. Without this the tab would happily report a
-142M profit on an interior wall that has never once sold.
+### Duties
 
-**Bought from** is joined out of the game's own shop tables: the NPC, the zone and the map
-coordinate, preferring a city vendor where an item is stocked in several places. *+n more* means
-there are closer options than the one shown. Two tags flag stock you may not be able to buy
-today: `locked?` where a quest or achievement gates the shop, and `seasonal` where the shop only
-opens during an event (46 items, mostly Starlight, Valentione's and Heavensturn furnishings).
+The drops worth chasing in instanced and field content, with how often each one actually drops:
+
+- **Dungeons** — minions, orchestrion rolls and furnishings such as the Verdant Partition. The chance
+  is per run, every chest in the duty added together, and the item still goes to a party loot roll.
+- **Deep dungeons** — what the Palace of the Dead, Heaven-on-High, Eureka Orthos and Pilgrim's
+  Traverse sacks appraise into (the Night Pegasus Whistle, the Pilgrim's Traverse horns and
+  resonator, glamour weapons), plus the Gelmorran and Empyrean potsherd exchanges.
+- **Variant & Criterion** — the Sil'dihn, Rokkon, Aloalo and Corvosi potsherd exchanges, plus the
+  Merchant's Tale (Advanced) chests. Variant route minions are untradable, so they are not here.
+- **Eureka** — lockboxes and bunny coffers per zone, and notorious-monster FATE drops such as the
+  Cassie Earring and Blitzring, which have no recorded rate and say so.
+- **Bozja** — Southern Front and Zadnor lockboxes, and the Bozjan Cluster exchange.
+- **Occult Crescent** — treasure, pot and bunny coffers in both horns (the Occult accessories of
+  Blood and Magic among them), and the Enlightenment silver and gold piece exchanges.
+
+Only drops that sell for real money are listed. **Expected** is what one run, coffer or sack is worth
+from that item (chance × average after tax), or gil per unit of currency for an exchange. Sell now
+is your world and the rest is measured across your data centre, because rare drops
+sell a handful of times a month on any one world.
+
+### Flips
+
+No crafting involved — pure arbitrage. Scans mounts, minions, hairstyles, outfit coffers and
+emotes (the tradeable `Ballroom Etiquette` manuals) across every world on the data centres you
+have picked, finds the cheapest listing anywhere, and compares it to the 30-day average sale
+price on your home world. The world name is colour-coded: orange means a
+world hop is required, teal means it's already on your world.
+
+Rare, slow-moving items are exactly where current listings lie most, so this tab leans hardest
+on sales history.
+
+### Retainers
+
+What the four 18-hour exploration ventures (Field, Highland, Woodland and Waterside) bring back
+that is worth selling: 26 drops, mostly minions plus a few expensive furnishings. Anything worth
+only a few thousand gil is left off, because it is a venture reward but not a reason to send one.
+
+Ten of the rows are tagged **only from this venture**: they have no other source in the game (not
+craftable, not sold by a vendor, not a quest, duty or gathering drop, and not returned by a
+different venture). The rest can also be had elsewhere, and each row says where. The **Tier(s)**
+column gives the venture tiers in Roman numerals; a higher tier needs a higher-level retainer.
+
+The headline cards rank the four ventures by their most valuable drop. Filter to one venture, tick
+*Venture-exclusive only*, or tick *Only what is actually selling* to drop anything with no sales
+in 30 days.
+
+As on Duties, Sell now is your world but Avg 30d, Trend, Units/day and Gil/day are measured
+across your data centre, because these items sell a handful of times a month on any one world.
+Gil/day is Avg 30d after tax × units a day.
 
 ### Submersibles
 
@@ -259,33 +270,45 @@ each turn-in straight off the board. Turn-ins accept either quality, so each is 
 NQ and HQ is cheaper. Drafts, company credits and workshop time are not gil, so they are not counted.
 Projects that have not sold in 30 days carry a ⚠ and are kept out of the headline cards.
 
-### Duties
+### Vendors
 
-The drops worth chasing in instanced and field content, with how often each one actually drops:
+Every marketable item an NPC will sell you for plain gil — **4,943** of them — priced against
+the market board on the server you pick. Vendor prices are fixed and never move, so unlike the
+crafting tabs the only variable is what the board pays, which makes anything here a repeatable
+run rather than a one-off snipe.
 
-- **Dungeons** — minions, orchestrion rolls and furnishings such as the Verdant Partition. The chance
-  is per run, every chest in the duty added together, and the item still goes to a party loot roll.
-- **Deep dungeons** — what the Palace of the Dead, Heaven-on-High, Eureka Orthos and Pilgrim's
-  Traverse sacks appraise into (the Night Pegasus Whistle, the Pilgrim's Traverse horns and
-  resonator, glamour weapons), plus the Gelmorran and Empyrean potsherd exchanges.
-- **Variant & Criterion** — the Sil'dihn, Rokkon, Aloalo and Corvosi potsherd exchanges, plus the
-  Merchant's Tale (Advanced) chests. Variant route minions are untradable, so they are not here.
-- **Eureka** — lockboxes and bunny coffers per zone, and notorious-monster FATE drops such as the
-  Cassie Earring and Blitzring, which have no recorded rate and say so.
-- **Bozja** — Southern Front and Zadnor lockboxes, and the Bozjan Cluster exchange.
-- **Occult Crescent** — treasure, pot and bunny coffers in both horns (the Occult accessories of
-  Blood and Magic among them), and the Enlightenment silver and gold piece exchanges.
+By default the tab shows **only what is turning a profit right now**. That is still around
+1,200 rows on a busy server, so the default sort is **Gil/day** rather than raw margin — a 40M
+margin on something that sells twice a year is worth less than a 5k margin on something that
+shifts thirty a day, and sorting this way sinks the dead stock on its own. The best profit/day
+(profit per unit × units per day) is still shown in the headline cards.
 
-Only drops that sell for real money are listed. **Expected** is what one run, coffer or sack is worth
-from that item (chance × average after tax), or gil per unit of currency for an exchange. As on
-Retainers, Sell now is your world and the rest is measured across your data centre, because rare drops
-sell a handful of times a month on any one world.
+The columns read Item, Bought from, Vendor cost, Sell now, Sell avg 30d, Trend, Profit/unit,
+Margin, Units/day and Gil/day. Trend is pulled only for the rows on screen and fills in just
+after the table draws, since fetching 30 days of sales for all 4,943 items would take fifty
+extra batches. Tick **Show ALL vendor items** to see the whole 4,943 including the losers;
+it's off by default because most vendor stock never sells for more than it costs.
+
+**Sell price** has three bases. *Realistic* (the default) takes the lower of the cheapest
+current listing and the 30-day average — you have to undercut the board to sell, but a lone
+silly listing is not a real price. *Cheapest listing* and *30-day average* are also available.
+
+A ⚠ chip means the price is not backed by real sales: either nothing has sold on that server in
+30 days, or the listing sits far from the average that did. Most vendor stock hits one of those,
+so the chip is common — the headline figures at the top of the tab ignore those rows entirely,
+and **Hide ⚠ unreliable** drops them from the table. Without this the tab would happily report a
+142M profit on an interior wall that has never once sold.
+
+**Bought from** is joined out of the game's own shop tables: the NPC, the zone and the map
+coordinate, preferring a city vendor where an item is stocked in several places. *+n more* means
+there are closer options than the one shown. Two tags flag stock you may not be able to buy
+today: `locked?` where a quest or achievement gates the shop, and `seasonal` where the shop only
+opens during an event (46 items, mostly Starlight, Valentione's and Heavensturn furnishings).
 
 ### Lists
 
-Up to five lists you fill yourself. The 📋 button on any row of any tab — **Dashboard**,
-**Precrafts**, **Flips**, **Scrips**, **Currencies** and **Vendors**, and on any material inside
-a crafting tree — opens a picker with your lists on it; choose one and the item lands there.
+Up to five lists you fill yourself. The 📋 button on any row of any tab, and on any material inside
+a crafting tree, opens a picker with your lists on it; choose one and the item lands there.
 Clicking the same list again takes it back off.
 
 Each tab hands over what it knows: a precraft or a Scrips collectable brings its whole recipe
@@ -310,15 +333,18 @@ loading the Dashboard's 9,000-item catalogue.
 
 ## Shared features
 
-**Shopping list.** The 🛒 button on any row adds that item's materials to a list shared across
-every tab. It groups by world (flagging which need a hop), tracks a running gil total, and tags
+**Shopping list.** The 🛒 button adds an item's materials to a list shared across every tab. It is
+on the rows of the Dashboard, Precrafts, Scrips and your lists, where it adds the recipe's
+materials; on Workshop, where it adds every turn-in the project needs; and on Flips, Retainers and
+Vendors, where it adds the item itself. Currencies, Duties
+and Submersibles have nothing to buy with gil, so they don't carry one. It groups by world (flagging which need a hop), tracks a running gil total, and tags
 each line with which finished item it's for. Worlds stay in the order they were first added, so
 ticking items off never moves the world you're halfway through buying. Prices are captured at the time of adding, and each
 line is badged against the recent average so you can see whether you're buying into a dip or
 overpaying. Crystals, shards and clusters are excluded — assumed stocked.
 
 **Teamcraft simulator.** Every craftable row on the **Dashboard**, **Precrafts** and list tabs —
-and every craftable material inside a crafting tree — has a ↗ button that opens that exact
+and every craftable material inside a crafting tree, including the Workshop's — has a ↗ button that opens that exact
 recipe in the [Teamcraft](https://ffxivteamcraft.com) craft simulator, so you can check a
 rotation before you commit. Rows that aren't crafted don't get one.
 
@@ -367,6 +393,10 @@ anything unrecognised — an unknown item is never guessed into a category it mi
 **Settings.** Home world (default **Spriggan**), the data centres materials are priced across
 (default **Chaos**), and market tax (default **5%**) are set per tab and persisted. Each tab
 remembers its own filters and sort between sessions.
+
+On a first visit the desk asks which world you play on, and every tab starts on that world and its
+data centre. From then on each tab's world is its own: change it on one tab and the others stay
+where they are.
 
 **Worlds and data centres.** *Sell on* lists every world across North America, Europe, Japan and
 Oceania, grouped by region and data centre. *Mats from* is a checklist rather than a dropdown of fixed combinations — tick any number
@@ -437,6 +467,10 @@ node tools/rebake.js
 It downloads the latest public game data and crowd-sourced loot rates, rebuilds the three
 datasets and writes them into `src/data/` and `index.html`. It needs only Node.js, and nothing it touches needs a
 key or an account.
+
+The **Vendors** and **Currencies** data, and the Dashboard and Precrafts recipe lists, are not
+covered. The scripts that built them were not kept, so they stay on patch 7.55 until those scripts
+are rewritten.
 
 ## Architecture
 
@@ -538,6 +572,17 @@ duplicating some code — which is why the shared chunks exist.
 - Until it has prices, the Dashboard shows a big **Load live prices** button in place of an empty table.
 - **Refresh** now really pulls fresh prices instead of re-reading the 12-minute cache, and shows
   an *Updating…* label and a progress bar while it works.
+- **Shift-click Refresh** on the Dashboard now rescans the items *Skip dead items* leaves out, as
+  its tooltip always said. Before, it only cleared the price cache.
+
+**Fixes**
+- The world you pick on a first visit now reaches every tab. It used to set only the Dashboard,
+  so the other tabs still opened on Spriggan.
+- **Retainers** remembers its world and filters between visits, like every other tab.
+- **Retainers**' *Daily gil* column is now **Gil/day**, the same name as on every other tab.
+- When prices fail to load, every tab gives the same message: Universalis may be down or
+  rate-limiting, so wait a minute and press Refresh. The old wording talked about a sandbox and
+  opening the file directly, which made no sense on the hosted desk.
 
 **Currencies, Vendors and the shopping list**
 - **Currencies** shows the currency cost inside the Item cell rather than in two extra columns,

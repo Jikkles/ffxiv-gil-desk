@@ -160,7 +160,7 @@ const fmtPct=p=>p>=10?p.toFixed(1)+"%":(p>=1?p.toFixed(2)+"%":p.toFixed(3).repla
 function setStatus(h){document.getElementById("status").innerHTML=h;}
 function clearErr(){const b=document.getElementById("errbox");if(b)b.innerHTML="";}
 function showErr(e){const t=document.getElementById("tbl");if(t)t.hidden=true;setStatus("Couldn't reach the market board.");
-  const b=document.getElementById("errbox");if(b)b.innerHTML=`<div class="err"><b>Live prices didn't load.</b> ${e.message||e}. Check <a href="https://universalis.app" target="_blank" rel="noopener" style="color:#ffd7db">universalis.app</a>.</div>`;}
+  const b=document.getElementById("errbox");if(b)b.innerHTML=`<div class="err"><b>Live prices didn't load.</b> ${e.message||e}. Universalis may be down or rate-limiting for a moment: wait a minute and press Refresh, or check <a href="https://universalis.app" target="_blank" rel="noopener" style="color:#ffd7db">universalis.app</a>.</div>`;}
 
 async function fetchAgg(scope,ids,onProgress){
   const ck=`agg:${scope}:${hashIds(ids)}`;const hit=Cache.get(ck,NET.CACHE_TTL_MS);

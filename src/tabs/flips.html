@@ -388,7 +388,7 @@ function clearErr(){document.getElementById("errbox").innerHTML="";}
 function showErr(e){
   document.getElementById("tbl").hidden=true;
   setStatus("Couldn't reach the market board.");
-  document.getElementById("errbox").innerHTML=`<div class="err"><b>Live prices didn't load.</b> ${e.message||e}. Open this file directly in your browser, or check <a href="https://universalis.app" target="_blank" rel="noopener" style="color:#ffd7db">universalis.app</a>.</div>`;
+  document.getElementById("errbox").innerHTML=`<div class="err"><b>Live prices didn't load.</b> ${e.message||e}. Universalis may be down or rate-limiting for a moment: wait a minute and press Refresh, or check <a href="https://universalis.app" target="_blank" rel="noopener" style="color:#ffd7db">universalis.app</a>.</div>`;
 }
 
 async function load(){

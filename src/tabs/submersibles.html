@@ -176,7 +176,7 @@ const catOf=id=>(SUB.names[id]||["",""])[1];
 function setStatus(h){document.getElementById("status").innerHTML=h;}
 function clearErr(){const b=document.getElementById("errbox");if(b)b.innerHTML="";}
 function showErr(e){document.getElementById("tbl").hidden=true;setStatus("Couldn't reach the market board.");
-  document.getElementById("errbox").innerHTML=`<div class="err"><b>Live prices didn't load.</b> ${e.message||e}. Routes are still ranked on salvage alone below once prices return. Check <a href="https://universalis.app" target="_blank" rel="noopener" style="color:#ffd7db">universalis.app</a>.</div>`;}
+  document.getElementById("errbox").innerHTML=`<div class="err"><b>Live prices didn't load.</b> ${e.message||e}. Routes are still ranked on salvage alone below once prices return. Universalis may be down or rate-limiting for a moment: wait a minute and press Refresh, or check <a href="https://universalis.app" target="_blank" rel="noopener" style="color:#ffd7db">universalis.app</a>.</div>`;}
 
 async function fetchAgg(scope,ids,onProgress){
   const ck=`agg:${scope}:${hashIds(ids)}`;const hit=Cache.get(ck,NET.CACHE_TTL_MS);

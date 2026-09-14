@@ -363,8 +363,28 @@ addEventListener("message",e=>{if(e.data&&e.data.gildesk==="focusSearch"&&XW.foc
 /* ---- first-visit home world picker ----
    A new visitor has never told us which world to price against, so every
    "Sell on" select would default to Spriggan. Ask once, before the first tab
-   loads, and write the answer into the same settings key every tab's own
-   restoreSettings() already reads on load — no per-tab wiring needed. */
+   loads, and write the answer into the Dashboard's settings; seedHomeWorld()
+   below carries it to the rest. */
+/* the baked world list, for the picker and for seeding the tabs; the tabs
+   themselves refresh theirs from Universalis */
+const HOME_TOPO=[
+  {region:"North America",dcs:{
+    "Aether":["Adamantoise","Cactuar","Faerie","Gilgamesh","Jenova","Midgardsormr","Sargatanas","Siren"],
+    "Primal":["Behemoth","Excalibur","Exodus","Famfrit","Hyperion","Lamia","Leviathan","Ultros"],
+    "Crystal":["Balmung","Brynhildr","Coeurl","Diabolos","Goblin","Malboro","Mateus","Zalera"],
+    "Dynamis":["Cuchulainn","Golem","Halicarnassus","Kraken","Maduin","Marilith","Rafflesia","Seraph"]}},
+  {region:"Europe",dcs:{
+    "Chaos":["Cerberus","Louisoix","Moogle","Omega","Phantom","Ragnarok","Sagittarius","Spriggan"],
+    "Light":["Alpha","Lich","Odin","Phoenix","Raiden","Shiva","Twintania","Zodiark"],
+    "Shadow":["Innocence","Pixie","Titania","Tycoon"]}},
+  {region:"Japan",dcs:{
+    "Elemental":["Aegis","Atomos","Carbuncle","Garuda","Gungnir","Kujata","Tonberry","Typhon"],
+    "Gaia":["Alexander","Bahamut","Durandal","Fenrir","Ifrit","Ridill","Tiamat","Ultima"],
+    "Mana":["Anima","Asura","Chocobo","Hades","Ixion","Masamune","Pandaemonium","Titan"],
+    "Meteor":["Belias","Mandragora","Ramuh","Shinryu","Unicorn","Valefor","Yojimbo","Zeromus"]}},
+  {region:"Oceania",dcs:{
+    "Materia":["Bismarck","Ravana","Sephirot","Sophia","Zurvan"]}}
+];
 function pickHomeWorld(){
   return new Promise(resolve=>{
     const SKEY="gildesk:all:settings", PICKED="gildesk:homePicked:v1";
@@ -373,24 +393,6 @@ function pickHomeWorld(){
     let saved=null;try{const s=JSON.parse(localStorage.getItem(SKEY)||"null");
       if(s&&typeof s.home==="string"&&s.home)saved=s.home;}catch(e){}
     if(saved){try{localStorage.setItem(PICKED,"1");}catch(e){}return resolve();}
-    const TOPO=[
-      {region:"North America",dcs:{
-        "Aether":["Adamantoise","Cactuar","Faerie","Gilgamesh","Jenova","Midgardsormr","Sargatanas","Siren"],
-        "Primal":["Behemoth","Excalibur","Exodus","Famfrit","Hyperion","Lamia","Leviathan","Ultros"],
-        "Crystal":["Balmung","Brynhildr","Coeurl","Diabolos","Goblin","Malboro","Mateus","Zalera"],
-        "Dynamis":["Cuchulainn","Golem","Halicarnassus","Kraken","Maduin","Marilith","Rafflesia","Seraph"]}},
-      {region:"Europe",dcs:{
-        "Chaos":["Cerberus","Louisoix","Moogle","Omega","Phantom","Ragnarok","Sagittarius","Spriggan"],
-        "Light":["Alpha","Lich","Odin","Phoenix","Raiden","Shiva","Twintania","Zodiark"],
-        "Shadow":["Innocence","Pixie","Titania","Tycoon"]}},
-      {region:"Japan",dcs:{
-        "Elemental":["Aegis","Atomos","Carbuncle","Garuda","Gungnir","Kujata","Tonberry","Typhon"],
-        "Gaia":["Alexander","Bahamut","Durandal","Fenrir","Ifrit","Ridill","Tiamat","Ultima"],
-        "Mana":["Anima","Asura","Chocobo","Hades","Ixion","Masamune","Pandaemonium","Titan"],
-        "Meteor":["Belias","Mandragora","Ramuh","Shinryu","Unicorn","Valefor","Yojimbo","Zeromus"]}},
-      {region:"Oceania",dcs:{
-        "Materia":["Bismarck","Ravana","Sephirot","Sophia","Zurvan"]}}
-    ];
     const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
     const back=document.createElement("div");
     back.className="homepick-back";
@@ -398,7 +400,7 @@ function pickHomeWorld(){
       <h2>Which server do you play on?</h2>
       <p>This sets what "Sell on" defaults to everywhere on the desk, so prices already match your world. You can change it any time from any tab.</p>
       <select id="homepickSel">
-        ${TOPO.map(r=>Object.keys(r.dcs).map(d=>
+        ${HOME_TOPO.map(r=>Object.keys(r.dcs).map(d=>
           `<optgroup label="${esc(r.region)} · ${esc(d)}">`+
           r.dcs[d].map(w=>`<option value="${esc(w)}">${esc(w)}</option>`).join("")+
           `</optgroup>`).join("")).join("")}
@@ -418,7 +420,7 @@ function pickHomeWorld(){
       /* restoreSettings() only follows a saved "dc" id to the matching data
          centre for the "home" id, so without this the price panels would
          load whatever DC the tab defaults to, not the one this world is in. */
-      for(const r of TOPO)for(const d in r.dcs)if(r.dcs[d].indexOf(sel.value)>=0)s.dc=d;
+      for(const r of HOME_TOPO)for(const d in r.dcs)if(r.dcs[d].indexOf(sel.value)>=0)s.dc=d;
       try{localStorage.setItem(SKEY,JSON.stringify(s));}catch(e){}
       dismiss();
     });
@@ -427,7 +429,27 @@ function pickHomeWorld(){
     addEventListener("keydown",function esck(e){if(e.key==="Escape"){removeEventListener("keydown",esck);dismiss();}});
   });
 }
-pickHomeWorld().then(()=>activate("all"));
+/* Every tab keeps its own settings, so a world written only to the Dashboard's
+   left the other nine selling on Spriggan. A tab that has never had a world set
+   follows the Dashboard's world and data centres; a tab that has keeps its own.
+   Runs before any tab loads, so each one's restoreSettings() picks it up. */
+const TAB_SETTINGS=["precraft","currencies","materia","duties","flips","retainer","submersible","workshop","vendors",
+  "list1","list2","list3","list4","list5"];
+function seedHomeWorld(){
+  let src=null;try{src=JSON.parse(localStorage.getItem("gildesk:all:settings")||"null");}catch(e){}
+  if(!src||typeof src.home!=="string"||!src.home)return;
+  let dc=typeof src.dc==="string"&&src.dc?src.dc:null;
+  if(!dc)for(const r of HOME_TOPO)for(const d in r.dcs)if(r.dcs[d].indexOf(src.home)>=0)dc=d;
+  for(const t of TAB_SETTINGS){
+    const key="gildesk:"+t+":settings";
+    let s=null;try{s=JSON.parse(localStorage.getItem(key)||"null");}catch(e){}
+    if(!s||typeof s!=="object")s={};
+    if(typeof s.home==="string"&&s.home)continue;
+    s.home=src.home;if(dc&&!s.dc)s.dc=dc;
+    try{localStorage.setItem(key,JSON.stringify(s));}catch(e){}
+  }
+}
+pickHomeWorld().then(()=>{seedHomeWorld();activate("all");});
 </script>
 </body>
 </html>
