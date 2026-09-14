@@ -1,6 +1,6 @@
-# Gil Desk
+# Jikky's Gil Factory
 
-A market-board scanner for Final Fantasy XIV.
+A market-board scanner for Final Fantasy XIV — "the desk" for short.
 
 ### **[→ Open the desk](https://jikkles.github.io/ffxiv-gil-desk/)**
 
@@ -30,10 +30,12 @@ browser. It is one self-contained file and behaves identically either way; setti
 lists live in that browser, so the hosted desk and a local copy keep their own.
 
 Each tab scans as soon as you open it, so a tab is never a blank table waiting for a click —
-except the **Dashboard**. The desk opens on it, and its scan is thousands of lookups, so it waits
-for **Refresh** rather than rate-limiting whichever tab you actually came for. Come back to a tab
-and it only rescans if its cached prices have gone cold (12 minutes), so flipping between tabs
-costs nothing; **Refresh** pulls fresh prices whenever you want them.
+except the **Dashboard**. The desk opens on it, and its scan is thousands of lookups, so until it
+has prices it shows one big **Load live prices** button rather than rate-limiting whichever tab
+you actually came for. Come back to a tab and it only rescans if its cached prices have gone cold
+(12 minutes), so flipping between tabs costs nothing; **Refresh** in the sidebar skips that cache
+and pulls fresh prices every time, with an *Updating…* label and a progress bar along the top
+while it works.
 
 ## The core idea
 
@@ -78,19 +80,24 @@ Three deliberate choices run through the whole thing:
 | --- | --- |
 | **Dashboard** | Profit scanner across 9,400+ personal-craft items |
 | **Precrafts** | Every craftable intermediate, as a one-step buy-craft-sell flip |
-| **Flips** | Cross-world flips on mounts, minions, hairstyles and outfit coffers |
-| **Scrips** | The two collectible → scrip → materia loops, valued live |
 | **Currencies** | Which marketable item each currency buys at the best gil rate |
-| **Vendors** | Every gil-priced NPC item, and what it resells for on your server |
+| **Scrips** | The two collectible → scrip → materia loops, valued live |
+| **Duties** | Valuable drops from dungeons, deep dungeons, variant, Eureka, Bozja and Occult Crescent, with drop rates |
+| **Flips** | Cross-world flips on mounts, minions, hairstyles and outfit coffers |
 | **Retainers** | What the four exploration ventures bring back that is worth selling |
 | **Submersibles** | Which voyage route earns the most for your sub build and resend schedule |
 | **Workshop** | All 162 Free Company workshop projects, costed phase by phase against their sale price |
-| **Duties** | Valuable drops from dungeons, deep dungeons, variant, Eureka, Bozja and Occult Crescent, with drop rates |
+| **Vendors** | Every gil-priced NPC item, and what it resells for on your server |
 | **Lists** | Up to five lists you fill yourself, renameable, kept in your browser |
 
-The **Dashboard**, **Precrafts**, **Flips** and list tabs each carry a `Trend` column, and
-it is sortable like any other — sort by it to see what is moving before you commit to a
-craft. Hover a trend for the two averages behind it and the window they cover.
+The tabs share one set of columns, in the same order everywhere: **Item**, **Sell now**,
+**Avg 30d**, **Trend**, **Units/day** and **Gil/day**, with each tab's own extras (a vendor cost,
+a buy price, a profit) slotted in around them. `Sell now` carries a small age pill showing how
+old that listing is. `Gil/day` is net sale price × units a day — how much gil the item moves on
+your world, not your cut of it.
+
+`Trend` is sortable like any other column — sort by it to see what is moving before you commit
+to a craft. Hover a trend for the two averages behind it and the window they cover.
 
 Two things sit outside the tabs and work from all of them: the **search box** in the top right,
 for looking up any item by name, and the **🌐** button on every row, which shows what that item
@@ -156,7 +163,9 @@ than precraft here) and only expanded into their own materials when nothing is f
 ### Currencies
 
 Pick a currency and it works out which marketable item that currency buys at the best
-gil-per-unit rate, then what that item sells for after tax.
+gil-per-unit rate, then what that item sells for after tax. Each row's Item cell shows the item's
+own icon and name over its vendor, with the currency icon and what one costs pinned to the right
+of the same cell, so the tab keeps the same columns as the rest of the desk.
 
 Vendor costs are read from the game's `SpecialShop` and `GCScripShopItem` tables at **patch
 7.55**, filtered to items actually sellable on the market board. Where the same item is sold by
@@ -178,10 +187,15 @@ crafting tabs the only variable is what the board pays, which makes anything her
 run rather than a one-off snipe.
 
 By default the tab shows **only what is turning a profit right now**. That is still around
-1,200 rows on a busy server, so the default sort is **profit/day** (profit per unit × sales per
-day) rather than raw margin — a 40M margin on something that sells twice a year is worth less
-than a 5k margin on something that shifts thirty a day, and sorting this way sinks the dead
-stock on its own. Tick **Show ALL vendor items** to see the whole 4,943 including the losers;
+1,200 rows on a busy server, so the default sort is **Gil/day** rather than raw margin — a 40M
+margin on something that sells twice a year is worth less than a 5k margin on something that
+shifts thirty a day, and sorting this way sinks the dead stock on its own. The best profit/day
+(profit per unit × units per day) is still shown in the headline cards.
+
+The columns read Item, Bought from, Vendor cost, Sell now, Sell avg 30d, Trend, Profit/unit,
+Margin, Units/day and Gil/day. Trend is pulled only for the rows on screen and fills in just
+after the table draws, since fetching 30 days of sales for all 4,943 items would take fifty
+extra batches. Tick **Show ALL vendor items** to see the whole 4,943 including the losers;
 it's off by default because most vendor stock never sells for more than it costs.
 
 **Sell price** has three bases. *Realistic* (the default) takes the lower of the cheapest
@@ -298,9 +312,24 @@ loading the Dashboard's 9,000-item catalogue.
 
 **Shopping list.** The 🛒 button on any row adds that item's materials to a list shared across
 every tab. It groups by world (flagging which need a hop), tracks a running gil total, and tags
-each line with which finished item it's for. Prices are captured at the time of adding, and each
+each line with which finished item it's for. Worlds stay in the order they were first added, so
+ticking items off never moves the world you're halfway through buying. Prices are captured at the time of adding, and each
 line is badged against the recent average so you can see whether you're buying into a dip or
 overpaying. Crystals, shards and clusters are excluded — assumed stocked.
+
+**Teamcraft simulator.** Every craftable row on the **Dashboard**, **Precrafts** and list tabs —
+and every craftable material inside a crafting tree — has a ↗ button that opens that exact
+recipe in the [Teamcraft](https://ffxivteamcraft.com) craft simulator, so you can check a
+rotation before you commit. Rows that aren't crafted don't get one.
+
+**Folding sidebar.** The arrow at the top of any tab's filters panel folds it down to a narrow
+rail, giving the table the width. It is one setting for the whole desk: fold it on one tab and
+every tab follows, and it stays folded next visit.
+
+**Tab bar.** When the window narrows, the bar tightens step by step (tab padding, a shorter
+search box, an icon-only theme button, smaller text, and finally no tab icons) before anything
+wraps, so the search box and theme button stay on the right. The list tabs carry on along the
+same row while there is room.
 
 **Item search.** The search box in the top right of the tab bar looks up any item by name and
 opens the cross-world panel for it, from whichever tab you happen to be on. It matches against
@@ -382,8 +411,8 @@ named NPC.
 
 The network layer batches 100 item IDs per request, runs 5 requests concurrently, retries twice
 with backoff on rate limits and server errors, and caches responses in `localStorage` for 12
-minutes (world lists for 24 hours). Shift-clicking **Refresh** forces a fresh pull; it clears
-only cached prices, never your saved lists, shopping list or settings.
+minutes (world lists for 24 hours). **Refresh** always skips that cache and pulls fresh prices;
+it never touches your saved lists, shopping list or settings.
 
 Universalis rate-limits heavy scans, and its rate-limit responses don't carry CORS headers, so a
 large refresh will log some `blocked by CORS policy` errors in the browser console. These are
@@ -436,7 +465,8 @@ Inside the built file:
 
 - A thin shell holds the tab bar and one `<iframe>` per tab.
 - `BLOBS` maps each tab key to a complete, standalone HTML document.
-- On first visit to a tab, its document is injected via `srcdoc`. Tabs never auto-load data.
+- On first visit to a tab, its document is injected via `srcdoc`. Every tab scans on first open
+  except the Dashboard, which waits for its **Load live prices** button.
 - Five shared code chunks are spliced into each document at render time via placeholder
   comments: `SHARED_A` (fetch/retry/cache layer), `SHARED_B` (world topology, the data-centre
   picker and the multi-DC market helpers), `SHARED_SHOP` (the shopping list), `SHARED_LIST`
@@ -480,3 +510,41 @@ duplicating some code — which is why the shared chunks exist.
   as hypothetical, not as gil you can go and collect.
 - Vendor locations come from the shop tables, which don't record seasonal availability perfectly
   — an unflagged item can still turn out to be event-only.
+
+## Changelog
+
+### 14 September 2026
+
+**New tabs and data**
+- **Submersibles**, **Workshop** and **Duties** tabs, baked from the game tables and crowd-sourced
+  loot records, and rebaked for patch 7.56.
+- A weekly GitHub Actions job rebakes those three tabs 10–38 days after a patch and pushes the
+  result on its own (see [Keeping it current](#keeping-it-current)).
+- The 150 items that had no icon (Bicolor Gemstone Vouchers, Tomestones of Frivolity, orchestrion
+  rolls, a lot of furnishings) now have one.
+
+**Across the desk**
+- The desk is now called **Jikky's Gil Factory** in the tab bar.
+- New tab order: Dashboard, Precrafts, Currencies, Scrips, Duties, Flips, Retainers, Submersibles,
+  Workshop, Vendors, then your lists.
+- Every tab uses the same columns in the same order (Item, Sell now, Avg 30d, Trend, Units/day,
+  Gil/day), plus its own extras. **Flips** gains Gil/day, and **Vendors** gains Trend and Gil/day.
+- Every craftable row, and every craftable material in a crafting tree, links to its recipe in the
+  Teamcraft simulator.
+- The filters panel folds down to a rail, and the whole desk remembers the choice.
+- The tab bar stays on one row as the window narrows, and the list tabs carry on along it.
+
+**Dashboard and Refresh**
+- Until it has prices, the Dashboard shows a big **Load live prices** button in place of an empty table.
+- **Refresh** now really pulls fresh prices instead of re-reading the 12-minute cache, and shows
+  an *Updating…* label and a progress bar while it works.
+
+**Currencies, Vendors and the shopping list**
+- **Currencies** shows the currency cost inside the Item cell rather than in two extra columns,
+  and fetches sales history only for the rows on screen, so big scans no longer fail.
+- **Vendors** sorts by Gil/day by default. Its Server field is now *Sell on*, listed above the
+  buy side as on the other tabs.
+- The shopping list no longer reorders its worlds as you tick items off.
+
+**Under the hood**
+- `index.html` is now built from `src/` with `node tools/build.js` (see [Architecture](#architecture)).
