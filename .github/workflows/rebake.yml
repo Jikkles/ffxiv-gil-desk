@@ -19,7 +19,6 @@ permissions:
   contents: write   # push the rebake
   issues: write     # report a rebake that needs a human
   actions: write    # keep this schedule switched on
-  pages: write      # rebuild the site after a push
 
 concurrency: rebake
 
@@ -77,8 +76,7 @@ jobs:
           git commit -m "Rebake Submersibles, Workshop and Duties for $PATCH" \
                      -m "Automatic weekly rebake, $DAYS days after the game data changed."
           git pull --rebase origin main
-          git push origin HEAD:main
-          gh api -X POST "repos/${{ github.repository }}/pages/builds" || true
+          git push origin HEAD:main   # GitHub Pages rebuilds from this push on its own
 
       - name: Open an issue
         if: failure()
