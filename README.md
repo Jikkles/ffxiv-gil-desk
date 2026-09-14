@@ -29,9 +29,11 @@ Prefer it offline, or want your own copy? Download [index.html](index.html) and 
 browser. It is one self-contained file and behaves identically either way; settings and saved
 lists live in that browser, so the hosted desk and a local copy keep their own.
 
-Each tab scans as soon as you open it, so a tab is never a blank table waiting for a click.
-Come back to one and it only rescans if its cached prices have gone cold (12 minutes), so
-flipping between tabs costs nothing; **Refresh** pulls fresh prices whenever you want them.
+Each tab scans as soon as you open it, so a tab is never a blank table waiting for a click —
+except the **Dashboard**. The desk opens on it, and its scan is thousands of lookups, so it waits
+for **Refresh** rather than rate-limiting whichever tab you actually came for. Come back to a tab
+and it only rescans if its cached prices have gone cold (12 minutes), so flipping between tabs
+costs nothing; **Refresh** pulls fresh prices whenever you want them.
 
 ## The core idea
 
@@ -80,6 +82,10 @@ Three deliberate choices run through the whole thing:
 | **Scrips** | The two collectible → scrip → materia loops, valued live |
 | **Currencies** | Which marketable item each currency buys at the best gil rate |
 | **Vendors** | Every gil-priced NPC item, and what it resells for on your server |
+| **Retainers** | What the four exploration ventures bring back that is worth selling |
+| **Submersibles** | Which voyage route earns the most for your sub build and resend schedule |
+| **Workshop** | All 162 Free Company workshop projects, costed phase by phase against their sale price |
+| **Duties** | Valuable drops from dungeons, deep dungeons, variant, Eureka, Bozja and Occult Crescent, with drop rates |
 | **Lists** | Up to five lists you fill yourself, renameable, kept in your browser |
 
 The **Dashboard**, **Precrafts**, **Flips** and list tabs each carry a `Trend` column, and
@@ -194,6 +200,73 @@ there are closer options than the one shown. Two tags flag stock you may not be 
 today: `locked?` where a quest or achievement gates the shop, and `seasonal` where the shop only
 opens during an event (46 items, mostly Starlight, Valentione's and Heavensturn furnishings).
 
+### Submersibles
+
+Free Company submersibles are sent on voyages of up to five sectors and come back with loot. Nearly
+all of the gil is **salvaged jewellery** (Salvaged and Extravagant Salvaged rings, bracelets, earrings
+and necklaces), which cannot go on the market board but sells to any NPC for a fixed 8,000–34,500. It
+drops in Deep-sea Site sectors J, M, O, R and Z, and in the Sea of Ash's Ascetic's Demise — which is
+why players run **OJ** (the Wreckage of *Discovery I* and the unidentified derelict) once a day, or
+**MROJZ** / **JORZ** on a longer cycle.
+
+Set your subs' **rank** and **parts** (hull, stern, bow, bridge — `S+` is a modified Shark, and so
+on) and the tab works out the build's surveillance, retrieval, speed, range and favor, then ranks
+every route worth sailing:
+
+- **Loot per visit** comes from crowd-sourced voyage records (see [Data](#data)): units per loot roll,
+  times the rolls a visit gives when favor clears the sector's breakpoint. Short of a sector's
+  surveillance breakpoints the build loses that tier's loot; short of its retrieval breakpoint it
+  brings back the smaller quantity band. Both are flagged per sector.
+- **Salvage** is valued at the NPC price; everything else at the lower of its 30-day average and its
+  cheapest listing across your data centre, after tax, so a single troll sale cannot make a sector.
+- **Voyage time** uses the game's own formula — travel and survey time scaled by speed, plus a fixed
+  12 hours — and each route is sailed in the quickest order that fits the build's range.
+- **Repairs** are Magitek Repair Materials at the current price, spread over the voyages a part
+  lasts. Ceruleum tanks cost company credits, not gil, so they are counted but not subtracted.
+- **Profit/day** is what the fleet nets a day on the resend schedule you pick. A 22-hour voyage sent
+  once a day earns every day; a 26-hour one only every other day, which is exactly the trade-off
+  between OJ and the longer routes.
+
+Click a route for what each sector brings back and which breakpoints the build meets. The **Loot**
+view lists every item a voyage can return, with the desk's standard price columns.
+
+### Workshop
+
+All 162 projects a Free Company workshop can build — submersible and airship parts, housing
+exteriors and aetherial wheels — read straight from the game's `CompanyCraftSequence`,
+`CompanyCraftPart`, `CompanyCraftProcess` and `CompanyCraftSupplyItem` tables, so every phase, set
+size and set count is what the workshop really asks for. Columns match the Dashboard: sell now,
+30-day average, trend, material cost, profit, margin, units/day and gil/day.
+
+Click a project for its phases, each turn-in with its set breakdown and crafter level, and the recipe
+under every craftable turn-in, as deep as it goes. **Mat cost** defaults to *Precraft-optimised* (a
+turn-in cheaper to craft than to buy is costed as crafted, crystals included); *Buy turn-ins* prices
+each turn-in straight off the board. Turn-ins accept either quality, so each is bought at whichever of
+NQ and HQ is cheaper. Drafts, company credits and workshop time are not gil, so they are not counted.
+Projects that have not sold in 30 days carry a ⚠ and are kept out of the headline cards.
+
+### Duties
+
+The drops worth chasing in instanced and field content, with how often each one actually drops:
+
+- **Dungeons** — minions, orchestrion rolls and furnishings such as the Verdant Partition. The chance
+  is per run, every chest in the duty added together, and the item still goes to a party loot roll.
+- **Deep dungeons** — what the Palace of the Dead, Heaven-on-High, Eureka Orthos and Pilgrim's
+  Traverse sacks appraise into (the Night Pegasus Whistle, the Pilgrim's Traverse horns and
+  resonator, glamour weapons), plus the Gelmorran and Empyrean potsherd exchanges.
+- **Variant & Criterion** — the Sil'dihn, Rokkon, Aloalo and Corvosi potsherd exchanges, plus the
+  Merchant's Tale (Advanced) chests. Variant route minions are untradable, so they are not here.
+- **Eureka** — lockboxes and bunny coffers per zone, and notorious-monster FATE drops such as the
+  Cassie Earring and Blitzring, which have no recorded rate and say so.
+- **Bozja** — Southern Front and Zadnor lockboxes, and the Bozjan Cluster exchange.
+- **Occult Crescent** — treasure, pot and bunny coffers in both horns (the Occult accessories of
+  Blood and Magic among them), and the Enlightenment silver and gold piece exchanges.
+
+Only drops that sell for real money are listed. **Expected** is what one run, coffer or sack is worth
+from that item (chance × average after tax), or gil per unit of currency for an exchange. As on
+Retainers, Sell now is your world and the rest is measured across your data centre, because rare drops
+sell a handful of times a month on any one world.
+
 ### Lists
 
 Up to five lists you fill yourself. The 📋 button on any row of any tab — **Dashboard**,
@@ -290,6 +363,16 @@ so you know whether you're acting on a live market or yesterday's.
 All market data comes from the [Universalis](https://universalis.app) API — free, keyless and
 CORS-open. Item and recipe metadata is baked into the file.
 
+The **Submersibles** and **Duties** drop rates come from
+[Infi's FFXIVGachaSpreadsheet](https://github.com/Infiziert90/FFXIVGachaSpreadsheet) exports
+(`Submarines.json`, `DeepDungeonSacks.json`, `EurekaBunnies.json`, `FieldOpLockboxes.json`,
+`OccultTreasuresV2.json`, `ChestDropsV2.json`) — the loot records uploaded by the SubmarineTracker
+and related plugins — baked in by `tools/rebake.js` (last run 14 September 2026). Sector positions, survey times, tanks and
+part stats come from the game's `SubmarineExploration`, `SubmarinePart` and `SubmarineRank` tables,
+and the stat breakpoints from [SubmarineTracker](https://github.com/Infiziert90/SubmarineTracker).
+Exchange costs are read from `SpecialShop`. The **Workshop** projects come from the
+`CompanyCraft*` tables, and the recipes under each turn-in from Teamcraft's public data.
+
 The **Vendors** dataset is built from the game's own `GilShopItem`, `GilShop`, `Item`,
 `ENpcBase`, `ENpcResident`, `Level` and `Map` tables (via the public
 [ffxiv-datamining](https://github.com/xivapi/ffxiv-datamining) CSVs), filtered to items that are
@@ -310,9 +393,22 @@ absorbed by the retry layer and are harmless — if batches genuinely fail, the 
 Data is only as good as what players have uploaded. Items nobody has scanned recently will show
 stale or missing prices.
 
+## Keeping it current
+
+Submersible routes, workshop projects and duty drops are baked into the file, so a patch that
+adds new ones needs them pulled again. One command does it — see [tools/README.md](tools/README.md):
+
+```
+node tools/rebake.js
+```
+
+It downloads the latest public game data and crowd-sourced loot rates, rebuilds the three
+datasets and writes them into `index.html`. It needs only Node.js, and nothing it touches needs a
+key or an account.
+
 ## Architecture
 
-The whole desk is one ~4.7MB `index.html` with no build step.
+The whole desk is one ~5.6MB `index.html` with no build step.
 
 - A thin shell holds the tab bar and one `<iframe>` per tab.
 - `BLOBS` maps each tab key to a complete, standalone HTML document.
@@ -343,7 +439,10 @@ duplicating some code — which is why the shared chunks exist.
 - Prices from a data centre in another region are informational: you cannot travel there.
 - Daily ceilings are rankings, not forecasts.
 - Nothing accounts for crafting stats, materia, food, or whether you can actually hit HQ.
-- Vendor costs are pinned to patch 7.55 and will drift as the game updates.
+- Vendor costs are pinned to patch 7.55 and will drift as the game updates. The Submersibles,
+  Workshop and Duties data can be refreshed with `node tools/rebake.js`.
+- Submersible and duty drop rates are crowd-sourced averages. They describe a lot of voyages and
+  coffers, not your next one, and a rate on a thin sample (a few hundred coffers) can move a long way.
 - The cross-world panel reads the 50 cheapest listings per scope. That is across the scope, not
   per world, which is what sets the number: a data centre is eight worlds, so 50 leaves roughly
   six listings each. On a heavily stocked item the units-available figure is therefore a floor,
