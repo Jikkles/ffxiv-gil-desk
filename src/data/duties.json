@@ -3024,6 +3024,21 @@
       "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Bronze-tinged Sack","pct":1.173,"n":13298}]
     },
     {
+      "i": 16616,
+      "n": "Red Viola Corsage",
+      "c": "Head",
+      "src": [
+        {"g":"Deep dungeons","p":"Eureka Orthos","f":"Bronze-tinged Sack","pct":0.466,"n":13298},
+        {
+          "g": "Bozja",
+          "p": "Bozjan Southern Front",
+          "f": "Southern Front Lockbox",
+          "pct": 0.099,
+          "n": 175738
+        }
+      ]
+    },
+    {
       "i": 13849,
       "n": "Replica Heavy High Allagan Coat",
       "c": "Body",
