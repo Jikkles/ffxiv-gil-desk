@@ -26,7 +26,7 @@
   html,body{height:100%}
   body{margin:0;background:var(--bg);font-family:"Inter",system-ui,sans-serif;display:flex;flex-direction:column}
   .tabbar{
-    display:flex;gap:7px;align-items:center;flex-wrap:wrap;background:var(--bg2);
+    display:flex;gap:14px;align-items:center;background:var(--bg2);
     border-bottom:1px solid var(--line);padding:0 16px 0 0;position:sticky;top:0;z-index:5;min-height:66px;flex:none;
   }
   /* the brand block sits over the tab sidebars, so the two columns line up */
@@ -45,6 +45,9 @@
   .brand .b1{font-family:"Inter",sans-serif;font-size:14.5px;font-weight:700;color:var(--ink);white-space:nowrap}
   .brand .b1 b{color:var(--gil);font-weight:700}
   .brand .b2{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint);white-space:nowrap}
+  /* the tabs are one column between the brand and the search, so when they run
+     out of room they wrap inside it and the search stays put on the right */
+  .tabs{flex:1;min-width:0;display:flex;flex-wrap:wrap;align-items:center;gap:6px 4px;padding:9px 0}
   .tab{all:unset;cursor:pointer;color:var(--muted);font-family:"Inter",sans-serif;font-size:14px;
     padding:10px 15px;border-radius:10px;border:1px solid transparent;display:flex;align-items:center;gap:9px}
   .tab:hover{color:var(--ink);background:var(--panel2)}
@@ -57,7 +60,15 @@
     border-radius:10px;border:1px dashed var(--line2)}
   .tabadd:hover{color:var(--gil);border-color:var(--gil)}
   .tabadd[hidden]{display:none}
-  .tabright{margin-left:auto;display:flex;align-items:center;gap:8px}
+  .tabright{flex:none;display:flex;align-items:center;gap:8px}
+  /* fitBar() steps these on, one at a time, until the tabs sit on one row */
+  .tabbar.fit1 .tab{padding:10px 11px;gap:8px}
+  .tabbar.fit2 #xwSearch input{width:120px}
+  .tabbar.fit2 .themebtn .tl{display:none}
+  .tabbar.fit2 .themebtn{padding:9px 10px}
+  .tabbar.fit3 .tab{padding:9px 9px;gap:7px;font-size:13.5px}
+  .tabbar.fit3 .tabsep{margin:0 2px}
+  .tabbar.fit4 .tabic{display:none}
   .themebtn{
     all:unset;cursor:pointer;display:flex;align-items:center;gap:7px;padding:9px 14px;border-radius:10px;
     border:1px solid var(--line);background:var(--panel);color:var(--muted);font-family:"JetBrains Mono",monospace;font-size:12px;
@@ -66,9 +77,10 @@
   .themebtn .ti{display:flex;line-height:1}
   .themebtn .ti svg{width:15px;height:15px;display:block}
   @media(max-width:900px){
-    .tabbar{padding:8px 12px}
+    .tabbar{padding:8px 12px;flex-wrap:wrap;gap:6px}
     .brand{width:auto;border-right:none}
-    .tabright{margin-left:0;width:100%}
+    .tabs{order:3;flex-basis:100%;padding:0}
+    .tabright{margin-left:auto}
   }
   .frames{position:relative;flex:1;min-height:0}
   iframe{width:100%;height:100%;border:0;display:none;background:var(--bg)}
@@ -111,6 +123,7 @@
       <span class="b1">Jikky&rsquo;s <b>Gil Factory</b></span>
     </span>
   </span>
+  <nav class="tabs">
   <button class="tab" data-tab="all" aria-selected="false">Dashboard</button>
   <button class="tab" data-tab="precraft" aria-selected="false">Precrafts</button>
   <button class="tab" data-tab="flips" aria-selected="false">Flips</button>
@@ -123,6 +136,7 @@
   <button class="tab" data-tab="duties" aria-selected="false">Duties</button>
   <span class="tabsep"></span>
   <button class="tabadd" id="addList" title="Create another list (up to five)">＋ List</button>
+  </nav>
   <div class="tabright">
     <div class="tabsearch" id="tabSearch"></div>
     <span id="themeToggle"></span>
@@ -275,7 +289,7 @@ function syncListTabs(){
       b=document.createElement("button");
       b.className="tab";b.dataset.tab=key;b.dataset.listtab=n;
       b.setAttribute("aria-selected","false");
-      bar.insertBefore(b,addBtn);
+      addBtn.parentNode.insertBefore(b,addBtn);
     }
     b.textContent="";
     b.insertAdjacentHTML("afterbegin",tabIcon("list"));
@@ -285,7 +299,31 @@ function syncListTabs(){
     }
   }
   addBtn.hidden=st.order.length>=LIST_MAX;
+  fitBar();
 }
+/* ---- keep the bar on one row ----
+   The list tabs carry user-chosen names, so no fixed breakpoint knows when the
+   row is full. Instead, measure: start roomy and tighten a step at a time until
+   every tab shares the first tab's row. The icons are the last thing to go, and
+   only if that alone saves the row: when even that is not enough the tabs keep
+   their icons and wrap, inside their own column. */
+const FIT_STEPS=4;
+function fitBar(){
+  const bar=document.querySelector(".tabbar"),tabs=bar.querySelector(".tabs");
+  const kids=[...tabs.children].filter(k=>!k.hidden&&k.offsetParent!==null);
+  if(!kids.length)return;
+  /* centred on one row, the short divider still overlaps the first tab's height */
+  const oneRow=()=>kids[kids.length-1].getBoundingClientRect().top<kids[0].getBoundingClientRect().bottom;
+  for(let i=1;i<=FIT_STEPS;i++)bar.classList.remove("fit"+i);
+  if(matchMedia("(max-width:900px)").matches)return;
+  for(let i=1;i<=FIT_STEPS&&!oneRow();i++)bar.classList.add("fit"+i);
+  if(!oneRow())bar.classList.remove("fit"+FIT_STEPS);
+}
+let fitQueued=0;
+addEventListener("resize",()=>{cancelAnimationFrame(fitQueued);fitQueued=requestAnimationFrame(fitBar);});
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitBar);
+/* folding the sidebar hands the brand's width to the tabs, or takes it back */
+document.querySelector(".brand").addEventListener("transitionend",e=>{if(e.propertyName==="width")fitBar();});
 addBtn.addEventListener("click",()=>{
   const st=readLists();
   if(st.order.length>=LIST_MAX)return;
@@ -318,6 +356,7 @@ XW.mountSearch(document.getElementById("tabSearch"));
 /* the shared UI runtime also owns the theme, which the shell shares with every tab */
 (0,eval)(UI_JS+"\n;window.mountThemeToggle=mountThemeToggle;window.__applyTheme=applyTheme;");
 mountThemeToggle(document.getElementById("themeToggle"));
+fitBar();
 /* "/" pressed inside a tab arrives here, since the key never reaches this document */
 addEventListener("message",e=>{if(e.data&&e.data.gildesk==="focusSearch"&&XW.focusSearch)XW.focusSearch();});
 
