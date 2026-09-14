@@ -9,6 +9,14 @@
 <style>
 /*__UI_CSS__*/
 /* ---- dashboard only: the craft tree, freshness pills and stock chips ---- */
+/* the Dashboard never scans on its own, so until it has prices it offers one big way in */
+.startscan{display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;
+  margin:18px 0 8px;padding:44px 20px;border:1px dashed var(--line2);border-radius:14px;background:var(--panel)}
+.startscan[hidden]{display:none}
+.startscan .btn.primary{font-size:17px;font-weight:700;padding:16px 38px;border-radius:12px}
+.startscan .btn.primary:disabled{opacity:.6;cursor:progress}
+.startscan-sub{font-size:13px;color:var(--muted);max-width:520px;line-height:1.5}
+.startscan-sub b{color:var(--ink);font-weight:600}
 tr.detail>td{background:var(--bg2);border-bottom:1px solid var(--line);padding:0;border-left:none}
 .tree{padding:12px 16px 14px}
 .thead{display:grid;grid-template-columns:1fr 132px 152px 132px 112px;gap:18px;font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);padding:0 6px 6px;border-bottom:1px solid var(--line)}
@@ -93,6 +101,10 @@ tr.detail>td{background:var(--bg2);border-bottom:1px solid var(--line);padding:0
     
 
     <div class="status" id="status">Loading…</div>
+    <div class="startscan" id="startScan" hidden>
+      <button class="btn primary" id="startScanGo" type="button">↻ Load live prices</button>
+      <div class="startscan-sub">Prices <b class="nItemsEcho">9,400+</b> items on <b class="homename">Spriggan</b>, with materials from <b class="dcname">Chaos</b>. Same as <b>Refresh</b> in the sidebar.</div>
+    </div>
     <div id="errbox"></div>
 
     <div class="tablewrap">
@@ -201,6 +213,7 @@ function closureIds(ids){const seen=new Set(ids);const st=[...ids];
     for(const ing of r.ingredients)if(!seen.has(ing.id)){seen.add(ing.id);st.push(ing.id);}}
   return[...seen];}
 async function load(){const btn=document.getElementById("refresh");btn.disabled=true;clearErr();
+  document.getElementById("startScan").hidden=true;
   try{setStatus("Fetching world list\u2026");
     await refreshTopology();buildHomeSelect(document.getElementById("home"),state.home);setDcs(state.dcs);
     state.worlds=await fetchWorlds();
@@ -223,7 +236,10 @@ async function load(){const btn=document.getElementById("refresh");btn.disabled=
       if(!s||!s.a||!s.a[1])nd.add(id);else nd.delete(id);}
     saveDeadList(nd);
     if(dead.size)document.getElementById("status").innerHTML+=` · <span title="Zero-sale items skipped this refresh — shift-click Refresh for a full rescan">${dead.size.toLocaleString("en-GB")} dead skipped</span>`;
-  }catch(e){showErr(e);}finally{btn.disabled=false;}}
+  }catch(e){showErr(e);}finally{btn.disabled=false;syncStartScan();}}
+/* the big button stands in for Refresh until a scan has produced rows, and
+   comes back if the first scan fails */
+function syncStartScan(){document.getElementById("startScan").hidden=!!state.rows;}
 
 function compute(){state._best={};state._hops={};const rows=[];
   const opt=state.matBasis!=="buyall";
@@ -337,6 +353,7 @@ function showErr(e){document.getElementById("tbl").hidden=true;setStatus("Couldn
   document.getElementById("errbox").innerHTML=`<div class="err"><b>Live prices didn't load.</b> ${e.message||e}. The sandbox may have blocked universalis.app, or it's briefly down. Open this file directly in your browser, or check <a href="https://universalis.app" target="_blank" rel="noopener" style="color:#ffd7db">universalis.app</a>.</div>`;}
 
 document.getElementById("nItems").textContent=FINISHED_IDS.length;
+document.querySelectorAll(".nItemsEcho").forEach(e=>{e.textContent=FINISHED_IDS.length;});
 document.getElementById("grp").addEventListener("change",e=>{state.group=e.target.value;render();});
 /* the sidebar category list drives the hidden <select>, so every existing
    listener, and the saved-settings round trip, keep working untouched */
@@ -373,12 +390,13 @@ document.getElementById("hideNo").addEventListener("change",e=>{state.hideNo=e.t
 document.getElementById("hideOutlier").addEventListener("change",e=>{state.hideOutlier=e.target.checked;render();});
 document.getElementById("skipDead").addEventListener("change",e=>{state.skipDead=e.target.checked;if(state.rows)load();});
 document.getElementById("refresh").addEventListener("click",load);
+document.getElementById("startScanGo").addEventListener("click",()=>document.getElementById("refresh").click());
 document.querySelectorAll("thead th[data-k]").forEach(th=>{if(th.style.cursor==="default")return;
   th.addEventListener("click",()=>{const k=th.dataset.k;if(state.sortKey===k)state.sortDir*=-1;else{state.sortKey=k;state.sortDir=-1;}
     document.querySelectorAll("thead th").forEach(x=>{x.removeAttribute("data-sorted");const s=x.querySelector("span");if(s)s.textContent="";});
     th.setAttribute("data-sorted","");th.querySelector("span").textContent=state.sortDir<0?"▾":"▴";render();});});
 buildNames();
-document.getElementById("status").innerHTML='Click <b>Refresh</b> to load live prices…';
+document.getElementById("status").innerHTML="";syncStartScan();
 
 
 /* ===== v12: settings persistence + force-refresh ===== */
