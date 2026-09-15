@@ -344,6 +344,15 @@ window.Tour=(function(){
       const sc=Math.max(1,Math.min(A.w/focus.w,A.h/focus.h,s.zoom||1.25));
       let tx=focus.w*sc>A.w?A.x-focus.x*sc:A.x+A.w/2-(focus.x+focus.w/2)*sc;
       let ty=focus.h*sc>A.h?A.y-focus.y*sc:A.y+A.h/2-(focus.y+focus.h/2)*sc;
+      /* lining a tall frame up from its top can leave the lit part itself off the
+         bottom (the Last scan card under a sidebar taller than the window), so slide
+         just far enough to bring the lit part into the room, when it fits there */
+      if(target.h*sc<=A.h){
+        if(ty+(target.y+target.h)*sc>A.y+A.h)ty=A.y+A.h-(target.y+target.h)*sc;
+        if(ty+target.y*sc<A.y)ty=A.y-target.y*sc;}
+      if(target.w*sc<=A.w){
+        if(tx+(target.x+target.w)*sc>A.x+A.w)tx=A.x+A.w-(target.x+target.w)*sc;
+        if(tx+target.x*sc<A.x)tx=A.x-target.x*sc;}
       /* keep the page filling the screen rather than sliding off to show a gap,
          and when it is smaller than the screen, keep it on it */
       const pw=V.w*sc,ph=pageH*sc;
