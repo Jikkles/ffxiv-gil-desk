@@ -593,13 +593,16 @@ duplicating some code — which is why the shared chunks exist.
 **Scans**
 - A Dashboard scan no longer loses batches to Universalis' connection limit. It had opened about
   fifteen requests at once, and three batches failed on a clean first scan. The whole desk now keeps
-  at most eight open, including a tab still scanning in the background.
+  at most eight open, including a tab still scanning in the background, and a refused request is
+  tried four times rather than three before its batch counts as failed.
 
 **Layout**
 - At 1600px wide every column fits again: long item names wrap onto a second line, and so do
   headers like *Sell avg 30d*, rather than Units/day and Gil/day being cut off. Vendors' cells are a
-  touch narrower to fit its ten columns.
+  touch narrower to fit its ten columns, and its freshness tag can drop under the price.
 - Currencies no longer scrolls sideways, and the right-most currency icons' labels open leftwards.
+- On a narrower screen the headline cards no longer squeeze a tab's intro down to one word a line
+  once prices load (Vendors at 1366px was the worst); their captions cut off with an ellipsis instead.
 - A few colours that browsers ignored now show: the orange partial-data warning, the glow on the
   selected currency, and two hover backgrounds.
 

@@ -25,6 +25,10 @@
 .copy-btn:hover{border-color:var(--aether)}
 /* ten columns: a little less room either side of each keeps Gil/day on screen at 1600px */
 #tbl thead th,#tbl tbody td{padding-left:8px;padding-right:8px}
+/* and Sell now may put its freshness tag on a second line, so a wide price elsewhere
+   (an 8,000,000 gil vendor cost, say) does not push Gil/day off again */
+#tbl td.sellc{white-space:normal;line-height:1.7}
+#tbl td.sellc .nowrap,#tbl td.sellc .no-data{white-space:nowrap}
 .dense tbody td{padding:5px 11px!important}
 .dense .vend .where,.dense .vend .more{display:none}
 </style>
@@ -311,7 +315,8 @@ function render(){
       :"The cheapest listing sits far from the 30-day average — an odd listing, not a real price."} Treat this row's profit as unreliable.">⚠</span>`:"";
     /* the column says Sell now, so it shows the listing rather than whichever
        basis the sidebar picked to work the profit out from */
-    const sellCell=r.min==null?'<span class="no-data">no listing</span>'+warn:fmt(r.min)+warn+agePill(r.upload);
+    /* the space lets the freshness tag drop under the price when the table is short of room */
+    const sellCell=r.min==null?'<span class="no-data">no listing</span>'+warn:'<span class="nowrap">'+fmt(r.min)+warn+'</span> '+agePill(r.upload);
     const avgCell=r.avg!=null?fmt(r.avg):'<span class="no-data">—</span>';
     tr.innerHTML=`
       <td><div class="name">
@@ -322,7 +327,7 @@ function render(){
               r.seasonal?'<span class="seasonal" title="Only stocked at a seasonal event shop — you can buy this during that event and not the rest of the year">seasonal</span>':""}</span></div></td>
       <td class="vend hide">${vendorCell(r)}</td>
       <td class="gilv">${fmt(r.cost)}</td>
-      <td>${sellCell}</td>
+      <td class="sellc">${sellCell}</td>
       <td class="hide">${avgCell}</td>
       <td>${trendChip(r.trendT)}</td>
       <td class="profit ${cls}">${r.profit!=null?fmtM(r.profit):"—"}</td>

@@ -36,7 +36,7 @@ window.Tour=(function(){
     {sec:"Item list",title:"The item list",spot:"table",side:"bottom",
       body:"One row per item: what it sells for now, its 30-day average, which way the price is heading, what the materials cost, the profit, and how many sell a day. Click a column heading to sort by it."},
     {sec:"Item list",title:"⚠ Prices to double-check",spot:"outlier",focus:"outrow",side:"bottom",zoom:1.6,
-      body:"A <b>⚠</b> means the price can’t be trusted. Here one listing at 1,150,000 sits against a 30-day average of 12,000 from just two sales, so the profit is fantasy. It also shows when there’s no listing and the average rests on a sale or two, which is easy to rig. Hover it for the reason. <b>Hide ⚠ outliers</b> in the side panel starts ticked and keeps these rows out; untick it to see them."},
+      body:"A <b>⚠</b> means the price can’t be trusted. Here one listing at 1,150,000 sits against a 30-day average of 12,000 from just two sales, so the profit is fantasy. It also shows when there’s no listing and the average rests on a sale or two, which is easy to rig. Hover it for the reason. You only see rows like this with <b>Hide ⚠ outliers</b> unticked, as it is in this example; on the desk it starts ticked, so they stay out of your way."},
     {sec:"Freshness",title:"How fresh a price is",spot:"age",side:"right",zoom:1.8,
       body:"The pill beside each price says how long ago that item’s listings were last uploaded to Universalis: <b>green</b> under an hour, <b>orange</b> a few hours, <b>red</b> a day or more. An old price may already have sold or been undercut, so check it in game before you commit."},
     {sec:"Freshness",title:"Last scan",spot:"scan",focus:"side",side:"right",

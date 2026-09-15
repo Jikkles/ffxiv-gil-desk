@@ -41,6 +41,12 @@ function loadCatLabel() {
     try { patch = (await latestGameData()).patch; }
     catch (e) { console.log(`  note: could not look up the patch (${e.message}), so no "new" badges change`); }
   }
+  /* the badge reads "new <patch>", so only a patch number will do: a commit titled
+     anything else (latestGameData falls back to "new game data") leaves the badges alone */
+  if (patch && !/^\d+\.\d+[a-z]?$/.test(patch)) {
+    console.log(`  "${patch}" is not a patch number, so no "new" badges change`);
+    patch = null;
+  }
 
   const I = items();
   const catLabel = loadCatLabel();

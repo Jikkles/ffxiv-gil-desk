@@ -1,5 +1,5 @@
 /* ===== v12 data layer: retry, concurrency, cache ===== */
-const NET={CONCURRENCY:5,BATCH_SIZE:100,TIMEOUT_MS:20000,RETRIES:2,BACKOFF_MS:1500,MAX_OPEN:8,CACHE_TTL_MS:12*60*1000,WORLDS_TTL_MS:24*60*60*1000};
+const NET={CONCURRENCY:5,BATCH_SIZE:100,TIMEOUT_MS:20000,RETRIES:3,BACKOFF_MS:1500,MAX_OPEN:8,CACHE_TTL_MS:12*60*1000,WORLDS_TTL_MS:24*60*60*1000};
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 /* Every request on the desk waits its turn here. Each scan phase runs its own
    five workers, and the Dashboard runs three phases at once, so it was opening
@@ -31,7 +31,9 @@ async function tfetch(url,ms){let lastErr;
       if(res.status===429||res.status>=500)throw new Error("HTTP "+res.status);
       /* the body still has to arrive, so the slot is held until it has */
       const body=await res.arrayBuffer();
-      return new Response(body,{status:res.status,statusText:res.statusText,headers:res.headers});
+      /* a response that may carry no body (204, 304) cannot be rebuilt with one */
+      const empty=[101,204,205,304].indexOf(res.status)>=0;
+      return new Response(empty?null:body,{status:res.status,statusText:res.statusText,headers:res.headers});
     }catch(e){lastErr=e;}
     finally{clearTimeout(t);gateGive(slot);}
     if(attempt<NET.RETRIES)await sleep(NET.BACKOFF_MS*(attempt+1));}

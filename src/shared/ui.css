@@ -158,6 +158,12 @@ body{
 
 /* ---------- KPI cards ---------- */
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:11px;margin-bottom:13px}
+/* A card's one-line caption ("of 1,725 vendor items with market data on Spriggan") is
+   meant to cut off with an ellipsis, but a grid item will not shrink below its text, so
+   on a narrower screen the cards grew to fit their captions and squeezed the intro
+   beside them down to one word a line. Letting the grid and its cards shrink puts
+   the ellipsis back to work. */
+.hero .kpis,.hero .kpi{min-width:0}
 .kpi{display:flex;flex-direction:column;align-items:center;text-align:center;gap:7px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 15px;box-shadow:var(--shadow-sm)}
 .kpi .ki{width:36px;height:36px;border-radius:10px;flex:none;display:grid;place-items:center;font-size:17px;background:var(--panel2);border:1px solid var(--line)}
 .kpi .kbody{min-width:0;width:100%}
