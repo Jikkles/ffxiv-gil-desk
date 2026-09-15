@@ -425,3 +425,47 @@ thead th[data-sorted]{box-shadow:inset 0 -2px 0 var(--c1)}
 .howto .hw-sec h4{margin:0 0 6px;font-family:"JetBrains Mono",monospace;font-size:9.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--aether)}
 .howto .hw-sec p{margin:0;font-size:13px;line-height:1.6;color:var(--muted)}
 .howto .hw-sec b{color:var(--ink);font-weight:600}
+.howto .hw-guide{all:unset;box-sizing:border-box;cursor:pointer;display:inline-flex;align-items:center;gap:5px;flex:none;
+  font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.06em;padding:3px 9px;border-radius:7px;
+  color:var(--aether);border:1px solid var(--aether-line);background:var(--accent-soft)}
+.howto .hw-guide span{font-size:8px}
+.howto .hw-guide:hover{border-color:var(--aether)}
+.howto .hw-guide:focus-visible{outline:2px solid var(--aether);outline-offset:2px}
+
+/* ---------- a tab's own guide: the desk tour's spotlight and bubble, on the live page ---------- */
+.guide-root{position:fixed;inset:0;z-index:300;opacity:0;transition:opacity .2s ease}
+.guide-root.on{opacity:1}
+.guide-spot{position:fixed;border-radius:12px;pointer-events:none;
+  box-shadow:0 0 0 2px var(--aether),0 0 22px 2px #4de1c166,0 0 0 200vmax rgba(3,6,10,.72);
+  transition:left .35s ease,top .35s ease,width .35s ease,height .35s ease}
+:root[data-theme="light"] .guide-spot{box-shadow:0 0 0 2px var(--aether),0 0 22px 2px #0a736155,0 0 0 200vmax rgba(10,18,28,.6)}
+.guide-bub{position:fixed;left:0;top:0;width:340px;background:var(--panel);border:1px solid var(--line2);border-radius:14px;
+  padding:15px 17px 13px;box-shadow:0 20px 60px #00000080;font-family:"Inter",sans-serif;color:var(--ink);
+  opacity:0;transform:translateY(4px);transition:opacity .2s ease,transform .2s ease}
+.guide-bub.show{opacity:1;transform:none}
+.guide-top{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-family:"JetBrains Mono",monospace;
+  font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--aether)}
+.guide-n{margin-left:auto;color:var(--faint);letter-spacing:.06em}
+.guide-bub h3{margin:0 0 6px;font-size:16px;line-height:1.3}
+.guide-bub p{margin:0;font-size:13px;line-height:1.55;color:var(--muted)}
+.guide-bub p b{color:var(--ink);font-weight:600}
+.guide-prog{height:3px;border-radius:3px;background:var(--line);margin:13px 0 11px;overflow:hidden}
+.guide-prog i{display:block;height:100%;background:linear-gradient(90deg,var(--aether),var(--gil));transition:width .3s ease}
+.guide-nav{display:flex;align-items:center;gap:8px}
+.guide-nav button{all:unset;box-sizing:border-box;cursor:pointer;font-family:"Inter",sans-serif;font-size:12.5px;padding:7px 13px;border-radius:9px}
+.guide-nav button:focus-visible{outline:2px solid var(--aether);outline-offset:2px}
+.guide-nav .guide-skip{color:var(--faint);padding-left:0}
+.guide-nav .guide-skip:hover{color:var(--ink)}
+.guide-nav .guide-back{margin-left:auto;color:var(--muted);border:1px solid var(--line)}
+.guide-nav .guide-back:hover{color:var(--ink);border-color:var(--line2)}
+.guide-nav .guide-back[hidden]{display:none}
+.guide-nav .guide-back[hidden]+.guide-next{margin-left:auto}
+.guide-nav .guide-next{color:#0b1017;background:var(--gil);font-weight:700}
+:root[data-theme="light"] .guide-nav .guide-next{color:#fff}
+.guide-nav .guide-next:hover{filter:brightness(1.08)}
+.guide-arrow{position:absolute;width:14px;height:14px;background:var(--panel);transform:rotate(45deg);pointer-events:none}
+.guide-bub[data-side="right"] .guide-arrow{left:-8px;border-left:1px solid var(--line2);border-bottom:1px solid var(--line2)}
+.guide-bub[data-side="left"] .guide-arrow{right:-8px;border-right:1px solid var(--line2);border-top:1px solid var(--line2)}
+.guide-bub[data-side="bottom"] .guide-arrow{top:-8px;border-left:1px solid var(--line2);border-top:1px solid var(--line2)}
+.guide-bub[data-side="top"] .guide-arrow{bottom:-8px;border-right:1px solid var(--line2);border-bottom:1px solid var(--line2)}
+@media (prefers-reduced-motion:reduce){.guide-root,.guide-spot,.guide-bub,.guide-prog i{transition:none}}

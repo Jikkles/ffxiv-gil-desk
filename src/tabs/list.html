@@ -141,6 +141,13 @@
         <div class="hw-sec"><h4>Reading the table</h4><p>The columns match the Dashboard: sell now, 30-day average, material cost, profit, margin, units and gil a day. Open a row for its crafting tree. A raw material is still priced, just with no crafting cost.</p></div>
         <div class="hw-sec"><h4>Worth knowing</h4><p><b>✎ Rename</b> gives the list its own name, <b>＋ List</b> in the tab bar makes another (up to five), <b>Clear list</b> empties it with an undo, and <b>✕ Remove list</b> deletes the tab. Lists are kept in this browser only and never uploaded.</p></div>
       </div>
+      <template class="guide">
+        <div data-spot="#empty" data-side="bottom" data-title="Nothing here yet">Press 📋 on a row of any tab, or on a material in a crafting tree, and pick this list to add it.</div>
+        <div data-spot="#rename, #remove" data-side="bottom" data-title="Name or remove"><b>✎ Rename</b> gives the list its own name, and the tab follows. <b>✕ Remove list</b> deletes the tab.</div>
+        <div data-spot="#clear" data-side="right" data-title="Clear list">Empties the list, with an <b>↩ Undo clear</b> that still works after a reload.</div>
+        <div data-spot="#matbasis" data-side="right" data-title="Mat cost"><b>Precraft-optimised</b> crafts any intermediate that is cheaper to make; <b>Buy all mats</b> prices every material off the board.</div>
+        <div data-spot="#rows tr:first-child" data-side="bottom" data-title="Open a row">Click an item for its full crafting tree, just like the Dashboard.</div>
+      </template>
     </details>
 
   <div class="status" id="status">Loading…</div>

@@ -122,6 +122,13 @@
         <div class="hw-sec"><h4>Reading the table</h4><p><b>Bought from</b> is the NPC, zone and map spot; <b>+n more</b> means other vendors stock it too. <b>locked?</b> means a quest or achievement may gate the shop, and <b>seasonal</b> that it only opens during an event. <b>Sell price</b> on <b>Realistic</b> uses the lower of the cheapest listing and the 30-day average, since you will have to undercut to sell.</p></div>
         <div class="hw-sec"><h4>Worth knowing</h4><p>Only profitable items show by default, sorted by <b>Gil/day</b>, so steady sellers beat huge margins that never sell. Most vendor stock has barely sold, so ⚠ is common: <b>Hide ⚠ unreliable</b> drops those rows, and <b>Show ALL vendor items</b> brings back the losers too.</p></div>
       </div>
+      <template class="guide">
+        <div data-spot="#tbl th[data-k=vendor]" data-side="bottom" data-title="Bought from">The NPC, zone and map spot. <b>+n more</b> means other vendors stock it; <b>locked?</b> means a quest or achievement may gate the shop, <b>seasonal</b> that it only opens during an event.</div>
+        <div data-spot="#tbl th[data-k=cost]" data-side="bottom" data-title="Vendor cost">The fixed gil price the NPC charges. It never changes, so only the board price moves.</div>
+        <div data-spot="#basis" data-side="right" data-title="Sell price"><b>Realistic</b> uses the lower of the cheapest listing and the 30-day average, since you will have to undercut to sell.</div>
+        <div data-spot="#hideOutlier, #showAll" data-side="right" data-title="What gets shown"><b>Hide ⚠ unreliable</b> drops prices not backed by real sales, which is most vendor stock. <b>Show ALL vendor items</b> adds the ones that lose money.</div>
+        <div data-spot="#minVel, #minProfit" data-side="right" data-title="Minimums">Set how fast an item must sell and how much it must make to be listed.</div>
+      </template>
     </details>
 
   <div class="status" id="status">Pricing vendor stock against the market board…</div>

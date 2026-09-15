@@ -394,6 +394,8 @@ mountThemeToggle(document.getElementById("themeToggle"));
 fitBar();
 (0,eval)(TOUR_JS);
 document.getElementById("tourBtn").addEventListener("click",()=>Tour.start());
+/* the Dashboard's Show me asks for the same tour from inside its frame */
+addEventListener("message",e=>{if(e.data&&e.data.gildesk==="tour")Tour.start();});
 /* "/" pressed inside a tab arrives here, since the key never reaches this document */
 addEventListener("message",e=>{if(e.data&&e.data.gildesk==="focusSearch"&&XW.focusSearch)XW.focusSearch();});
 

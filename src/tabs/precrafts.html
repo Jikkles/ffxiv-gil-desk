@@ -121,6 +121,13 @@
         <div class="hw-sec"><h4>Reading the table</h4><p><b>Mat cost</b> buys every material NQ at its cheapest listing. Pick your <b>Class</b> and a <b>Min lvl</b> and <b>Max lvl</b> to see only what you can make, and open a row for its material list.</p></div>
         <div class="hw-sec"><h4>Worth knowing</h4><p>Plenty of intermediates barely sell HQ, so a row with no sales may still move: switch <b>Sell</b> to <b>NQ</b> to find the bulk market. <b>Deep 30d</b> pulls a full month of sales instead of a quick recent average, which is slower but steadier on items that rarely sell.</p></div>
       </div>
+      <template class="guide">
+        <div data-spot="#job, #minLvl, #maxLvl" data-side="right" data-title="Your crafter">Pick a <b>Class</b> and a level range, and the table keeps only what you can actually craft.</div>
+        <div data-spot="#sq" data-side="right" data-title="Sell quality">HQ by default. If a row shows no sales, try <b>NQ</b>: plenty of intermediates only really trade NQ.</div>
+        <div data-spot="#deep" data-side="right" data-title="Deep 30d">Pulls a full month of real sales instead of a quick recent average. Slower, but steadier on items that rarely sell.</div>
+        <div data-spot="#tbl th[data-k=cost]" data-side="bottom" data-title="Mat cost">Every material for one craft, bought NQ at its cheapest listing across <b>Mats from</b>.</div>
+        <div data-spot="#rows tr:first-child" data-side="bottom" data-title="Open a row">Click an item for its materials and where each is cheapest; the 🛒 on the row adds them all to your shopping list.</div>
+      </template>
     </details>
 
   <div class="status" id="status">Loading…</div>

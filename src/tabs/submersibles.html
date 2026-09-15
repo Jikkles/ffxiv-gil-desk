@@ -117,6 +117,14 @@ tr.detail>td{position:static!important}
         <div class="hw-sec"><h4>Start here</h4><p>Fill in <b>Your submersibles</b>: rank, the four parts, how many subs sail and how often you resend them. <b>Salvage</b> is the NPC jewellery, <b>Market loot</b> everything else, <b>Repairs</b> the repair materials used. <b>Profit/day</b> follows your resend schedule, so a 26-hour route sent once a day only earns every second day.</p></div>
         <div class="hw-sec"><h4>Worth knowing</h4><p>Click a route for what each sector brings back and whether your build meets its surveillance, retrieval and favor breakpoints; fall short and you lose loot. <b>Only routes this build maxes</b> hides the ones you cannot. The <b>Loot</b> view lists every item a voyage can return.</p></div>
       </div>
+      <template class="guide">
+        <div data-spot="#rank, #pHull, #pStern, #pBow, #pBridge, #statline" data-side="right" data-title="Your build">Set your rank and the four parts (<b>S+</b> is a modified Shark). The line underneath is what that build scores for surveillance, retrieval, speed, range and favor.</div>
+        <div data-spot="#subs, #cadence" data-side="right" data-title="Fleet and schedule">How many subs sail and how often you send them back out. <b>Profit/day</b> is worked out on this schedule.</div>
+        <div data-spot="#views" data-side="bottom" data-title="Routes or Loot"><b>Routes</b> ranks every voyage worth sailing; <b>Loot</b> lists every item a voyage can bring back.</div>
+        <div data-spot="#thr th[data-k=day]" data-side="bottom" data-title="Profit/day">What the whole fleet nets a day on your schedule, after repairs. A route longer than your resend gap only earns on the days it is back.</div>
+        <div data-spot="#rows tr:first-child" data-side="bottom" data-title="Open a route">Click a route for what each sector brings back and whether your build meets its surveillance, retrieval and favor breakpoints.</div>
+        <div data-spot="#fitOnly, #useMarket" data-side="right" data-title="Filters"><b>Only routes this build maxes</b> hides routes your build falls short on. Untick <b>Count market-board loot</b> to value a route on NPC salvage alone.</div>
+      </template>
     </details>
 
     <div class="status" id="status">Loading voyage loot prices&hellip;</div>

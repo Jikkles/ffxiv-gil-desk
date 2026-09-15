@@ -196,6 +196,146 @@ function mountHowTo(){
   const key="gildesk:howto:"+(box.dataset.howto||"tab");
   try{if(localStorage.getItem(key)==="open")box.open=true;}catch(e){}
   box.addEventListener("toggle",()=>{try{localStorage.setItem(key,box.open?"open":"closed");}catch(e){}});
+  /* Show me: the Dashboard hands over to the shell's full tour, any other tab
+     with a <template class="guide"> walks its own page */
+  const tpl=box.querySelector("template.guide"),tour=box.dataset.guide==="tour";
+  if(!tpl&&!tour)return;
+  const btn=document.createElement("button");
+  btn.type="button";btn.className="hw-guide";
+  btn.innerHTML='<span aria-hidden="true">▶</span> Show me';
+  btn.title=tour?"Take the tour of the desk":"Walk through this tab, a step at a time";
+  btn.addEventListener("click",e=>{
+    e.preventDefault();e.stopPropagation();
+    if(tour){try{window.parent.postMessage({gildesk:"tour"},"*");}catch(err){}return;}
+    Guide.start(tpl);
+  });
+  box.querySelector(".hw-title").after(btn);
 }
+
+/* ---- a tab's own guide ----
+   The same dim-and-spotlight as the desk tour, on the live page rather than an
+   example: each step lights up real controls, scrolled into view, with a speech
+   bubble beside them. A step is <div data-spot="css selectors" data-title="…"
+   data-side="right|left|bottom|top">body</div>; every visible match of the
+   selectors is lit together (a control is lit with its field), and a step with
+   nothing on screen yet, rows before prices arrive say, is passed over. */
+const Guide=(function(){
+  let steps=[],at=0,root=null,spot,bub,sideWas=null,settle=0;
+  const M=16,GAP=16;
+  function targets(sel){
+    let els=[];try{els=[...document.querySelectorAll(sel)];}catch(e){}
+    return els.map(el=>el.closest(".field,.chk,.kpi")||el)
+      .filter((el,i,a)=>a.indexOf(el)===i&&el.getClientRects().length&&!el.closest(".guide-root"));
+  }
+  function rectOf(els){
+    let x1=Infinity,y1=Infinity,x2=-Infinity,y2=-Infinity;
+    for(const el of els){const r=el.getBoundingClientRect();if(!r.width&&!r.height)continue;
+      x1=Math.min(x1,r.left);y1=Math.min(y1,r.top);x2=Math.max(x2,r.right);y2=Math.max(y2,r.bottom);}
+    return x1===Infinity?null:{x:x1-6,y:y1-6,w:x2-x1+12,h:y2-y1+12};
+  }
+  function start(tpl){
+    if(root)return;
+    const h1=document.querySelector(".hero h1");
+    const name=h1?h1.childNodes[0].textContent.trim():"This tab";
+    steps=[...tpl.content.querySelectorAll("[data-spot]")].map(d=>({sel:d.dataset.spot,title:d.dataset.title||"",side:d.dataset.side||"",body:d.innerHTML,sec:name}));
+    if(!steps.length)return;
+    /* anything in a folded sidebar needs the sidebar out while the guide runs */
+    const de=document.documentElement;
+    sideWas=de.getAttribute("data-side");
+    if(sideWas==="collapsed")de.setAttribute("data-side","open");
+    root=document.createElement("div");
+    root.className="guide-root";root.setAttribute("role","dialog");root.setAttribute("aria-modal","true");
+    root.setAttribute("aria-label",name+" guide");
+    root.innerHTML='<div class="guide-spot"></div><div class="guide-bub"><span class="guide-arrow"></span>'+
+      '<div class="guide-top"><span class="guide-sec"></span><span class="guide-n"></span></div><h3></h3><p></p>'+
+      '<div class="guide-prog"><i></i></div><div class="guide-nav"><button type="button" class="guide-skip">Close</button>'+
+      '<button type="button" class="guide-back">Back</button><button type="button" class="guide-next">Next</button></div></div>';
+    document.body.appendChild(root);
+    spot=root.querySelector(".guide-spot");bub=root.querySelector(".guide-bub");
+    root.querySelector(".guide-skip").addEventListener("click",close);
+    root.querySelector(".guide-back").addEventListener("click",()=>go(at-1,-1));
+    root.querySelector(".guide-next").addEventListener("click",()=>go(at+1,1));
+    addEventListener("keydown",onKey,true);
+    addEventListener("resize",relayout);
+    addEventListener("scroll",relayout,true);
+    requestAnimationFrame(()=>root&&root.classList.add("on"));
+    go(0,1);
+  }
+  function onKey(e){
+    if(!root)return;
+    if(e.key==="Escape"){e.preventDefault();e.stopPropagation();close();}
+    else if(e.key==="ArrowRight"){e.preventDefault();go(at+1,1);}
+    else if(e.key==="ArrowLeft"){e.preventDefault();go(at-1,-1);}
+    else if(e.key==="Tab"){e.preventDefault();
+      const f=[...bub.querySelectorAll("button:not([hidden])")],i=f.indexOf(document.activeElement);
+      f[(i+(e.shiftKey?-1:1)+f.length)%f.length].focus();}
+  }
+  function close(){
+    if(!root)return;
+    clearInterval(settle);
+    removeEventListener("keydown",onKey,true);removeEventListener("resize",relayout);removeEventListener("scroll",relayout,true);
+    if(sideWas==="collapsed")document.documentElement.setAttribute("data-side","collapsed");
+    const r=root;root=null;r.classList.remove("on");setTimeout(()=>r.remove(),220);
+  }
+  /* the last step with something on screen, so Next reads Finish there */
+  function lastLive(){for(let i=steps.length-1;i>=0;i--)if(targets(steps[i].sel).length)return i;return -1;}
+  function go(i,dir){
+    if(!root)return;
+    while(i>=0&&i<steps.length&&!targets(steps[i].sel).length)i+=dir;
+    if(i>=steps.length){close();return;}
+    if(i<0)return;
+    at=i;
+    /* counted against every step, so the total holds steady while a table is still loading */
+    const s=steps[i],first=steps.findIndex(x=>targets(x.sel).length);
+    bub.classList.remove("show");
+    bub.querySelector(".guide-sec").textContent=s.sec+" guide";
+    bub.querySelector(".guide-n").textContent=(i+1)+" / "+steps.length;
+    bub.querySelector("h3").textContent=s.title;
+    bub.querySelector("p").innerHTML=s.body;
+    bub.querySelector(".guide-prog i").style.width=Math.round((i+1)/steps.length*100)+"%";
+    bub.querySelector(".guide-back").hidden=i<=first;
+    bub.querySelector(".guide-next").textContent=i>=lastLive()?"Finish":"Next";
+    const els=targets(s.sel);
+    els[0].scrollIntoView({block:"center",inline:"nearest",behavior:"smooth"});
+    /* wait for the scroll to come to rest, then light it up */
+    clearInterval(settle);
+    let last="",still=0,tries=0;
+    settle=setInterval(()=>{
+      const r=rectOf(els),k=r?Math.round(r.x)+","+Math.round(r.y):"";
+      still=k===last?still+1:0;last=k;
+      if(still>=2||++tries>20){clearInterval(settle);if(!root||at!==i)return;layout();
+        bub.classList.add("show");bub.querySelector(".guide-next").focus({preventScroll:true});}
+      else if(tries===1)layout();
+    },60);
+  }
+  let queued=0;
+  function relayout(){cancelAnimationFrame(queued);queued=requestAnimationFrame(()=>{if(root)layout();});}
+  const clamp=(v,lo,hi)=>Math.max(lo,Math.min(hi,v));
+  function layout(){
+    const s=steps[at],r=rectOf(targets(s.sel));if(!r)return;
+    const W=innerWidth,H=innerHeight,E=3;
+    const x1=clamp(r.x,E,W-E),y1=clamp(r.y,E,H-E),x2=clamp(r.x+r.w,E,W-E),y2=clamp(r.y+r.h,E,H-E);
+    const S={x:x1,y:y1,w:Math.max(0,x2-x1),h:Math.max(0,y2-y1)};
+    Object.assign(spot.style,{left:S.x+"px",top:S.y+"px",width:S.w+"px",height:S.h+"px"});
+    const bw=bub.offsetWidth,bh=bub.offsetHeight;
+    const order=[s.side||"right"].concat(["right","bottom","left","top"].filter(x=>x!==s.side));
+    let pick=null;
+    for(const side of order){
+      let bx,by,fits;
+      if(side==="right"){bx=S.x+S.w+GAP;by=S.y+S.h/2-bh/2;fits=bx+bw<=W-M;}
+      else if(side==="left"){bx=S.x-GAP-bw;by=S.y+S.h/2-bh/2;fits=bx>=M;}
+      else if(side==="bottom"){by=S.y+S.h+GAP;bx=S.x+S.w/2-bw/2;fits=by+bh<=H-M;}
+      else{by=S.y-GAP-bh;bx=S.x+S.w/2-bw/2;fits=by>=M;}
+      const c={side,bx:clamp(bx,M,W-M-bw),by:clamp(by,M,H-M-bh)};
+      if(fits){pick=c;break;}
+      if(!pick)pick=c;
+    }
+    bub.style.left=Math.round(pick.bx)+"px";bub.style.top=Math.round(pick.by)+"px";bub.dataset.side=pick.side;
+    const a=bub.querySelector(".guide-arrow");
+    if(pick.side==="right"||pick.side==="left"){a.style.top=clamp(S.y+S.h/2-pick.by-7,14,bh-28)+"px";a.style.left="";}
+    else{a.style.left=clamp(S.x+S.w/2-pick.bx-7,14,bw-28)+"px";a.style.top="";}
+  }
+  return {start,close};
+})();
 if(document.readyState==="loading")addEventListener("DOMContentLoaded",mountHowTo);
 else mountHowTo();

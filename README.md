@@ -371,6 +371,10 @@ from yours, and it loads and scans nothing.
 what that tab works out, how to read its own columns and controls, and the catch worth knowing
 (why Duties measures prices across your data centre, why a 26-hour submersible route only earns
 every second day, why ⚠ is common on Vendors). Open one and it stays open on that tab next visit.
+**▶ Show me** beside it walks through that tab on the live page, the same dim-and-spotlight as the
+tour: four to six steps lighting up the controls and columns that tab adds, scrolled into view. A
+step whose part isn't on screen yet, rows before prices arrive for instance, is passed over. On the
+Dashboard, Show me starts the full tour.
 
 **Folding sidebar.** The arrow at the top of any tab's filters panel folds it down to a narrow
 rail, giving the table the width. It is one setting for the whole desk: fold it on one tab and
@@ -578,7 +582,8 @@ duplicating some code — which is why the shared chunks exist.
 - **Guided tour.** Picking your world on a first visit starts a walkthrough of the desk, and the
   new **Tour** button in the top right replays it (see [Shared features](#shared-features)).
 - **How this works** on every tab: a folded panel under the headline cards explaining what the tab
-  works out, how to read it, and what to watch for.
+  works out, how to read it, and what to watch for. Its **▶ Show me** button runs a short spotlight
+  guide on that tab.
 - Teamcraft buttons carry Teamcraft's TC logo instead of an arrow.
 - In every crafting tree, the ▼/▲ badge comparing a material's price with its average now also
   sits beside the buy price, not only beside the material's name.

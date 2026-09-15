@@ -103,6 +103,13 @@ thead th span{display:inline-block;min-width:.8em}
         <div class="hw-sec"><h4>Reading the table</h4><p><b>Chance</b> is per run for a dungeon (every chest added together, and you still have to win the loot roll), otherwise per coffer or sack. <b>Expected</b> is what one run, coffer or sack is worth from that item: chance × average price after tax. Exchanges show their currency cost instead, and Expected becomes gil per unit of currency.</p></div>
         <div class="hw-sec"><h4>Worth knowing</h4><p>Rare drops sell a few times a month on any one world, so <b>Sell now</b> is your world and everything else is measured across your data centre. Narrow it with <b>Content</b> and <b>Obtained by</b>. A few FATE drops have no recorded rate, and say so.</p></div>
       </div>
+      <template class="guide">
+        <div data-spot="#catNav" data-side="right" data-title="Content">Narrow the list to one kind of content: dungeons, deep dungeons, variant, Eureka, Bozja or Occult Crescent.</div>
+        <div data-spot="#how" data-side="right" data-title="Obtained by">Drops, currency exchanges, or both.</div>
+        <div data-spot="#tbl th[data-k=pct]" data-side="bottom" data-title="Chance">Per run for a dungeon (every chest added together, and you still roll for it), otherwise per coffer or sack. An exchange shows what it costs instead.</div>
+        <div data-spot="#tbl th[data-k=ev]" data-side="bottom" data-title="Expected">What one run, coffer or sack is worth from this item: chance × average price after tax. For an exchange, gil per unit of currency.</div>
+        <div data-spot="#soldOnly, #hideWarn" data-side="right" data-title="What gets hidden"><b>Only what is actually selling</b> hides drops with no sales across your data centre; <b>Hide ⚠ unreliable</b> drops prices that sit far from real sales.</div>
+      </template>
     </details>
 
     <div class="status" id="status">Loading duty drop prices&hellip;</div>

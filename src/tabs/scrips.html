@@ -105,6 +105,13 @@ h2{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.16em;te
         <div class="hw-sec"><h4>Reading the table</h4><p><b>Revenue/craft</b> is what one collectable&rsquo;s scrips are worth as materia on your world, using whichever of Competence, Cunning or Command sells best. <b>Profit/craft</b> takes off the materials. The table below prices the materia itself.</p></div>
         <div class="hw-sec"><h4>Worth knowing</h4><p>Lower-level Purple collectables give fewer scrips but often cost far less to make, so sort by profit rather than by scrips. In these recipe trees a precraft is bought NQ wherever it is listed, and only broken down into its own materials when none are for sale.</p></div>
       </div>
+      <template class="guide">
+        <div data-spot="#scrip" data-side="right" data-title="Which loop">Show both loops, or just <b>Purple → XI</b> or <b>Orange → XII</b>.</div>
+        <div data-spot="#ctbl th[data-k=value]" data-side="bottom" data-title="Revenue/craft">The scrips one collectable earns, times what a scrip is worth as materia on your world.</div>
+        <div data-spot="#ctbl th[data-k=profit]" data-side="bottom" data-title="Profit/craft">Revenue less the materials: the column to sort by.</div>
+        <div data-spot="#crows tr:first-child" data-side="bottom" data-title="Open a row">Click a collectable for its recipe. Precrafts are bought NQ wherever they are listed, and only broken down when none are for sale.</div>
+        <div data-spot="#mtbl thead, #mrows tr:nth-child(-n+3)" data-side="top" data-title="The materia">What each crafter materia sells for on your world. The best one at each grade sets what a scrip is worth.</div>
+      </template>
     </details>
 
   <div class="status" id="status">Loading…</div>
