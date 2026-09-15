@@ -1614,49 +1614,185 @@ n Potion
 1 Dodo Stuffing
 1 Chicken Stock
 1 Gysahl Greens
-2 Lominsan Anchovy
+1 Merlthor Goby
+1 Lominsan Anchovy
 1 Finger Shrimp
-5 Coral Butterfly
-3 Tiger Cod
+1 Ocean Cloud
+1 Sea Cucumber
+1 Harbor Herring
+1 Vongola Clam
+1 Coral Butterfly
+1 Moraby Flounder
+1 Pebble Crab
+1 Tiger Cod
 1 Helmet Crab
 1 Rothlyt Oyster
 1 Navigator's Dagger
-2 Razor Clam
-2 Blowfish
-5 Bianaq Bream
+1 Angelfish
+1 Razor Clam
+1 Blue Octopus
+1 Blowfish
+1 Saber Sardine
+1 Ogre Barracuda
+1 Monkfish
+1 Sea Bo
+1 Bianaq Bream
 1 Black Sole
 1 Hammerhead Shark
-2 Indigo Herring
+1 Sea Pickle
+1 Indigo Herring
 1 Ash Tuna
-2 Fullmoon Sardine
+1 Leafy Seadragon
+1 Fullmoon Sardine
 1 Haraldr Haddock
 1 Whitelip Oyster
-3 Silver Shark
-2 Raincaller
-6 Rock Lobster
-4 Mahi-mahi
-2 Mazlaya Marlin
-6 Megalodon
-2 Crayfish
-5 Princess Trout
+1 Lavender Remora
+1 Balloonfish
+1 Silver Shark
+1 Wahoo
+1 Raincaller
+1 Nautilus
+1 Pike Eel
+1 Mummer Wrasse
+1 Plaice
+1 Sea Devil
+1 Rock Lobster
+1 Goosefish
+1 Little Thalaos
+1 Shall Shell
+1 Mahi-mahi
+1 Halibut
+1 Mazlaya Marlin
+1 Coelacanth
+1 Giant Squid
+1 Gigant Octopus
+1 Sunfish
+1 Dinichthys
+1 Megalodon
+1 Titanic Sawfish
+1 Crayfish
+1 Chub
+1 Striped Goby
+1 Dwarf Catfish
+1 Bone Crayfish
+1 Princess Trout
 1 Dusk Goby
 1 Pipira
 1 Crimson Crayfish
-2 Brass Loach
+1 Gudgeon
+1 Brass Loach
 1 Maiden Carp
-d Bluebell Salmon
-2 Tricolored Carp
-4 Warmwater Trout
-3 Black Eel
+1 Abalathian Smelt
+1 Blindfish
+1 Mudskipper
+1 Rainbow Trout
+1 River Crab
+1 Ala Mhigan Fighting Fish
+1 Faerie Bass
+1 Acorn Snail
+1 Dark Sleeper
+1 La Noscean Perch
+1 Moat Carp
+1 Copperfish
+1 Bluebell Salmon
+1 Mudcrab
+1 Tricolored Carp
+1 Eunuch Crayfish
+1 Jade Eel
+1 Pond Mussel
+1 Warmwater Trout
+1 Glass Perch
+1 Four-eyed Fish
+1 Black Eel
 1 Dark Bass
-8 Yugr'am Salmon
-f Velodyna Carp
-f Northern Pike
-n Giant Catfish
-5 Emperor Fish
-3 Takitaro
-c Cloud Cutter
-a Allagan Snail
+1 Aegis Shrimp
+1 Five-ilm Pleco
+1 Climbing Perch
+1 Shadow Catfish
+1 Black Ghost
+1 Lamprey
+1 Plaguefish
+1 Yugr'am Salmon
+1 Spotted Pleco
+1 Ropefish
+1 Grip Killifish
+1 Bone Cleaner
+1 Root Skipper
+1 Bonytongue
+1 Mitten Crab
+1 Monke Onke
+1 Seema
+1 Sandfish
+1 Silverfish
+1 Clown Loach
+1 Armored Pleco
+1 Giant Bass
+1 Velodyna Carp
+1 Spotted Puffer
+1 Golden Loach
+1 Trader Eel
+1 Crimson Trout
+1 Discus
+1 Bronze Lake Trout
+1 Ignus Snail
+1 Loyal Pleco
+1 Thunderbolt Sculpin
+1 Fall Jumper
+1 Knifefish
+1 Oakroot
+1 Common Sculpin
+1 Southern Pike
+1 Northern Pike
+1 Kobold Puffer
+1 Archerfish
+1 Goblin Perch
+1 Agelyss Carp
+1 Assassin Betta
+1 Sludgeskipper
+1 Boltfish
+1 Garpike
+1 Ilsabardian Bass
+1 Paglth'an Discus
+1 Boxing Pleco
+1 Kissing Trout
+1 Angry Pike
+1 Goldfish
+1 Vampire Lampern
+1 Wandering Sculpin
+1 Cave Cherax
+1 Coeurlfish
+1 Giant Donko
+1 Sundisc
+1 Alligator Garfish
+1 Wootz Knifefish
+1 Giant Catfish
+1 Cadaver Carp
+1 Mushroom Crab
+1 Judgment Staff
+1 Poxpike
+1 Emperor Fish
+1 Bowfin
+1 Heliobatis
+1 Takitaro
+1 Pirarucu
+1 Morinabaligi
+1 Jungle Catfish
+1 Sand Bream
+1 Desert Catfish
+1 Dustfish
+1 Storm Rider
+1 Antlion Slug
+1 Dune Manta
+1 Cloud Jellyfish
+1 Skyfish
+1 Cloud Cutter
+1 Blind Manta
+1 Rift Sailor
+1 Sagolii Monkfish
+1 Saucerfish
+1 Caravan Eel
+1 Rhamphorhynchus
+4 Allagan Snail
 1 Tree Toad
 3 Dart Frog
 1 Lava Toad
@@ -2864,7 +3000,42 @@ k Coronal Straw Hat
 1 Diluted Vitriol
 1 Grand Company Quartermaster
 1e Clear Prism
-18 Paprika Seeds
+7 Zalera
+1 Beguiler Chub
+1 Oschon's Print
+1 Caterwauler
+1 Crystal Perch
+1 Moldva
+1 Junkmonger
+1 Goldenfin
+1 Gigantshark
+1 Armorer
+1 Great Gudgeon
+1 Dark Knight
+2 Sabertooth Cod
+1 Dream Goby
+2 Dark Ambusher
+1 Judgeray
+1 Bloody Brewer
+1 Faerie Queen
+1 Slime King
+1 Blue Widow
+1 Ghost Carp
+1 Carp Diem
+1 Mud Pilgrim
+1 Old Softie
+1 Marrow Sucker
+1 Chirurgeon
+1 Mud Golem
+1 Octomammoth
+1 Matron Carp
+1 High Perch
+1 Syldra
+1 Rivet Oyster
+1 Jacques the Snipper
+1 Stormdancer
+1 Glimmerscale
+1 Paprika Seeds
 1 Wild Onion Set
 1 Coerthan Carrot Seeds
 1 La Noscean Lettuce Seeds
@@ -2927,8 +3098,55 @@ b Tawny Latex
 2 Mimett Gourd
 1 Tantalplant
 2 Pahsana Fruit
-g Worm of Nym
-z Aetherlouse
+2 Cupfish
+1 Meteor Survivor
+1 Joan of Trout
+1 Toramafish
+1 Fingers
+1 The Assassin
+1 Vip Viper
+1 The Greatest Bream in the World
+1 Dirty Herry
+1 Old Hollow Eyes
+1 Sylphsbane
+1 Floating Boulder
+1 The Grinner
+1 Shark Tuna
+1 Worm of Nym
+1 Twitchbeard
+1 The Warden's Wand
+1 Spearnose
+1 Levinlight
+1 The Sinker
+1 The Gobfather
+1 Sweetnewt
+1 Bombardfish
+1 The Salter
+1 The Lone Ripper
+1 King of the Spring
+1 Discobolus
+1 Iron Noose
+2 Magic Carpet
+1 Daniffen's Mark
+1 Charon's Lantern
+1 The Green Jester
+1 Bloodbath
+1 Son of Levin
+1 Thundergut
+1 The Drowned Sniper
+1 The Terpsichorean
+1 Mirrorscale
+1 Helmsman's Hand
+1 The Thousand-year Itch
+1 Hannibal
+1 Dawn Maiden
+1 Starbright
+1 The Matriarch
+1 Shadowstreak
+1 The Captain's Chalice
+1 Anomalocaris
+1 Frilled Shark
+1 Aetherlouse
 1 Weathered Daggers
 6 Riviera Wall Shelf
 1 Gourmet Lunch
@@ -3141,8 +3359,26 @@ t Flawless Band
 6 Contemporary Pince-nez
 1 Rimless Glasses
 1 Thick-rimmed Glasses
-1h Ignus Horn
-j South Seas Armchair
+1b Imperial Goldfish
+1 The Old Man in the Sea
+2 Coelacanthus
+2 Seahag
+1 Ignus Horn
+1 Void Bass
+1 Cornelia
+1 Ninja Betta
+1 Canavan
+2 Pirate's Bane
+1 Ndendecki
+1 Bat-o'-Nine-Tails
+1 Wootz Knifefish Zenith
+2 Darkstar
+1 Blue Corpse
+1 Mahar
+2 Magicked Mushroom
+1 Giant Takitaro
+2 Blood Red Bonytongue
+1 South Seas Armchair
 1 South Seas Couch
 1 Riviera Canopy Bed
 1 Glade Canopy Bed
@@ -4421,24 +4657,131 @@ y Stonefly Nymph
 1 Bait/Miscellany
 1 Bait/Miscellany
 1 Bait/Miscellany
-2 Cloud Coral
-4 Coerthan Crab
+1 Icepick
+1 Cloud Coral
+1 Ice Faerie
+1 Skyworm
+2 Coerthan Crab
 1 Fanged Clam
 1 Lake Urchin
-2 Blueclaw Shrimp
+1 Whilom Catfish
+1 Blueclaw Shrimp
 1 Vanu Whitebone Exchange
-a Rock Mussel
-2 Vanu Whitebone Exchange
+1 Glacier Core
+1 Ogre Horn Snail
+1 Sorcerer Fish
+1 Hotrod
+1 Maiboi
+1 Three-lip Carp
+1 Bullfrog
+1 Cloudfish
+1 Mahu Wai
+1 Rock Mussel
+1 Buoyant Oviform
+1 Vanu Whitebone Exchange
 1 Blue Cloud Coral
 1 Seema Patrician
-4 Pipira Pira
-h Mogpom
-g Tiny Axolotl
-6 Sweetfish
-f Gloaming Coral
-d Unidentified Flying Biomass
-f Spring Urchin
-j Ishgardian Tea
+1 Ammonite
+1 Bubble Eye
+1 Grass Carp
+1 Pipira Pira
+1 Dravanian Squeaker
+1 Kissing Fish
+1 Mitre Slug
+1 Lava Crab
+1 Storm Core
+1 Scholar Sculpin
+1 Gigant Grouper
+1 Vanuhead
+1 Marble Oscar
+1 Lungfish
+1 Tigerfish
+1 Sky Faerie
+1 Granite Crab
+1 Aithon's Colt
+1 Shipworm
+1 Hedgemole Cricket
+1 Mogpom
+1 Magma Tree
+1 Cloud Rider
+1 Dravanian Bass
+1 Coerthan Puffer
+1 Snowcaller
+1 Dragonhead
+1 Mercy Staff
+1 Rime Eater
+1 Warmwater Bichir
+1 Noontide Oscar
+1 Shadowhisker
+1 Gobbie Mask
+1 Blue Medusa
+1 Cindersmith
+1 Bullwhip
+1 Tiny Axolotl
+1 High Allagan Helmet
+1 Platinum Fish
+1 Aether Eye
+1 Azysfish
+1 Crystalfin
+1 Sweetfish
+1 Orn Butterfly
+1 Hundred Fin
+1 Autumn Leaf
+1 Manasail
+1 Sky Sweeper
+1 Magma Louse
+1 Cometoise
+1 Aetherochemical Compound #123
+1 Brown Bolo
+1 Philosopher's Stone
+1 Fountfish
+1 Weston Bowfin
+1 Letter Puffer
+1 Star Faerie
+1 Gloaming Coral
+1 Albino Octopus
+1 Dragon's Soul
+1 Tornado Shark
+1 Warballoon
+1 Fossiltongue
+1 Proto-hropken
+1 Caiman
+1 Euphotic Pirarucu
+1 Illuminati Perch
+1 Rudderfish
+1 Bomb Puffer
+1 Mucous Minnow
+1 Unidentified Flying Biomass
+1 Hospitalier Fish
+1 Scorpionfly
+1 Rockclimber
+1 Blood Skipper
+1 Cobrafish
+1 Moogle Spirit
+1 Oil Eel
+1 Jeweled Jellyfish
+1 Battle Galley
+1 Yalm Lobster
+1 Hinterlands Perch
+1 Oven Catfish
+1 Pteranodon
+1 Winged Gurnard
+1 Spring Urchin
+1 Cherry Trout
+1 Stupendemys
+1 Black Magefish
+1 Barreleye
+1 Thunderbolt Eel
+1 Catkiller
+1 Loosetongue
+1 Thaliak Caiman
+1 Lavalord
+1 Tupuxuara
+1 Vampiric Tapestry
+1 Storm Chaser
+1 Berserker Betta
+1 Capelin
+5 Ishgardian Tea
 1 Frozen Spirits
 1 Hot Chocolate
 1 Fig Bavarois
@@ -4730,7 +5073,13 @@ y Cold Knight's Cookfire
 1 Archaeoskin Halfboots
 1 Ramie Shirt
 12 Iron Clapper
-7 Pterodactyl
+1 Functional Proto-hropken
+1 Coerthan Clione
+1 Dravanian Smelt
+1 Heavens Coral
+1 Sunsail
+1 Goblin Bass
+1 Pterodactyl
 1 Materials
 2 Gem Marimo
 1 Materials
@@ -4987,11 +5336,17 @@ v Spiced Cider
 1 Sewing Thread
 1 Powdered Horn
 1 Beastkin Horn
-m Gnomefish
-4 Priestfish
+l Amber Salamander
+1 Gnomefish
+1 Fleece Stingray
+1 Nyctosaur
+1 Lava Snail
+1 Priestfish
 1 Coerthan Oyster
-2 Mountain Kraken
-3 Wailers and Waterwheels Orchestrion Roll
+1 Oliphant's Trunk
+1 Mountain Kraken
+1 Armored Catfish
+2 Wailers and Waterwheels Orchestrion Roll
 1 I Am the Sea Orchestrion Roll
 1 A New Hope Orchestrion Roll
 1 Solid Orchestrion Roll
@@ -5296,7 +5651,20 @@ s Ironworks Cap of Gathering
 1 Grimoire of the Round
 1 Codex of the Round
 1 Astrometer of the Round
-z Luminous Fiber
+g Fat Purse
+1 The Impaler
+1 La Reale
+1 Scaleripper
+1 The Dreamweaver
+1 Meteortoise
+1 The Ewer King
+1 Vidofnir
+1 The Soul of the Martyr
+1 Inkfish
+1 The Second One
+1 Augmented High Allagan Helmet
+1 Aphotic Pirarucu
+7 Luminous Fiber
 1 Meteorite
 1 Crystallized Sap
 1 Light-kissed Aethersand
@@ -5533,7 +5901,21 @@ f Red Viola Corsage
 1 Demicrystal
 1 Sweet Cream Milk
 1 Stone Cheese
-18 Indirect Wall Lighting
+7 Dimorphodon
+1 Basking Shark
+1 Allagan Bladeshark
+1 Hailfinder
+1 Flarefish
+1 Twin-tongued Carp
+1 Madam Butterfly
+1 Moggle Mogpom
+1 Cirrostratus
+1 Hraesvelgr's Tear
+1 Aetherochemical Compound #666
+1 Hundred-eyed Axolotl
+1 Bobgoblin Bass
+2 Merciless
+n Indirect Wall Lighting
 2 Troupe Stage
 1 Round Stage
 k Nobility Sleeps Orchestrion Roll
@@ -5767,7 +6149,24 @@ b Cloud Mythril Ingot
 1 Zurvanite Carapace Fragment
 1 Void Matter
 1 Flannel
-k Peteinosaur
+3 Bishopfish
+1 Captain Nemo
+1 Paikiller
+1 Ceti
+1 Crystal Pigeon
+1 Thunderscale
+1 Riddle
+1 The Lord of Lords
+1 The Speaker
+1 Thousand Fin
+1 Bloodchaser
+1 Problematicus
+1 Opabinia
+1 Armor Fish
+1 Sea Butterfly
+1 Charibenet
+1 Raimdellopterus
+1 Peteinosaur
 b Fists of the Fiend
 1 Axe of the Fiend
 1 Pike of the Fiend
@@ -6736,11 +7135,132 @@ b Carbuncle Cottage Walls
 1 Everbright Aethersand
 1 Everborn Aethersand
 1 Everdeep Aethersand
-l Zekki Grouper
-c Heather Charr
-1v Lordly Salmon
-7 Doman Eel
-1b Corpse-eater
+1 Liopleurodon
+1 Ala Mhigan Ribbon
+1 Yanxian Barramundi
+1 Seraphim
+1 Blackfin Snake Eel
+1 Tail Mountains Minnow
+1 Sweatfish
+1 Rock Saltfish
+1 Comet Minnow
+1 Doman Grass Carp
+1 Samurai Fish
+1 Golden Cichlid
+1 Hak Bitterling
+1 Yat Goby
+1 Ruby Meagre
+1 Greenstream Loach
+1 Tawny Wench Shark
+1 Whitehorse
+1 Killifish
+1 Coeurl Snake Eel
+1 Zekki Grouper
+1 Saltshield Snapper
+1 Sculptor
+1 Pearl-eye
+1 Abalathian Bitterling
+1 Steelshark
+1 Tao Bitterling
+1 Idle Goby
+1 River Barramundi
+1 Mirage Chub
+1 Harutsuge
+1 Steelhead Trout
+1 Heather Charr
+1 Silken Koi
+1 Yellow Prismfish
+1 Blue Prismfish
+1 Hanatatsu
+1 Broken Crab
+1 Gyr Abanian Trout
+1 Bloodsipper
+1 Miounnefish
+1 Monk Betta
+1 Electric Catfish
+1 Pagan Pirarucu
+1 Temple Carp
+1 Gilfish
+1 Balloon Frog
+1 Lantern Marimo
+1 Death Loach
+1 Grymm Crab
+1 Enid Shrimp
+1 Invisible Crayfish
+1 Rapids Jumper
+1 Abalathian Salamander
+1 Adamantite Bichir
+1 Meditator
+1 Deemster
+1 Stonytongue
+1 Bull's Bite
+1 Peeping Pisces
+1 Scimitarfish
+1 Gigant Bass
+1 Nhaama's Boon
+1 Cave Killifish
+1 Bone Melter
+1 Fallen Leaf
+1 Falling Star
+1 Capsized Squeaker
+1 Nirvana Crab
+1 Velodyna Grass Carp
+1 Black Velodyna Carp
+1 Rhalgr's Bolt
+1 Highland Perch
+1 Gravel Gudgeon
+1 Grinning Anchovy
+1 Glass Herring
+1 Hellyfish
+1 Ruby Coral
+1 Sapphire Coral
+1 Bone Coral
+1 Butterfly Fish
+1 Dafu
+1 Swordfish
+1 Leaf Tatsunoko
+1 Glass Flounder
+1 Zekki Gator
+1 Daio Squid
+1 Koromo Octopus
+1 Gliding Fish
+1 Globefish
+1 Fan Clam
+1 Blockhead
+1 Glass Tuna
+1 Doman Crayfish
+1 Ruby Shrimp
+1 Striped Fugu
+1 Raitonfish
+1 Blank Oscar
+1 Dragonfish
+1 Lordly Salmon
+1 Yanxian Koi
+1 Kotsu Zetsu
+1 Longhair Catfish
+1 Plum Gazer
+1 Pandamoth
+1 Doman Trout
+1 Doman Eel
+1 Brassfish
+1 Othardian Trout
+1 Zagas Khaal
+1 Steppe Skipper
+1 Dry Steppe Skipper
+1 Sun Bass
+1 Skytear
+1 Dawn Crayfish
+1 Dusk Crayfish
+1 Bowfish
+1 Jade Sculpin
+1 Padjali Loach
+1 Nogoi
+1 Curtain Pleco
+2 Hardscale
+1 Eastern Pike
+1 Wraithfish
+1 Little Perykos
+s Corpse-eater
 3 Horned Turban
 2 Gauntlet Crab
 3 Swordtip
@@ -7085,7 +7605,12 @@ a Flying Chair
 1 Biomass Incubation Complex Painting
 1 Cathedral Painting
 1 Achievement Certificate
-8 Snailfish
+2 Cardinalfish
+1 Rockfish
+1 Ukiki
+1 Violet Prismfish
+1 Guppy
+2 Snailfish
 d Salt & Pepper Seal
 6 Material Supplier Permit A-3
 1 Junkmonger Permit A-3
@@ -7278,8 +7803,17 @@ a White Whittret
 4 Ala Mhigan Gown
 a6 Byakko's Mane
 1 Alpha's Feather
-2d Usuginu Octopus
-j Thavnairian Resin
+29 Mirage Mahi
+1 Triplespine
+1 Alligator Snapping Turtle
+1 Redtail
+1 Usuginu Octopus
+1 Saltmill
+1 Bonsai Fish
+1 Ribbon Eel
+1 Red Prismfish
+1 Elder Gourami
+e Thavnairian Resin
 1 Thavnairian Abrasive
 1 Thavnairian Cotton
 1 Thavnairian Alumen
@@ -7451,7 +7985,24 @@ l Dodo Horn
 2 Monkey King
 4 Wind-up Zhloe
 1 Lunar Barding
-1o Grand Chair
+h Shrieker
+1 White Goldfish
+1 Firelight Goldfish
+1 Hookstealer
+1 Sapphire Fan
+1 The Archbishop
+1 Bondsplitter
+1 The Undecided
+1 Diamond-eye
+1 Rising Dragon
+1 The Gambler
+1 The Winter Queen
+1 Rakshasa
+1 Bokuden
+1 Hagoromo Koi
+1 The Word of God
+1 Yat Khan
+r Grand Chair
 1 Red Dahlia Corsage
 1 Blue Dahlia Corsage
 1 Yellow Dahlia Corsage
@@ -7656,7 +8207,23 @@ l Arum Bulbs
 1 White Arum Corsage
 1 Black Arum Corsage
 1 Rainbow Arum Corsage
-10 Eldthurs Horn
+k Indigo Prismfish
+1 Green Prismfish
+1 Watcher Catfish
+1 Bloodtail Zombie
+1 Hardhead Trout
+1 Downstream Loach
+1 Corpse Chub
+1 The Last Tear
+1 Hemon
+1 Moksha
+1 Princess Killifish
+1 Ku'er
+1 Argonautica
+1 Hagoromo Bijin
+1 Duskfish
+1 Blade Skipper
+1 Eldthurs Horn
 3 Ballroom Etiquette - Scholarly Certitude
 2 Ballroom Etiquette - Ideal Gossip
 9 Modern Aesthetics - Form and Function
@@ -7830,10 +8397,29 @@ d Molech's Horn
 1 Black Lily of the Valley Corsage
 1 Rainbow Lily of the Valley Corsage
 1 Carbuncle Chandelier
-y Abroader Otter
+d Lily of the Veil
+1 The Vegetarian
+1 Seven Stars
+1 Pinhead
+1 Pomegranate Trout
+1 Glarramundi
+1 Hermit's End
+1 Suiten Ippeki
+1 Axelrod
+1 The Unraveled Bow
+1 Nhaama's Treasure
+1 Garden Skipper
+1 Banderole
+9 Abroader Otter
 1 Hedgehoglet
 5 Salvaged Coinage
-2i Absolute Lance
+2a Xenacanthus
+1 Drepanaspis
+1 Stethacanthus
+1 The Ruby Dragon
+1 Warden of the Seven Hues
+1 The Unconditional
+3 Absolute Lance
 3 Ballroom Etiquette - Overzealous Affirmations
 7 Kamacite Ore
 1 Kamacite
@@ -8589,12 +9175,113 @@ s High Steel Gunblade
 1 Doman Steel War Quoits
 3 Molybdenum Gunblade
 1 Molybdenum Chakrams
-25 Rose Shrimp
-6 Spearhead Squid
-1g Cyan Sea Devil
-2 Maneater Clam
-2 Sweetflesh Oyster
-c Platinum Bream
+10 Crystarium Tetra
+1 Laxan Carp
+1 Asteroidea
+1 Jacketed Snail
+1 Lover's Flower
+1 Sinspitter
+1 Wandering Catfish
+1 Crystal Knife
+1 Skeletonfish
+1 Milky Coral
+1 Gravel Mussel
+1 Crimson Sea Spider
+1 Bonefish
+1 Eulmore Butterfly
+1 Red Hammerhead
+1 Hard Candy
+1 Water Ball
+1 Abyssal Snail
+1 Clean Saucer
+1 Rabbit Skipper
+1 Xanthic Bass
+1 Albino Caiman
+1 Platinum Guppy
+1 Misty Killifish
+1 Albino Rock Crab
+1 Snakeskin Discus
+1 Albino Garfish
+1 Vicejaw
+1 Skulleater
+1 Toffee Snail
+1 Watts Trout
+1 Hucho Taimen
+1 Winged Hatchetfish
+1 Noble's Fan
+1 Zebra Catfish
+1 Sepia Sole
+1 Shellfracture Kelp
+1 Blood Cloud
+1 Kholusian Flounder
+1 South Kholusian Cod
+1 Razorfish
+1 Rose Shrimp
+1 Shapeshifter
+1 Minstrelfish
+1 Kholusian Wrasse
+1 Weedy Seadragon
+1 Henodus
+1 Spearhead Squid
+1 Shadow Crab
+1 Desert Dustfish
+1 Hornhelm
+1 Web-footed Sand Gecko
+1 Sand Egg
+1 Amber Lamprey
+1 Desert Saw
+1 Garik Crab
+1 Nabaath Manta
+1 Thorned Lizard
+1 Spotted Blue-eye
+1 Official Ball
+1 Grey Skipper
+1 Pixie Fish
+1 Blood-eyed Frog
+1 Cherry Herring
+1 Wimple Carp
+1 Lemonfish
+1 Rebel
+1 Wild Red Betta
+1 Spotted Ctenopoma
+1 Cerulean Loach
+1 Golden Lobster
+1 Toadhead
+1 Clawbow
+1 Black Tri-star
+1 Robber Crab
+1 Darkroot
+1 Yellow Pipira
+1 Oathfish
+1 Night's Bass
+1 Rak'tika Trout
+1 Clown Tetra
+1 Eryops
+1 Diamond Pipira
+1 Silver Kitten
+1 Darkdweller
+1 Deep Purple Coral
+1 Sycorax
+1 Stormfish
+1 Azure Sea Spider
+1 Caliban
+1 Hoodwinker
+1 Bubble Angler
+1 Ondo Harpoon
+1 Ondobane
+1 Stippled Eel
+1 Seatrap
+1 Ancient Shrimp
+1 Yeti Crab
+1 Aapoak
+1 Cyan Sea Devil
+1 Pancake Octopus
+1 Maneater Clam
+1 Stargazer
+1 Sweetflesh Oyster
+1 Rainbow Shrimp
+1 Predator
+a Platinum Bream
 10 Dohn Horn
 f Megapiranha
 6 Fruit Worm
@@ -8925,7 +9612,15 @@ f Megapiranha
 1 Grade 2 Tincture of Mind
 1q Blinding Indigo Orchestrion Roll
 2 Skybuilders' Scrip
-1p Dhalmel Whistle
+2 Loose Pendant
+1 Winged Dame
+1 The Unforgiven
+1 Bronze Sole
+1 The Horned King
+1 The Sound of Fury
+1 Priest of Yx'Lokwa
+1 Starchaser
+1g Dhalmel Whistle
 1 Albino Karakul Horn
 1 Eulmoran Inner Wall
 1 Eulmoran Marble Flooring
@@ -9222,7 +9917,13 @@ b Faded Copy of Invincible
 1 Skybuilders' Sea Salt
 6 Skybuilders' Toad
 1 Ufiti Horn
-e Bait/Miscellany
+8 The Jaws of Undeath
+1 White Ronso
+1 Ambling Caltrop
+1 Fae Rainbow
+1 Black Jet
+1 Ondo Sigh
+1 Bait/Miscellany
 1 Bait/Miscellany
 1 Bait/Miscellany
 1 Bait/Miscellany
@@ -9530,7 +10231,15 @@ n Allagan Melon Seeds
 1 Slanted Wall
 1 Slanted Skylight
 4 Sliced Watermelon
-d Aesthete's Saw
+5 The Sinsteeped
+1 Sweetheart
+1 Giant Taimen
+1 Leannisg
+1 Gold Hammer
+1 Recordkiller
+1 The Mother of All Pancakes
+1 Opal Shrimp
+1 Aesthete's Saw
 1 Aesthete's Cross-pein Hammer
 1 Aesthete's Raising Hammer
 1 Aesthete's Mallet
@@ -9579,7 +10288,8 @@ d Aesthete's Saw
 2v Levinstrike Aethersand
 1 Thunder Rock
 1 Levin Mint
-n Plate of Light
+1 Fuchsia Bloom
+m Plate of Light
 1r True Barding of Light
 25 Southern Seas Shirt
 1 Southern Seas Trousers
@@ -9906,7 +10616,13 @@ c Faded Copy of To the Edge
 1 Golden Pineapple
 1 Twilight Apple
 1 Cardamom
-82 Grilled Eel Set
+3t Moonlight Guppy
+1 Steel Fan
+1 Henodus Grandis
+1 Sunken Tome
+1 Pearl Pipira
+1 The Ondotaker
+44 Grilled Eel Set
 1 Goobbue Lamp
 2 Tankard
 1 Emerald Weapon Bust
@@ -10053,7 +10769,13 @@ x Materials
 1 Materials
 1 Materials
 1 Materials
-1g Small Forge's Walls
+1a Listracanthus
+1 Aquamaton
+1 Cinder Surprise
+1 Ealad Skaan
+1 Greater Serpent of Ronka
+1 Lancetfish
+1 Small Forge's Walls
 1 Medium Forge's Walls
 1 Large Forge's Walls
 1 Storm Blue Interior Wall
@@ -10106,7 +10828,18 @@ x Materials
 1 White Moth Orchids
 1 Black Moth Orchids
 1 Rainbow Moth Orchids
-d Ostensibly Special Timeworn Map
+1 Aster Trivi
+1 Python Discus
+1 Steel Razor
+1 Shadeshifter
+1 Nabaath Saw
+1 Dammroen Herring
+1 Celestial
+1 Deephaunt
+1 Golden Pipira
+1 Mora Tecta
+1 Maru Crab
+2 Ostensibly Special Timeworn Map
 7i Byakko's Enspirited Fists
 1 Byakko's Enspirited Greataxe
 1 Byakko's Enspirited Lance
@@ -11173,9 +11906,121 @@ a Carrots of Happiness Orchestrion Roll
 1 Finality Orchestrion Roll
 9 Faded Copy of Endcaller
 1 Faded Copy of Your Answer
-7 Northern Herring
-21 Icepike
-1s Spiny King Crab
+6 Pecten
+1 Northern Herring
+1 Dog-faced Puffer
+1 Cobalt Chromis
+1 Guitarfish
+1 Astacus
+2 Peacock Bass
+1 Academician
+1 Swordspine Snook
+1 Ponderer
+1 Tidal Dahlia
+1 Butterfly Fry
+1 Xenocypris
+1 Topminnow
+1 Tessera
+2 Fat Snook
+1 Prochilodus Luminosus
+1 Mesonauta
+1 Greengill Salmon
+2 Raiamas
+1 Red Bowfin
+1 Macrobrachium Lar
+1 Blowgun
+1 Darksteel Knifefish
+1 Astacus Aetherius
+2 Labyrinthos Tilapia
+1 Trunkblessed
+2 Seema Duta
+1 Longear Sunfish
+1 Silver Characin
+1 Thavnairian Goby
+1 Qeyiq Sole
+1 Gwl Crab
+1 Pantherscale Grouper
+2 Fate's Design
+1 Shadowdart Sardine
+1 Paksa Fish
+3 Golden Barramundi
+1 Kadjaya's Castaway
+1 Marid Frog
+2 Bluegill
+1 Bronze Pipira
+1 Green Swordtail
+2 Ksirapayin
+1 Wakeful Watcher
+1 Red Drum
+1 Forgeflame
+1 Bicuda
+1 Radzbalik
+1 Half-moon Betta
+2 Banana Eel
+1 Handy Hamsa
+1 Flowerhorn
+1 Thavnairian Caiman
+1 Fiery Goby
+1 Puff-paya
+1 Narunnairian Octopus
+1 Roosterfish
+1 Basilosaurus
+2 Eblan Trout
+1 Animulus
+1 Cerule Core
+1 Icepike
+1 Dark Crown
+1 Imperial Pleco
+1 Bluetail
+1 Star-blue Guppy
+2 Lunar Cichlid
+1 Teareye
+1 Replipirarucu
+1 Feverfish
+2 Calicia
+1 Protomyke #987
+1 Lunar Deathworm
+1 Fleeting Brand
+2 Regotoise
+1 Isle Skipper
+1 Iribainion
+1 Albino Loach
+1 Golden Shiner
+1 Mangar
+1 Dermogenys
+3 Antheia
+1 Colossoma
+2 Superstring
+1 Star Eater
+1 Vacuum Shrimp
+2 Cosmic Noise
+1 Glassfish
+2 Foun Myhk
+1 Dragonscale
+1 Ypupîara
+1 Eehs Forhnesh
+2 Katoptron
+2 Comet Tail
+1 Aoide
+1 Protoflesh
+2 Wandering Starscale
+1 Wormhole Worm
+1 Unidentified Flying Biomass II
+1 Triaina
+1 Sophos Deka-okto
+1 Class Twenty-four
+1 Terrifyingway
+1 Alien Mertone
+1 Monster Carrot
+1 Argonaut
+1 Echinos
+1 Space Bishop
+1 Alyketos
+1 Horizon Event
+1 E.B.E.-9318
+1 Unbegotten
+1 Phallaina 
+2 Spiny King Crab
 d Shallows Cod
 x Grey Mullet
 j Gold Salmon Roe
@@ -11206,7 +12051,14 @@ e Timeworn Saigaskin Map
 7 Royal Lunatender
 j Trophy Crystal
 1 Arkasodara Pana
-t Thavnairian Calamari
+m Aetherolectric Guitarfish
+1 Jumbo Snook
+1 Earful
+1 Hippo Frog
+1 Rimepike
+1 Foun Ahlm
+1 Forbiddingway
+1 Thavnairian Calamari
 1 Pactmaker's Halfheart Saw
 1 Pactmaker's Cross-pein Hammer
 1 Pactmaker's Raising Hammer
@@ -11559,7 +12411,16 @@ h Trophy Crystal Exchange (Other)
 1 Grade 7 Tincture of Vitality
 1 Grade 7 Tincture of Intelligence
 1 Grade 7 Tincture of Mind
-a Omicron Omnitoken
+1 Greatsword Snook
+1 Swampsucker Bowfin
+1 Lale Crab
+1 Bigcuda
+1 Sovereign Shadow
+1 Disappirarucu
+1 Starscryer
+1 Argonauta argo
+1 Planetes
+1 Omicron Omnitoken
 a9 Sil'dihn Potsherd Exchange
 1 Sil'dihn Potsherd Exchange
 1 Sil'dihn Potsherd Exchange
@@ -11704,7 +12565,14 @@ a Silence Orchestrion Roll
 1 Crafters' Scrip Exchange
 1 Crafters' Scrip Exchange
 1h Gatherers' Scrip Exchange
-2a Indagator's Saw
+m Catastrophizer
+1 Mossgill Salmon
+1 Vidyutvat Wrasse
+1 Browned Banana Eel
+1 Frozen Regotoise
+1 Cosmic Haze
+1 Antheian Dahlia
+1i Indagator's Saw
 1 Indagator's Cross-pein Hammer
 1 Indagator's Raising Hammer
 1 Indagator's Lapidary Hammer
@@ -12014,7 +12882,12 @@ y Crafters' Scrip Exchange
 1 Caviar Canapes
 1 Marinated Broccoflower
 1 Broccoflower Stew
-6 Rokkon Potsherd
+1 Onyx Knifefish
+1 Wakeful Warden
+1 Basilosaurus Rex
+1 Eehs Fan
+1 Gilt Dermogenys
+1 Rokkon Potsherd
 o Concentrated Verdurous Glioaether
 3 Concentrated Igneous Glioaether
 2 Concentrated Aqueous Glioaether
@@ -12206,7 +13079,19 @@ d Lupin Seeds
 1 Crafters' Scrip Exchange
 1 Crafters' Scrip Exchange
 1 Crafters' Scrip Exchange
-4i Potent Verdurous Glioaether
+44 Circuit Tilapia
+1 Durdina Fish
+1 Mayaman
+1 Chlorophos Deathworm
+1 Starscale Ephemeris
+1 E.B.E.-852738
+1 Hyphalosaurus
+1 Gharlichthys
+1 Snowy Parexus
+1 Furcacauda
+1 Lopoceras Elegans
+1 Sidereal Whale
+3 Potent Verdurous Glioaether
 3 Potent Igneous Glioaether
 2 Potent Aqueous Glioaether
 1 Aetherial Arbor Lumber
@@ -12983,12 +13868,143 @@ f Palm Round Brush
 2 Red Pine Flat Brush
 2 Ironwood Filbert Brush
 2 Chondrite Magitek Paintbrush
-i Stardust Shrimp
-a Urqotrout
-j Driftwood Catfish
-1k Shaaloani Salmon
-14 Devotion Clam
-1k Golden Stonefly Nymph
+e Mosquito Fish
+1 Pel Frog
+1 Petticoat Tetra
+1 Reasonscale Silverside
+1 Stardust Shrimp
+1 Shallows Sot
+1 Ghostfish
+1 Permit
+1 Floating Fife
+1 Blue Purse
+1 Goldfin Cavalli
+1 Sea Alpaca
+1 Marbled Hatchetfish
+1 Starsnipper
+1 Urqotrout
+1 Yok Huy Stonecutter
+1 Chirwagur Loach
+1 Alright Alright Alright
+1 Zorlortor
+1 Shooting Starscale
+1 First Feastfish
+1 Urqofrog
+1 Zeh Tortoh
+1 Morsel Trout
+1 Deepwarden
+1 Kozama'uka Skipper
+1 Bopo'u Sleeper
+1 Poison Dyefrog
+1 Pleated Matamata
+1 Uyuy Xage
+1 Plattershell
+1 Candiru
+1 Trahira
+1 Driftwood Catfish
+1 Oho Hunu
+1 Bronze Pleco
+1 Crenicichla
+1 Hunu Peacock Bass
+1 Pelubane
+1 Giant Trahira
+1 Ku'uxage Bitterling
+1 Tonguesnatcher
+1 Corn Dace
+1 Ka Puyhu
+1 Ligaka Guppy
+1 Dumplingfish
+1 Banded Candiru
+1 Oxydoras
+1 Spotted Stingray
+1 Yellow Peacock Bass
+1 Shovelnose Catfish
+1 Shimmering Shadow
+1 Ut'ohmu Dawnfish
+1 Belonesox
+1 Xd'aa Talat Cichlid
+1 Iq Br'aax Sailfin
+1 Hunmu Ob
+1 Apoda
+1 Mirror Carp
+1 Tsoly Mu
+1 Iq Rrax Leaffish
+1 Archmatron Angelfish
+1 Yak T'el Salamander
+1 Shadowtongue
+1 Cloud-eye Carp
+1 Xobr'it Lobster
+1 Sunbright Axolotl
+1 Horned Frog
+1 Mudfish
+1 Turali Beaded Lizard
+1 Yak T'el Catfish
+1 Ankledeep Catfish
+1 Checkered Cichlid
+1 Moxutural Gar
+1 Variatus
+1 Welkin Catfish
+1 Flawless Saucer
+1 Glittergill
+1 Twig Catfish
+1 Blind Brotula
+1 Yak T'el Caiman
+1 Ut'ohmu Tiika
+1 Sharknose Goby
+1 Yak T'el Crab
+1 Xty'iinbek Sleeper
+1 Chain Shark
+1 Bonytail Chub
+1 Niikwerepi Trout
+1 Pyariyoanaan Cichlid
+1 Shaaloani Salmon
+1 Trailtrout
+1 Toari Sucker
+1 Turali Paddlefish
+1 Zorgor Core
+1 Cloudribbon
+1 Zorgor Scorpion
+1 Vagrant Cascade
+1 Zorgor Condor
+1 Cloud Wasp
+1 Azure Glider
+1 Hellsnow Shark
+1 Heritage Loach
+1 Outskirts Sniffer
+1 Pumpkin Perch
+1 Tiger Muskellunge
+1 Moon Croppie
+1 Driftdowns Trout
+1 Electrobetta
+1 Thundering Redbelly
+1 Yyasulani Bowfin
+1 Crackling Flounder
+1 Goldgrouper
+1 Everkeep Yabby
+1 Stickleback
+1 Custodian Carp
+1 Mosaic Loach
+1 Rosebud Frog
+1 Knight Goby
+1 Windspath Eel
+1 Harlequin Lancer
+1 Cleyran Carp
+1 Giant Snakehead
+1 Datnioides
+1 Neo Arowana
+1 Canal Bream
+1 Iris Wrasse
+1 Canal Drum
+1 Butterfly Ray
+1 Hydro Louvar
+1 Devotion Clam
+1 Forgotten One
+1 Copper Shark
+1 Golden Day
+1 Starglass Gibel
+1 Scarlet Queen
+1 Ultimoat Carp
+1e Golden Stonefly Nymph
 1 Crimson Lugworm
 1 Silkmoth Pupa
 1 Honeybee
@@ -13288,7 +14304,15 @@ c Sacks of Nuts Exchange
 1 Tinkerer's Treasure Trove Orchestrion Roll
 1 Faded Copy of The Skyruin
 1 Faded Copy of Seeking Purpose
-i Cloudsail
+a Icuvlo's Barter
+1 Moongripper
+1 Cazuela Crab
+1 Stardust Sleeper
+1 Ilyon Asoh Cichlid
+1 Pixel Loach
+1 Hwittayoanaan Cichlid
+1 Thunderswift Trout
+1 Cloudsail
 2 Presumably Special Timeworn Map
 g Bayside Bevy Painting
 1 Resplendent Quarter Painting
@@ -13645,13 +14669,22 @@ f Everkeep Lamppost
 1 Yok Huy Ward
 7 Timeworn Gargantuaskin Map
 3 Goldentail
-1j Cordia Sap
+1 Prime Adjudicator
+1 Crenicichla Miyaka
+1 Iron Shadowtongue
+1 Lotl-in-waiting
+1 Azure Diver
+1 Sprouting Perch
+1 Gigagiant Snakehead
+1 Gondola Louvar
+1b Cordia Sap
 1 Desert Lapis Ore
 1 Sin Beaver
 1 Levinchrome Aethersand
 1 Levin Quartz
 1 Calamus Root
-2 Desert Lapis
+1 Purple Palate
+1 Desert Lapis
 1 Craftsman's Tri-solution
 1 Mason's Abrasive
 1 All i Pebre
@@ -13825,7 +14858,15 @@ a Neon Street Cap
 2 Ballroom Etiquette - Fashion Forward
 2 Ballroom Etiquette - Bearing Insult
 2 Modern Aesthetics - Fulsome Forelocks
-2p Mamool Ja Nanook
+1 Cabinkeep Permit
+1 Muttering Matamata
+1 Riverlong Candiru
+1 Deep Canopy
+1 Awaksbane Apoda
+1 Ttokatoa
+1 Thunderous Flounder
+1 Harlequin Queen
+2h Mamool Ja Nanook
 c Fortune Carrot
 1 Herringbone Interior Wall
 1 Teal Carpet
@@ -14141,7 +15182,15 @@ c7 Red Tea Flower Corsage
 1 Black Tea Flowers
 1 Rainbow Tea Flowers
 1 Runaway Metal
-12 Gallant Shepherd
+b Purse of Riches
+1 Punutiy Pain
+1 Shuckfin Dace
+1 Shin Snuffler
+1 Moxutural Greatgar
+1 Heirloom Goldgrouper
+1 Datnioides Aeroplanos
+1 Esperance Carp
+k Gallant Shepherd
 1 La Noscean Shorthair
 4 Occult Earrings of Blood
 1 Occult Necklace of Blood
@@ -14304,7 +15353,20 @@ j Soothing Sea-beast
 ba Junior Jinbei
 1l Pitchfork
 3 Modern Aesthetics - Loosened Locks
-e3 Standard Spectrum Dye
+70 Ole Ole Ole
+1 Iron Oxydoras
+1 Excavator Catfish
+1 Moonmarking Saucer
+1 Autarch's Supper
+1 Bitterbark Caiman 
+1 Vagrant Keeper
+1 Shined Copper Shark
+1 Ner Lar Dor
+1 Xehabopo'u
+1 Skyfrond
+1 Rroneek Bichir
+1 Triple Threat
+6r Standard Spectrum Dye
 1 Cosmocredit Exchange (Materials/Materia/Items)
 1 Cosmocredit Exchange (Materials/Materia/Items)
 1 Interstellar Leafkin Whistle
@@ -14323,7 +15385,8 @@ e3 Standard Spectrum Dye
 1 Antique Lantern
 3 Ballroom Etiquette - Dignified Derision
 3 Ballroom Etiquette - Rearward Regards
-14 The Federation of Windurst Orchestrion Roll
+2 Great Ball of Lightning
+12 The Federation of Windurst Orchestrion Roll
 1 Feast of the Ladies Orchestrion Roll
 1 Bustle of the Capital Orchestrion Roll
 1 Fated Strife -Besieged- Orchestrion Roll

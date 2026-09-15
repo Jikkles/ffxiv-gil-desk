@@ -65,7 +65,7 @@ window.Tour=(function(){
       body:"Search for any item by name from any tab (press <b>/</b> to jump in). <b>Tour</b> brings this walkthrough back whenever you want it."}
   ];
   /* one line under each tab on the "other tabs" step */
-  const TAB_NOTES={all:"Profit on 9,400+ crafts and precrafts",gathering:"Gil an hour from Miner and Botanist",
+  const TAB_NOTES={all:"Profit on 9,400+ crafts and precrafts",gathering:"Gil from Miner, Botanist and Fisher",
     currencies:"Best gil rate for each currency",materia:"Collectables to scrips to materia",
     duties:"Valuable drops, maps and portals",flips:"Buy low on one world, sell on another",
     retainer:"What ventures bring back",submersible:"Best voyage for your sub build",

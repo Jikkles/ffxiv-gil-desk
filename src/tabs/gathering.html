@@ -27,6 +27,10 @@ thead th span{display:inline-block;min-width:.8em}
 .pill.btn{color:#7fd49a;border-color:#2c4a39;background:#7fd49a12}
 :root[data-theme="light"] .pill.min{color:#3a55b0;border-color:#c3cdf0}
 :root[data-theme="light"] .pill.btn{color:#1e7a48;border-color:#b5dcc4}
+.pill.fsh{color:#6fc8e8;border-color:#27485a;background:#6fc8e812}
+:root[data-theme="light"] .pill.fsh{color:#1d6f8f;border-color:#b3d9e8}
+.gpill.big{color:#ff9d7a;border-color:#57352a;background:#ff9d7a12}
+:root[data-theme="light"] .gpill.big{color:#b04a24;border-color:#eec5b6}
 .perhour{font-family:"JetBrains Mono",monospace}
 .perhour .q{margin-left:3px}
 .forecast{color:var(--muted);font-size:11px;font-family:"JetBrains Mono",monospace}
@@ -62,6 +66,11 @@ thead th span{display:inline-block;min-width:.8em}
       <div class="field" title="Items each swing brings in on average, with your yield bonuses and skills"><label for="perSwing">Items a swing</label><input type="number" id="perSwing" value="2" min="0.5" max="20" step="0.5"></div>
     </div>
     <div class="sgroup">
+      <div class="slabel">Your fishing</div>
+      <div class="field" title="How many of one fish you land in an hour of fishing for it while it is biting. Fish that rarely bite at their spot come in well under this"><label for="catchesHr">Catches an hour</label><input type="number" id="catchesHr" value="30" min="1" max="200"></div>
+      <div class="field" title="Big fish landed each time one's window opens: 1 if you land it every window, 0.5 if every other"><label for="bigWin">Big fish a window</label><input type="number" id="bigWin" value="1" min="0.1" max="5" step="0.1"></div>
+    </div>
+    <div class="sgroup">
       <div class="slabel">Filters</div>
       <div class="field sel" title="The price the hourly earnings are worked out at"><label for="basis">Price</label><select id="basis"><option value="now">Sell now</option><option value="avg">30-day avg</option></select></div>
       <div class="field sel"><label for="nodeType">Nodes</label><select id="nodeType"><option value="all">Regular and timed</option><option value="regular">Regular only</option><option value="timed">Timed only</option><option value="up">Timed, up now</option></select></div>
@@ -71,7 +80,7 @@ thead th span{display:inline-block;min-width:.8em}
     </div>
     <div class="sgroup">
       <div class="slabel">Class</div>
-      <select id="cls" hidden><option value="all">Both classes</option><option value="MIN">Miner</option><option value="BTN">Botanist</option></select>
+      <select id="cls" hidden><option value="all">All classes</option><option value="MIN">Miner</option><option value="BTN">Botanist</option><option value="FSH">Fisher</option></select>
       <div class="snav" id="catNav"></div>
     </div>
     <div class="sgroup">
@@ -84,7 +93,7 @@ thead th span{display:inline-block;min-width:.8em}
       <div class="hicon">&#9935;&#65039;</div>
       <div>
         <h1><b>Gathering</b></h1>
-        <p class="sub">Every <b id="nItems">700+</b> item a Miner or Botanist can gather and sell, ranked by <b>gil an hour</b>: an estimate of how many you can gather in an hour, times what each one sells for on <b class="homename">Spriggan</b>. Set <b>Your gathering</b> to match your gear, and timed nodes show when they are next up.</p>
+        <p class="sub">Every <b id="nItems">1,800+</b> item a Miner, Botanist or Fisher can gather and sell, ranked by <b>gil a day</b> on <b class="homename">Spriggan</b>, with an estimate of what an hour of gathering each one earns. Set <b>Your gathering</b> and <b>Your fishing</b> to match your gear; timed nodes and fish show when they are next up.</p>
       </div>
       <div class="kpis">
         <div class="kpi"><div class="ki">&#9935;&#65039;</div><div class="kbody"><div class="k">Best gil / hour</div><div class="v gil" id="kpiBest">&mdash;</div><div class="s" id="kpiBestName">waiting for data&hellip;</div></div></div>
@@ -94,17 +103,18 @@ thead th span{display:inline-block;min-width:.8em}
     </div>
 
     <details class="howto" data-howto="gathering">
-      <summary><span class="hw-ic"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="M7.8 7.9a2.3 2.3 0 0 1 4.4.9c0 1.6-2.2 1.9-2.2 3.2M10 14.4v.1"/></svg></span><span class="hw-title">How this works</span><span class="hw-hint">what an hour of mining or botany is worth</span><span class="hw-car">▸</span></summary>
+      <summary><span class="hw-ic"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="M7.8 7.9a2.3 2.3 0 0 1 4.4.9c0 1.6-2.2 1.9-2.2 3.2M10 14.4v.1"/></svg></span><span class="hw-title">How this works</span><span class="hw-hint">what an hour of mining, botany or fishing is worth</span><span class="hw-car">▸</span></summary>
       <div class="hw-body">
-        <div class="hw-sec"><h4>What it works out</h4><p>How much gil an hour of gathering one item brings in: an estimate of how many you gather in an hour, times its price after tax. A regular node can be worked all hour, so <b>Per hour</b> is <b>Nodes an hour</b> × <b>Swings a node</b> × <b>Items a swing</b>. A timed node is only up for a short window a few times a day, so it counts one visit for every window in a real hour (an Eorzean day is 70 minutes).</p></div>
-        <div class="hw-sec"><h4>Reading the table</h4><p><b>Node</b> says whether the best node is regular or timed, and when a timed one is next up, in real minutes. <b>Gil/hour</b> is Per hour × the price in <b>Price</b> after tax. The Eorzean spawn times are on the hover. Tick <b>Cap at a day&rsquo;s sales</b> to count no more an hour than your world buys in a whole day.</p></div>
-        <div class="hw-sec"><h4>Worth knowing</h4><p>The defaults suit a gatherer with decent gear using yield skills; set <b>Your gathering</b> to what you really see and every row follows. Shards and crystals, spearfishing and the Diadem are left out. <b>Hidden items</b> only turn up on some visits (and some need a Folklore book or enough Perception), so they are left out unless you tick <b>Include hidden items</b>, and their Per hour is an overestimate. Per hour for a timed node assumes you catch every window.</p></div>
+        <div class="hw-sec"><h4>What it works out</h4><p>How much gil an hour of gathering one item brings in: an estimate of how many you gather in an hour, times its price after tax. A regular node can be worked all hour, so <b>Per hour</b> is <b>Nodes an hour</b> × <b>Swings a node</b> × <b>Items a swing</b>. A timed node is only up for a short window a few times a day, so it counts one visit for every window in a real hour (an Eorzean day is 70 minutes). A fish is <b>Catches an hour</b>; a fish that only bites at certain Eorzean hours or in certain weather counts only the share of the time it is biting, and a big fish counts <b>Big fish a window</b> for each window.</p></div>
+        <div class="hw-sec"><h4>Reading the table</h4><p><b>Node</b> says whether the best node or fishing spot is regular or timed, and when a timed one is next up, in real time; a fish&rsquo;s next window comes from the weather forecast. <b>Gil/hour</b> is Per hour × the price in <b>Price</b> after tax. The Eorzean spawn times, or a fish&rsquo;s hours and weather, are on the hover. Tick <b>Cap at a day&rsquo;s sales</b> to count no more an hour than your world buys in a whole day.</p></div>
+        <div class="hw-sec"><h4>Worth knowing</h4><p>The defaults suit a gatherer with decent gear using yield skills; set <b>Your gathering</b> to what you really see and every row follows. Shards and crystals, spearfishing, ocean fishing, Cosmic Exploration and the Diadem are left out. <b>Catches an hour</b> is the same for every fish, but a fish that rarely bites at its spot comes in well under it, so treat Gil/hour on fish as a best case; big fish that need other fish caught first say so on the hover. <b>Hidden items</b> only turn up on some visits (and some need a Folklore book or enough Perception), so they are left out unless you tick <b>Include hidden items</b>, and their Per hour is an overestimate. Per hour for a timed node assumes you catch every window.</p></div>
       </div>
       <template class="guide">
         <div data-spot="#nodesHr, #swings, #perSwing" data-side="right" data-title="Your gathering">Set these to what you actually get. <b>Per hour</b> on a regular node is nodes × swings × items a swing; a timed node uses swings × items a swing once per window.</div>
-        <div data-spot="#catNav" data-side="right" data-title="Class">Miner, Botanist, or both.</div>
+        <div data-spot="#catchesHr, #bigWin" data-side="right" data-title="Your fishing">How many of a fish you land an hour while it bites, and how many big fish you land each window.</div>
+        <div data-spot="#catNav" data-side="right" data-title="Class">Miner, Botanist, Fisher, or all three.</div>
         <div data-spot="#nodeType" data-side="right" data-title="Nodes">Regular nodes you can work all hour, timed nodes, or only the timed nodes that are up right now.</div>
-        <div data-spot="#tbl th[data-k=node]" data-side="bottom" data-title="Node">Regular or timed. A timed node says when it is next up in real time, or how long it has left; hover for its Eorzean spawn times.</div>
+        <div data-spot="#tbl th[data-k=node]" data-side="bottom" data-title="Node">Regular or timed. A timed node or fish says when it is next up in real time, or how long it has left; hover for its Eorzean spawn times, or a fish&rsquo;s hours and weather.</div>
         <div data-spot="#tbl th[data-k=gilHr]" data-side="bottom" data-title="Gil/hour">Per hour × the price you picked in <b>Price</b>, after tax. Tick <b>Cap at a day&rsquo;s sales</b> to stop an item that barely sells from topping the list.</div>
         <div data-spot="#rows tr:first-child td:first-child" data-side="bottom" data-title="Where to go">Each row names the zone, the area and the map coordinates of its best node; hover for every other node it comes from.</div>
       </template>
@@ -129,8 +139,8 @@ thead th span{display:inline-block;min-width:.8em}
     </table></div>
 
     <p class="foot">
-      Node data from <a href="https://github.com/ffxiv-teamcraft/ffxiv-teamcraft" target="_blank" rel="noopener">Teamcraft</a>: what each node gives, its level, where it is and when a timed node spawns. An item from several nodes is ranked on its best one: a regular node first, then the timed node that spawns most often.
-      Per hour is an estimate from <b>Your gathering</b>: nodes an hour × swings a node × items a swing for a regular node; for a timed node, swings × items a swing for each spawn window in a real hour (a node spawning twice an Eorzean day is up about 1.7 times an hour). Gil/hour = Per hour × the chosen price × (1 &minus; tax); with <b>Cap at a day&rsquo;s sales</b>, Per hour is held to Units/day first.
+      Node and fishing spot data from <a href="https://github.com/ffxiv-teamcraft/ffxiv-teamcraft" target="_blank" rel="noopener">Teamcraft</a>: what each node gives, its level, where it is and when a timed node spawns. Fish hours, weather and big fish from the <a href="https://ff14fish.carbuncleplushy.com" target="_blank" rel="noopener">Carbuncle Plushy fish tracker</a>, with each zone&rsquo;s weather odds to forecast the next window. An item from several nodes is ranked on its best one: a regular node first, then the timed node that spawns most often.
+      Per hour is an estimate from <b>Your gathering</b>: nodes an hour × swings a node × items a swing for a regular node; for a timed node, swings × items a swing for each spawn window in a real hour (a node spawning twice an Eorzean day is up about 1.7 times an hour); for a fish, Catches an hour, times the share of the time it bites if it has hours or weather, or Big fish a window × windows a real hour for a big fish. Gil/hour = Per hour × the chosen price × (1 &minus; tax); with <b>Cap at a day&rsquo;s sales</b>, Per hour is held to Units/day first.
       Sell now = cheapest NQ listing on <span class="homename">Spriggan</span>. Avg 30d, Trend and Units/day are 30 days of sales there, and Gil/day = Avg 30d × (1 &minus; tax) × Units/day, as on every tab. Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>.
     </p>
   </main>
@@ -141,12 +151,15 @@ const ICON_INDEX = /*__ICON_INDEX__*/;
 
 /* every marketable gathered item with each node it comes from, best first:
    {i, nm, ui, nodes: [{n: node id, c: MIN|BTN, t: node type, lv, z: zone, a: area, x, y,
-   sp: Eorzean spawn hours, d: minutes up, k: "timed"|"ephemeral" (regular when absent), h: hidden}]} */
+   sp: Eorzean spawn hours, d: minutes up, k: "timed"|"ephemeral" (regular when absent), h: hidden}]}
+   A fishing spot has c: FSH and, for a fish with conditions, k: "timed", hr: [from, to] Eorzean hours,
+   ws / pw: weather now / weather before, wr: the zone's weather odds, u: share of the time up,
+   w: windows a real hour; b: big fish, fl: needs a Folklore book, pr: fish to catch first */
 const GATHER = /*@json data/gathering.json*/null;
 const IDS = GATHER.map(g => g.i);
 
 let state={home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],query:"",tax:0.05,basis:"now",cls:"all",nodeType:"all",minLvl:1,maxLvl:100,
-  nodesHr:60,swings:6,perSwing:2,showHidden:false,hideNo:true,hideOutlier:true,capDay:false,sortKey:"gilDay",sortDir:-1,mkt:null,hist:null,rows:null};
+  nodesHr:60,swings:6,perSwing:2,catchesHr:30,bigWin:1,showHidden:false,hideNo:true,hideOutlier:true,capDay:false,sortKey:"gilDay",sortDir:-1,mkt:null,hist:null,rows:null};
 
 /*__SHARED_A__*/
 /*__SHARED_B__*/
@@ -194,8 +207,46 @@ async function fetchWorlds(){
    An Eorzean day is 70 real minutes: one Eorzean minute is 175/60 real seconds. */
 const ET_MIN_MS=175000/60, ET_DAY_MIN=1440;
 function etMinuteNow(){return Math.floor(Date.now()/ET_MIN_MS)%ET_DAY_MIN;}
+/* Fish windows. Weather changes every 8 Eorzean hours (1,400 real seconds); period k rolls
+   0-99 against the zone's cumulative odds, as the game does (the build uses the same lines). */
+const PERIOD_MS=1400000;
+function weatherRoll(k){
+  const unix=k*1400,bell=unix/175;
+  const inc=(bell+8-(bell%8))%24;
+  const days=((unix/4200)<<32)>>>0;
+  const base=days*100+inc;
+  const s1=((base<<11)^base)>>>0,s2=((s1>>>8)^s1)>>>0;
+  return s2%100;}
+function weatherAt(node,k){const r=weatherRoll(k);return node.wr.find(x=>r<x[1])[0];}
+function hourRanges(sh,eh){const a=Math.round(sh*60),b=Math.round(eh*60);
+  if(a===b||(a===0&&b===1440))return[[0,1440]];return a<b?[[a,b]]:[[a,1440],[0,b]];}
+/* the window open now or opening next, as real [start, end) ms; kept until it closes */
+function fishWindow(node){
+  const now=Date.now();
+  if(node._win!==undefined&&(node._win===null?now<node._winUntil:node._win[1]>now))return node._win;
+  const ranges=hourRanges(node.hr[0],node.hr[1]);
+  let win=null;const k0=Math.floor(now/PERIOD_MS);
+  for(let k=k0;k<k0+25000;k++){
+    const ok=(!node.ws||node.ws.includes(weatherAt(node,k)))&&(!node.pw||node.pw.includes(weatherAt(node,k-1)));
+    if(!ok){if(win)break;continue;}
+    const day0=((8*k)%24)*60;
+    const bits=ranges.map(([a,b])=>[Math.max(a,day0),Math.min(b,day0+480)]).filter(([a,b])=>b>a)
+      .map(([a,b])=>[k*PERIOD_MS+(a-day0)*ET_MIN_MS,k*PERIOD_MS+(b-day0)*ET_MIN_MS]).sort((x,y)=>x[0]-y[0]);
+    let closed=false;
+    for(const[a,b]of bits){
+      if(win&&Math.abs(a-win[1])<1)win[1]=b;
+      else if(win){closed=true;break;}
+      else if(b>now)win=[a,b];}
+    if(closed)break;
+    /* a window that stops short of the period's end is over */
+    if(win&&Math.abs(win[1]-(k+1)*PERIOD_MS)>=1)break;
+  }
+  node._win=win;node._winUntil=now+PERIOD_MS;return win;
+}
 /* up now (with real minutes left) or real minutes until the next window */
 function spawnState(node){
+  if(node.hr){const w=fishWindow(node);if(!w)return{up:false,mins:Infinity};const now=Date.now();
+    return w[0]<=now?{up:true,mins:Math.ceil((w[1]-now)/60000)}:{up:false,mins:Math.ceil((w[0]-now)/60000)};}
   if(!node.sp||!node.sp.length)return null;
   const now=etMinuteNow(),dur=node.d||120;let next=Infinity;
   for(const h of node.sp){const start=h*60;
@@ -204,16 +255,30 @@ function spawnState(node){
     next=Math.min(next,(start-now+ET_DAY_MIN)%ET_DAY_MIN);}
   return{up:false,mins:Math.ceil(next*ET_MIN_MS/60000)};
 }
+const dur=m=>m>=1440?Math.floor(m/1440)+"d "+Math.floor(m%1440/60)+"h":m>=60?Math.floor(m/60)+"h "+(m%60)+"m":m+"m";
 function spawnHTML(node){const s=spawnState(node);if(!s)return"";
-  return s.up?`<span class="spawn up">up now · ${s.mins}m left</span>`:`<span class="spawn">up in ${s.mins>=60?Math.floor(s.mins/60)+"h "+(s.mins%60)+"m":s.mins+"m"}</span>`;}
-function etHours(node){return node.sp.map(h=>String(h).padStart(2,"0")+":00").join(" & ")+" ET, "+(node.d||120)/60+" Eorzean hours each";}
+  if(!isFinite(s.mins))return`<span class="spawn">no window in sight</span>`;
+  return s.up?`<span class="spawn up">up now · ${dur(s.mins)} left</span>`:`<span class="spawn">up in ${dur(s.mins)}</span>`;}
+const hhmm=h=>String(Math.floor(h)).padStart(2,"0")+":"+String(Math.round(h%1*60)).padStart(2,"0");
+function fishConditions(node){
+  const bits=[];
+  if(!(node.hr[0]===0&&node.hr[1]===24))bits.push(hhmm(node.hr[0])+"–"+hhmm(node.hr[1])+" ET");
+  if(node.ws)bits.push("in "+node.ws.join(" or "));
+  if(node.pw)bits.push("after "+node.pw.join(" or "));
+  const every=1/node.w;
+  bits.push("a window about every "+(every>=48?Math.round(every/24)+" real days":every>=2?Math.round(every)+" real hours":Math.round(every*60)+" real minutes")+", biting "+(node.u*100).toFixed(node.u<0.01?2:1)+"% of the time");
+  return bits.join(", ");}
+function fishNotes(node){const n=[];if(node.b)n.push("big fish");if(node.pr)n.push("catch "+node.pr.join(" and ")+" first");if(node.fl)n.push("needs a Folklore book");return n.join(" · ");}
+function etHours(node){if(node.hr)return fishConditions(node);return node.sp.map(h=>String(h).padStart(2,"0")+":00").join(" & ")+" ET, "+(node.d||120)/60+" Eorzean hours each";}
 
 /* items one visit, and visits an hour: all hour for a regular node, one per window for a timed one */
 function perHour(node){
+  if(node.c==="FSH")return node.b?(node.w||0)*state.bigWin:state.catchesHr*(node.k?node.u:1);
   const visit=state.swings*state.perSwing;
   if(!node.k)return state.nodesHr*visit;
   return node.sp.length*(60/70)*visit;
 }
+const CLASS_NAME={MIN:"Miner",BTN:"Botanist",FSH:"Fisher"};
 function whereText(node){return `${node.t} · lvl ${node.lv} · ${node.z}${node.a&&node.a!==node.z?" — "+node.a:""}${node.x!=null?` (${node.x.toFixed(1)}, ${node.y.toFixed(1)})`:""}`;}
 
 function priceRow(g){
@@ -262,16 +327,17 @@ function render(){
   document.getElementById("rows").innerHTML=rows.map(r=>{
     const n=r.node,kind=n.k||"regular";
     const others=r.g.nodes.slice(1);
-    const title=r.g.nodes.map(x=>`${x.c==="MIN"?"Miner":"Botanist"} · ${whereText(x)}${x.k?" · "+etHours(x):""}${x.h?" · hidden item":""}`).join("\n");
+    const title=r.g.nodes.map(x=>`${CLASS_NAME[x.c]} · ${whereText(x)}${x.k?" · "+etHours(x):""}${x.h?" · hidden item":""}${x.c==="FSH"&&fishNotes(x)?" · "+fishNotes(x):""}`).join("\n");
     const warn=r.outlier?` <span class="warn" title="No current listing, or the listing sits far from the 30-day average — treat this price as unreliable.">⚠</span>`:"";
+    const folk=n.fl?` <span class="q" title="Needs a Folklore book before it will bite">folklore</span>`:"";
     const hidden=n.h?` <span class="q" title="A hidden item: it only turns up on some visits, and may need a Folklore book or enough Perception, so Per hour overstates it">hidden</span>`:"";
     return `<tr class="row" style="cursor:default">`+
       `<td><div class="name rich"><span class="rowtools"><button class="listbtn" data-listadd="${r.id}" title="Add to a saved list">📋</button><button class="xwbtn" data-xw="${r.id}" data-xwname="${xesc(r.name)}" title="Compare this item's price and stock on every world">🌐</button></span>`+
         `${iconHTML(r.id)}<span class="nmeta"><span class="n"><a href="https://universalis.app/market/${r.id}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">${r.name}</a>`+
-        `<span class="pill ${n.c.toLowerCase()}">${n.c}</span>${warn}${hidden}</span>`+
+        `<span class="pill ${n.c.toLowerCase()}">${n.c}</span>${warn}${hidden}${folk}</span>`+
         `<span class="t" title="${xesc(title)}">${xesc(whereText(n))}</span></span></div></td>`+
-      `<td title="${xesc(n.k?etHours(n):"Up all the time")}"><div class="node"><span class="gpill ${kind}">${kind}</span>${n.k?`<span data-node="${r.id}">${spawnHTML(n)}</span>`:""}${others.length?`<span class="more">+${others.length} more</span>`:""}</div></td>`+
-      `<td class="perhour" title="${n.k?`${state.swings} swings × ${state.perSwing} a swing, ${n.sp.length} window${n.sp.length>1?"s":""} an Eorzean day`:`${state.nodesHr} nodes × ${state.swings} swings × ${state.perSwing} a swing`}${r.capped?" · held to what sells in a day":""}">${fmt(r.perHr)}${r.capped?' <span class="q">cap</span>':""}</td>`+
+      `<td title="${xesc((n.k?etHours(n):"Up all the time")+(n.c==="FSH"&&fishNotes(n)?"\n"+fishNotes(n):""))}"><div class="node"><span class="gpill ${kind}">${kind}</span>${n.b?'<span class="gpill big">big fish</span>':""}${n.k?`<span data-node="${r.id}">${spawnHTML(n)}</span>`:""}${others.length?`<span class="more">+${others.length} more</span>`:""}</div></td>`+
+      `<td class="perhour" title="${n.c==="FSH"?(n.b?`${state.bigWin} a window × ${n.w} windows a real hour`:`${state.catchesHr} catches an hour${n.k?` × biting ${(n.u*100).toFixed(1)}% of the time`:""}`):n.k?`${state.swings} swings × ${state.perSwing} a swing, ${n.sp.length} window${n.sp.length>1?"s":""} an Eorzean day`:`${state.nodesHr} nodes × ${state.swings} swings × ${state.perSwing} a swing`}${r.capped?" · held to what sells in a day":""}">${r.perHr<10?+r.perHr.toFixed(2):fmt(r.perHr)}${r.capped?' <span class="q">cap</span>':""}</td>`+
       `<td class="forecast">${r.gilHr!=null&&r.gilHr>0?"<b>"+fmtK(r.gilHr)+"</b>/hr":"—"}</td>`+
       `<td>${fmt(r.now)}${agePill(r.upload)}</td>`+
       `<td>${fmt(r.avg)}${r.avg!=null&&r.n30?` <span class="q">${r.n30}×</span>`:""}</td>`+
@@ -279,7 +345,7 @@ function render(){
       `<td>${velCell(r.velI)}</td>`+
       `<td class="forecast">${r.gilDay!=null&&r.gilDay>0?"<b>"+fmtK(r.gilDay)+"</b>/day":"—"}</td></tr>`;}).join("");
   renderKpis(rows);
-  setStatus(rows.length?`Sell on <b>${state.home}</b> · gil an hour at <b>${state.basis==="avg"?"30-day avg":"current low"}</b> · ${state.nodesHr} nodes × ${state.swings} swings × ${state.perSwing} a swing · tax ${Math.round(state.tax*100)}% · ${rows.length} shown`
+  setStatus(rows.length?`Sell on <b>${state.home}</b> · gil an hour at <b>${state.basis==="avg"?"30-day avg":"current low"}</b> · ${state.nodesHr} nodes × ${state.swings} swings × ${state.perSwing} a swing · ${state.catchesHr} fish an hour · tax ${Math.round(state.tax*100)}% · ${rows.length} shown`
     :"Nothing matches these filters — try untick <b>Hide no-sales</b>, or widen the level range.");
 }
 /* the cards read every row that passes the filters, never a ⚠ row */
@@ -305,7 +371,7 @@ setInterval(()=>{
 
 function buildNav(){
   const sel=document.getElementById("cls"),nav=document.getElementById("catNav");nav.innerHTML="";
-  const ic={all:"&#9638;",MIN:"&#9935;&#65039;",BTN:"&#127807;"};
+  const ic={all:"&#9638;",MIN:"&#9935;&#65039;",BTN:"&#127807;",FSH:"&#127907;"};
   const count=c=>c==="all"?GATHER.length:GATHER.filter(g=>g.nodes.some(n=>n.c===c)).length;
   for(const o of sel.options){const b=document.createElement("button");b.type="button";b.dataset.cat=o.value;
     b.innerHTML=`<span class="ic">${ic[o.value]}</span><span>${o.textContent}</span><span class="q">${count(o.value)}</span>`;
@@ -352,6 +418,8 @@ document.getElementById("capDay").addEventListener("change",e=>{state.capDay=e.t
 document.getElementById("nodesHr").addEventListener("change",()=>{state.nodesHr=num("nodesHr",1,60);recompute();});
 document.getElementById("swings").addEventListener("change",()=>{state.swings=num("swings",1,6);recompute();});
 document.getElementById("perSwing").addEventListener("change",()=>{state.perSwing=num("perSwing",0.1,2);recompute();});
+document.getElementById("catchesHr").addEventListener("change",()=>{state.catchesHr=num("catchesHr",1,30);recompute();});
+document.getElementById("bigWin").addEventListener("change",()=>{state.bigWin=num("bigWin",0.01,1);recompute();});
 document.getElementById("minLvl").addEventListener("change",e=>{state.minLvl=+e.target.value||1;rerender();});
 document.getElementById("maxLvl").addEventListener("change",e=>{state.maxLvl=+e.target.value||100;rerender();});
 document.getElementById("refresh").addEventListener("click",load);
@@ -384,7 +452,7 @@ document.querySelectorAll("thead th[data-k]").forEach(th=>{
 /* saved lists: a gathered item goes over as a plain material, with where to gather it */
 window.__listEntry=id=>{
   id=+id;const g=GATHER.find(x=>x.i===id);if(!g)return null;const n=g.nodes[0];
-  return{id,name:g.nm,kind:"materials",group:"materials",q:"nq",note:`${n.c==="MIN"?"Miner":"Botanist"} · ${n.z}`,recipes:{},src:"Gathering"};
+  return{id,name:g.nm,kind:"materials",group:"materials",q:"nq",note:`${CLASS_NAME[n.c]} · ${n.z}`,recipes:{},src:"Gathering"};
 };
 </script>
 </body>

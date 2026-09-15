@@ -9,6 +9,7 @@ const DATAMINING = "https://raw.githubusercontent.com/xivapi/ffxiv-datamining/ma
 const TEAMCRAFT = "https://raw.githubusercontent.com/ffxiv-teamcraft/ffxiv-teamcraft/staging/libs/data/src/lib/json/";
 const INFI = "https://raw.githubusercontent.com/Infiziert90/FFXIVGachaSpreadsheet/refs/heads/master/website/static/data/";
 const TRACKER = "https://raw.githubusercontent.com/Infiziert90/SubmarineTracker/master/SubmarineTracker/";
+const FISHTRACKER = "https://raw.githubusercontent.com/icykoneko/ff14-fish-tracker-app/master/";
 
 const FILES = [
   /* the game's own tables */
@@ -19,13 +20,15 @@ const FILES = [
     "CompanyCraftType", "CompanyCraftDraftCategory",
     "CollectablesShop", "CollectablesShopItem", "CollectablesShopItemGroup", "CollectablesShopRewardScrip",
     "CollectablesShopRefine", "ItemAction", "RetainerTaskRandom", "RetainerTask", "TreasureHuntRank", "TreasureSpot"].map(n => [n + ".csv", DATAMINING + n + ".csv"]),
-  /* Teamcraft: recipes (workshop trees, simulator links), icons, sub part -> item, gathering nodes */
-  ...["recipes", "item-icons", "submarine-parts", "nodes"].map(n => [n + ".json", TEAMCRAFT + n + ".json"]),
+  /* Teamcraft: recipes (workshop trees, simulator links), icons, sub part -> item, gathering nodes, fish per spot */
+  ...["recipes", "item-icons", "submarine-parts", "nodes", "fishing-spots"].map(n => [n + ".json", TEAMCRAFT + n + ".json"]),
   /* Infi's crowd-sourced loot records: submarine voyages and duty coffers */
   ...["Submarines", "DeepDungeonSacks", "EurekaBunnies", "FieldOpLockboxes", "OccultTreasuresV2", "ChestDropsV2", "Ventures", "LastUpdate"]
     .map(n => [n + ".json", INFI + n + ".json"]),
   /* SubmarineTracker's surveillance / retrieval / favor breakpoints per sector */
   ["Sectors.cs", TRACKER + "Data/Sectors.cs"],
+  /* the Carbuncle Plushy fish tracker: each fish's hours and weather, and every zone's weather odds */
+  ["fishtracker-data.js", FISHTRACKER + "js/app/data.js"],
 ];
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
