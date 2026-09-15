@@ -118,10 +118,12 @@ addEventListener("click",e=>{
    along the top of the tab, which stays in view with the filters folded away.
    The bar fills from runBatches, summed over every batch run in the scan, and
    never steps backwards when a later phase adds more batches; it just holds
-   short of the end until the button comes back. A cache hit that is over
-   inside the grace period shows neither, so it does not flicker. */
+   short of the end until the button comes back, then fills and stays full
+   until the next scan, so a finished scan reads as finished. A cache hit that
+   is over inside the grace period skips the running bar and the label, so it
+   does not flicker, and goes straight to the full bar. */
 const Busy={
-  GRACE_MS:150,runs:[],shown:0,btn:null,bar:null,label:"",timer:0,on:false,
+  GRACE_MS:150,runs:[],shown:0,btn:null,bar:null,label:"",timer:0,on:false,seen:false,
   track(total){const run={done:0,total};Busy.runs.push(run);Busy.paint();return run;},
   paint(){
     if(!Busy.on)return;
@@ -137,15 +139,19 @@ const Busy={
     Busy.runs=Busy.runs.filter(r=>r.done<r.total);
     Busy.label=Busy.btn.innerHTML;
     Busy.btn.classList.add("busy");Busy.btn.setAttribute("aria-busy","true");
+    /* drop straight back from a previous full bar rather than sliding down */
+    Busy.bar.classList.remove("done");Busy.bar.firstChild.style.transition="none";Busy.bar.firstChild.style.width="0";
+    void Busy.bar.offsetWidth;Busy.bar.firstChild.style.transition="";
     Busy.bar.hidden=false;Busy.paint();
   },
   stop(){
     clearTimeout(Busy.timer);Busy.timer=0;Busy.runs=[];
+    if(Busy.seen){Busy.seen=false;
+      Busy.bar.classList.remove("indet");Busy.bar.classList.add("done");Busy.bar.hidden=false;Busy.bar.firstChild.style.width="100%";}
     if(!Busy.on)return;
     Busy.on=false;
     Busy.btn.innerHTML=Busy.label;
     Busy.btn.classList.remove("busy");Busy.btn.removeAttribute("aria-busy");
-    Busy.bar.hidden=true;
   },
   watch(){
     const btn=document.getElementById("refresh");
@@ -156,7 +162,7 @@ const Busy={
     Busy.bar.appendChild(document.createElement("i"));
     document.body.appendChild(Busy.bar);
     const sync=()=>{
-      if(btn.disabled){if(!Busy.on&&!Busy.timer)Busy.timer=setTimeout(()=>{Busy.timer=0;if(btn.disabled)Busy.start();},Busy.GRACE_MS);}
+      if(btn.disabled){Busy.seen=true;if(!Busy.on&&!Busy.timer)Busy.timer=setTimeout(()=>{Busy.timer=0;if(btn.disabled)Busy.start();},Busy.GRACE_MS);}
       else Busy.stop();
     };
     try{new MutationObserver(sync).observe(btn,{attributes:true,attributeFilter:["disabled"]});}catch(e){}

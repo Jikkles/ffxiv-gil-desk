@@ -135,6 +135,7 @@ body{
   box-shadow:0 0 8px var(--aether);transition:width .3s ease}
 .scanbar.indet i{width:35%;transition:none;animation:scanbar 1.1s ease-in-out infinite}
 @keyframes scanbar{from{transform:translateX(-100%)}to{transform:translateX(290%)}}
+.scanbar.done i{width:100%}
 @media (prefers-reduced-motion:reduce){
   .rspin{animation:none;border-right-color:currentColor;opacity:.6}
   .scanbar.indet i{animation:none;width:100%;opacity:.5}
