@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Tour example</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<!-- The tour's example page: the Dashboard, drawn with the Dashboard's own stylesheet
+     (filled in by the tour from the real tab) and made-up prices, so it looks exactly
+     like the desk without loading or scanning anything. The tour adds the tab bar,
+     cloned from the shell, and sets --vh and --barh. Parts the tour points at carry
+     data-t names; a name on several elements means their outline together. -->
+<style>/*__PAGE_CSS__*/</style>
+<style>
+html{overflow:hidden;height:auto}
+body{display:block;height:auto;background-attachment:scroll}
+/* the trend chip's colours, which the data layer normally injects */
+.tr{font-family:"JetBrains Mono",monospace;font-size:13px;white-space:nowrap}
+.tr.up,.tr.dip{color:var(--win)} .tr.dn{color:var(--loss)} .tr.flat{color:var(--faint)}
+.tabbar{position:relative}
+/* the real sidebar is a 100vh sticky column inside its own frame; here the page is
+   one tall document, so the column just runs the height of the screen or the page */
+.app{min-height:calc(var(--vh,100vh) - var(--barh,66px))}
+.side{position:static;height:auto;min-height:calc(var(--vh,100vh) - var(--barh,66px));overflow:visible}
+/* the tour opens the first row, fills the shopping list and labels the tabs as it goes */
+body:not(.t-tree) tr.detail{display:none}
+body.t-tree tr.row.first>td{background:var(--row-open)}
+body.t-tree tr.row.first .caret{transform:rotate(90deg);border-left-color:var(--aether)}
+body:not(.t-shop) .sp-full,body.t-shop .sp-empty{display:none}
+.tabnote{position:absolute;z-index:20;display:none;width:182px;padding:8px 11px;border-radius:10px;
+  background:var(--panel);border:1px solid var(--aether-line);box-shadow:0 8px 22px #0000004d;
+  font:12px/1.35 "Inter",sans-serif;color:var(--muted);text-align:center}
+.tabnote b{display:block;color:var(--ink);font-size:13px;margin-bottom:2px}
+.tabstem{position:absolute;z-index:19;display:none;width:1px;background:var(--aether-line)}
+.tabband{position:absolute;z-index:18;display:none;left:0;right:0;background:var(--bg2);border-bottom:1px solid var(--line)}
+body.t-tabs .tabnote,body.t-tabs .tabstem,body.t-tabs .tabband{display:block}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="sgroup" data-t="side">
+      <div class="slabel">Filter items</div>
+      <div class="field inline"><label>🔍</label><input type="text" placeholder="search name…" tabindex="-1"></div>
+    </div>
+    <div class="sgroup" data-t="side server">
+      <div class="slabel">Server</div>
+      <div class="field sel"><label>Sell on</label><select tabindex="-1"><option class="homename"></option></select></div>
+      <div class="field dcwrap"><label>Mats from</label>
+        <button type="button" class="dcbtn" tabindex="-1"><span class="dcname"></span> <span class="dccar">▾</span></button></div>
+      <button class="btn primary wide" data-t="refresh" tabindex="-1">↻ Refresh</button>
+    </div>
+    <div class="sgroup" data-t="side filters">
+      <div class="slabel">Marketboard settings</div>
+      <label class="chk"><input type="checkbox" checked tabindex="-1"> Hide no-sales</label>
+      <label class="chk"><input type="checkbox" tabindex="-1"> Hide ⚠ outliers</label>
+      <label class="chk"><input type="checkbox" checked tabindex="-1"> Skip dead items</label>
+    </div>
+    <div class="sgroup" data-t="side filters">
+      <div class="slabel">Filters</div>
+      <div class="field sel"><label>Profit vs</label><select tabindex="-1"><option>Current low</option></select></div>
+      <div class="field sel"><label>Mat cost</label><select tabindex="-1"><option>Precraft-optimised</option></select></div>
+      <div class="field sel"><label>Tax</label><select tabindex="-1"><option>5%</option></select></div>
+    </div>
+    <div class="sgroup" data-t="side filters">
+      <div class="slabel">Categories</div>
+      <div class="snav" id="catNav"></div>
+    </div>
+    <div class="sgroup" data-t="side">
+      <div class="scancard" data-t="scan"><span class="dot"></span>Last scan<br><b id="lastScan" style="color:var(--win)">—</b></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="hero">
+      <div class="hicon" data-t="hero">💰</div>
+      <div data-t="hero">
+        <h1>Dashboard</h1>
+        <p class="sub">A profit scanner across <b>9,482</b> personal-craft items — consumables, furniture, intermediate materials, gear, tools and dyes. Sell prices benchmark against <b class="homename"></b>; <b>Avg 30d</b> is the real anchor, so a lone inflated listing shows up for what it is. Click any item for its full crafting tree.</p>
+      </div>
+      <div class="kpis" data-t="kpis">
+        <div class="kpi"><div class="ki">🪙</div><div class="kbody"><div class="k">Best profit / unit</div><div class="v gil">1,289,698 g</div><div class="s">Smaller Water Otter Fountain</div></div></div>
+        <div class="kpi"><div class="ki">📅</div><div class="kbody"><div class="k">Daily profit ceiling</div><div class="v cy">37.56M g</div><div class="s">visible items, 30-day <span class="homename"></span> rate</div></div></div>
+        <div class="kpi"><div class="ki">🗃️</div><div class="kbody"><div class="k">Profitable / shown</div><div class="v">300 / 1406</div><div class="s">freshest data 0m ago</div></div></div>
+      </div>
+    </div>
+
+    <div id="shopPanel" data-t="shop"><div class="sp-head">
+      <span class="sp-cart">🛒</span><span class="sp-title">Shopping list</span>
+      <span class="sp-sum sp-empty">empty — use 🛒 on a row to add its materials</span>
+      <span class="sp-sum sp-full">6 items · ~4.1k gil · <span id="spWorlds">3 worlds</span></span>
+      <span class="sp-caret">▸</span></div></div>
+
+    <div class="status">Sell vs <b class="homename"></b> · profit on <b>current low</b> · mats <b>precraft-optimised</b>, cheapest on <span class="dcname"></span> · 1406 match (top 300) · tax 5% · click an item, then any craftable material to go deeper</div>
+
+    <div class="tablewrap">
+      <table>
+        <thead><tr data-t="table">
+          <th style="cursor:default">Item</th><th>Sell now <span></span></th><th>Avg 30d <span></span></th><th>Trend <span></span></th>
+          <th class="hide">Mat cost <span></span><i style="display:block;font-style:normal;font-weight:400;font-size:9px;letter-spacing:.06em;color:var(--faint);text-transform:none">optimised</i></th>
+          <th data-sorted>Profit/unit <span>▾</span></th><th>Margin <span></span></th><th>Units/day <span></span></th><th>Gil/day <span></span></th>
+        </tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </main>
+</div>
+
+<script>
+const ICON_INDEX = /*__ICON_INDEX__*/;
+const RECIPE_INDEX = /*__RECIPE_INDEX__*/;
+/*__UI_JS__*/
+/* home: the world picked, dc: its data centre, worlds: that data centre's worlds */
+const MOCK = /*__MOCK__*/null;
+
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+const fmt=n=>Math.round(n).toLocaleString("en-GB");
+document.querySelectorAll(".homename").forEach(e=>{e.textContent=MOCK.home;});
+document.querySelectorAll(".dcname").forEach(e=>{e.textContent=MOCK.dc;});
+document.getElementById("lastScan").textContent=new Date().toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit",second:"2-digit"});
+/* three other worlds on the same data centre, for the "hop" materials */
+const away=MOCK.worlds.filter(w=>w!==MOCK.home);
+const hop=i=>away.length?away[i%away.length]:MOCK.home;
+document.getElementById("spWorlds").textContent=Math.min(3,away.length)+1+" worlds";
+
+const CATS=[["▦","All categories"],["⚔️","Gear"],["🪑","Furniture"],["🧱","Materials"],["🍖","Food"],["🧪","Medicine"],["🔧","Tools"],["🎵","Music"],["🐾","Minions"],["✨","Misc"],["🎨","Dyes"]];
+document.getElementById("catNav").innerHTML=CATS.map((c,i)=>
+  `<button type="button" tabindex="-1" aria-current="${i===0}"><span class="ic">${c[0]}</span><span>${c[1]}</span></button>`).join("");
+
+function tools(id,name,first){
+  const t=k=>first?` data-t="${k}"`:"";
+  return `<span class="rowtools"><button class="shopbtn" tabindex="-1"${t("b-shop")}>🛒</button><button class="listbtn" tabindex="-1"${t("b-list")}>📋</button><button class="xwbtn" tabindex="-1"${t("b-xw")}>🌐</button>${teamcraftHTML(id).replace("<a ",first?'<a data-t="b-tc" tabindex="-1" ':'<a tabindex="-1" ')}</span>`;
+}
+function trend(p){
+  if(p==null)return '<span class="tr flat">·</span>';
+  const cls=Math.abs(p)<5?"flat":(p>0?"up":(p<=-30?"dip":"dn"));
+  return `<span class="tr ${cls}">${cls==="flat"?"→":(p>0?"▲":"▼")} ${p>0?"+":""}${Math.abs(p)>=10?Math.round(p):p.toFixed(1)}%</span>`;
+}
+/* the listing's age, coloured the way agePill() does: under an hour, under six, older */
+function age(a,tag){const t=tag?' data-t="age"':"";
+  return a==="<1h"?`<span class="age-pill age-fresh"${t}>&lt;1h</span>`:`<span class="age-pill ${/d$/.test(a)?"age-stale":"age-ok"}"${t}>${a}</span>`;}
+
+/* id, name, tag, subtitle, sell, quality, listing age, avg 30d, sales, trend %, mat cost, profit, margin, units/day, gil/day,
+   outlier (a price the ⚠ flags; the tour points at the first one) */
+const ROWS=[
+  [39421,"Smaller Water Otter Fountain","furniture","Outdoor Furnishing",1999999,"NQ","1h",1142851,14,80,610301,1289698,64,"0.47","601.9k"],
+  [51251,"Lattice Window Seat","furniture","Furnishing",2389450,"NQ","<1h",2832791,7,-23,1016137,1253841,52,"0.23","292.6k"],
+  [4361,"Electrum Gorget","gear","Necklace",1150000,"HQ","<1h",12000,2,null,2403,1090097,95,"0.07","76.3k",1],
+  [15559,"Mighty Thunderbolt","gear","Lancer's Arm",1000000,"HQ","<1h",600000,2,null,12610,937390,94,"0.07","62.5k"],
+  [13090,"Oriental Grass Plot","furniture","Outdoor Furnishing",2222222,"NQ","2d",1999996,6,null,1242808,868303,39,"0.20","173.7k"],
+  [49254,"Courtly Lover's Cane","gear","Two-handed Conjurer's Arm",850000,"HQ","<1h",454330,38,-1.1,58043,749457,88,"1.27","949.3k"],
+  [49306,"Courtly Lover's Earrings of Fending","gear","Earrings",792144,"HQ","<1h",404170,26,-48,32061,720476,91,"0.87","624.4k"],
+  [49267,"Courtly Lover's Pendulums","gear","Sage's Arm",745923,"HQ","<1h",478474,19,23,74012,634615,85,"0.63","401.9k"],
+  [38895,"Indagator's Needle","tool","Weaver's Primary Tool",599999,"HQ","4h",300000,1,null,27442,542557,90,"0.03","18.1k"]
+];
+/* the first row's recipe, one level open: [id, name, qty, depth, craftable, open,
+   buy, quality, avg, dip badge, world (0-2 a hop, "home"), craft, line, craft saving] */
+const TREE=[
+  [39242,"Smaller Water Otter Fountain Lumber",2,0,1,1,null,"",null,null,null,915,1830],
+  [39236,"Pure Verdurous Glioaether",1,1,0,0,218,"NQ",null,null,0,null,218],
+  [36193,"Ironwood Log",1,1,0,0,147,"NQ",228,35,1,null,147],
+  [36205,"Scarlet Moko Grass",1,1,0,0,90,"NQ",174,48,2,null,90],
+  [36245,"Kumbhira Skin",1,1,0,0,120,"NQ",247,51,0,null,120],
+  [39243,"Smaller Water Otter Fountain Hardware",2,0,1,0,null,"",null,null,null,1475,2950],
+  [39244,"Smaller Water Otter Fountain Resin",2,0,1,0,null,"",null,null,null,301025,602050],
+  [7009,"Cut Stone",6,0,1,0,650,"HQ",903,28,1,357,2142,293],
+  [36263,"Ambrosial Water",4,0,0,0,199,"NQ",332,40,"home",null,796],
+  [36262,"Dynamis Crystal",4,0,0,0,80,"NQ",176,55,"home",null,320]
+];
+function node(n){
+  const [id,name,qty,depth,craftable,open,buy,q,avg,dip,world,craft,line,save]=n;
+  const buyCheaper=craft==null||(buy!=null&&buy<=craft);
+  const where=world==null?'<div class="server dim">—</div>'
+    :world==="home"?`<div class="server home" data-t="buyon">${esc(MOCK.home)}</div>`
+    :`<div class="server hop" data-t="buyon">${esc(hop(world))} · hop</div>`;
+  return `<div class="node${craftable?" clickable":""}" style="padding-left:${depth*20}px">
+    <div class="nlabel"><button class="shopbtn sm" tabindex="-1">+</button><button class="listbtn sm" tabindex="-1">📋</button><button class="xwbtn sm" tabindex="-1">🌐</button>${teamcraftHTML(id,"sm").replace("<a ",'<a tabindex="-1" ')}<span class="ntoggle ${craftable?"has":"leaf"} ${open?"open":""}">${craftable?'<span class="c"></span>':"·"}</span>${iconHTML(id)}
+      <span><span class="nqty">${qty}×</span>${esc(name)}${save?`<span class="badge">craft −${save}</span>`:""}${dip?`<span class="stk good">▼ −${dip}%</span>`:""}</span></div>
+    <div class="price ${buy==null?"dim":(buyCheaper?"cheap":"dim")}" data-t="buyon">${buy!=null?`buy ${fmt(buy)} <span class="qtag ${q==="HQ"?"hq":""}">${q}</span>`:'<span class="dim">no listing</span>'}${avg!=null?`<span class="navg">avg ${fmt(avg)}${dip?`<span class="stk good">▼ −${dip}%</span>`:""}</span>`:""}</div>
+    ${where}
+    <div class="price ${craft!=null&&!buyCheaper?"cheap":"dim"} ncraft">${craft!=null?"craft "+fmt(craft):'<span class="dim">—</span>'}</div>
+    <div class="line">${fmt(line)}</div></div>`;
+}
+function tree(){
+  return `<div class="tree">
+    <div class="thead"><div>Buy all of these, craft once → 1× Smaller Water Otter Fountain</div><div class="r" data-t="buyon">Buy (${esc(MOCK.dc)})</div><div class="r" data-t="buyon">Buy on</div><div class="r hcraft">Craft it</div><div class="r">Line (best)</div></div>
+    ${TREE.map(node).join("")}
+    <div class="tfoot">
+      <span><span class="lab">Buy-all /craft</span><b>5,229</b></span>
+      <span><span class="lab">Crystals</span><b>~213</b> <span class="dim">hidden · incl. in costs</span></span>
+      <span><span class="lab">Precraft-optimised</span><b>610,301</b> <span class="dim">← in use</span></span>
+      <span><span class="lab">Cost/unit</span><b>610,301</b></span>
+      <span><span class="lab">Sell now·${esc(MOCK.home)}</span><b>1,999,999 NQ</b></span>
+      <span><span class="lab">Avg 30d</span><b>1,142,851 (14 sold)</b></span>
+      <span><span class="lab">Trend</span><b>${trend(80)}</b></span>
+      <span><span class="lab">Profit/unit</span><b class="profit win">1,289,698</b></span>
+    </div></div>`;
+}
+document.getElementById("rows").innerHTML=ROWS.map((r,i)=>{
+  const [id,name,kind,note,sell,q,a,avg,n,tr,cost,profit,margin,vel,daily,outlier]=r;
+  const out=outlier&&!ROWS.slice(0,i).some(x=>x[15]);
+  const first=i===0,table=i<3?' data-t="table"':"";
+  return `<tr class="row${first?" first":""}"${table}>
+    <td${out?' data-t="outrow"':""}><div class="name rich"${first?' data-t="rowhead"':""}>${tools(id,name,first)}<span class="caret"></span>${iconHTML(id)}<span class="nmeta"><span class="n">${esc(name)} <span class="pill ${kind}">${kind}</span></span><span class="t">${esc(note)}</span></span></div></td>
+    <td${out?' data-t="outlier outrow"':""}>${fmt(sell)} <span class="q">${q}</span>${outlier?' <span class="warn">⚠</span>':""}${age(a,i<5)}</td>
+    <td${out?' data-t="outrow"':""}>${fmt(avg)} <span class="q">${n}×</span></td>
+    <td>${trend(tr)}</td>
+    <td class="hide">${fmt(cost)}</td>
+    <td class="profit win">${fmt(profit)}</td>
+    <td>${margin}%</td>
+    <td>${vel}</td>
+    <td class="forecast"><b>${daily}</b>/day</td></tr>`+
+    (first?`<tr class="detail" data-t="tree"><td colspan="9">${tree()}</td></tr>`:"");
+}).join("");
+</script>
+</body>
+</html>

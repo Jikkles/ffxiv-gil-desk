@@ -312,7 +312,7 @@ function nodeHTML(id,amount,path,depth){
   let h=`<div class="node${hasKids?' clickable':''}" ${hasKids?`data-np="${path}"`:''} style="padding-left:${depth*20}px">
     <div class="nlabel"><button class="shopbtn sm" data-shopmat="${id}|${amount}" title="Add ${amount}× to shopping list">+</button><button class="xwbtn sm" data-xw="${id}" data-xwname="${xesc(escapeName(id))}" data-xwqty="${amount}" title="Compare this item's price and stock on every world">\ud83c\udf10</button>${teamcraftHTML(id,'sm')}<span class="ntoggle ${hasKids?'has':'leaf'} ${open?'open':''}">${hasKids?'<span class="c"></span>':'·'}</span>${iconHTML(id)}
       <span><span class="nqty">${amount}×</span>${escapeName(id)}${saveBadge}${stk}</span></div>
-    <div class="price ${buyCls}">${buy.price!=null?'buy '+fmt(buy.price)+' <span class="qtag '+(buy.hq?'hq':'')+'">'+(buy.hq?'HQ':'NQ')+'</span>':'<span class="dim">no listing</span>'}${bavg!=null?'<span class="navg">avg '+fmtK(bavg)+'</span>':''}</div>
+    <div class="price ${buyCls}">${buy.price!=null?'buy '+fmt(buy.price)+' <span class="qtag '+(buy.hq?'hq':'')+'">'+(buy.hq?'HQ':'NQ')+'</span>':'<span class="dim">no listing</span>'}${bavg!=null?'<span class="navg">avg '+fmtK(bavg)+stk+'</span>':''}</div>
     <div class="server ${buy.price==null?'dim':(buy.hop?'hop':'home')}">${buy.price!=null?buy.world+(buy.hop?' · hop':''):'—'}</div>
     <div class="price ${craftCls} ncraft">${craft!=null?'craft '+fmt(craft):'<span class="dim">—</span>'}</div>
     <div class="price ${vendorCls} nvendor">${vendor!=null?'vendor '+fmt(vendor):'<span class="dim">—</span>'}</div>

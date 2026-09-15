@@ -24,7 +24,8 @@ are separate markets, so they are left out.
 ## Quick start
 
 **[Open the desk](https://jikkles.github.io/ffxiv-gil-desk/)** and pick your world. That's it —
-nothing to install or sign into.
+nothing to install or sign into. Picking a world starts a short guided tour of the desk, which the
+**Tour** button in the top right brings back any time.
 
 Prefer it offline, or want your own copy? Download [index.html](index.html) and open it in a
 browser. It is one self-contained file and behaves identically either way; settings and saved
@@ -347,7 +348,7 @@ line is badged against the recent average so you can see whether you're buying i
 overpaying. Crystals, shards and clusters are excluded — assumed stocked.
 
 **Teamcraft simulator.** Every craftable row on the **Dashboard**, **Precrafts** and list tabs —
-and every craftable material inside a crafting tree, including the Workshop's — has a ↗ button that opens that exact
+and every craftable material inside a crafting tree, including the Workshop's — has a Teamcraft button, marked with its TC logo, that opens that exact
 recipe in the [Teamcraft](https://ffxivteamcraft.com) craft simulator, so you can check a
 rotation before you commit. Rows that aren't crafted don't get one.
 
@@ -356,6 +357,15 @@ rotation before you commit. Rows that aren't crafted don't get one.
 `#list1` to `#list5` — so a link or bookmark opens the desk straight on that tab, and the browser's
 Back and Forward buttons step through the tabs you visited. An address for a list you don't have
 opens the Dashboard.
+
+**Guided tour.** A first visit that picks a world goes straight into a walkthrough of an example
+Dashboard with made-up prices, sized to your window: it dims everything but the part it is
+explaining, zooms in on it, and talks through it in a speech bubble. It covers the side panel,
+the page summary and cards, the item list, ⚠ outliers, how fresh prices are, the crafting tree
+and where to buy materials, each row button, and the other tabs. **Tour** in the top right runs
+it again; the arrow keys step through it and Esc closes it. The example is drawn with the real
+Dashboard's stylesheet and a copy of your tab bar, so it never shows a desk that looks different
+from yours, and it loads and scans nothing.
 
 **Folding sidebar.** The arrow at the top of any tab's filters panel folds it down to a narrow
 rail, giving the table the width. It is one setting for the whole desk: fold it on one tab and
@@ -496,6 +506,7 @@ node tools/build.js --check   # does index.html match src/?
 | `index.html` | The shell: tab bar, iframes, search box |
 | `tabs/*.html` | One complete page per tab (`list.html` is every saved list) |
 | `shared/*.js`, `shared/ui.css` | The code and styles every tab shares |
+| `tour/tour.js`, `tour/mock.html` | The guided tour: its steps, and the example page it walks through |
 | `data/*.json` | The baked datasets inside the tabs, one record per line |
 | `data/*-index.txt` | The item name, icon and recipe indexes |
 
@@ -556,6 +567,14 @@ duplicating some code — which is why the shared chunks exist.
   — an unflagged item can still turn out to be event-only.
 
 ## Changelog
+
+### 15 September 2026
+
+- **Guided tour.** Picking your world on a first visit starts a walkthrough of the desk, and the
+  new **Tour** button in the top right replays it (see [Shared features](#shared-features)).
+- Teamcraft buttons carry Teamcraft's TC logo instead of an arrow.
+- In every crafting tree, the ▼/▲ badge comparing a material's price with its average now also
+  sits beside the buy price, not only beside the material's name.
 
 ### 14 September 2026
 

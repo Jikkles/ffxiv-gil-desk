@@ -294,7 +294,7 @@ function sellTimeHTML(s, wantHQ) {
 function treeHTML(r){let body="";
   r.ings.forEach((i,ix)=>{const where=i.missing?`<span class="muted">no listings</span>`:`<span class="server ${i.hop?'hop':'home'}" style="text-align:left">${i.world}${i.hop?' · hop':''}</span>`;
     body+=`<div class="node"><div class="nlabel"><button class="shopbtn sm" data-shopmat="${r.id}|${ix}" title="Add ${i.amount}× to shopping list">+</button><button class="listbtn sm" data-listadd="${i.id}" title="Add to a saved list">📋</button><button class="xwbtn sm" data-xw="${i.id}" data-xwname="${xesc(i.name)}" data-xwqty="${i.amount}" title="Compare this item's price and stock on every world">\ud83c\udf10</button>${teamcraftHTML(i.id,'sm')}${iconHTML(i.id)}<span><span class="nqty">${i.amount}×</span>${i.name}${i.stk||''}</span></div>
-      <div class="price ${i.unit==null?'dim':''}">${fmt(i.unit)} <span class="q">NQ</span>${i.avg!=null?'<span class="navg">avg '+fmtK(i.avg)+'</span>':''}</div>
+      <div class="price ${i.unit==null?'dim':''}">${fmt(i.unit)} <span class="q">NQ</span>${i.avg!=null?'<span class="navg">avg '+fmtK(i.avg)+(i.stk||'')+'</span>':''}</div>
       <div style="text-align:left">${where}</div><div class="line nline">${fmt(i.line)}</div></div>`;});
   const sq=state.sellQ.toUpperCase();
   return `<div class="tree">

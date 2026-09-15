@@ -136,9 +136,7 @@ function teamcraftHTML(itemId,cls){
   const u=teamcraftUrl(itemId);
   if(!u)return "";
   return '<a class="tcbtn'+(cls?" "+cls:"")+'" href="'+u+'" target="_blank" rel="noopener"'+
-    ' title="Open this craft in the Teamcraft simulator" aria-label="Open in the Teamcraft simulator">'+
-    '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M8 4H4v12h12v-4"/>'+
-    '<path d="M12 4h4v4"/><path d="M16 4 9.5 10.5"/></svg></a>';
+    ' title="Open this craft in the Teamcraft simulator" aria-label="Open in the Teamcraft simulator"></a>';
 }
 
 /* ---- in-game item icons ----
