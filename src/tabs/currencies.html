@@ -377,29 +377,24 @@ async function loadTrends(){
 }
 
 /* ---- render ---- */
-/* What the row costs in its currency, shown on the right of the item cell. In
-   the all-currencies view the icon is already the row’s own, so only the
-   number is worth repeating. */
+/* What the row costs in its currency, shown on the right of the item cell. */
 /* costs are whole currency units nine times out of ten, so 3 reads as 3 rather
    than 3.00; the split rate a vendor bundle works out to keeps its decimals */
 const fmtCost=n=>{const r=Math.round(n*100)/100;
   return Number.isInteger(r)?r.toLocaleString("en-GB"):r.toFixed(2).replace(/0+$/,"");};
-function costChip(r,withIcon){
+function costChip(r){
   if(r.perUnit==null)return "";
   const split=r.qty>1?` <span class="q">(${fmt(r.cost)}&divide;${r.qty})</span>`:"";
   const name=r.curName||(curById(state.cur)||{}).name||"";
-  return `<span class="curcost" title="${xesc(name)} × ${fmtCost(r.perUnit)} for one">${withIcon?rowIcon(r.curIc):""}<b>×${fmtCost(r.perUnit)}</b>${split}</span>`;
+  return `<span class="curcost" title="${xesc(name)} × ${fmtCost(r.perUnit)} for one">${rowIcon(r.curIc)}<b>×${fmtCost(r.perUnit)}</b>${split}</span>`;
 }
 /* the desk-wide column set: every tab reads Item, Sell now, Avg 30d, Trend,
    Units/day, Gil/day, with anything tab-specific riding inside the item cell */
-const COLS_ONE=[["name","Item",1],["now","Sell now"],["avg","Avg 30d"],["trend","Trend"],
+const COLS=[["name","Item",1],["now","Sell now"],["avg","Avg 30d"],["trend","Trend"],
   ["vel","Units/day"],["gilDay","Gil/day"]];
-const COLS_ALL=[["name","Currency",1],["now","Sell now"],["avg","Avg 30d"],["trend","Trend"],
-  ["vel","Units/day"],["gilDay","Gil/day"]];
-function cols(){return state.cur==="__all"?COLS_ALL:COLS_ONE;}
 function renderHead(){
   const tr=document.getElementById("thr");
-  tr.innerHTML=cols().map(([k,l,noSort])=>
+  tr.innerHTML=COLS.map(([k,l,noSort])=>
     `<th data-k="${k}"${noSort?' style="cursor:default"':''}${k===state.sortKey?' data-sorted':''}>${l} <span>${k===state.sortKey?(state.sortDir<0?"▾":"▴"):""}</span></th>`).join("");
   tr.querySelectorAll("th[data-k]").forEach(th=>{
     if(th.style.cursor==="default")return;
@@ -418,9 +413,14 @@ function render(){
        and there is no item at all when nothing met the sales filter */
     const lb=r.id!=null?`<button class="listbtn" data-listadd="${r.id}" title="Add to a saved list">📋</button><button class="xwbtn" data-xw="${r.id}" data-xwname="${xesc(r.name)}" title="Compare this item's price and stock on every world">\ud83c\udf10</button>`:"";
     const tools=lb?`<span class="rowtools">${lb}</span>`:"";
-    const nameCell=state.cur==="__all"
-      ? `<td><div class="name rich wide">${tools}${rowIcon(r.curIc)}<span class="nmeta"><span class="n">${r.curName}</span><span class="t">${r.gpc!=null?("best: "+r.name):"nothing meets the sales filter"}</span></span>${costChip(r,false)}</div></td>`
-      : `<td><div class="name rich wide">${tools}${iconHTML(r.id)}<span class="nmeta"><span class="n"><a href="https://universalis.app/market/${r.id}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">${r.name}</a>${r.hq?'<span class="qtag hq">HQ</span>':''}${r.unique?'<span class="q">unique</span>':''}</span><span class="t shopname">${r.shop||"&mdash;"}</span></span>${costChip(r,true)}</div></td>`;
+    /* the overview row is the best item that currency buys, laid out like any
+       other row; its currency name leads the subline, since the potsherds all
+       wear the same icon. With nothing past the sales filter, the currency stands in. */
+    const sub=state.cur!=="__all"?(r.shop||"&mdash;")
+      :r.shop&&r.shop.includes(r.curName)?r.shop:[r.curName,r.shop].filter(Boolean).join(" &middot; ");
+    const nameCell=r.id==null
+      ? `<td><div class="name rich wide">${rowIcon(r.curIc)}<span class="nmeta"><span class="n">${r.curName}</span><span class="t">nothing meets the sales filter</span></span></div></td>`
+      : `<td><div class="name rich wide">${tools}${iconHTML(r.id)}<span class="nmeta"><span class="n"><a href="https://universalis.app/market/${r.id}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">${r.name}</a>${r.hq?'<span class="qtag hq">HQ</span>':''}${r.unique?'<span class="q">unique</span>':''}</span><span class="t shopname">${sub}</span></span>${costChip(r)}</div></td>`;
     return `<tr class="row">${nameCell}`+
       `<td>${fmtK(r.now)}${agePill(r.upload)}</td>`+
       `<td>${fmtK(r.avg)}</td>`+
