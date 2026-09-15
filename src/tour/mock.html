@@ -17,6 +17,8 @@ body{display:block;height:auto;background-attachment:scroll}
 /* the trend chip's colours, which the data layer normally injects */
 .tr{font-family:"JetBrains Mono",monospace;font-size:13px;white-space:nowrap}
 .tr.up,.tr.dip{color:var(--win)} .tr.dn{color:var(--loss)} .tr.flat{color:var(--faint)}
+/* the NPC buy cells' colour, which markets.js normally injects */
+.server.npc{color:var(--aether);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tabbar{position:relative}
 /* the real sidebar is a 100vh sticky column inside its own frame; here the page is
    one tall document, so the column just runs the height of the screen or the page */
@@ -54,6 +56,7 @@ body.t-tabs .tabnote,body.t-tabs .tabstem,body.t-tabs .tabband{display:block}
       <div class="slabel">Marketboard settings</div>
       <label class="chk"><input type="checkbox" checked tabindex="-1"> Hide no-sales</label>
       <label class="chk"><input type="checkbox" tabindex="-1"> Hide ⚠ outliers</label>
+      <label class="chk"><input type="checkbox" tabindex="-1"> Show crystals</label>
       <label class="chk"><input type="checkbox" checked tabindex="-1"> Skip dead items</label>
     </div>
     <div class="sgroup" data-t="side filters">
@@ -158,7 +161,7 @@ const ROWS=[
   [38895,"Indagator's Needle","tool","Weaver's Primary Tool",599999,"HQ","4h",300000,1,null,27442,542557,90,"0.03","18.1k"]
 ];
 /* the first row's recipe, one level open: [id, name, qty, depth, craftable, open,
-   buy, quality, avg, dip badge, world (0-2 a hop, "home"), craft, line, craft saving] */
+   buy, quality, avg, dip badge, world (0-2 a hop, "home", or [npc zone] for an NPC shop), craft, line, craft saving] */
 const TREE=[
   [39242,"Smaller Water Otter Fountain Lumber",2,0,1,1,null,"",null,null,null,915,1830],
   [39236,"Pure Verdurous Glioaether",1,1,0,0,218,"NQ",null,null,0,null,218],
@@ -168,19 +171,21 @@ const TREE=[
   [39243,"Smaller Water Otter Fountain Hardware",2,0,1,0,null,"",null,null,null,1475,2950],
   [39244,"Smaller Water Otter Fountain Resin",2,0,1,0,null,"",null,null,null,301025,602050],
   [7009,"Cut Stone",6,0,1,0,650,"HQ",903,28,1,357,2142,293],
-  [36263,"Ambrosial Water",4,0,0,0,199,"NQ",332,40,"home",null,796],
+  [36627,"Luxurious Paper",4,0,0,0,480,"NQ",null,null,["Mist"],null,1920],
   [36262,"Dynamis Crystal",4,0,0,0,80,"NQ",176,55,"home",null,320]
 ];
 function node(n){
   const [id,name,qty,depth,craftable,open,buy,q,avg,dip,world,craft,line,save]=n;
   const buyCheaper=craft==null||(buy!=null&&buy<=craft);
+  const npc=Array.isArray(world);
   const where=world==null?'<div class="server dim">—</div>'
+    :npc?`<div class="server npc" data-t="npc">NPC · ${esc(world[0])}</div>`
     :world==="home"?`<div class="server home" data-t="buyon">${esc(MOCK.home)}</div>`
     :`<div class="server hop" data-t="buyon">${esc(hop(world))} · hop</div>`;
   return `<div class="node${craftable?" clickable":""}" style="padding-left:${depth*20}px">
     <div class="nlabel"><button class="shopbtn sm" tabindex="-1">+</button><button class="listbtn sm" tabindex="-1">📋</button><button class="xwbtn sm" tabindex="-1">🌐</button>${teamcraftHTML(id,"sm").replace("<a ",'<a tabindex="-1" ')}<span class="ntoggle ${craftable?"has":"leaf"} ${open?"open":""}">${craftable?'<span class="c"></span>':"·"}</span>${iconHTML(id)}
       <span><span class="nqty">${qty}×</span>${esc(name)}${save?`<span class="badge">craft −${save}</span>`:""}${dip?`<span class="stk good">▼ −${dip}%</span>`:""}</span></div>
-    <div class="price ${buy==null?"dim":(buyCheaper?"cheap":"dim")}" data-t="buyon">${buy!=null?`buy ${fmt(buy)} <span class="qtag ${q==="HQ"?"hq":""}">${q}</span>`:'<span class="dim">no listing</span>'}${avg!=null?`<span class="navg">avg ${fmt(avg)}${dip?`<span class="stk good">▼ −${dip}%</span>`:""}</span>`:""}</div>
+    <div class="price ${buy==null?"dim":(buyCheaper?"cheap":"dim")}" data-t="${npc?"npc":"buyon"}">${buy!=null?`${npc?"npc":"buy"} ${fmt(buy)} <span class="qtag ${q==="HQ"?"hq":""}">${q}</span>`:'<span class="dim">no listing</span>'}${avg!=null?`<span class="navg">avg ${fmt(avg)}${dip?`<span class="stk good">▼ −${dip}%</span>`:""}</span>`:""}</div>
     ${where}
     <div class="price ${craft!=null&&!buyCheaper?"cheap":"dim"} ncraft">${craft!=null?"craft "+fmt(craft):'<span class="dim">—</span>'}</div>
     <div class="line">${fmt(line)}</div></div>`;

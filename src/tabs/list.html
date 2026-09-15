@@ -139,14 +139,15 @@
       <summary><span class="hw-ic"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="M7.8 7.9a2.3 2.3 0 0 1 4.4.9c0 1.6-2.2 1.9-2.2 3.2M10 14.4v.1"/></svg></span><span class="hw-title">How this works</span><span class="hw-hint">your own list of items to keep an eye on</span><span class="hw-car">▸</span></summary>
       <div class="hw-body">
         <div class="hw-sec"><h4>What it works out</h4><p>A list you fill yourself. Press 📋 on any row of any tab, or on a material inside a crafting tree, and pick this list: the item lands here with live prices and, for a craft, its whole recipe.</p></div>
-        <div class="hw-sec"><h4>Reading the table</h4><p>The columns match the Dashboard: sell now, 30-day average, material cost, profit, margin, units and gil a day. Open a row for its crafting tree. A raw material is still priced, just with no crafting cost. A material an NPC sells for less than the board is bought from the NPC.</p></div>
+        <div class="hw-sec"><h4>Reading the table</h4><p>The columns match the Dashboard: sell now, 30-day average, material cost, profit, margin, units and gil a day. Open a row for its crafting tree. A raw material is still priced, just with no crafting cost. A material an NPC sells for less than the board is bought from the NPC. Shards and crystals are costed but hidden; tick <b>Show crystals</b> to list them.</p></div>
         <div class="hw-sec"><h4>Worth knowing</h4><p><b>✎ Rename</b> gives the list its own name, <b>＋ List</b> in the tab bar makes another (up to five), <b>Clear list</b> empties it with an undo, and <b>✕ Remove list</b> deletes the tab. Lists are kept in this browser only and never uploaded.</p></div>
       </div>
       <template class="guide">
         <div data-spot="#empty" data-side="bottom" data-title="Nothing here yet">Press 📋 on a row of any tab, or on a material in a crafting tree, and pick this list to add it.</div>
         <div data-spot="#rename, #remove" data-side="bottom" data-title="Name or remove"><b>✎ Rename</b> gives the list its own name, and the tab follows. <b>✕ Remove list</b> deletes the tab.</div>
         <div data-spot="#clear" data-side="right" data-title="Clear list">Empties the list, with an <b>↩ Undo clear</b> that still works after a reload.</div>
-        <div data-spot="#matbasis" data-side="right" data-title="Mat cost"><b>Precraft-optimised</b> crafts any intermediate that is cheaper to make; <b>Buy all mats</b> prices every material off the board.</div>
+        <div data-spot="#matbasis" data-side="right" data-title="Mat cost"><b>Precraft-optimised</b> crafts any intermediate that is cheaper to make; <b>Buy all mats</b> prices every material off the board. Either way, an NPC shop wins wherever it is cheaper.</div>
+        <div data-spot="#showCrystals" data-side="right" data-title="Show crystals">Shards, crystals and clusters are always in the cost. Tick this to list them in each recipe as well.</div>
         <div data-spot="#rows tr:first-child" data-side="bottom" data-title="Open a row">Click an item for its full crafting tree, just like the Dashboard.</div>
       </template>
     </details>
