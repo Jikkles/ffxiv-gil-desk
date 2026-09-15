@@ -1,6 +1,7 @@
 /* Writes the rebuilt data into src/data/, then rebuilds index.html:
-   - the CD, VD, SUB, WS and DUTY datasets of the Currencies, Vendors, Submersibles, Workshop
-     and Duties tabs, and the DATA and PRE recipe catalogues of the Dashboard and Precrafts
+   - the CD, VD, SUB, WS, DUTY, T4, FLIP_ITEMS and VITEMS datasets of the Currencies, Vendors,
+     Submersibles, Workshop, Duties, Scrips, Flips and Retainers tabs, and the DATA and PRE recipe
+     catalogues of the Dashboard and Precrafts
    - ICON_INDEX and ITEM_INDEX: any item those tabs show that the desk has no icon or
      searchable name for yet is added (existing entries are left exactly as they are)
    - RECIPE_INDEX: rebuilt whole from Teamcraft's recipes, so new crafts get their
@@ -15,10 +16,11 @@ const I = items();
 const report = [];
 
 /* ---- each tab's data ---- */
-for (const [tab, name, file] of [["currencies", "CD", "CURRENCIES.json"], ["vendors", "VD", "VENDORS.json"],
+for (const [tab, name, file, dataName] of [["currencies", "CD", "CURRENCIES.json"], ["vendors", "VD", "VENDORS.json"],
   ["submersibles", "SUB", "SUB.json"], ["workshop", "WS", "WS.json"], ["duties", "DUTY", "DUTY.json"],
-  ["dashboard", "DATA", "DASHBOARD.json"], ["precrafts", "PRE", "PRECRAFTS.json"]]) {
-  const data = `data/${tab}.json`;
+  ["dashboard", "DATA", "DASHBOARD.json"], ["precrafts", "PRE", "PRECRAFTS.json"],
+  ["scrips", "T4", "SCRIPS.json"], ["flips", "FLIP_ITEMS", "FLIPS.json"], ["retainer", "VITEMS", "RETAINERS.json", "retainers"]]) {
+  const data = `data/${dataName || tab}.json`;
   if (!readSrc(`tabs/${tab}.html`).includes(`const ${name} = /*@json ${data}*/null;`))
     throw new Error(`src/tabs/${tab}.html has no "const ${name} = /*@json ${data}*/null;" line to fill`);
   /* read as text, not parsed and re-written: the Dashboard catalogue's key order is part of the file */
@@ -34,6 +36,8 @@ for (const [tab, name, file] of [["currencies", "CD", "CURRENCIES.json"], ["vend
 const SUB = readJSON(need("out/SUB.json")), WS = readJSON(need("out/WS.json")), DUTY = readJSON(need("out/DUTY.json"));
 const CUR = readJSON(need("out/CURRENCIES.json")), VEN = readJSON(need("out/VENDORS.json"));
 const DASH = readJSON(need("out/DASHBOARD.json")), PRE = readJSON(need("out/PRECRAFTS.json"));
+const SCRIPS = readJSON(need("out/SCRIPS.json")), FLIPS = readJSON(need("out/FLIPS.json")), RET = readJSON(need("out/RETAINERS.json"));
+const treeIds = n => [n.id, ...(n.ings || []).flatMap(treeIds)];
 const shown = new Set([
   ...Object.keys(CUR.items).map(Number),
   ...CUR.currencies.map(c => c.id),
@@ -46,6 +50,10 @@ const shown = new Set([
   ...Object.keys(DASH.names).map(Number),
   ...Object.keys(PRE).map(Number),
   ...Object.values(PRE).flatMap(p => p.ings.map(i => i.id)),
+  ...SCRIPS.materia.map(m => m.id),
+  ...SCRIPS.collectibles.flatMap(c => treeIds(c.tree)),
+  ...FLIPS.map(f => f.id),
+  ...RET.map(r => r.i),
 ]);
 const icons = decodeIndex(readSrc("data/icon-index.txt")), names = decodeIndex(readSrc("data/item-index.txt"));
 const teamcraftIcons = readJSON(need("item-icons.json"));

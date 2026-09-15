@@ -66,6 +66,7 @@ tr.detail>td{background:var(--bg2);border-bottom:1px solid var(--line);padding:0
       <div class="slabel">Marketboard settings</div>
       <label class="chk" title="Hide projects nobody has bought on your world in the last 30 days"><input type="checkbox" id="hideNo" checked> Hide no-sales</label>
       <label class="chk"><input type="checkbox" id="hideOutlier" checked> Hide &#9888; outliers</label>
+      <label class="chk" title="Shards, crystals and clusters are always costed. Tick this to list them under each recipe as well."><input type="checkbox" id="showCrystals"> Show crystals</label>
     </div>
     <div class="sgroup">
       <div class="slabel">Filters</div>
@@ -163,7 +164,7 @@ const fmt = n => n == null || !isFinite(n) ? "—" : Math.round(n).toLocaleStrin
 const fmtK = n => { if (n == null || !isFinite(n)) return "—"; if (Math.abs(n) >= 1e6) return (n / 1e6).toFixed(2) + "M"; if (Math.abs(n) >= 1e3) return (n / 1e3).toFixed(1) + "k"; return Math.round(n).toString(); };
 const ago = ms => { if (!ms) return "no uploads"; const s = (Date.now() - ms) / 1000; if (s < 3600) return Math.round(s / 60) + "m ago"; if (s < 86400) return Math.round(s / 3600) + "h ago"; return Math.round(s / 86400) + "d ago"; };
 
-let state = {home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],tax:0.05,group:"all",hideNo:true,hideOutlier:true,query:"",basis:"avg30",matBasis:"opt",
+let state = {home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],tax:0.05,group:"all",hideNo:true,hideOutlier:true,showCrystals:false,query:"",basis:"avg30",matBasis:"opt",
   sortKey:"profit",sortDir:-1,worlds:null,sell:null,hist:null,chaos:null,rows:null,expanded:new Set(),tree:new Set(),_best:{},_hops:{}};
 
 function side(res,hq){return res?(hq?res.h:res.n):null;}
@@ -299,7 +300,8 @@ function nodeHTML(id,amount,path,depth,sets){
     <div class="server ${buy.price==null?'dim':(buy.hop?'hop':'home')}">${buy.price!=null?buy.world+(buy.hop?' · hop':''):'—'}</div>
     <div class="price ${craftCls} ncraft">${craft!=null?'craft '+fmt(craft):'<span class="dim">—</span>'}</div>
     <div class="line">${fmt(best!=null?best*amount:null)}</div></div>`;
-  if(hasKids&&open)for(const[g,a]of r.g)h+=nodeHTML(g,a*amount/r.y,path+">"+g,depth+1,null);
+  if(hasKids&&open){for(const[g,a]of r.g)h+=nodeHTML(g,a*amount/r.y,path+">"+g,depth+1,null);
+    if(state.showCrystals)for(const[c,a]of r.cx)h+=nodeHTML(c,a*amount/r.y,path+">"+c,depth+1,null);}
   return h;
 }
 function treeHTML(r){const p=r.p;let body="";
@@ -382,6 +384,7 @@ document.getElementById("matbasis").addEventListener("change",e=>{state.matBasis
 document.getElementById("tax").addEventListener("change",e=>{state.tax=parseFloat(e.target.value);if(state.rows){compute();render();}});
 document.getElementById("hideNo").addEventListener("change",e=>{state.hideNo=e.target.checked;if(state.rows)render();});
 document.getElementById("hideOutlier").addEventListener("change",e=>{state.hideOutlier=e.target.checked;if(state.rows)render();});
+document.getElementById("showCrystals").addEventListener("change",e=>{state.showCrystals=e.target.checked;if(state.rows)render();});
 document.getElementById("refresh").addEventListener("click",load);
 document.querySelectorAll("thead th[data-k]").forEach(th=>{if(th.style.cursor==="default")return;
   th.addEventListener("click",()=>{const k=th.dataset.k;if(state.sortKey===k)state.sortDir*=-1;else{state.sortKey=k;state.sortDir=-1;}

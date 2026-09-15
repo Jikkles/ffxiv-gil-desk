@@ -69,10 +69,12 @@ h2{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.16em;te
     <div class="sgroup">
       <div class="slabel">Marketboard settings</div>
       <label class="chk"><input type="checkbox" id="hideNo" checked> Hide no-sales</label>
+      <label class="chk" title="Shards, crystals and clusters are always costed. Tick this to list them in each recipe as well."><input type="checkbox" id="showCrystals"> Show crystals</label>
     </div>
     <div class="sgroup">
       <div class="slabel">Filters</div>
-      <div class="field sel"><label for="scrip">Show</label><select id="scrip"><option value="all">Both scrips</option><option value="purple">Purple → XI</option><option value="orange">Orange → XII</option></select></div>
+      <div class="field sel"><label for="scrip">Show</label><select id="scrip"><option value="all">Both scrips</option><option value="purple">Purple</option><option value="orange">Orange</option></select></div>
+      <div class="field sel"><label for="cls">Class</label><select id="cls"><option value="all">All crafters</option><option>CRP</option><option>BSM</option><option>ARM</option><option>GSM</option><option>LTW</option><option>WVR</option><option>ALC</option><option>CUL</option></select></div>
       <div class="field sel"><label for="tax">Tax</label><select id="tax"><option value="0.05">5%</option><option value="0.03">3%</option><option value="0">0%</option></select></div>
     </div>
     <div class="sgroup">
@@ -85,11 +87,11 @@ h2{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.16em;te
       <div class="hicon">💎</div>
       <div>
         <h1><b>Scrips</b></h1>
-        <p class="sub">Two scrip-flip loops, valued live. <span class="otext">Orange</span> collectibles (lvl 100, 144 scrips) buy grade <b>XII</b> materia at 500 scrips; <span class="ptext">Purple</span> collectibles (lvls 92–98, 142–198 scrips) buy grade <b>XI</b> materia at 250 scrips. <b>Revenue/craft</b> is the materia those scrips are worth on <b class="homename">Spriggan</b>; <b>profit</b> subtracts the material cost. Click any row to see the recipe tree — precrafts are bought NQ wherever they are listed (you would rather buy than precraft), and only expanded into their own mats when nothing is for sale.</p>
+        <p class="sub">Two scrip-flip loops, valued live. <span class="otext">Orange</span> collectibles (level 100) buy grade <b>XII</b> materia; <span class="ptext">Purple</span> collectibles (levels 50 to 98) buy every grade from IV to XI, and whichever sells best per scrip sets what a scrip is worth. <b>Revenue/craft</b> is the materia those scrips are worth on <b class="homename">Spriggan</b>; <b>profit</b> subtracts the material cost. Click any row to see the recipe tree — precrafts are bought NQ wherever they are listed (you would rather buy than precraft), and only expanded into their own mats when nothing is for sale.</p>
       </div>
     <div class="kpis">
-    <div class="kpi"><div class="ki">🪙</div><div class="kbody"><div class="k">Purple → XI · gil per scrip</div><div class="v p" id="kP">—</div><div class="s" id="kPn">—</div></div></div>
-    <div class="kpi"><div class="ki">📈</div><div class="kbody"><div class="k">Orange → XII · gil per scrip</div><div class="v o" id="kO">—</div><div class="s" id="kOn">—</div></div></div>
+    <div class="kpi"><div class="ki">🪙</div><div class="kbody"><div class="k">Purple · gil per scrip</div><div class="v p" id="kP">—</div><div class="s" id="kPn">—</div></div></div>
+    <div class="kpi"><div class="ki">📈</div><div class="kbody"><div class="k">Orange · gil per scrip</div><div class="v o" id="kO">—</div><div class="s" id="kOn">—</div></div></div>
     <div class="kpi"><div class="ki">🌍</div><div class="kbody"><div class="k">Best collectible / craft</div><div class="v gil" id="kBest">—</div><div class="s" id="kBestN">—</div></div></div>
   </div></div>
 
@@ -101,16 +103,16 @@ h2{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.16em;te
   <details class="howto" data-howto="materia">
       <summary><span class="hw-ic"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="M7.8 7.9a2.3 2.3 0 0 1 4.4.9c0 1.6-2.2 1.9-2.2 3.2M10 14.4v.1"/></svg></span><span class="hw-title">How this works</span><span class="hw-hint">which collectable to turn in for materia</span><span class="hw-car">▸</span></summary>
       <div class="hw-body">
-        <div class="hw-sec"><h4>What it works out</h4><p>Two loops: craft a collectable, turn it in for crafters&rsquo; scrips, spend the scrips on materia and sell it. <b>Orange</b>: level 100 collectables, 144 scrips, grade XII materia at 500 scrips. <b>Purple</b>: levels 92 to 98, 142 to 198 scrips, grade XI materia at 250.</p></div>
-        <div class="hw-sec"><h4>Reading the table</h4><p><b>Revenue/craft</b> is what one collectable&rsquo;s scrips are worth as materia on your world, using whichever of Competence, Cunning or Command sells best. <b>Profit/craft</b> takes off the materials. The table below prices the materia itself.</p></div>
-        <div class="hw-sec"><h4>Worth knowing</h4><p>Lower-level Purple collectables give fewer scrips but often cost far less to make, so sort by profit rather than by scrips. In these recipe trees a precraft is bought NQ wherever it is listed, and only broken down into its own materials when none are for sale.</p></div>
+        <div class="hw-sec"><h4>What it works out</h4><p>Two loops: craft a collectable, turn it in for crafters&rsquo; scrips, spend the scrips on materia and sell it. <b>Orange</b>: level 100 collectables, for grade XII materia. <b>Purple</b>: every Rarefied collectable from level 50 to 98, for materia from grade IV to XI.</p></div>
+        <div class="hw-sec"><h4>Reading the table</h4><p><b>Revenue/craft</b> is what one collectable&rsquo;s scrips are worth as materia on your world, using whichever materia that scrip buys sells best for its scrip cost. <b>Profit/craft</b> takes off the materials. The table below prices the materia itself.</p></div>
+        <div class="hw-sec"><h4>Worth knowing</h4><p>Lower-level Purple collectables give fewer scrips but often cost far less to make, so sort by profit rather than by scrips. In these recipe trees a precraft is bought NQ wherever it is listed, and only broken down into its own materials when none are for sale. Crystals are costed but hidden; tick <b>Show crystals</b> to list them.</p></div>
       </div>
       <template class="guide">
-        <div data-spot="#scrip" data-side="right" data-title="Which loop">Show both loops, or just <b>Purple → XI</b> or <b>Orange → XII</b>.</div>
+        <div data-spot="#scrip" data-side="right" data-title="Which loop">Show both loops, or just <b>Purple</b> or <b>Orange</b>, and pick a <b>Class</b>.</div>
         <div data-spot="#ctbl th[data-k=value]" data-side="bottom" data-title="Revenue/craft">The scrips one collectable earns, times what a scrip is worth as materia on your world.</div>
         <div data-spot="#ctbl th[data-k=profit]" data-side="bottom" data-title="Profit/craft">Revenue less the materials: the column to sort by.</div>
         <div data-spot="#crows tr:first-child" data-side="bottom" data-title="Open a row">Click a collectable for its recipe. Precrafts are bought NQ wherever they are listed, and only broken down when none are for sale.</div>
-        <div data-spot="#mtbl thead, #mrows tr:nth-child(-n+3)" data-side="top" data-title="The materia">What each crafter materia sells for on your world. The best one at each grade sets what a scrip is worth.</div>
+        <div data-spot="#mtbl thead, #mrows tr:nth-child(-n+3)" data-side="top" data-title="The materia">What each crafter materia sells for on your world. The one that sells best for its scrip cost sets what a scrip is worth.</div>
       </template>
     </details>
 
@@ -143,7 +145,7 @@ h2{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.16em;te
     <tbody id="mrows"></tbody>
   </table></div>
 
-  <p class="foot">Scrip yields and materia costs are the live in-game values at high collectibility: Purple lvl 92/94/96/98 give 142/157/171/198 scrips and a grade-XI crafter materia costs 250 Purple; Orange lvl 100 gives 144 and a grade-XII materia costs 500 Orange. "gil/scrip" uses whichever of the three crafter materia (Competence/Cunning/Command) at that grade sells highest on <span class="homename">Spriggan</span>, net of tax. Material cost buys each precraft NQ at the cheapest <span class="dcname">Chaos</span> price where it is listed, and only expands/crafts a precraft when it has no listings; raw mats NQ. Only crafting (Craftsman&rsquo;s) materia are shown; materia sells NQ. Lower-level Purple gives fewer scrips but often cheaper mats — sort by profit to see which actually wins. Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>.</p>
+  <p class="foot">Scrip yields and materia costs are read from the game's own collectable and scrip shop tables, at top collectability, and rebaked after each patch. "gil/scrip" uses whichever crafter materia that scrip buys sells for the most per scrip on <span class="homename">Spriggan</span>, net of tax. Material cost, shards and crystals included, buys each precraft NQ at the cheapest <span class="dcname">Chaos</span> price where it is listed, and only expands/crafts a precraft when it has no listings; raw mats NQ. Only crafting (Craftsman&rsquo;s) materia are shown; materia sells NQ. Lower-level Purple gives fewer scrips but often cheaper mats — sort by profit to see which actually wins. Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>.</p>
   </main>
 </div>
 
@@ -156,12 +158,13 @@ const EX=T4.exchanges, COLL=T4.collectibles, MATERIA=T4.materia;
 const MATERIA_IDS=MATERIA.map(m=>m.id);
 const COLL_PRICE_IDS=(()=>{const s=new Set();const walk=n=>{if(!n)return;s.add(n.id);(n.ings||[]).forEach(walk);};COLL.forEach(c=>walk(c.tree));return[...s];})();
 const SCRIP_BUY={};
-for(const key of ['purple','orange']) for(const id of EX[key].scripMateria) SCRIP_BUY[id]={type:key,cost:EX[key].materiaCost};
+for(const key of ['purple','orange']) if(EX[key]) for(const o of (EX[key].offers||EX[key].scripMateria.map(id=>({id,cost:EX[key].materiaCost})))) SCRIP_BUY[o.id]={type:key,cost:o.cost};
+const isCrystal=id=>id>=2&&id<=19;
 const CHAOS_FALLBACK={39:"Omega",71:"Moogle",80:"Cerberus",83:"Louisoix",85:"Spriggan",97:"Ragnarok",400:"Sagittarius",401:"Phantom"};const LIGHT_FALLBACK={36:"Lich",33:"Twintania",56:"Phoenix",66:"Odin",67:"Shiva",402:"Zodiark",43:"Raiden",79:"Alpha"};
 const fmt=n=>n==null||!isFinite(n)?"—":Math.round(n).toLocaleString("en-GB");
 const fmtK=n=>{if(n==null||!isFinite(n))return"—";if(Math.abs(n)>=1e6)return(n/1e6).toFixed(2)+"M";if(Math.abs(n)>=1e3)return(n/1e3).toFixed(1)+"k";return Math.round(n).toString();};
 
-let state={home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],tax:0.05,scrip:"all",grade:"all",query:"",hideNo:true,
+let state={home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],tax:0.05,scrip:"all",cls:"all",showCrystals:false,grade:"all",query:"",hideNo:true,
   csort:"profit",cdir:-1,msort:"sell",mdir:-1,worlds:null,sell:null,chaos:null,
   gps:{purple:null,orange:null},collRows:null,matRows:null,expanded:new Set()};
 
@@ -235,22 +238,25 @@ function compute(){
     const net=sell!=null?sell*(1-state.tax):null;const sb=SCRIP_BUY[m.id];
     return {...m,sell,avg,vel,net,scripType:sb?sb.type:null,scripCost:sb?sb.cost:null};});
   const byId={};state.matRows.forEach(r=>byId[r.id]=r);
+  /* a scrip is worth whatever materia it buys sells for, per scrip of its cost */
   for(const key of ['purple','orange']){let best=null;
-    for(const id of EX[key].scripMateria){const r=byId[id];if(r&&r.net!=null){const g=r.net/EX[key].materiaCost;if(best==null||g>best.g)best={g,mat:r};}}
+    for(const id in SCRIP_BUY){const sb=SCRIP_BUY[id];if(sb.type!==key)continue;const r=byId[id];
+      if(r&&r.net!=null){const g=r.net/sb.cost;if(best==null||g>best.g)best={g,mat:r,cost:sb.cost};}}
     state.gps[key]=best;}
   state.collRows=COLL.map(c=>{
     const kids=(c.tree.ings||[]).map(ing=>costNode(ing,c.id+">"+ing.id));
     let mat=0,missing=false;for(const k of kids){if(k.total==null)missing=true;else mat+=k.total;}
-    let hop=0,miss=false;kids.forEach(k=>walkCost(k,nd=>{if(nd.mode==="buy"||nd.mode==="buyHQ"){if(nd.missing)miss=true;else if(nd.world!=null&&nd.world!==state.homeId)hop++;}}));
+    let hop=0,miss=false,cx=0;kids.forEach(k=>walkCost(k,nd=>{if(isCrystal(nd.id)&&nd.total!=null)cx+=nd.total;
+      if(nd.mode==="buy"||nd.mode==="buyHQ"){if(nd.missing)miss=true;else if(!isCrystal(nd.id)&&nd.world!=null&&nd.world!==state.homeId)hop++;}}));
     const g=state.gps[c.scripType];const gps=g?g.g:null;
     const value=gps!=null?c.scrips*gps:null;
     const profit=(value!=null&&!missing)?value-mat:null;
-    return {id:c.id,key:c.class+" "+c.lvl,cls:c.class,lvl:c.lvl,name:c.name.replace("Rarefied ",""),scripType:c.scripType,grade:EX[c.scripType].grade,
+    return {id:c.id,key:c.class+" "+c.lvl,cls:c.class,lvl:c.lvl,name:c.name.replace("Rarefied ",""),scripType:c.scripType,grade:g?g.mat.grade:EX[c.scripType].grade,cx,
       scrips:c.scrips,mat:missing?null:mat,value,profit,kids,hop,missing:missing||miss};});
 }
 
 function nodeRows(kids,depth){let h="";
-  for(const k of kids){const ind=depth*18;
+  for(const k of kids){if(isCrystal(k.id)&&!state.showCrystals)continue;const ind=depth*18;
     const canExpand=!!(k.children&&k.children.length);
     const open=canExpand&&(state.matOpen.has(k.path)?!k.showKids:k.showKids);
     const tag=k.mode==="buy"?"buy NQ":"craft";
@@ -276,7 +282,7 @@ function nodeRows(kids,depth){let h="";
 
 function renderColl(){if(!state.collRows)return;
   state.matOpen=state.matOpen||new Set();
-  let rows=state.collRows.filter(r=>state.scrip==="all"||r.scripType===state.scrip);
+  let rows=state.collRows.filter(r=>(state.scrip==="all"||r.scripType===state.scrip)&&(state.cls==="all"||r.cls===state.cls));
   rows.sort((a,b)=>{const k=state.csort;let av=a[k],bv=b[k];if(k==="key")return a.key.localeCompare(b.key)*(state.cdir*-1);av=(av==null||!isFinite(av))?-Infinity:av;bv=(bv==null||!isFinite(bv))?-Infinity:bv;return(av-bv)*state.cdir;});
   const tb=document.getElementById("crows");tb.innerHTML="";
   for(const r of rows){const open=state.expanded.has(r.id);
@@ -296,6 +302,7 @@ function renderColl(){if(!state.collRows)return;
         ${nodeRows(r.kids,0)}
         <div class="tfoot">
           <span><span class="lab">Material cost</span><b>${fmt(r.mat)}</b></span>
+          ${r.cx>0?`<span><span class="lab">Crystals</span><b>~${fmt(r.cx)}</b> <span class="muted">${state.showCrystals?"incl. above":"hidden · incl. in costs"}</span></span>`:""}
           <span><span class="lab">Scrips</span><b class="${r.scripType==='purple'?'ptext':'otext'}">${r.scrips}</b></span>
           <span><span class="lab">gil/scrip</span><b>${g?fmt(g.g):'—'}</b></span>
           <span><span class="lab">Revenue/craft</span><b class="rev">${fmt(r.value)}</b></span>
@@ -306,9 +313,9 @@ function renderColl(){if(!state.collRows)return;
   document.getElementById("ctbl").hidden=false;
   const gp=state.gps.purple,go=state.gps.orange;
   document.getElementById("kP").textContent=gp?fmt(gp.g)+" g":"—";
-  document.getElementById("kPn").textContent=gp?("via "+gp.mat.type+" · 250/materia"):"no XI listing";
+  document.getElementById("kPn").textContent=gp?("via "+gp.mat.type+" "+gp.mat.grade+" · "+gp.cost+"/materia"):"no materia listing";
   document.getElementById("kO").textContent=go?fmt(go.g)+" g":"—";
-  document.getElementById("kOn").textContent=go?("via "+go.mat.type+" · 500/materia"):"no XII listing";
+  document.getElementById("kOn").textContent=go?("via "+go.mat.type+" "+go.mat.grade+" · "+go.cost+"/materia"):"no materia listing";
   const prof=rows.filter(r=>r.profit!=null).sort((a,b)=>b.profit-a.profit)[0];
   document.getElementById("kBest").textContent=prof?fmt(prof.profit)+" g":"—";
   document.getElementById("kBestN").textContent=prof?(prof.name+" · "+prof.cls+" lvl "+prof.lvl):"—";
@@ -334,6 +341,8 @@ function showErr(e){document.getElementById("ctbl").hidden=true;document.getElem
   document.getElementById("errbox").innerHTML=`<div class="err"><b>Live prices didn't load.</b> ${(e&&e.message)||e}. Universalis may be down or rate-limiting for a moment: wait a minute and press Refresh, or check <a href="https://universalis.app" target="_blank" rel="noopener" style="color:#ffd7db">universalis.app</a>.</div>`;}
 
 document.getElementById("scrip").addEventListener("change",e=>{state.scrip=e.target.value;renderColl();});
+document.getElementById("cls").addEventListener("change",e=>{state.cls=e.target.value;renderColl();});
+document.getElementById("showCrystals").addEventListener("change",e=>{state.showCrystals=e.target.checked;renderColl();});
 buildHomeSelect(document.getElementById("home"),state.home);
 document.getElementById("home").addEventListener("change",e=>{homeChanged(e.target.value);load();});
 initDcPicker(()=>load());

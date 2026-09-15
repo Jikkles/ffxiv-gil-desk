@@ -79,7 +79,7 @@
     </div>
     <div class="sgroup">
       <div class="slabel">Marketboard settings</div>
-      <label class="chk"><input type="checkbox" id="deep"> Deep 30d</label>
+      <label class="chk" title="Shards, crystals and clusters are always costed. Tick this to list them in each recipe as well."><input type="checkbox" id="showCrystals"> Show crystals</label>
       <label class="chk"><input type="checkbox" id="hideNo" checked> Hide no-sales</label>
       <label class="chk"><input type="checkbox" id="hideOutlier" checked> Hide ⚠ outliers</label>
       <label class="chk"><input type="checkbox" id="density"> Compact</label>
@@ -118,14 +118,13 @@
       <summary><span class="hw-ic"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="M7.8 7.9a2.3 2.3 0 0 1 4.4.9c0 1.6-2.2 1.9-2.2 3.2M10 14.4v.1"/></svg></span><span class="hw-title">How this works</span><span class="hw-hint">buy the materials, craft once, sell it HQ</span><span class="hw-car">▸</span></summary>
       <div class="hw-body">
         <div class="hw-sec"><h4>What it works out</h4><p>Every craftable intermediate, 900+ of them, as one simple flip: buy its materials on your data centre, craft it once, sell it HQ on your world. No chains of precrafts and no Free Company workshop.</p></div>
-        <div class="hw-sec"><h4>Reading the table</h4><p><b>Mat cost</b> buys every material NQ at its cheapest listing. Pick your <b>Class</b> and a <b>Min lvl</b> and <b>Max lvl</b> to see only what you can make, and open a row for its material list.</p></div>
-        <div class="hw-sec"><h4>Worth knowing</h4><p>Plenty of intermediates barely sell HQ, so a row with no sales may still move: switch <b>Sell</b> to <b>NQ</b> to find the bulk market. <b>Deep 30d</b> pulls a full month of sales instead of a quick recent average, which is slower but steadier on items that rarely sell.</p></div>
+        <div class="hw-sec"><h4>Reading the table</h4><p><b>Mat cost</b> buys every material NQ at its cheapest listing, shards and crystals included. Pick your <b>Class</b> and a <b>Min lvl</b> and <b>Max lvl</b> to see only what you can make, and open a row for its material list.</p></div>
+        <div class="hw-sec"><h4>Worth knowing</h4><p>Plenty of intermediates barely sell HQ, so a row with no sales may still move: switch <b>Sell</b> to <b>NQ</b> to find the bulk market. Crystals are costed but left out of each recipe to keep it short; tick <b>Show crystals</b> to list them.</p></div>
       </div>
       <template class="guide">
         <div data-spot="#job, #minLvl, #maxLvl" data-side="right" data-title="Your crafter">Pick a <b>Class</b> and a level range, and the table keeps only what you can actually craft.</div>
         <div data-spot="#sq" data-side="right" data-title="Sell quality">HQ by default. If a row shows no sales, try <b>NQ</b>: plenty of intermediates only really trade NQ.</div>
-        <div data-spot="#deep" data-side="right" data-title="Deep 30d">Pulls a full month of real sales instead of a quick recent average. Slower, but steadier on items that rarely sell.</div>
-        <div data-spot="#tbl th[data-k=cost]" data-side="bottom" data-title="Mat cost">Every material for one craft, bought NQ at its cheapest listing across <b>Mats from</b>.</div>
+        <div data-spot="#tbl th[data-k=cost]" data-side="bottom" data-title="Mat cost">Every material for one craft, crystals included, bought NQ at its cheapest listing across <b>Mats from</b>.</div>
         <div data-spot="#rows tr:first-child" data-side="bottom" data-title="Open a row">Click an item for its materials and where each is cheapest; the 🛒 on the row adds them all to your shopping list.</div>
       </template>
     </details>
@@ -149,7 +148,7 @@
     <tbody id="rows"></tbody>
   </table></div>
 
-  <p class="foot">Gil/day = profit/unit × the <b>units</b> that sell a day on <span class="homename">Spriggan</span> — a stack of 99 is 99 units and one sale. You capture a slice of that, so it's a ranking not a promise. Sell now = cheapest current <span class="homename">Spriggan</span> listing at the chosen quality (⚠ = far from the average, likely a noise listing). Avg 30d = recent average sale (or the true 30-day average, with its sale count, if "Deep 30d" is on — slower, pulls a month of history). Mat cost = buying every material NQ at the cheapest <span class="dcname">Chaos</span> price and crafting once; sell defaults to HQ since that's what you craft. Which world each material is cheapest on is in the row's craft tree, under "Buy on". Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>. Intermediates with thin HQ markets may show no sale — switch Sell to NQ to see the bulk market.</p>
+  <p class="foot">Gil/day = profit/unit × the <b>units</b> that sell a day on <span class="homename">Spriggan</span> — a stack of 99 is 99 units and one sale. You capture a slice of that, so it's a ranking not a promise. Sell now = cheapest current <span class="homename">Spriggan</span> listing at the chosen quality (⚠ = far from the average, likely a noise listing). Avg 30d = the median sale price over 30 days, weighted by units, with its sale count. Mat cost = buying every material NQ, shards and crystals included, at the cheapest <span class="dcname">Chaos</span> price and crafting once; sell defaults to HQ since that's what you craft. Which world each material is cheapest on is in the row's craft tree, under "Buy on". Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>. Intermediates with thin HQ markets may show no sale — switch Sell to NQ to see the bulk market.</p>
   </main>
 </div>
 
@@ -164,11 +163,13 @@ const MAT_IDS = (()=>{const s=new Set();for(const id of PRE_IDS)for(const ing of
 const SELL_IDS = PRE_IDS;
 const CHAOS_FALLBACK={39:"Omega",71:"Moogle",80:"Cerberus",83:"Louisoix",85:"Spriggan",97:"Ragnarok",400:"Sagittarius",401:"Phantom"};const LIGHT_FALLBACK={36:"Lich",33:"Twintania",56:"Phoenix",66:"Odin",67:"Shiva",402:"Zodiark",43:"Raiden",79:"Alpha"};
 const MAX_ROWS=300, MONTH_S=2592000;
+const PRE_SET=new Set(PRE_IDS);
+const isCrystal=id=>id>=2&&id<=19;
 const fmt=n=>n==null||!isFinite(n)?"—":Math.round(n).toLocaleString("en-GB");
 const fmtK=n=>{if(n==null||!isFinite(n))return"—";if(Math.abs(n)>=1e6)return(n/1e6).toFixed(2)+"M";if(Math.abs(n)>=1e3)return(n/1e3).toFixed(1)+"k";return Math.round(n).toString();};
 const ago=ms=>{if(!ms)return"no uploads";const s=(Date.now()-ms)/1000;if(s<3600)return Math.round(s/60)+"m ago";if(s<86400)return Math.round(s/3600)+"h ago";return Math.round(s/86400)+"d ago";};
 
-let state={home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],tax:0.05,job:"all",query:"",sellQ:"hq",basis:"listing",deep:false,hideNo:true,hideOutlier:true,minLvl:1,maxLvl:100,
+let state={home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],tax:0.05,job:"all",query:"",sellQ:"hq",basis:"listing",showCrystals:false,hideNo:true,hideOutlier:true,minLvl:1,maxLvl:100,
   sortKey:"profit",sortDir:-1,worlds:null,sell:null,chaos:null,hist:null,rows:null,expanded:new Set()};
 
 function side(res,hq){return res?(hq?res.h:res.n):null;}
@@ -224,22 +225,21 @@ async function load(){const btn=document.getElementById("refresh");btn.disabled=
     const jobs=[
       fetchAgg(state.home,SELL_IDS,prog("Pricing "+state.home)),
       fetchMarket(MAT_IDS,prog("Pricing mats ("+dcLabel()+")")),
-      state.deep?fetchHist(state.home,SELL_IDS,prog("Reading 30-day history")):Promise.resolve(null)];
+      /* a month of real sales: only ten batches for this tab, and the one honest source
+         for Avg 30d, the trend and units a day */
+      fetchHist(state.home,SELL_IDS,prog("Reading 30-day history"))];
     const[sell,chaos,hist]=await Promise.all(jobs);
-    state.sell=sell.out;state.chaos=chaos.out;state.hist=hist?hist.out:null;
+    state.sell=sell.out;state.chaos=chaos.out;state.hist=hist.out;
     compute();render();updateScanTime();
-    finishStatus(hist?[sell,chaos,hist]:[sell,chaos]);
+    finishStatus([sell,chaos,hist]);
   }catch(e){showErr(e);}finally{btn.disabled=false;}}
-
-async function ensureDeep(){ if(state.deep&&!state.hist){const btn=document.getElementById("refresh");btn.disabled=true;
-    try{const hist=await fetchHist(state.home,SELL_IDS,(d,t)=>setStatus(`Reading 30-day history\u2026 ${d}/${t} batches`));state.hist=hist.out;finishStatus([hist]);}catch(e){showErr(e);return;}finally{btn.disabled=false;} } compute();render(); }
 
 function sellInfo(id){const wantHQ=state.sellQ==="hq",res=state.sell[id];
   const listing=aggPrice(res,wantHQ,"world").price;
   let avg,vel,tr=null,vi=null,n30=0,avgFb=false;
-  /* both branches are units a day: deep measures them over 30 days of history,
-     shallow takes the aggregate's own rolling few-day figure */
-  if(state.deep&&state.hist){const a=avg30(state.hist[id],wantHQ);avg=a.avg;n30=a.n;avgFb=!!a.fb;vi=vel30(state.hist[id],wantHQ);vel=vi.perDay;tr=trend30(state.hist[id],wantHQ);}
+  /* 30 days of history, as on the Dashboard. Only an item whose history batch
+     failed falls back to the aggregate's own short rolling figures. */
+  if(state.hist&&state.hist[id]){const a=avg30(state.hist[id],wantHQ);avg=a.avg;n30=a.n;avgFb=!!a.fb;vi=vel30(state.hist[id],wantHQ);vel=vi.perDay;tr=trend30(state.hist[id],wantHQ);}
   else{avg=aggAvg(res,wantHQ,"world");vel=aggVel(res,wantHQ,"world");vi=velAgg(vel);}
   return {listing,avg,n30,avgFb,vel,velI:vi,trend:tr,upload:aggUpload(res)};
 }
@@ -251,7 +251,7 @@ function compute(){const rows=[];
     const outlier=s.avg!=null&&(s.listing==null||s.listing>s.avg*2.5||s.listing<s.avg*0.4);
     let mat=0,missing=false,fresh=s.upload,hop=0;const ings=[];
     for(const ing of p.ings){const m=aggPrice(state.chaos[ing.id],false,"dc");const line=m.price!=null?m.price*ing.amount:null;
-      if(m.price==null)missing=true;else{mat+=line;if(m.worldId!=null&&m.worldId!==state.homeId)hop++;}
+      if(m.price==null)missing=true;else{mat+=line;if(!isCrystal(ing.id)&&m.worldId!=null&&m.worldId!==state.homeId)hop++;}
       fresh=Math.max(fresh,aggUpload(state.chaos[ing.id]));
       const iav=buyAvg(state.chaos[ing.id],false);ings.push({id:ing.id,name:ing.name,amount:ing.amount,unit:m.price,avg:iav,stk:stockBadge(m.price,iav),world:m.price!=null?wname(m.worldId):null,hop:(m.worldId!=null&&m.worldId!==state.homeId),line,missing:m.price==null});}
     const costUnit=mat/p.yields;
@@ -307,8 +307,8 @@ function sellTimeHTML(s, wantHQ) {
   const labels = ['00','06','12','18','23'].map(h=>'<span>'+h+'h</span>').join('');
   return '<div class="sell-time"><h4>Best time to sell <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--acc)">' + topLabel + ' UK</span></h4><div class="st-bars">' + bars + '</div><div class="st-labels">' + labels + '</div><span class="st-note">Based on ' + total + ' sales in last 30 days \u00b7 teal = top 3 peak hours \u00b7 hover for details</span></div>';
 }
-function treeHTML(r){let body="";
-  r.ings.forEach((i,ix)=>{const where=i.missing?`<span class="muted">no listings</span>`:`<span class="server ${i.hop?'hop':'home'}" style="text-align:left">${i.world}${i.hop?' · hop':''}</span>`;
+function treeHTML(r){let body="",cx=0;
+  r.ings.forEach((i,ix)=>{if(isCrystal(i.id)){cx+=i.line||0;if(!state.showCrystals)return;}const where=i.missing?`<span class="muted">no listings</span>`:`<span class="server ${i.hop?'hop':'home'}" style="text-align:left">${i.world}${i.hop?' · hop':''}</span>`;
     body+=`<div class="node"><div class="nlabel"><button class="shopbtn sm" data-shopmat="${r.id}|${ix}" title="Add ${i.amount}× to shopping list">+</button><button class="listbtn sm" data-listadd="${i.id}" title="Add to a saved list">📋</button><button class="xwbtn sm" data-xw="${i.id}" data-xwname="${xesc(i.name)}" data-xwqty="${i.amount}" title="Compare this item's price and stock on every world">\ud83c\udf10</button>${teamcraftHTML(i.id,'sm')}${iconHTML(i.id)}<span><span class="nqty">${i.amount}×</span>${i.name}${i.stk||''}</span></div>
       <div class="price ${i.unit==null?'dim':''}">${fmt(i.unit)} <span class="q">NQ</span>${i.avg!=null?'<span class="navg">avg '+fmtK(i.avg)+(i.stk||'')+'</span>':''}</div>
       <div style="text-align:left">${where}</div><div class="line nline">${fmt(i.line)}</div></div>`;});
@@ -318,10 +318,11 @@ function treeHTML(r){let body="";
     ${body}
     <div class="tfoot">
       <span><span class="lab">Mat/craft</span><b>${fmt(r.matTotal)}</b></span>
+      ${cx>0?`<span><span class="lab">Crystals</span><b>~${fmt(cx)}</b> <span class="muted">${state.showCrystals?"incl. above":"hidden · incl. in costs"}</span></span>`:""}
       <span><span class="lab">Cost/unit</span><b>${fmt(r.cost)}</b></span>
       <span><span class="lab">Sell ${sq}·${state.home}</span><b>${r.sell==null?'—':fmt(r.sell)}</b></span>
       <span><span class="lab">Avg</span><b>${fmt(r.avg)}</b></span>
-      <span><span class="lab">Trend</span><b>${trendChip(r.trendT,state.deep?'':'Tick Deep 30d to read the trend: it compares the newer and older halves of a month of sales')}</b></span>
+      <span><span class="lab">Trend</span><b>${trendChip(r.trendT)}</b></span>
       <span><span class="lab">Profit/unit</span><b class="${r.profit==null?'':(r.profit>=0?'profit win':'profit loss')}">${r.profit==null?'—':fmt(r.profit)}</b></span>
       <span><span class="lab">Class / lvl</span><b>${jobLabel(r)} · ${r.lvl}</b></span>
     </div>
@@ -339,13 +340,13 @@ function render(){if(!state.rows)return;const shown=visibleRows();let rows=shown
     const yieldTag=r.yields>1?` <span class="q">×${r.yields}</span>`:"";
     const warn=r.outlier?` <span class="warn" title="No current listing, or the listing sits far from the 30-day average — treat this price as unreliable.">⚠</span>`:"";
     const kind=kindOf(r);
-    const chainBadge = r.ings.some(i=>Object.keys(PRE).includes(String(i.id)))?'<span class="chain-badge">deep chain</span>':"";
+    const chainBadge = r.ings.some(i=>PRE_SET.has(i.id))?'<span class="chain-badge">deep chain</span>':"";
     const patchBadge = r.patch?'<span class="patch-badge">new '+r.patch+'</span>':"";
     tr.innerHTML=`<td><div class="name"><span class="n"><button class="shopbtn" data-shopitem="${r.id}" title="Add all materials to shopping list">🛒</button><button class="listbtn" data-listadd="${r.id}" title="Add to a saved list">📋</button><button class="xwbtn" data-xw="${r.id}" data-xwname="${xesc(r.name)}" title="Compare this item's price and stock on every world">\ud83c\udf10</button>${teamcraftHTML(r.id)}<span class="caret"></span>${iconHTML(r.id)}${r.name} <span class="pill ${kind}">${kind}</span>${patchBadge}${chainBadge}</span>
         <span class="t">${jobLabel(r)} · ${r.cat} · lvl ${r.lvl}</span></div></td>
       <td>${fmt(r.sell)} <span class="q">${state.sellQ.toUpperCase()}</span>${warn}${agePill(r.upload)}</td>
       <td>${fmt(r.avg)}${r.avg!=null&&r.n30?` <span class="q">${r.n30}×</span>`:''}${r.avgFb?' <span class=\"q\" title=\"No sales of the requested quality in the last 30 days — average includes both NQ and HQ\">mixed</span>':''}</td>
-      <td>${trendChip(r.trendT,state.deep?'':'Tick Deep 30d to read the trend: it compares the newer and older halves of a month of sales')}</td>
+      <td>${trendChip(r.trendT)}</td>
       <td class="hide">${fmt(r.cost)}${yieldTag}</td>
       <td class="profit ${cls}">${r.profit==null?'—':fmt(r.profit)}</td>
       <td>${r.margin==null?'—':Math.round(r.margin*100)+'%'}</td>
@@ -364,7 +365,7 @@ function render(){if(!state.rows)return;const shown=visibleRows();let rows=shown
   const ds=prof.reduce((s,r)=>s+(r.daily||0),0);document.getElementById("kpiDaily").textContent=ds?fmtK(ds)+" g":"—";
   document.getElementById("kpiCount").textContent=prof.length+" / "+total;
   document.getElementById("kpiFresh").textContent="freshest data "+ago(Math.max(0,...rows.map(r=>r.upload||0)));
-  setStatus(`Sell ${state.sellQ.toUpperCase()} vs <b>${state.home}</b> · mats NQ cheapest on ${dcLabel()} · ${state.deep?'30-day':'recent'} avg · ${total} match${trunc?` (top ${MAX_ROWS})`:""} · tax ${Math.round(state.tax*100)}% · click a row for its materials`);
+  setStatus(`Sell ${state.sellQ.toUpperCase()} vs <b>${state.home}</b> · mats NQ cheapest on ${dcLabel()} · 30-day avg · ${total} match${trunc?` (top ${MAX_ROWS})`:""} · tax ${Math.round(state.tax*100)}% · click a row for its materials`);
   updateStrip();
 }
 function setStatus(h){document.getElementById("status").innerHTML=h;}
@@ -381,7 +382,7 @@ buildHomeSelect(document.getElementById("home"),state.home);
 document.getElementById("home").addEventListener("change",e=>{homeChanged(e.target.value);load();});
 initDcPicker(()=>load());
 document.getElementById("tax").addEventListener("change",e=>{state.tax=parseFloat(e.target.value);if(state.rows){compute();render();}});
-document.getElementById("deep").addEventListener("change",e=>{state.deep=e.target.checked;if(state.rows)ensureDeep();});
+document.getElementById("showCrystals").addEventListener("change",e=>{state.showCrystals=e.target.checked;if(state.rows)render();});
 document.getElementById("hideNo").addEventListener("change",e=>{state.hideNo=e.target.checked;render();});
 document.getElementById("hideOutlier").addEventListener("change",e=>{state.hideOutlier=e.target.checked;render();});
 document.getElementById("refresh").addEventListener("click",load);
@@ -417,7 +418,7 @@ function updateStrip(){
   document.getElementById("ks-count").textContent=profitRows.length+" / "+rows.length;
   const totalDaily=profitRows.reduce((s,r)=>s+(r.daily||0),0);
   document.getElementById("ks-daily").textContent=totalDaily?fmtK(Math.round(totalDaily))+" g":"—";
-  const chains=rows.filter(r=>r.ings.some(i=>Object.keys(PRE).includes(String(i.id)))).length;
+  const chains=rows.filter(r=>r.ings.some(i=>PRE_SET.has(i.id))).length;
   document.getElementById("ks-chains").textContent=chains;
 }
 

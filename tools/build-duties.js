@@ -8,7 +8,7 @@
      node tools/build-duties.js              use cached prices if under a day old
      node tools/build-duties.js --reprice    ask Universalis again */
 const fs = require("fs");
-const { OUT, CACHE, cached, need, readJSON, writeJSON, sheet, items, marketable } = require("./lib/common");
+const { OUT, CACHE, cached, need, readJSON, writeJSON, sheet, items, marketable, regionPrices } = require("./lib/common");
 const { readSrc } = require("./build");
 
 const I = items();
@@ -125,38 +125,7 @@ for (const r of sheet("SpecialShop")) {
 for (const [id, g, p, f] of FATE) add(id, { g, p, f, fate: 1 });
 
 /* ---- prices: which of these sell for real money ---- */
-async function prices(scope, ids) {
-  const file = cached(`prices-${scope}.json`);
-  let out = {};
-  const fresh = fs.existsSync(file) && Date.now() - fs.statSync(file).mtimeMs < 86400000 && !process.argv.includes("--reprice");
-  if (fresh) out = readJSON(file);
-  const todo = ids.filter(id => !(id in out));
-  const region = /^(Europe|North-America|Japan|Oceania)$/.test(scope);
-  for (let i = 0; i < todo.length; i += 100) {
-    const batch = todo.slice(i, i + 100);
-    for (let a = 0; a < 5; a++) {
-      try {
-        const r = await fetch(`https://universalis.app/api/v2/aggregated/${scope}/${batch.join(",")}`);
-        if (!r.ok) throw new Error("HTTP " + r.status);
-        const j = await r.json();
-        for (const row of j.results || []) {
-          const pick = q => q && q.averageSalePrice && q.averageSalePrice[region ? "region" : "dc"] ? q.averageSalePrice[region ? "region" : "dc"].price : null;
-          out[row.itemId] = pick(row.nq) ?? pick(row.hq);
-        }
-        for (const id of batch) if (!(id in out)) out[id] = null;
-        break;
-      } catch (e) {
-        if (a === 4) throw new Error("Universalis " + scope + ": " + e.message);
-        await new Promise(res => setTimeout(res, 3000 * (a + 1)));
-      }
-    }
-    process.stdout.write(`\r  pricing on ${scope}: ${Math.min(i + 100, todo.length)}/${todo.length}`);
-    await new Promise(res => setTimeout(res, 400));
-  }
-  if (todo.length) process.stdout.write("\n");
-  writeJSON(file, out);
-  return out;
-}
+const prices = regionPrices;
 
 (async () => {
   const ids = Object.keys(sources).map(Number);

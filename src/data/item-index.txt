@@ -2142,8 +2142,10 @@ w Heavens' Eye Materia II
 9 Morbol Seedling
 1 Tiny Rat
 1 Baby Bun
-3 Allagan Tomestones of Poetics (Other)
-5 Gravel Golem
+2 Bluebird
+1 Allagan Tomestones of Poetics (Other)
+1 Infant Imp
+4 Gravel Golem
 1 Wind-up Tonberry
 1 Tiny Tortoise
 1 Baby Raptor
@@ -2151,10 +2153,18 @@ w Heavens' Eye Materia II
 1 Tiny Bulb
 1 Allagan Tomestones of Poetics (Other)
 1 Wind-up Dullahan
-8 Allagan Tomestones of Poetics (Other)
-2 Wind-up Aldgoat
-4 Model Vanguard
-9 Wind-up Airship
+1 Gigantpole
+1 Pudgy Puk
+3 Smallshell
+3 Allagan Tomestones of Poetics (Other)
+1 Coblyn Larva
+1 Wind-up Aldgoat
+3 Bite-sized Pudding
+1 Model Vanguard
+1 Demon Brick
+3 Slime Puddle
+1 Kidragora
+4 Wind-up Airship
 1 Wind-up Qiqirn
 4 ADS Plating
 1 ADS Frame
@@ -2787,7 +2797,9 @@ k Coronal Straw Hat
 3 Tidal Barding
 7 Plush Cushion
 5 Baby Opo-opo
-4 Magic Broom
+2 Minute Mindflayer
+1 Tight-beaked Parrot
+1 Magic Broom
 2 Steamed Catfish
 1 Popoto Pancakes
 1 Roast Canard
@@ -2963,10 +2975,17 @@ e Krakka Root Seeds
 1 Garlic Jester Seeds
 1 Tomato King Seeds
 1 Mandragora Queen Seeds
-b Tiny Tapir
+4 Onion Prince
+1 Eggplant Knight
+1 Garlic Jester
+1 Tomato King
+1 Mandragora Queen
+3 Tiny Tapir
 1 Nana Bear
 1 Miniature Minecart
-d Realm Reborn Red
+1 Nutkin
+3 Naughty Nanka
+9 Realm Reborn Red
 1 Magicked Prism (Meteor Survivor)
 1 Pinwheel
 1s Ruby Earrings
@@ -3252,7 +3271,11 @@ e Triple Cream Coffee
 1 Shark Fin Soup
 1 Haddock Dip
 1 Bacon Broth
-k Ice Barding
+c Fat Cat
+1 Littlefoot
+1 Mummy's Little Mummy
+1 Assassin Fry
+5 Ice Barding
 1 Quick-hardening Sealant
 1 Xelphatol Spring Water
 1 Wootz Ingot
@@ -4118,11 +4141,19 @@ lw Mythrite Halfheart Saw
 1 Dragonskin Ring
 1 Griffin Leather Ring
 8 Heavenscracker
-9 Atrophied Atomos
-4 Clockwork Barrow
-3 Iron Dwarf
-4 Steam-powered Gobwalker G-VII
-j Highland Barding
+7 Unicolt
+2 Atrophied Atomos
+1 Owlet
+1 Ugly Duckling
+1 Gaelikitten
+1 Clockwork Barrow
+1 Lesser Panda
+1 Page 63
+1 Iron Dwarf
+3 Gestahl
+1 Steam-powered Gobwalker G-VII
+7 Gold Rush Minecart
+c Highland Barding
 1 Expanse Barding
 1 Hive Barding
 1 Alpine Chair
@@ -4558,7 +4589,8 @@ h General-purpose Pure White Dye
 2 Paissa Brat
 1 Wind-up Illuminatus
 3 Hunting Hawk
-5 Wind-up Ifrit
+4 Korpokkur Kid
+1 Wind-up Ifrit
 h Camphorwood Necklace of Fending
 1 Eikon Iron Earring of Fending
 1 Camphorwood Armillae of Fending
@@ -4827,10 +4859,14 @@ w Orchestrion
 1 Black Oldroses
 1 Rainbow Oldroses
 1 Sephirotic Barding
-d Wind-up Garuda
+3 Zu Horn
+a Wind-up Garuda
 1 Wind-up Titan
 1 Wind-up Leviathan
-13 Spiced Cider
+3 Calca
+2 Morpho
+3 Fenrir Pup
+v Spiced Cider
 1 Apple Strudel
 1 Peperoncino
 1 Boscaiola
@@ -5071,8 +5107,11 @@ a Staggered Shelf
 2 Horde Barding
 9 Wind-up Ramuh
 1 Wind-up Shiva
-4 Baby Brachiosaur
-l New World Headdress
+2 Magic Bucket
+1 Calamari
+1 Baby Brachiosaur
+6 Dwarf Rabbit
+f New World Headdress
 1 New World Jacket
 1 New World Armlets
 1 New World Hose
@@ -5283,7 +5322,10 @@ e Pellitory
 1 Southern Sea Tank Trimmings
 dn Sophic Barding
 7 Night Pegasus Whistle
-9 Wind-up Edda
+4 Dress-up Thancred
+2 Dress-up Alisaie
+2 Shaggy Shoat
+1 Wind-up Edda
 n Ramie Hood
 1 Ramie Poncho
 1 Fur-lined Dhalmelskin Boots
@@ -5610,7 +5652,8 @@ b Crystalscape Tank Trimmings
 1 Cropped Flannel Slops
 1 Pteroskin Shoes
 1h Zurvanite Barding
-5 Wind-up Estinien
+3 Bullpup
+2 Wind-up Estinien
 a Red Cherry Blossom Corsage
 1 Blue Cherry Blossom Corsage
 1 Yellow Cherry Blossom Corsage
@@ -6701,10 +6744,20 @@ t Taoist's Cap
 1 Ao Dai
 1 Quan
 1 Guoc
-1e Tiny Tatsunoko
-9 Wind-up Namazu
-2 Wind-up Chimera
-5 Wind-up Khloe
+1a Castaway Chocobo Chick
+1 Odder Otter
+3 Tiny Tatsunoko
+1 Bombfish
+1 Bom Boko
+1 Road Sparrow
+2 Dress-up Yugiri
+3 Mock-up Grynewaht
+1 Wind-up Namazu
+1 Ivon Coeurlfist Doll
+1 Wind-up Chimera
+2 Magitek Avenger F1
+1 Ghido
+2 Wind-up Khloe
 1 Wind-up Susano
 1 Wind-up Lakshmi
 1 Wind-up Bismarck
@@ -6821,8 +6874,12 @@ h Cloudsbreath
 a Flying Chair
 3 Wind-up Hien
 2 Wind-up Ravana
-3 Wind-up Matanga
-5 Wind-up Shinryu
+1 Mameshiba
+1 Tengu Doll
+1 Wind-up Matanga
+3 Axolotl Eft
+1 Koala Joey
+1 Wind-up Shinryu
 8 Ixali Oaknot
 1 Vanu Whitebone
 1 Sylphic Goldleaf
@@ -6919,7 +6976,8 @@ a Flying Chair
 1 Cathedral Painting
 1 Achievement Certificate
 8 Snailfish
-j Material Supplier Permit A-3
+d Salt & Pepper Seal
+6 Material Supplier Permit A-3
 1 Junkmonger Permit A-3
 1 Mender Permit A-3
 1 Thavnairian Wool Autumn Shirt
@@ -7083,13 +7141,16 @@ b Futon Mattress
 1 Imperial Hypersonic Assault Craft L-XXIII Oil Painting
 1 Mol Iloh Oil Painting
 1 Moai Statue Oil Painting
-e Wind-up Magnai
+a White Whittret
+4 Wind-up Magnai
 1 Private Moai
 1 Wind-up Mithra
 1 Wind-up Fafnir
-2 Byakko Cub
+1 The Prince of Anemos
+1 Byakko Cub
 1 Aurelia Polyp
-3 Byakko Barding
+1 The Gold Whisker
+2 Byakko Barding
 2 Red Tulip Corsage
 1 Blue Tulip Corsage
 1 Yellow Tulip Corsage
@@ -7273,7 +7334,8 @@ l Dodo Horn
 4 Copycat Bulb
 1 Wind-up Tarutaru
 2 Wind-up Sadu
-6 Wind-up Zhloe
+2 Monkey King
+4 Wind-up Zhloe
 1 Lunar Barding
 1o Grand Chair
 1 Red Dahlia Corsage
@@ -7443,8 +7505,11 @@ b Redoubtable Rolanberry Tart
 1 Coelacanth-class Pressure Hull
 1 Coelacanth-class Stern
 2b Scarlet Peacock
-b Wind-up Elvaan
-3 Scarlet Tailfeather
+9 Mudpie
+2 Wind-up Elvaan
+1 Dhalmel Calf
+1 Capybara Pup
+1 Scarlet Tailfeather
 1 Whisperfine Woolen Coat
 1 Whisperfine Woolen Shorts
 1 Whisperfine Woolen Boots
@@ -7617,7 +7682,8 @@ a Rain Hood
 1 Rain Boots
 11 Eurekan Petrel Horn
 4 Seitei
-5 Wind-up Weapon
+1 Conditional Virtue
+4 Wind-up Weapon
 1 Yukinko Snowflake
 4f Seiryu Barding
 4 Seiryu's Scale
@@ -7637,7 +7703,8 @@ d Molech's Horn
 1 Rainbow Lily of the Valley Corsage
 1 Carbuncle Chandelier
 y Abroader Otter
-6 Salvaged Coinage
+1 Hedgehoglet
+5 Salvaged Coinage
 2i Absolute Lance
 3 Ballroom Etiquette - Overzealous Affirmations
 7 Kamacite Ore
@@ -8175,12 +8242,18 @@ bh Deepgold Anelace
 1 Exchange Allied Seals
 1 Exchange Allied Seals
 17 Magicked Bed
-7 Wind-up Fuath
-9 Wind-up Omega-M
+5 Black Hayate
+1 Chameleon
+1 Wind-up Fuath
+1 Armadillo Bowler
+3 Clionid Larva
+5 Wind-up Omega-M
 1 Wind-up Omega-F
 2 Tiny Echevore
 1 Sharksucker-class Insubmersible
-5 Bicolor Gemstone
+1 Shoebill
+3 Forgiven Hate
+1 Bicolor Gemstone
 7i Deepgold Saw
 1 Deepgold Cross-pein Hammer
 1 Deepgold Raising Hammer
@@ -8801,9 +8874,13 @@ s Facet Claw Hammer
 i Ballroom Etiquette - The Winsome Wallflower
 3 Modern Aesthetics - Modern Legend
 1 Hades Barding
-5 Meerkat
+2 Bacon Bits
+2 Mystic Weapon
+1 Meerkat
 1 Miniature White Knight
-5 Wind-up Hobgoblin
+2 Domakin
+2 Little Leannan
+1 Wind-up Hobgoblin
 1 Cerberpup
 3 Hades's Auracite
 3 Metal Spinner
@@ -9180,8 +9257,11 @@ c Shinryu's Ephemeral Claws
 1 Shinryu's Ephemeral Rapier
 1 Shinryu's Ephemeral Gunblade
 1 Shinryu's Ephemeral Chakrams
-9 Silver Dasher
-3 Ancient One
+4 Sungold Talos
+5 Silver Dasher
+1 Paissa Patissier
+1 Paissa Threadpuller
+1 Ancient One
 6 Construct 14 Identification Key
 8 Ballroom Etiquette - Well Bread
 1 Ballroom Etiquette - Intelligent Impressions
@@ -9206,7 +9286,8 @@ i Red Hyacinth Corsage
 1 Faded Copy of Ultima (The Primals)
 1 Parasol
 1 Sky Blue Parasol
-8 Diadem Balloon Bug
+1 Coffer o' Kupos
+7 Diadem Balloon Bug
 1 Diadem Red Balloon
 1 Diadem Crane Fly
 1 Diadem Hoverworm
@@ -9358,12 +9439,137 @@ p Plate of Light
 1 Seiryu's Sanctified Ephemeris
 1 Seiryu's Sanctified Katana
 1 Seiryu's Sanctified Rapier
-5 Megalotragus Horn
+4 Gabriel α Identification Key
+1 Megalotragus Horn
 3 Incitatus Whistle
-7 Ephemeral Necromancer
+5 Magitek Helldiver F1
+1 Weatherproof Gaelicat
+1 Ephemeral Necromancer
 1 Allagan Melon
 1 Sand Fox
-60 Weathering Agent
+1 Petit Pteranodon
+1 Dainsleif F1
+2m Rarefied Cedar Longbow
+1 Rarefied Cedar Fishing Rod
+1 Rarefied Holy Cedar Spinning Wheel
+1 Rarefied Dark Chestnut Rod
+1 Rarefied Hallowed Chestnut Ring
+1 Rarefied Birch Signum
+1 Rarefied Beech Composite Bow
+1 Rarefied Larch Necklace
+1 Rarefied Pine Cane
+1 Rarefied Persimmon Bracelets
+1 Rarefied Zelkova Spinning Wheel
+1 Rarefied White Oak Partisan
+1 Rarefied Applewood Staff
+1 Rarefied White Ash Earrings
+1 Rarefied Sandteak Fauchard
+1 Rarefied Mythrite Katzbalger
+1 Rarefied Mythrite Pugiones
+1 Rarefied Mythrite Halfheart Saw
+1 Rarefied Titanium Creasing Knife
+1 Rarefied Titanium Mortar
+1 Rarefied Adamantite Bill
+1 Rarefied High Steel Guillotine
+1 Rarefied High Steel Claw Hammer
+1 Rarefied Doman Iron Uchigatana
+1 Rarefied Doman Steel Patas
+1 Rarefied Molybdenum Pliers
+1 Rarefied Deepgold Anelace
+1 Rarefied Deepgold Culinary Knife
+1 Rarefied Bluespirit Gunblade
+1 Rarefied Titanbronze Pickaxe
+1 Rarefied Mythrite Sallet
+1 Rarefied Mythrite Hauberk
+1 Rarefied Mythrite Bladed Lantern Shield
+1 Rarefied Titanium Frypan
+1 Rarefied Titanium Vambraces
+1 Rarefied Adamantite Scutum
+1 Rarefied High Steel Thermal Alembic
+1 Rarefied High Steel Plate Belt
+1 Rarefied Doman Iron Greaves
+1 Rarefied Doman Steel Tabard
+1 Rarefied Molybdenum Headgear
+1 Rarefied Deepgold Cuirass
+1 Rarefied Deepgold Wings
+1 Rarefied Bluespirit Gauntlets
+1 Rarefied Titanbronze Tower Shield
+1 Rarefied Mythrite Goggles
+1 Rarefied Mythrite Bangle
+1 Rarefied Mythrite Needle
+1 Rarefied Hardsilver Monocle
+1 Rarefied Hardsilver Pole
+1 Rarefied Aurum Regis Earrings
+1 Rarefied Koppranickel Planisphere
+1 Rarefied Koppranickel Necklace
+1 Rarefied Durium Chaplets
+1 Rarefied Durium Rod
+1 Rarefied Palladium Needle
+1 Rarefied Stonegold Degen
+1 Rarefied Stonegold Orrery
+1 Rarefied Manasilver Ear Cuffs
+1 Rarefied Titanbronze Headgear
+1 Rarefied Archaeoskin Belt
+1 Rarefied Archaeoskin Cloche
+1 Rarefied Wyvernskin Mask
+1 Rarefied Dhalmelskin Coat
+1 Rarefied Dragonskin Ring
+1 Rarefied Serpentskin Hat
+1 Rarefied Gaganaskin Shoes
+1 Rarefied Gyuki Leather Jacket
+1 Rarefied Tigerskin Tricorne
+1 Rarefied Marid Leather Corset
+1 Rarefied Gazelleskin Armguards
+1 Rarefied Smilodonskin Trousers
+1 Rarefied Gliderskin Thighboots
+1 Rarefied Atrociraptorskin Cap
+1 Rarefied Zonureskin Fingerless Gloves
+1 Rarefied Rainbow Bolero
+1 Rarefied Rainbow Ribbon
+1 Rarefied Holy Rainbow Hat
+1 Rarefied Ramie Turban
+1 Rarefied Hallowed Ramie Doublet
+1 Rarefied Chimerical Felt Cyclas
+1 Rarefied Bloodhempen Skirt
+1 Rarefied Ruby Cotton Gilet
+1 Rarefied Kudzu Hat
+1 Rarefied Serge Hose
+1 Rarefied Twinsilk Apron
+1 Rarefied Brightlinen Himation
+1 Rarefied Iridescent Top
+1 Rarefied Pixie Cotton Hood
+1 Rarefied Ovim Wool Tunic
+1 Rarefied Archaeoskin Grimoire
+1 Rarefied Archaeoskin Codex
+1 Rarefied Dissolvent
+1 Rarefied Dhalmelskin Codex
+1 Rarefied Max-Potion
+1 Rarefied Book of Aurum Regis
+1 Rarefied Koppranickel Index
+1 Rarefied Reisui
+1 Rarefied Tigerskin Grimoire
+1 Rarefied Growth Formula
+1 Rarefied Gazelleskin Codex
+1 Rarefied Alkahest
+1 Rarefied Gliderskin Grimoire
+1 Rarefied Bluespirit Codex
+1 Rarefied Syrup
+1 Rarefied Dhalmel Gratin
+1 Rarefied Sohm Al Tart
+1 Rarefied Sauteed Porcini
+1 Rarefied Royal Eggs
+1 Rarefied Peperoncino
+1 Rarefied Marron Glace
+1 Rarefied Baklava
+1 Rarefied Shorlog
+1 Rarefied Tempura Platter
+1 Rarefied Persimmon Pudding
+1 Rarefied Chirashi-zushi
+1 Rarefied Grilled Rail
+1 Rarefied Spaghetti al Nero
+1 Rarefied Popotoes au Gratin
+1 Rarefied Espresso con Panna
+1 Weathering Agent
 1 Seacloth
 1 Red Cosmos Corsage
 1 Blue Cosmos Corsage
@@ -9395,7 +9601,15 @@ b Bozjan Cluster
 3 Modern Aesthetics - Saintly Style
 1 Modern Aesthetics - Wind Caller
 67 Hraesvelgr Attire Coffer
-w Eternal Wind - Shadowbringers Orchestrion Roll
+m Rarefied Lignum Vitae Grinding Wheel
+1 Rarefied Mythril Hatchet
+1 Rarefied Mythril Alembic
+1 Rarefied Mythril Ring
+1 Rarefied Swallowskin Coat
+1 Rarefied Dwarven Cotton Beret
+1 Rarefied Dwarven Mythril Grimoire
+1 Rarefied Lemonade
+3 Eternal Wind - Shadowbringers Orchestrion Roll
 1 To the Edge Orchestrion Roll
 2 Blood on the Wind Orchestrion Roll
 1 Discord: Imperial (Zodiac Age Version) Orchestrion Roll
@@ -9574,8 +9788,11 @@ a Carnation Seeds
 6 Big Shell Whistle
 5 Gabriel Mark III Identification Key
 2 Syldrion-class Insubmersible
-8 Drippy
-3 Magicked Prism (Bomb Head)
+7 Save the Princess
+1 Drippy
+1 Trike
+1 Golden Beaver
+1 Magicked Prism (Bomb Head)
 1 Magicked Prism (Numeral 0)
 1 Magicked Prism (Numeral 1)
 1 Magicked Prism (Numeral 2)
@@ -9715,7 +9932,8 @@ b Diamond Barding
 3 Gilded Mikoshi Flute
 1 Golden Ronkan Flute
 3 Anteater
-4 Benben Stone
+2 Magitek Predator F1
+2 Benben Stone
 1 Wanderer's Campfire
 a Modern Aesthetics - Both Ways
 1 Modern Aesthetics - Battle-ready Bobs
@@ -10432,7 +10650,47 @@ l Highland Cottage Permit (Wood)
 1 Highland Mansion Permit (Wood)
 1 Highland Mansion Permit (Stone)
 1 Highland Mansion Permit (Composite)
-3k Triteleia Seeds
+a Rarefied Horse Chestnut Kasa
+1 Rarefied Palm Bracelet
+1 Rarefied Red Pine Spinning Wheel
+1 Rarefied Ironwood Grinding Wheel
+1 Rarefied Integral Armillae
+1 Rarefied High Durium Pistol
+1 Rarefied High Durium Greatsword
+1 Rarefied Bismuth Sledgehammer
+1 Rarefied Manganese Cross-pein Hammer
+1 Rarefied Chondrite Culinary Knife
+1 Rarefied High Durium Knuckles
+1 Rarefied High Durium Kite Shield
+1 Rarefied Bismuth Fat Cat Frypan
+1 Rarefied Manganese Armor of the Behemoth King
+1 Rarefied Chondrite Sollerets
+1 Rarefied High Durium Milpreves
+1 Rarefied Pewter Choker
+1 Rarefied Phrygian Earring
+1 Rarefied Manganese Horn of the Last Unicorn
+1 Rarefied Star Quartz Choker
+1 Rarefied Gajaskin Shoes
+1 Rarefied Luncheon Toadskin Hose
+1 Rarefied Saigaskin Gloves
+1 Rarefied Kumbhiraskin Shoes
+1 Rarefied Ophiotauroskin Top
+1 Rarefied Darkhempen Hat
+1 Rarefied Almasty Serge Gloves
+1 Rarefied Snow Linen Doublet
+1 Rarefied Scarlet Moko Wedge Cap
+1 Rarefied AR-Caean Velvet Bottoms
+1 Rarefied Gajaskin Codex
+1 Rarefied Luncheon Toadskin Grimoire
+1 Rarefied Moon Gel
+1 Rarefied Enchanted Manganese Ink
+1 Rarefied Draught
+1 Rarefied Archon Loaf
+1 Rarefied King Crab Cake
+1 Rarefied Happiness Juice
+1 Rarefied Giant Haddock Dip
+1 Rarefied Giant Popoto Pancakes
+27 Triteleia Seeds
 1 Red Triteleia
 1 Blue Triteleia
 1 Yellow Triteleia
@@ -10470,10 +10728,17 @@ t Red Ribbon
 1 Wristlet of Happiness
 1 Hose of Happiness
 1 Boots of Happiness
-2t Wind-up Magus Sisters
-2 Wind-up Anima
-a Adventure Basket
-3 Wind-up Grebuloff
+2r Flag
+2 Wind-up Magus Sisters
+1 Optimus Omicron
+1 Wind-up Anima
+3 Brave New Urianger
+2 Hippo Calf
+1 Crabe de la Crabe
+1 Prince Lunatender
+3 Adventure Basket
+2 Greener Gleaner
+1 Wind-up Grebuloff
 4 Red Triteleia Earring
 1 Blue Triteleia Earring
 1 Yellow Triteleia Earring
@@ -10711,11 +10976,20 @@ j Gold Salmon Roe
 1 Purple Scrip Exchange (Lv. 80 Materials/Bait/Tokens)
 1 Purple Scrip Exchange (Lv. 90 Bait/Tokens)
 i Paladin's Arms of the Round
-c Luxurious Paper
+4 Rarefied Integral Fishing Rod
+1 Rarefied Chondrite Lapidary Hammer
+1 Rarefied Chondrite Alembic
+1 Rarefied Chondrite Needle
+1 Rarefied Ophiotauroskin Halfgloves
+1 Rarefied AR-Caean Velvet Work Cap
+1 Rarefied Ophiotauroskin Magitek Codex
+1 Rarefied Sykon Bavarois
+1 Luxurious Paper
 1 Cloth of Happiness
 1 Phonograph Plate
 1 Bird of Elpis Breast
-q Trophy Crystal
+7 Royal Lunatender
+j Trophy Crystal
 1 Arkasodara Pana
 t Thavnairian Calamari
 1 Pactmaker's Halfheart Saw
@@ -10759,7 +11033,9 @@ t Thavnairian Calamari
 3 Wind-up Kangaroo
 2 Teacup Kapikulu
 1 Chewy
-8 Highland Cottage Roof (Wood)
+1 Clockwork Novus D
+4 Blue-footed Booby
+3 Highland Cottage Roof (Wood)
 1 Highland Cottage Roof (Stone)
 1 Highland Cottage Roof (Composite)
 1 Highland House Roof (Wood)
@@ -11095,9 +11371,12 @@ e Melon Pie
 c Windswept Barding
 8 Wind-up Scarmiglione
 2 Pterosquirrel
-3 Wind-up Philos
+1 Sponge Silkie
+1 Sewer Skink
+1 Wind-up Philos
 4 Wondrous Lanner Whistle
-24 Sil'dihn Potsherd
+4 Sil'dihn Throne
+20 Sil'dihn Potsherd
 3 Island Prism
 4 Fieldcracker
 1 The Fae's Crown Sword
@@ -11335,10 +11614,12 @@ t Morning Glory Seeds
 1 Corgi
 2 Suzusaurus
 2 Wind-up Cagnazzo 
-4 Bantam Train
+2 Private Pachypodium
+2 Bantam Train
 2 Wind-up Aidoneus
 6 Phaethon Horn
-3 Magitek Avenger G1 Identification Key
+1 Pinky Identification Key
+2 Magitek Avenger G1 Identification Key
 1 Chrysomallos Horn
 7 Magicked Prism (Faux Fox Face)
 1 Tropicracker
@@ -11509,11 +11790,16 @@ o Concentrated Verdurous Glioaether
 cf Ballroom Etiquette - Scrupulous Citations
 4 Voidcast Barding
 2 Puffin
-5 Chimpanzee
+2 Okuri Chochin
+3 Chimpanzee
 1 Exciting Dynamite
-5 Wind-up Barbariccia
+1 Mikra Lyssa
+1 Shiromaru
+1 Kuromaru
+2 Wind-up Barbariccia
 1 Goggle-eyed Dogu
-9 Magicked Children's Bed
+7 Shishioji Flute
+2 Magicked Children's Bed
 3 Seacracker
 1 Magicked Prism (Loporrit Head)
 1 Red Chrysanthemum Corsage
@@ -11691,9 +11977,11 @@ d Lupin Seeds
 x Ballroom Etiquette - Humble Triumph
 3 Modern Aesthetics - The Bold and the Braid
 1 Aloalo Potsherd Exchange
-9 Kydonia Strolls
+5 Uolosapa
+4 Kydonia Strolls
 2 Wind-up Golbez
-h Sabotender de la Luna Whistle
+9 Repulu
+8 Sabotender de la Luna Whistle
 5 Quaqua Horn
 2 Islecracker
 1 Magicked Prism (Doll Head)
@@ -12414,7 +12702,10 @@ d High-density Fiberboard
 1 Ra'Kaznar Ring of Gathering
 66 Petit Punutiy
 1 Air-wheeler M9
-7 Rororrlo Teh
+2 Honeysuckler
+1 Not-so-bighorn
+2 Quetzal
+2 Rororrlo Teh
 2 Tankardtender
 2 Speaking Stone
 1 Wind-up Mamool Ja
@@ -12671,7 +12962,55 @@ a Timeless Turali Cloth
 1 Pineapple Orange Jelly
 1 Lobster Bisque
 1 Boiled Lobster
-1q Turali Trader's Shirt
+1 Rarefied Ginseng Earrings
+1 Rarefied Ceiba Spear
+1 Rarefied Dark Mahogany Necklace
+1 Rarefied Acacia Rod
+1 Rarefied Claro Walnut Grinding Wheel
+1 Rarefied Claro Walnut Fishing Rod
+1 Rarefied Mountain Chromite Fists
+1 Rarefied Ruthenium War Axe
+1 Rarefied Cobalt Tungsten Scimitars
+1 Rarefied Titanium Gold Mortar
+1 Rarefied Ra'Kaznar War Scythe
+1 Rarefied Ra'Kaznar Round Knife
+1 Rarefied Mountain Chromite Alembic
+1 Rarefied Ruthenium Sabatons
+1 Rarefied Cobalt Tungsten Chocobo Frypan
+1 Rarefied Titanium Gold Thorned Corselet
+1 Rarefied Ra'Kaznar Greaves
+1 Rarefied Ra'Kaznar Ring
+1 Rarefied Lar Longbow
+1 Rarefied Ihuykanite Circlet
+1 Rarefied Cobalt Tungsten Tuck
+1 Rarefied White Gold Choker
+1 Rarefied Ra'Kaznar Orrery
+1 Rarefied Black Star Earrings
+1 Rarefied Loboskin Fingerless Gloves
+1 Rarefied Crocodileskin Leggings
+1 Rarefied Br'aaxskin Armlets
+1 Rarefied Gomphotherium Brais
+1 Rarefied Gargantuaskin Trousers
+1 Rarefied Gargantuaskin Hat
+1 Rarefied Snow Cotton Beret
+1 Rarefied Mountain Linen Top
+1 Rarefied Sarcenet Kecks
+1 Rarefied Rroneek Serge Hat
+1 Rarefied Thunderyards Silk Gloves
+1 Rarefied Thunderyards Silk Culottes
+1 Rarefied Loboskin Grimoire
+1 Rarefied Gemsap of Dexterity
+1 Rarefied Br'aaxskin Codex
+1 Rarefied Cunning Craftsman's Tisane
+1 Rarefied Gemdraught of Vitality
+1 Rarefied Claro Walnut Flat Brush
+1 Rarefied Boiled Alpaca Steak
+1 Rarefied Banana Ponzecake
+1 Rarefied Turali Pineapple Ponzecake
+1 Rarefied Salmon Jerky
+1 Rarefied Stuffed Peppers
+1 Rarefied Tacos de Carne Asada
+e Turali Trader's Shirt
 1 Turali Trader's Culottes
 1 Turali Trader's Shoes
 1 Turali Traveler's Shirt
@@ -12774,11 +13113,15 @@ e Toco Toquito
 1 Shshuye
 1 Spinettesaurus
 2 Tin Soldier S3
-5 Eternal Barding
-7 Barreltender Whistle
+2 Wisp of Darkness
+2 The Lawnblazer
+1 Eternal Barding
+5 Dais of Darkness
+2 Barreltender Whistle
 1 Eggeater Horn
 1 Alexandrian Axe Beak Horn
-2 Modern Aesthetics - Doing the Wave
+1 Vacuum Suit Identification Key
+1 Modern Aesthetics - Doing the Wave
 1 Modern Aesthetics - A Half Times Two
 2 Ballroom Etiquette - Personal Perfection
 3x Wintertide Trapper's Hat
@@ -13035,7 +13378,8 @@ k Cosmocredit Exchange
 a Goldentail
 1j Cordia Sap
 1 Desert Lapis Ore
-2 Levinchrome Aethersand
+1 Sin Beaver
+1 Levinchrome Aethersand
 4 Desert Lapis
 1 Craftsman's Tri-solution
 1 Mason's Abrasive
@@ -13046,7 +13390,9 @@ a Goldentail
 1 Pliable Plywood
 eb Rroneek Calf
 1 Micro Crow
-7 Wind-up Feo Ul
+1 Sunray Ray
+3 Model Suit
+3 Wind-up Feo Ul
 4 Barding of the Dead
 4 Ballroom Etiquette - The Ceremony of Tea
 2 Ballroom Etiquette - Anticipating Exertion
@@ -13062,7 +13408,8 @@ eb Rroneek Calf
 1 Black Champa
 1 Rainbow Champa
 d Interstellar Dhalmel Whistle
-6 Forgiven Mimicry Resonator
+4 Yan Horn
+2 Forgiven Mimicry Resonator
 3 Felyne Support Team Cart Horn
 2 The Faces We Wear - Mythril-edged Eyepatch (Left)
 1 The Faces We Wear - Mythril-edged Eyepatch (Right)
@@ -13137,7 +13484,8 @@ h Cosmocredit Exchange
 1 Cosmocredit Exchange
 1f Pilgrim's Protector Horn
 1 Ornamental Shrublet Horn
-b Magicked Prism (Moai Head)
+1 Cosmoboard
+a Magicked Prism (Moai Head)
 9v Ultra-Potion
 13 Occult Coffer
 1 Occult Potion
@@ -13166,7 +13514,8 @@ a Neon Street Cap
 1 Cosmocredit Exchange
 1 Cosmocredit Exchange
 1 Cosmocredit Exchange
-9 Red Paperflower Earring
+5 Cosmosuit Coffer
+4 Red Paperflower Earring
 1 Blue Paperflower Earring
 1 Yellow Paperflower Earring
 1 Green Paperflower Earring
@@ -13185,9 +13534,17 @@ a Neon Street Cap
 1 White Paperflowers
 1 Black Paperflowers
 1 Rainbow Paperflowers
-b Tipping Tortoise
+5 Mini Yan
+1 Gimme Kitten
+1 Micro Rover
+1 Psamathe
+1 Naiad
+1 Deimos
+1 Tipping Tortoise
 1 Royal Hound
-8 Petalodus Whistle
+1 Skallic Uolosapa
+1 Warp Loader Identification Key
+6 Petalodus Whistle
 2 Queen's Knight Barding
 2 Ballroom Etiquette - Fashion Forward
 2 Ballroom Etiquette - Bearing Insult
@@ -13495,7 +13852,8 @@ c7 Red Tea Flower Corsage
 1 Rainbow Tea Flowers
 1 Runaway Metal
 12 Gallant Shepherd
-5 Occult Earrings of Blood
+1 La Noscean Shorthair
+4 Occult Earrings of Blood
 1 Occult Necklace of Blood
 1 Occult Bracelet of Blood
 1 Occult Ring of Blood
@@ -13561,22 +13919,33 @@ z Corvosi Potsherd Exchange
 1 Cosmocredit Exchange
 1 Cosmocredit Exchange
 1 Cosmocredit Exchange
-k Modern Aesthetics - Shadowhunter Chic
+d Mistic Condor
+1 Little Mermaid
+1 Magic Lamp
+1 Droningway
+4 Modern Aesthetics - Shadowhunter Chic
 7 Ballroom Etiquette - Galumphing Grievance
 3 Ballroom Etiquette - Saving Face
 2e Occult Compass
 1 Occult Pyramicula
 a Corvosi Potsherd
-3 Dynamite Whistle
-8 Cosmocredit Exchange
+1 Cosmic Countenance Identification Key
+2 Dynamite Whistle
+1 Genie Lamp
+3 Volatile Gravity Vacuum Suit Identification Key
+1 Cosmic Armored Weapon Identification Key
+3 Cosmocredit Exchange
 1 Cosmocredit Exchange
-3 Runaway Barding
+1 Royal Magicked Carpet
+2 Runaway Barding
 7 The Faces We Wear - Blindfold Eyepatch (Left)
 1 The Faces We Wear - Blindfold Eyepatch (Right)
 9d Hearts Tread and Trampled Orchestrion Roll
 2 Fall into Forever Orchestrion Roll
 8 Corvosi Potsherd Exchange
-q Cloth of Legend
+k Soothing Sea-beast
+4 Powersuit Coffer
+2 Cloth of Legend
 1 Fortune-teller's Velvet
 2 First Seedling
 3t Monarch Whetstone
@@ -13626,15 +13995,23 @@ q Cloth of Legend
 1 Crumbling Aqueduct
 8 Cosmocredit Exchange
 1 Cosmocredit Exchange
-r1 Standard Spectrum Dye
+ba Junior Jinbei
+1o Modern Aesthetics - Loosened Locks
+e3 Standard Spectrum Dye
 1 Cosmocredit Exchange (Materials/Materia/Items)
 1 Cosmocredit Exchange (Materials/Materia/Items)
 1 Interstellar Leafkin Whistle
 7 Colibri Callado Whistle
-7 Cosmocredit Exchange
+2 Duck-billed Porter Whistle
+1 Cosmic Armored Weapon Beta Identification Key
+1 Cosmic Predator Identification Key
+3 Cosmocredit Exchange
 1 Cosmocredit Exchange
-6 Puny Mage
-7 Barding of Naught
+3 Lite-loader
+1 Caprino
+2 Puny Mage
+6 Nymian Uolosapa
+1 Barding of Naught
 4 Antique Lantern
 3 Ballroom Etiquette - Dignified Derision
 3 Ballroom Etiquette - Rearward Regards

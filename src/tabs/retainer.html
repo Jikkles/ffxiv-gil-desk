@@ -86,12 +86,12 @@ tbody td:nth-child(3){max-width:150px;overflow:hidden;text-overflow:ellipsis}
       <summary><span class="hw-ic"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="M7.8 7.9a2.3 2.3 0 0 1 4.4.9c0 1.6-2.2 1.9-2.2 3.2M10 14.4v.1"/></svg></span><span class="hw-title">How this works</span><span class="hw-hint">what exploration ventures are worth sending</span><span class="hw-car">▸</span></summary>
       <div class="hw-body">
         <div class="hw-sec"><h4>What it works out</h4><p>What the four 18-hour exploration ventures (Field, Highland, Woodland and Waterside) bring back that is worth selling: mostly minions, plus a few pricey furnishings.</p></div>
-        <div class="hw-sec"><h4>Reading the table</h4><p><b>Venture</b> and <b>Tier(s)</b> say which venture brings it back and at what level; a higher tier needs a higher-level retainer. <b>Only from this venture</b> marks a drop with no other source anywhere in the game.</p></div>
+        <div class="hw-sec"><h4>Reading the table</h4><p><b>Venture</b> and <b>Tier(s)</b> say which venture brings it back and at what level; a higher tier needs a higher-level retainer. The percentage beside the tiers is how often it comes back at its best tier, from players&rsquo; logged ventures. <b>Only from this venture</b> marks a drop with no other source anywhere in the game.</p></div>
         <div class="hw-sec"><h4>Worth knowing</h4><p>These sell a handful of times a month on any one world, so <b>Sell now</b> is your world and the rest is your data centre. Tick <b>Venture-exclusive only</b> for the drops you cannot get elsewhere, or <b>Only what is actually selling</b> to drop anything unsold for 30 days.</p></div>
       </div>
       <template class="guide">
         <div data-spot="#vfilter" data-side="right" data-title="Venture">Look at one venture: Field for combat retainers, Highland for miners, Woodland for botanists, Waterside for fishers.</div>
-        <div data-spot="#tbl th[data-k=tier]" data-side="bottom" data-title="Tier(s)">Which venture tiers bring it back. A higher tier needs a higher-level retainer.</div>
+        <div data-spot="#tbl th[data-k=tier]" data-side="bottom" data-title="Tier(s)">Which venture tiers bring it back, and how often at the best of them. A higher tier needs a higher-level retainer.</div>
         <div data-spot="#exclOnly, #soldOnly" data-side="right" data-title="Filters"><b>Venture-exclusive only</b> keeps drops with no other source in the game; <b>Only what is actually selling</b> drops anything unsold for 30 days.</div>
         <div data-spot="#kpis" data-side="bottom" data-title="The cards">The four ventures, ranked by their most valuable drop.</div>
       </template>
@@ -136,36 +136,7 @@ let state={home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],query:"",tax:0.05,
    rest, all a few thousand gil or less) is left out, as are the materials with a
    vendor or map route of their own - a venture reward, but not a reason to run
    one. vl is only needed when a drop spans several ventures. */
-const VITEMS=[
-  {i:35970,n:"Flag",v:"Field Exploration",t:"XXVI-XXVIII",c:"Minion",x:1},
-  {i:36856,n:"Clockwork Novus D",v:"Field Exploration",t:"XXVIII-XXIX",c:"Minion",x:1},
-  {i:8199,n:"Tiny Tapir",v:"Field Exploration",t:"XIV, XV, XIX, XXIV",c:"Minion",x:1},
-  {i:44119,n:"Horizontal Neon Wall Light",v:"Field Exploration",t:"XXXI",c:"Wall-mounted",o:"Occult Crescent overworld coffers"},
-  {i:44111,n:"Stone Partition",v:"Field Exploration",t:"XXXI",c:"Furnishing",o:"Occult Crescent overworld coffers"},
-  {i:44120,n:"Vertical Neon Wall Light",v:"Field Exploration",t:"XXXI",c:"Wall-mounted",o:"Occult Crescent overworld coffers"},
-  {i:43582,n:"Wind-up Mamool Ja",v:"Highland Exploration",t:"XXXI",c:"Minion",x:1},
-  {i:35987,n:"Wind-up Grebuloff",v:"Highland Exploration",t:"XXVI-XXVIII",c:"Minion",x:1},
-  {i:28627,n:"Wind-up Hobgoblin",v:"Highland Exploration",t:"XXV, XXX",c:"Minion",o:"the Itinerant Moogle, when that event is running"},
-  {i:36852,n:"Wind-up Kangaroo",v:"Highland Exploration",t:"XXVIII-XXIX",c:"Minion",o:"Sack of Silvered Light"},
-  {i:8201,n:"Miniature Minecart",v:"Highland Exploration",t:"XIV-XVII",c:"Minion",o:"haloed sacks, Grand Company seal containers"},
-  {i:12650,n:"Lupin Seedling",v:"Woodland Exploration",t:"XVIII, XIX, XXIV",c:"Reagent",x:1},
-  {i:36855,n:"Chewy",v:"Woodland Exploration",t:"XXVIII-XXIX",c:"Minion",o:"Sack of Silvered Light"},
-  {i:43573,n:"Not-so-bighorn",v:"Woodland Exploration",t:"XXXI",c:"Minion",o:"Sack of Silvered Light"},
-  {i:35986,n:"Greener Gleaner",v:"Woodland Exploration",t:"XXVI-XXVIII",c:"Minion",o:"Sack of Gilded Light"},
-  {i:28618,n:"Bacon Bits",v:"Woodland Exploration",t:"XXV",c:"Minion",o:"the Itinerant Moogle, Light sacks"},
-  {i:9348,n:"Littlefoot",v:"Woodland Exploration",t:"XIV-XVI",c:"Minion",o:"Grand Company seal containers"},
-  {i:35980,n:"Crabe de la Crabe",v:"Waterside Exploration",t:"XXVI-XXVIII",c:"Minion",x:1},
-  {i:36860,n:"Blue-footed Booby",v:"Waterside Exploration",t:"XXVIII",c:"Minion",x:1},
-  {i:43575,n:"Quetzal",v:"Waterside Exploration",t:"XXXI",c:"Minion",x:1},
-  {i:8022,n:"Young Water Lily",v:"Waterside Exploration",t:"XIV, XV",c:"Reagent",x:1},
-  {i:28624,n:"Domakin",v:"Waterside Exploration",t:"XXV",c:"Minion",o:"quick exploration, the Itinerant Moogle"},
-  {i:9347,n:"Fat Cat",v:"Waterside Exploration",t:"XIV-XVII, XIX, XXIV, XXV",c:"Minion",o:"Grand Company seal containers, the Itinerant Moogle"},
-  {i:12061,n:"Gestahl",v:"Waterside Exploration",t:"XVIII, XIX",c:"Minion",o:"haloed sacks, Grand Company seal containers"},
-  {i:7794,n:"Light Steel Plate",v:"Three ventures",t:"XIII",c:"Metal",x:1,
-    vl:["Field Exploration","Highland Exploration","Waterside Exploration"]},
-  {i:7566,n:"Minute Mindflayer",v:"All four",t:"XIII",c:"Minion",o:"Palace of the Dead sacks, Grand Company seal containers",
-    vl:["Field Exploration","Highland Exploration","Woodland Exploration","Waterside Exploration"]}
-];
+const VITEMS = /*@json data/retainers.json*/null;
 const VIDS=VITEMS.map(x=>x.i);
 const VENTURES=[
   {v:"Field Exploration",cls:"Combat class",ic:"&#9876;&#65039;"},
@@ -221,7 +192,10 @@ async function fetchWorlds(){
 function priceRow(e){
   const res=state.mkt?state.mkt[e.i]:null;
   const now=aggPrice(res,false,"world");
-  const avg=aggAvg(res,false,"dc");
+  /* the 30-day median across the data centre, from the history read below; the
+     aggregate's short rolling mean stands in only if that history did not load */
+  const h=state.hist?state.hist[e.i]:null;
+  const avg=h?histAvg(h,false).avg:aggAvg(res,false,"dc");
   /* Units a day over 30 days of history rather than the aggregate's rolling few
      days, which on something that sells a handful of times a month is mostly a
      run of zeros. */
@@ -230,7 +204,7 @@ function priceRow(e){
   const dcNow=aggPrice(res,false,"dc");
   const basis=avg!=null?avg:(dcNow!=null?dcNow:now);
   const net=basis!=null?basis*(1-state.tax):null;
-  return{id:e.i,name:e.n,venture:e.v,vl:e.vl||[e.v],tier:e.t,cat:e.c,excl:!!e.x,other:e.o||null,
+  return{id:e.i,name:e.n,venture:e.v,vl:e.vl||[e.v],tier:e.t,cat:e.c,excl:!!e.x,other:e.o||null,chance:e.p!=null?e.p:null,
     now,avg,vel,velI:vi,trend,daily:(net!=null&&vel)?net*vel:null};
 }
 function compute(){state.rows=VITEMS.map(priceRow);}
@@ -279,7 +253,7 @@ function visibleRows(){
   if(state.venture!=="all")r=r.filter(x=>x.vl.indexOf(state.venture)>=0);
   if(state.query){const q=state.query.toLowerCase();
     r=r.filter(x=>x.name.toLowerCase().includes(q)||x.venture.toLowerCase().includes(q)||catLabel(x.cat).toLowerCase().includes(q)
-      ||(x.excl?"only here exclusive":"also from "+x.other).toLowerCase().includes(q));}
+      ||(x.excl?"only here exclusive":"also from "+(x.other||"")).toLowerCase().includes(q));}
   const k=state.sortKey,d=state.sortDir;
   return r.slice().sort((a,b)=>{
     if(k==="name"||k==="venture"||k==="tier")return d*String(a[k]).localeCompare(String(b[k]));
@@ -289,6 +263,8 @@ function visibleRows(){
     if(av==null&&bv==null)return 0;if(av==null)return 1;if(bv==null)return -1;
     return d*(av-bv);});
 }
+/* a drop chance as a player reads it: 0.3%, 1.2%, 8.6% */
+function chanceText(p){const v=p*100;return(v<1?v.toFixed(2):v.toFixed(1)).replace(/\.?0+$/,"")+"%";}
 function render(){
   const rows=visibleRows();
   const tbl=document.getElementById("tbl");
@@ -301,10 +277,10 @@ function render(){
         `<button class="xwbtn" data-xw="${r.id}" data-xwname="${xesc(r.name)}" title="Compare this item's price and stock on every world">🌐</button>`+
         `${iconHTML(r.id)}<a href="https://universalis.app/market/${r.id}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">${r.name}</a>`+
         `<span class="pill ${catSlug(r.cat)}" title="${r.cat}">${catLabel(r.cat)}</span></span>`+
-        `<span class="t" title="${r.excl?"Nothing else in the game produces this":"Also obtainable from "+r.other}">`+
-          `${r.excl?(r.vl.length>1?"Only from these ventures":"Only from this venture"):"Also from "+r.other}</span></div></td>`+
+        `<span class="t" title="${r.excl?"Nothing else in the game produces this":r.other?"Also obtainable from "+r.other:"A newer drop: no other source turned up in the desk's own data, but nobody has checked the rest of the game by hand"}">`+
+          `${r.excl?(r.vl.length>1?"Only from these ventures":"Only from this venture"):r.other?"Also from "+r.other:"Other sources not checked"}</span></div></td>`+
       `<td title="${r.vl.join(", ")}">${r.venture}</td>`+
-      `<td title="Venture tier ${r.tier}">${r.tier}</td>`+
+      `<td title="Venture tier ${r.tier}${r.chance!=null?" · comes back from "+chanceText(r.chance)+" of ventures at its best tier, in players' logged ventures":""}">${r.tier}${r.chance!=null?' <span class="q">'+chanceText(r.chance)+'</span>':''}</td>`+
       `<td>${fmt(r.now)}</td>`+
       `<td>${fmt(r.avg)}</td>`+
       `<td>${trendChip(r.trend)}</td>`+

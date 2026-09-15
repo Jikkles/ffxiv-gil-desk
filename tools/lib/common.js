@@ -82,4 +82,46 @@ async function latestGameData() {
   return { patch, when: new Date(latest.commit.committer.date) };
 }
 
-module.exports = { ROOT, CACHE, OUT, cached, need, readJSON, writeJSON, sheet, items, marketable, decodeIndex, encodeIndex, latestGameData };
+/* ---- a price check against Universalis ----
+   The average sale price of each item across a region or data centre (NQ, else HQ), or null
+   when it has none. Cached per item in tools/.cache/prices2-<scope>.json, so builders asking
+   about different items share one file without wiping each other: an item is asked about again
+   once its price is a day old, or an hour old with --reprice on the command line (so two
+   builders in one rebake do not both ask). */
+async function regionPrices(scope, ids) {
+  const file = cached(`prices2-${scope}.json`);
+  let seen = {};
+  try { if (fs.existsSync(file)) seen = readJSON(file); } catch (e) { seen = {}; }
+  const maxAge = process.argv.includes("--reprice") ? 3600000 : 86400000, now = Date.now();
+  const todo = ids.filter(id => !(seen[id] && now - seen[id][1] < maxAge));
+  const out = {};
+  const region = /^(Europe|North-America|Japan|Oceania)$/.test(scope);
+  for (let i = 0; i < todo.length; i += 100) {
+    const batch = todo.slice(i, i + 100);
+    for (let a = 0; a < 5; a++) {
+      try {
+        const r = await fetch(`https://universalis.app/api/v2/aggregated/${scope}/${batch.join(",")}`);
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        const j = await r.json();
+        for (const row of j.results || []) {
+          const pick = q => q && q.averageSalePrice && q.averageSalePrice[region ? "region" : "dc"] ? q.averageSalePrice[region ? "region" : "dc"].price : null;
+          out[row.itemId] = pick(row.nq) ?? pick(row.hq);
+        }
+        for (const id of batch) { if (!(id in out)) out[id] = null; seen[id] = [out[id], now]; }
+        break;
+      } catch (e) {
+        if (a === 4) throw new Error("Universalis " + scope + ": " + e.message);
+        await new Promise(res => setTimeout(res, 3000 * (a + 1)));
+      }
+    }
+    process.stdout.write(`\r  pricing on ${scope}: ${Math.min(i + 100, todo.length)}/${todo.length}`);
+    await new Promise(res => setTimeout(res, 400));
+  }
+  if (todo.length) process.stdout.write("\n");
+  writeJSON(file, seen);
+  const res = {};
+  for (const id of ids) res[id] = seen[id] ? seen[id][0] : null;
+  return res;
+}
+
+module.exports = { ROOT, CACHE, OUT, cached, need, readJSON, writeJSON, sheet, items, marketable, decodeIndex, encodeIndex, latestGameData, regionPrices };

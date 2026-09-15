@@ -163,13 +163,13 @@
       <summary><span class="hw-ic"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="M7.8 7.9a2.3 2.3 0 0 1 4.4.9c0 1.6-2.2 1.9-2.2 3.2M10 14.4v.1"/></svg></span><span class="hw-title">How this works</span><span class="hw-hint">buy on one world, sell on yours</span><span class="hw-car">▸</span></summary>
       <div class="hw-body">
         <div class="hw-sec"><h4>What it works out</h4><p>No crafting: world-to-world trading on mounts, minions, hairstyles, outfit coffers and emotes. It finds the cheapest listing on any world in <b>Buy from</b> and compares it with what the item really sells for on your world.</p></div>
-        <div class="hw-sec"><h4>Reading the table</h4><p><b>Buy</b> names the world to buy on: orange means you will have to travel, teal means it is already on yours. <b>Profit/flip</b> is the 30-day average sale on your world, after tax, less the buy price.</p></div>
-        <div class="hw-sec"><h4>Worth knowing</h4><p>Rare items are where listings lie most, so profit rests on real sales rather than today&rsquo;s cheapest listing on your world; glance at <b>Sell now</b> before you buy. <b>Min profit</b> and <b>Min avg price</b> cut out small flips, and <b>Hide same-world deals</b> leaves only the ones that need a hop.</p></div>
+        <div class="hw-sec"><h4>Reading the table</h4><p><b>Buy</b> names the world to buy on: orange means you will have to travel, teal means it is already on yours. <b>Profit/flip</b> is what it sells for on your world, after tax, less the buy price: the 30-day average, or the cheapest listing already on your world when that is lower, since you would have to undercut it.</p></div>
+        <div class="hw-sec"><h4>Worth knowing</h4><p>Rare items are where listings lie most, so profit rests on real sales, but never above what your world is already listing it for. <b>caps</b> beside <b>Sell now</b> marks a row priced at that listing, and ⚠ one nothing has sold on your world in 30 days, which the headline card leaves out. <b>Min profit</b> and <b>Min avg price</b> cut out small flips, and <b>Hide same-world deals</b> leaves only the ones that need a hop.</p></div>
       </div>
       <template class="guide">
         <div data-spot="#dcBtn" data-side="right" data-title="Buy from">The data centres searched for the cheapest listing. More of them finds more deals, but the scan takes longer.</div>
         <div data-spot="#tbl th[data-k=buyPrice]" data-side="bottom" data-title="Buy (cheapest)">The lowest listing and the world it is on: <b>orange</b> means you will have to travel, <b>teal</b> that it is on your own world.</div>
-        <div data-spot="#tbl th[data-k=profit]" data-side="bottom" data-title="Profit/flip">The 30-day average sale on your world, after tax, less the buy price.</div>
+        <div data-spot="#tbl th[data-k=profit]" data-side="bottom" data-title="Profit/flip">The 30-day average sale on your world, or the cheapest listing there if that is lower, after tax, less the buy price.</div>
         <div data-spot="#grp, #minProfit, #minAvg, #hideHome" data-side="right" data-title="Filters">Pick a category, cut out small flips, and tick <b>Hide same-world deals</b> to see only the ones worth a hop.</div>
       </template>
     </details>
@@ -195,7 +195,7 @@
   <p class="foot">
     Buy = cheapest NQ listing anywhere on <span class="dcname">Chaos</span> (world shown in orange = hop required, teal = already on your world).
     Sell avg 30d = 30-day average sale price on your home world — more reliable than current listings for rare items.
-    Profit = Sell avg × (1 − tax) − Buy. Margin = Profit ÷ Sell avg.
+    Profit = the lower of Sell avg and Sell now, × (1 − tax) − Buy: you have to undercut what your world already lists (Sell now is ignored when the cheapest listing anywhere is on your own world, since that is the one you buy). Margin = Profit ÷ that sell price.
     Units/day = how many units actually sell a day on your home world over 30 days — a stack of 99 counts as 99, not as one sale.
     Gil/day = net sale price × units/day — how much gil the item moves on your world, which is the market’s pace rather than your cut of it.
     Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>.
@@ -285,8 +285,14 @@ function compute(){
     // Sell now: cheapest listing on home world
     const sellNow=aggPrice(sellData,false,"world").price;
 
-    // Use avg as sell basis if available, else listing
-    const sellBasis=sellAvg!=null?sellAvg:(sellNow!=null?sellNow:null);
+    /* What you can actually sell for: the lower of the 30-day average and the
+       cheapest listing already on your world, since you have to undercut that
+       listing to sell. The average alone called a flip profitable when your
+       world was already listing below the buy price. When the cheapest listing
+       anywhere is on your own world, that listing is the one you would buy, so
+       it does not cap the resale and the average stands. */
+    const sellBasis=(sellAvg!=null&&sellNow!=null&&!isHome)?Math.min(sellAvg,sellNow):(sellAvg!=null?sellAvg:sellNow);
+    const undercut=sellAvg!=null&&sellNow!=null&&!isHome&&sellNow<sellAvg;
 
     const net=sellBasis!=null?sellBasis*(1-state.tax):null;
     const profit=net!=null&&buyPrice!=null?net-buyPrice:null;
@@ -297,13 +303,16 @@ function compute(){
        not the cheapest-on-Chaos one the buy price came from */
     const uploadSell=aggUpload(sellData);
 
-    // Outlier check: buy price suspiciously higher than sell avg
-    const outlier=buyPrice!=null&&sellAvg!=null&&buyPrice>sellAvg*1.2;
+    /* Two ways a flip's numbers lie: nothing has sold on your world in 30 days, so
+       the sale price is someone's asking price; or the buy price sits above what
+       it really sells for, so the listing is stale or the margin is not there. */
+    const noHist=sellAvg==null;
+    const outlier=noHist||(buyPrice!=null&&buyPrice>sellAvg*1.2);
 
     rows.push({
       id, name:item.name, cat:item.cat,
       buyPrice, buyWorld, buyWorldId, isHome,
-      sellAvg, sellNow, vel, velI:v30, profit, margin, gilDay, upload, uploadSell, outlier,
+      sellAvg, sellNow, sellBasis, undercut, noHist, vel, velI:v30, profit, margin, gilDay, upload, uploadSell, outlier,
       trendT:tr30, trend:tr30?tr30.pct:null
     });
   }
@@ -352,11 +361,14 @@ function render(){
     const worldTag=r.buyWorld==null
       ?'<span class="no-data">no listing</span>'
       :`<span class="buy-world${r.isHome?' home':''}">${r.buyWorld}${r.isHome?' <span class="tag-home">home</span>':''}</span>`;
-    const warnTag=r.outlier?'<span class="warn" title="Buy price is close to or above sell average — margin may be thin or listing is stale"> ⚠</span>':'';
+    const warnTag=r.outlier?(r.noHist
+      ?'<span class="warn" title="Nothing has sold on your world in 30 days, so this profit rests on an asking price nobody has paid"> ⚠</span>'
+      :'<span class="warn" title="Buy price is close to or above sell average — margin may be thin or listing is stale"> ⚠</span>'):'';
     const sellAvgTag=r.sellAvg!=null
       ?`${fmt(Math.round(r.sellAvg))} <span class="q">${velNum(r.vel)}/day</span>`
       :'<span class="no-data">no history</span>';
-    const sellNowTag=r.sellNow!=null?fmt(r.sellNow)+agePill(r.uploadSell):'<span class="no-data">—</span>';
+    const capTag=r.undercut?' <span class="q" title="Your world is already listing this below its 30-day average, so profit is worked out at this listing price">caps</span>':'';
+    const sellNowTag=r.sellNow!=null?fmt(r.sellNow)+capTag+agePill(r.uploadSell):'<span class="no-data">—</span>';
 
     tr.innerHTML=`
       <td><div class="name"><span class="n"><button class="shopbtn" data-shopitem="${r.id}" title="Add this item to shopping list">🛒</button><button class="listbtn" data-listadd="${r.id}" title="Add to a saved list">📋</button><button class="xwbtn" data-xw="${r.id}" data-xwname="${xesc(r.name)}" title="Compare this item's price and stock on every world">\ud83c\udf10</button>${iconHTML(r.id)}${r.name}<span class="pill ${catCls}">${r.cat}</span></span></div>
@@ -375,7 +387,8 @@ function render(){
   document.getElementById("tbl").hidden=false;
 
   const profitable=rows.filter(r=>r.profit!=null&&r.profit>0).sort((a,b)=>b.profit-a.profit);
-  const best=profitable[0];
+  /* the headline card never quotes a ⚠ row */
+  const best=profitable.find(r=>!r.outlier);
   document.getElementById("kpiBest").textContent=best?fmtM(best.profit)+" g":"—";
   document.getElementById("kpiBestName").textContent=best?best.name:"nothing profitable in view";
   document.getElementById("kpiCount").textContent=profitable.length+" / "+rows.length+" shown";
@@ -454,7 +467,7 @@ document.getElementById("density").addEventListener("change",e=>{
 document.getElementById("copyList").addEventListener("click",()=>{
   const rows=visibleRows().filter(r=>r.profit>0);
   if(!rows.length){alert("No profitable flips to copy.");return;}
-  const lines=rows.map(r=>`${r.name} — buy ${fmt(r.buyPrice)} on ${r.buyWorld||"?"} → sell ~${fmtM(r.sellAvg||r.sellNow||0)} on ${state.home} (${fmtM(r.profit)} profit, ${velNum(r.vel)} units/day)`);
+  const lines=rows.map(r=>`${r.name} — buy ${fmt(r.buyPrice)} on ${r.buyWorld||"?"} → sell ~${fmtM(r.sellBasis||0)} on ${state.home} (${fmtM(r.profit)} profit, ${velNum(r.vel)} units/day)`);
   navigator.clipboard.writeText("FLIP LIST\n"+lines.join("\n")).then(()=>{
     const b=document.getElementById("copyList");b.textContent="✓ Copied!";setTimeout(()=>b.textContent="📋 Copy list",2000);
   });

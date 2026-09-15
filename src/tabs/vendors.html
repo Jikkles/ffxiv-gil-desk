@@ -215,16 +215,25 @@ function agePill(ms){if(!ms)return'<span class="age-pill age-stale">no data</spa
 let state={
   home:"Spriggan", dc:"Chaos", dcs:["Chaos"], tax:0.05, group:"all", query:"", basis:"safe",
   minVel:0, minProfit:1, showAll:false, hideOutlier:false,
-  sortKey:"gilDay", sortDir:-1, mkt:null, hist:{}, rows:null
+  sortKey:"gilDay", sortDir:-1, mkt:null, hist:{}, rows:null, gen:0
 };
 
 /* NQ side only — gil shops sell NQ (the single HQ entry in the game's shop table is not marketable) */
 function nq(res){return res?res.n:null;}
+/* The average and the pace come from 30 days of this world's sales wherever that
+   history has been read: the median, as on every other tab. The aggregate's own
+   figures are a mean over its last few days, where one joke sale moves the price
+   and a quiet week reads as nothing sold, so they only stand in for a row whose
+   history has not arrived yet (fromHist says which). */
 function marketOf(id){
   const q=nq(state.mkt&&state.mkt[id]);
-  if(!q)return{min:null,avg:null,vel:0,upload:0};
-  return{min:q.mw&&q.mw[0]!=null?q.mw[0]:null, avg:q.aw!=null?q.aw:null,
-    vel:q.vw!=null?q.vw:0, upload:(state.mkt[id]&&state.mkt[id].u)||0};}
+  const min=q&&q.mw&&q.mw[0]!=null?q.mw[0]:null, upload=(state.mkt&&state.mkt[id]&&state.mkt[id].u)||0;
+  const h=state.hist[id];
+  if(h){const a=histAvg(h,false),v=vel30(h,false);
+    return{min,avg:a.avg,vel:v.perDay,velI:v,upload,fromHist:true};}
+  if(!q)return{min:null,avg:null,vel:0,velI:velAgg(0),upload:0,fromHist:false};
+  const vel=q.vw!=null?q.vw:0;
+  return{min,avg:q.aw!=null?q.aw:null,vel,velI:velAgg(vel),upload,fromHist:false};}
 
 function compute(){
   const rows=[];
@@ -246,7 +255,7 @@ function compute(){
     const net=sell!=null?sell*(1-state.tax):null;
     const gilDay=net!=null?net*(m.vel||0):null;
     const trendT=trend30(state.hist[v.id]);
-    rows.push({...v,min:m.min,avg:m.avg,vel:m.vel||0,upload:m.upload,sell,profit,margin,daily,gilDay,
+    rows.push({...v,min:m.min,avg:m.avg,vel:m.vel||0,velI:m.velI,fromHist:m.fromHist,upload:m.upload,sell,profit,margin,daily,gilDay,
       trendT,trend:trendT?trendT.pct:null,outlier,noHist});
   }
   state.rows=rows;
@@ -311,7 +320,8 @@ function render(){
     const tr=document.createElement("tr");
     const cls=r.profit==null?"na":(r.profit>0?"win":"loss");
     const warn=r.outlier?`<span class="warn" title="${r.noHist
-      ?"Nothing has sold on this server in 30 days — this is one person's asking price, not proof anyone will pay it."
+      ?(r.fromHist?"Nothing has sold on this server in 30 days — this is one person's asking price, not proof anyone will pay it."
+        :"Nothing has sold on this server in the last few days, and its 30-day history is still loading — treat this asking price with suspicion.")
       :"The cheapest listing sits far from the 30-day average — an odd listing, not a real price."} Treat this row's profit as unreliable.">⚠</span>`:"";
     /* the column says Sell now, so it shows the listing rather than whichever
        basis the sidebar picked to work the profit out from */
@@ -332,7 +342,7 @@ function render(){
       <td>${trendChip(r.trendT)}</td>
       <td class="profit ${cls}">${r.profit!=null?fmtM(r.profit):"—"}</td>
       <td class="hide">${r.margin!=null?Math.round(r.margin*100)+"%":"—"}</td>
-      <td>${r.vel>0?velCell(velAgg(r.vel)):'<span class="no-data">0</span>'}</td>
+      <td>${r.vel>0?velCell(r.velI):'<span class="no-data">0</span>'}</td>
       <td>${fmtM(r.gilDay)}</td>`;
     tb.appendChild(tr);
   }
@@ -379,36 +389,52 @@ async function fetchHist(scope,ids,onProgress){
   if(!res.failed.length)Cache.set(ck,res.out);
   return res;}
 
-/* Trend needs sales history, and there are 4,943 vendor items - far too many
-   to pull history for. The table never shows more than MAX_ROWS, so ask only
-   about the rows on screen and fill their trends in once they land. Anything
-   already asked about is remembered, including the misses, so scrolling the
-   filters around does not ask twice. */
+/* History for all 4,943 vendor items would be fifty batches, and most of them
+   lose money on any price. load() reads it for every item the aggregate says
+   could turn a profit; anything else that reaches the screen (Show ALL, or a
+   filter change) is asked about here and fills in once it lands. Anything already
+   asked about is remembered, misses included, so it is never asked twice. A scan
+   that started since the request (a new world, say) owns state.hist now, so a
+   late answer is dropped rather than written over it, and the rows on screen are
+   asked about again for the new world. */
 let trendsPending=false;
 async function loadTrends(){
   if(!state.mkt||trendsPending)return;
   const need=visibleRows().slice(0,MAX_ROWS).map(r=>r.id).filter(id=>!(id in state.hist));
   if(!need.length)return;
   trendsPending=true;
+  const gen=state.gen,home=state.home;let stale=false;
   try{
-    const res=await fetchHist(state.home,need);
+    const res=await fetchHist(home,need);
+    if(gen!==state.gen){stale=true;return;}
     for(const id of need)state.hist[id]=res.out[id]||null;
     compute();render();
-  }catch(e){for(const id of need)state.hist[id]=null;}
-  finally{trendsPending=false;}
+  }catch(e){if(gen!==state.gen)stale=true;else for(const id of need)state.hist[id]=null;}
+  finally{trendsPending=false;if(stale&&state.rows)loadTrends();}
 }
 
 async function load(){
   const btn=document.getElementById("refresh");btn.disabled=true;clearErr();
+  const gen=++state.gen;
   try{
     setStatus("Pricing "+esc(state.home)+"…");
     await refreshTopology();buildHomeSelect(document.getElementById("home"),state.home);
     state.hist={};
     const res=await fetchAgg(state.home,V_IDS,(d,t)=>setStatus(`Pricing ${esc(state.home)}… ${d}/${t} batches`));
+    if(gen!==state.gen)return;
     state.mkt=res.out;
+    /* 30 days of sales for everything that could make money on either the
+       cheapest listing or the aggregate's average: the rows the default view shows */
+    const tax=state.tax,cand=[];
+    for(const v of V_ITEMS){const q=nq(state.mkt[v.id]);if(!q)continue;
+      const hi=Math.max(q.mw&&q.mw[0]!=null?q.mw[0]:-1,q.aw!=null?q.aw:-1);
+      if(hi>0&&hi*(1-tax)>v.cost)cand.push(v.id);}
+    const hist=await fetchHist(state.home,cand,(d,t)=>setStatus(`Reading 30-day history for ${cand.length.toLocaleString("en-GB")} items… ${d}/${t} batches`));
+    if(gen!==state.gen)return;
+    for(const id of cand)state.hist[id]=hist.out[id]||null;
     compute();render();updateScanTime();
-    finishStatus([res]);
-  }catch(e){showErr(e);}finally{btn.disabled=false;}
+    finishStatus([res,hist]);
+  }catch(e){if(gen===state.gen)showErr(e);}finally{if(gen===state.gen)btn.disabled=false;}
 }
 
 /* ---- wiring ---- */

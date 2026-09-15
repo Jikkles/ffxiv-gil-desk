@@ -67,7 +67,8 @@ tr.detail>td{background:var(--bg2);border-bottom:1px solid var(--line);padding:0
       <div class="slabel">Marketboard settings</div>
       <label class="chk"><input type="checkbox" id="hideNo" checked> Hide no-sales</label>
       <label class="chk"><input type="checkbox" id="hideOutlier" checked> Hide ⚠ outliers</label>
-      <label class="chk" title="Items with zero sales in the last 30 days are skipped on the next refresh, making it much faster. The list refreshes itself weekly — shift-click Refresh at any time to force a full rescan of everything."><input type="checkbox" id="skipDead" checked> Skip dead items</label>
+      <label class="chk" title="Shards, crystals and clusters are always costed. Tick this to list them in each recipe as well."><input type="checkbox" id="showCrystals"> Show crystals</label>
+      <label class="chk" title="Items with zero sales in the last 30 days are skipped on later refreshes, making them much faster. Each one is checked again a week after it was last found dead, and every world keeps its own list — shift-click Refresh at any time to force a full rescan of everything."><input type="checkbox" id="skipDead" checked> Skip dead items</label>
     </div>
     <div class="sgroup">
       <div class="slabel">Filters</div>
@@ -156,7 +157,7 @@ const ago=ms=>{if(!ms)return"no uploads";const s=(Date.now()-ms)/1000;if(s<3600)
 
 /* the desk opens here, so this tab scans only when Refresh is pressed (see autoLoad) */
 window.MANUAL_SCAN=true;
-let state={home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],skipDead:true,tax:0.05,group:"all",hideNo:true,hideOutlier:true,query:"",basis:"listing",matBasis:"opt",
+let state={home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],skipDead:true,tax:0.05,group:"all",hideNo:true,hideOutlier:true,showCrystals:false,query:"",basis:"listing",matBasis:"opt",
   sortKey:"profit",sortDir:-1,worlds:null,sell:null,hist:null,chaos:null,rows:null,expanded:new Set(),tree:new Set(),_best:{},_hops:{}};
 
 function side(res,hq){return res?(hq?res.h:res.n):null;}
@@ -212,11 +213,22 @@ async function fetchWorlds(){
     const m={};for(const w of a)m[w.id]=w.name;Cache.set("worlds",m);return m;
   }catch(e){return{...CHAOS_FALLBACK};}}
 
-/* ===== v13.1: dead-item pruning ===== */
-const DEAD_KEY="gildesk:all:deadlist",DEAD_TTL=7*24*3600*1000;
-function getDeadList(){try{const r=JSON.parse(localStorage.getItem(DEAD_KEY)||"null");
-  if(!r||Date.now()-r.t>DEAD_TTL)return new Set();return new Set(r.ids);}catch(e){return new Set();}}
-function saveDeadList(s){try{localStorage.setItem(DEAD_KEY,JSON.stringify({t:Date.now(),ids:[...s]}));}catch(e){}}
+/* ===== dead-item pruning =====
+   Each item carries the time it was last checked and found dead, per world. It is
+   skipped for a week from that check and then asked about again, so an item that
+   starts selling comes back on its own. The list used to carry one timestamp for
+   the whole thing, rewritten on every scan: anything skipped was never checked
+   again, so a weekly scanner never saw an item come back to life, and a list
+   built on one world was applied to every other. */
+const DEAD_KEY="gildesk:all:deadlist:v2",DEAD_TTL=7*24*3600*1000;
+try{localStorage.removeItem("gildesk:all:deadlist");}catch(e){}
+function readDead(){try{const r=JSON.parse(localStorage.getItem(DEAD_KEY)||"null");return r&&typeof r==="object"?r:{};}catch(e){return{};}}
+/* id -> when it was last found dead, for this world */
+function deadTimes(world){const d=readDead()[world];return d&&typeof d==="object"?d:{};}
+function getDeadList(world){const now=Date.now(),t=deadTimes(world),s=new Set();
+  for(const id in t)if(now-t[id]<DEAD_TTL)s.add(+id);return s;}
+function saveDeadTimes(world,t){const all=readDead();all[world]=t;
+  try{localStorage.setItem(DEAD_KEY,JSON.stringify(all));}catch(e){}}
 function closureIds(ids){const seen=new Set(ids);const st=[...ids];
   while(st.length){const id=st.pop();const r=RECIPES[id];if(!r)continue;
     for(const ing of r.ingredients)if(!seen.has(ing.id)){seen.add(ing.id);st.push(ing.id);}}
@@ -230,7 +242,8 @@ async function load(){const btn=document.getElementById("refresh");btn.disabled=
     const prog=l=>(d,t)=>setStatus(`${l}\u2026 ${d}/${t} batches`);
     /* a shift-click Refresh is a full rescan, dead items included, for this scan only */
     const full=state.fullScan;state.fullScan=false;
-    const dead=(state.skipDead&&!full)?getDeadList():new Set();
+    const world=state.home;
+    const dead=(state.skipDead&&!full)?getDeadList(world):new Set();
     const finIds=dead.size?FINISHED_IDS.filter(id=>!dead.has(id)):FINISHED_IDS;
     const matIds=dead.size?closureIds(finIds):ALL_IDS;
     const[sell,hist,chaos]=await Promise.all([
@@ -240,12 +253,13 @@ async function load(){const btn=document.getElementById("refresh");btn.disabled=
     state.sell=sell.out;state.hist=hist.out;state.chaos=chaos.out;
     compute();render();updateScanTime();
     finishStatus([sell,hist,chaos]);
-    /* refresh the dead list from what we actually fetched (skip failed batches) */
+    /* refresh the dead list from what we actually fetched (skip failed batches):
+       everything asked about this scan is stamped now if dead and dropped if not */
     const failedIds=new Set();for(const r of[sell,hist,chaos])for(const f of r.failed)for(const id of f.ids)failedIds.add(id);
-    const nd=getDeadList();
+    const nd=deadTimes(world),stamp=Date.now();
     for(const id of finIds){if(failedIds.has(id))continue;const s=hist.out[id];
-      if(!s||!s.a||!s.a[1])nd.add(id);else nd.delete(id);}
-    saveDeadList(nd);
+      if(!s||!s.a||!s.a[1])nd[id]=stamp;else delete nd[id];}
+    saveDeadTimes(world,nd);
     if(dead.size)document.getElementById("status").innerHTML+=` · <span title="Zero-sale items skipped this refresh — shift-click Refresh for a full rescan">${dead.size.toLocaleString("en-GB")} dead skipped</span>`;
   }catch(e){showErr(e);}finally{btn.disabled=false;syncStartScan();}}
 /* the big button stands in for Refresh until a scan has produced rows, and
@@ -302,13 +316,13 @@ function nodeHTML(id,amount,path,depth){
     <div class="server ${buy.price==null?'dim':(buy.hop?'hop':'home')}">${buy.price!=null?buy.world+(buy.hop?' · hop':''):'—'}</div>
     <div class="price ${craftCls} ncraft">${craft!=null?'craft '+fmt(craft):'<span class="dim">—</span>'}</div>
     <div class="line">${fmt(best!=null?best*amount:null)}</div></div>`;
-  if(hasKids&&open) for(const ing of r.ingredients){if(isCrystal(ing.id))continue;h+=nodeHTML(ing.id,ing.amount,path+">"+ing.id,depth+1);}
+  if(hasKids&&open) for(const ing of r.ingredients){if(isCrystal(ing.id)&&!state.showCrystals)continue;h+=nodeHTML(ing.id,ing.amount,path+">"+ing.id,depth+1);}
   return h;
 }
 const isCrystal=id=>id>=2&&id<=19;
 function crystalCost(rec){return rec.ingredients.reduce((s,ing)=>{if(!isCrystal(ing.id))return s;const b=buyOf(ing.id);return s+(b.price!=null?b.price*ing.amount:0);},0);}
 function treeHTML(r){const rec=RECIPES[r.id];let body="";
-  for(const ing of rec.ingredients){if(isCrystal(ing.id))continue;body+=nodeHTML(ing.id,ing.amount,r.id+">"+ing.id,0);}
+  for(const ing of rec.ingredients){if(isCrystal(ing.id)&&!state.showCrystals)continue;body+=nodeHTML(ing.id,ing.amount,r.id+">"+ing.id,0);}
   const bestTotal=r.matOpt!=null?r.matOpt:rec.ingredients.reduce((s,ing)=>{const b=bestOf(ing.id);return s+(b!=null?b*ing.amount:0);},0);
   const bestUnit=bestTotal/rec.yields,save=r.matBuyAll-bestTotal;
   const opt=state.matBasis!=="buyall",live=' <span class="dim" title="This is the basis the table is costing against right now">← in use</span>';
@@ -317,7 +331,7 @@ function treeHTML(r){const rec=RECIPES[r.id];let body="";
     ${body}
     <div class="tfoot">
       <span><span class="lab">Buy-all /craft</span><b>${fmt(r.matBuyAll)}</b>${opt?'':live}</span>
-      ${(cx=>cx>0?`<span><span class="lab">Crystals</span><b>~${fmt(cx)}</b> <span class="dim" title="Shards, crystals and clusters are hidden from the tree to reduce clutter, but their market cost is still included in Buy-all and Cost/unit.">hidden · incl. in costs</span></span>`:``)(crystalCost(rec))}
+      ${(cx=>cx>0?`<span><span class="lab">Crystals</span><b>~${fmt(cx)}</b> ${state.showCrystals?'<span class="dim">incl. above</span>':'<span class="dim" title="Shards, crystals and clusters are hidden from the tree to reduce clutter, but their market cost is still included in Buy-all and Cost/unit. Tick Show crystals to list them.">hidden · incl. in costs</span>'}</span>`:``)(crystalCost(rec))}
       <span><span class="lab">Precraft-optimised</span><b class="${save>0?'profit win':''}">${fmt(bestTotal)}${save>0?` (save ${fmtK(save)})`:''}</b>${opt?live:''}</span>
       <span><span class="lab">Cost/unit</span><b>${fmt(r.cost)}</b> <span class="dim">${opt?`buy-all would be ${fmt(r.costBuyAll)}`:`→ ${fmt(bestUnit)} optimised`}</span></span>
       <span><span class="lab">Sell now·${state.home}</span><b>${r.sell==null?'—':fmt(r.sell)+' '+r.q}</b></span>
@@ -393,14 +407,17 @@ buildCatNav();
 document.getElementById("search").addEventListener("input",e=>{state.query=e.target.value;render();});
 document.getElementById("basis").addEventListener("change",e=>{state.basis=e.target.value;if(state.rows){compute();render();}});
 buildHomeSelect(document.getElementById("home"),state.home);
-document.getElementById("home").addEventListener("change",e=>{homeChanged(e.target.value);load();});
-initDcPicker(()=>load());
+/* the Dashboard only scans once asked to: before the first scan, a new world or
+   data centre just changes what the Load live prices button will price */
+document.getElementById("home").addEventListener("change",e=>{homeChanged(e.target.value);if(state.rows)load();});
+initDcPicker(()=>{if(state.rows)load();});
 document.getElementById("matbasis").addEventListener("change",e=>{state.matBasis=e.target.value;
   const m=document.getElementById("costMode");if(m)m.textContent=state.matBasis==="buyall"?"buy-all":"optimised";
   if(state.rows){compute();render();}});
 document.getElementById("tax").addEventListener("change",e=>{state.tax=parseFloat(e.target.value);if(state.rows){compute();render();}});
 document.getElementById("hideNo").addEventListener("change",e=>{state.hideNo=e.target.checked;render();});
 document.getElementById("hideOutlier").addEventListener("change",e=>{state.hideOutlier=e.target.checked;render();});
+document.getElementById("showCrystals").addEventListener("change",e=>{state.showCrystals=e.target.checked;render();});
 document.getElementById("skipDead").addEventListener("change",e=>{state.skipDead=e.target.checked;if(state.rows)load();});
 document.getElementById("refresh").addEventListener("click",load);
 document.getElementById("startScanGo").addEventListener("click",()=>document.getElementById("refresh").click());
@@ -475,6 +492,32 @@ function healListTags(){
   }catch(e){}
 }
 healListTags();
+/* A row saved from Precrafts or Scrips before those trees carried crystals costs
+   its crafts without them. The Dashboard holds the full recipes, so where a saved
+   recipe matches one of them on everything but the crystals, the crystals are put
+   back. Runs once on load and writes only if something changed. */
+function healListCrystals(){
+  try{
+    if(typeof Lists==="undefined")return;
+    const d=Lists.read();let n=0;
+    for(const slot of LIST_SLOTS)for(const it of(d.items[slot]||[])){
+      if(it.src==="Dashboard"||!it.recipes)continue;
+      for(const id in it.recipes){
+        const saved=it.recipes[id],full=RECIPES[id];
+        if(!saved||!full||!Array.isArray(saved.ingredients))continue;
+        if(saved.ingredients.some(g=>isCrystal(g.id)))continue;
+        const cry=full.ingredients.filter(g=>isCrystal(g.id));if(!cry.length)continue;
+        const rest=full.ingredients.filter(g=>!isCrystal(g.id));
+        const same=(saved.yields||1)===full.yields&&rest.length===saved.ingredients.length&&
+          rest.every(g=>saved.ingredients.some(x=>+x.id===g.id&&+x.amount===g.amount));
+        if(!same)continue;
+        saved.ingredients=saved.ingredients.concat(cry.map(g=>({id:g.id,name:escapeName(g.id),amount:g.amount})));n++;
+      }
+    }
+    if(n)Lists.write(d);
+  }catch(e){}
+}
+healListCrystals();
 window.__listEntry=id=>{
   id=+id;
   /* ingredient names live in DATA.names here, so resolve them now — the list tab

@@ -289,11 +289,7 @@ const XW={
 
     const qbtn=(v,l,t)=>`<button class="xw-q${XW.quality===v?" on":""}" data-xwq="${v}" title="${t}">${l}</button>`;
 
-    let body;
-    if(XW.err)body=`<div class="xw-msg bad">Couldn't load prices — ${xesc(XW.err)}<br>
-      <span class="xw-dim">Universalis may be busy; try again in a moment.</span></div>`;
-    else if(!XW.data)body=`<div class="xw-msg">Reading every world on ${xesc(XW.scope)}…</div>`;
-    else body=XW.bodyHTML();
+    const body=XW.bodyInner();
 
     m.innerHTML=`<div class="xw-back" data-xwclose="1"></div>
       <div class="xw-panel" role="dialog" aria-modal="true" aria-label="Prices on other worlds">
@@ -312,9 +308,23 @@ const XW={
           <button class="xw-btn" data-xwreload="1" ${XW.busy?"disabled":""}>${XW.busy?"Loading…":"⟳ Refresh"}</button>
           ${home?`<span class="xw-home">home: <b>${xesc(home)}</b></span>`:""}
         </div>
-        ${body}
+        <div class="xw-body">${body}</div>
       </div>`;
     if(scroll){const tw=m.querySelector(".xw-tw");if(tw)tw.scrollTop=scroll;}
+  },
+  bodyInner(){
+    if(XW.err)return`<div class="xw-msg bad">Couldn't load prices — ${xesc(XW.err)}<br>
+      <span class="xw-dim">Universalis may be busy; try again in a moment.</span></div>`;
+    if(!XW.data)return`<div class="xw-msg">Reading every world on ${xesc(XW.scope)}…</div>`;
+    return XW.bodyHTML();
+  },
+  /* the numbers under the bar, redrawn without touching the bar itself: the
+     "I want" box keeps its focus and caret while you type into it */
+  paintBody(){
+    const b=document.querySelector("#xwModal .xw-body");if(!b)return XW.paint();
+    const keep=b.querySelector(".xw-tw"),scroll=keep?keep.scrollTop:0;
+    b.innerHTML=XW.bodyInner();
+    if(scroll){const tw=b.querySelector(".xw-tw");if(tw)tw.scrollTop=scroll;}
   },
 
   bodyHTML(){
@@ -554,6 +564,7 @@ const XW={
     #xwModal .xw-btn[disabled]{opacity:.5;cursor:default}
     #xwModal .xw-home{margin-left:auto;font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--faint,var(--faint))}
     #xwModal .xw-home b{color:var(--win,var(--win));font-weight:500}
+    #xwModal .xw-body{display:contents}
     #xwModal .xw-msg{padding:26px 18px;text-align:center;color:var(--muted,var(--muted));font-size:13.5px;line-height:1.6}
     #xwModal .xw-msg.bad{color:var(--loss,var(--loss))}
     #xwModal .xw-dim{color:var(--faint,var(--faint))}
@@ -640,19 +651,23 @@ const XW={
     },true);
 
     document.addEventListener("change",function(e){
+      /* left empty or at nothing, the box shows the amount the numbers are using */
+      if(e.target&&e.target.id==="xwWant"&&!(+e.target.value>=1)){e.target.value=XW.want;return;}
       if(e.target&&e.target.id==="xwScope"){
         XW.scope=e.target.value;XW.savePrefs({scope:XW.scope});
         XW.data=null;XW.open=new Set();XW.reload();}
     });
     document.addEventListener("input",function(e){
       if(e.target&&e.target.id==="xwWant"){
-        const v=Math.max(1,Math.min(9999,+e.target.value||1));
+        /* a box emptied to type a new number is left empty: repainting it as 1
+           put a 1 back under the caret, so typing 50 read as 150 or 501. The
+           numbers only follow once there is a number to follow. */
+        const raw=String(e.target.value).trim();
+        if(raw===""||!(+raw>=1))return;
+        const v=Math.max(1,Math.min(9999,Math.floor(+raw)));
         XW.want=v;XW.savePrefs({want:v});
-        /* repaint the numbers without stealing the caret out of the box */
-        const el=e.target,pos=el.selectionStart;
-        XW.paint();
-        const again=document.getElementById("xwWant");
-        if(again){again.focus();try{again.setSelectionRange(pos,pos);}catch(err){}}}
+        /* only the numbers are redrawn, so the box and its caret stay put */
+        XW.paintBody();}
     });
     document.addEventListener("keydown",function(e){
       if(e.key==="Escape"&&XW.item){XW.close();return;}

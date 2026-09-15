@@ -16,11 +16,13 @@ const FILES = [
     "GilShop", "GilShopItem", "ENpcBase", "ENpcResident", "Level", "Map", "PlaceName", "TerritoryType",
     "SubmarineExploration", "SubmarineMap", "SubmarinePart", "SubmarineRank",
     "CompanyCraftSequence", "CompanyCraftPart", "CompanyCraftProcess", "CompanyCraftSupplyItem",
-    "CompanyCraftType", "CompanyCraftDraftCategory"].map(n => [n + ".csv", DATAMINING + n + ".csv"]),
+    "CompanyCraftType", "CompanyCraftDraftCategory",
+    "CollectablesShop", "CollectablesShopItem", "CollectablesShopItemGroup", "CollectablesShopRewardScrip",
+    "CollectablesShopRefine", "ItemAction", "RetainerTaskRandom", "RetainerTask"].map(n => [n + ".csv", DATAMINING + n + ".csv"]),
   /* Teamcraft: recipes (workshop trees, simulator links), icons, sub part -> item */
   ...["recipes", "item-icons", "submarine-parts"].map(n => [n + ".json", TEAMCRAFT + n + ".json"]),
   /* Infi's crowd-sourced loot records: submarine voyages and duty coffers */
-  ...["Submarines", "DeepDungeonSacks", "EurekaBunnies", "FieldOpLockboxes", "OccultTreasuresV2", "ChestDropsV2", "LastUpdate"]
+  ...["Submarines", "DeepDungeonSacks", "EurekaBunnies", "FieldOpLockboxes", "OccultTreasuresV2", "ChestDropsV2", "Ventures", "LastUpdate"]
     .map(n => [n + ".json", INFI + n + ".json"]),
   /* SubmarineTracker's surveillance / retrieval / favor breakpoints per sector */
   ["Sectors.cs", TRACKER + "Data/Sectors.cs"],

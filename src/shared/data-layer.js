@@ -242,6 +242,15 @@ function summarizeHist(it){const out={h:[null,0],n:[null,0],a:[null,0],p:[null,0
    one worth staying quiet about. Wants two days of cover and three sales either
    side as well, because a couple of sales of a thin item is noise. Summaries
    cached before this existed have no r/o and return null until the cache rolls. */
+/* The 30-day price of a history summary: the unit-weighted median at the quality
+   asked for, or across both when that quality never sold (fb says so). null when
+   nothing sold at all. wantHQ undefined reads both qualities. */
+function histAvg(s,wantHQ){
+  if(!s)return{avg:null,n:0,fb:false};
+  const pick=wantHQ===undefined?s.a:(wantHQ?s.h:s.n);
+  if(pick&&pick[0]!=null)return{avg:pick[0],n:pick[1],fb:false};
+  if(wantHQ!==undefined&&s.a&&s.a[0]!=null)return{avg:s.a[0],n:s.a[1],fb:true};
+  return{avg:null,n:0,fb:false};}
 const TREND_MIN_SALES=3;
 function trend30(s,wantHQ){
   if(!s||!s.r||!s.o||!(s.win>=172800))return null;

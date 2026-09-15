@@ -196,7 +196,7 @@
 
   <p class="foot">
     Costs are read from the game&rsquo;s <b>SpecialShop</b> and <b>GCScripShopItem</b> tables, rebaked after every patch and filtered to items that are actually sellable on the market board. Where the same item is sold by more than one vendor for the same currency, the cheapest is used. Tomestone and scrip costs use the client&rsquo;s virtual-currency indices, resolved the same way the CurrencySpender plugin does it.
-    <b>Sell now</b> is the cheapest current listing on your world; <b>Avg 30d</b> is the recent average sale price &mdash; steadier for thin items, which is why it is the default basis. <b>Net</b> is that price after market tax.
+    <b>Sell now</b> is the cheapest current listing on your world; <b>Avg 30d</b> is the median sale price over the last 30 days &mdash; steadier for thin items, which is why it is the default basis. <b>Net</b> is that price after market tax.
     Some shop rows belong to vendors that no longer exist in-game, so the vendor name is shown on every row &mdash; if it looks like a dead NPC, treat the row with suspicion. Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>.
   </p>
   </main>
@@ -215,7 +215,7 @@ const fmtK=n=>{if(n==null||!isFinite(n))return"—";if(Math.abs(n)>=1e6)return(n
 const fmt2=n=>n==null||!isFinite(n)?"—":(n>=100?Math.round(n).toLocaleString("en-GB"):n.toFixed(n>=10?1:2));
 
 let state={home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],tax:0.05,cur:CD.currencies[0].id,basis:"avg",
-  minVel:0.5,query:"",showTribal:false,sortKey:"gilDay",sortDir:-1,worlds:null,mkt:null,hist:{},rows:null};
+  minVel:0.5,query:"",showTribal:false,sortKey:"gilDay",sortDir:-1,worlds:null,mkt:null,hist:{},rows:null,gen:0};
 
 function side(res,hq){return res?(hq?res.h:res.n):null;}
 function aggPrice(res,hq,scope){const q=side(res,hq);const m=q&&(scope==="world"?q.mw:q.md);return m&&m[0]!=null?m[0]:null;}
@@ -322,9 +322,12 @@ function priceRow(e){
   const hq=!!e.hq&&!!meta.hq;
   const res=state.mkt?state.mkt[e.i]:null;
   const now=aggPrice(res,hq,"world");
-  const avg=aggAvg(res,hq,"world")??aggAvg(res,hq,"dc");
-  const vel=aggVel(res,hq,"world");
-  const trendT=trend30(state.hist[e.i],hq);
+  /* 30 days of this world's sales, the median and the pace; the aggregate's own
+     short rolling figures only stand in for an item whose history failed to load */
+  const h=state.hist[e.i];
+  const avg=h?histAvg(h,hq).avg:(aggAvg(res,hq,"world")??aggAvg(res,hq,"dc"));
+  const velI=h?vel30(h,hq):velAgg(aggVel(res,hq,"world")),vel=velI.perDay;
+  const trendT=trend30(h,hq);
   let basis=null;
   if(state.basis==="now")basis=now;
   else if(state.basis==="avg")basis=avg??now;
@@ -333,7 +336,7 @@ function priceRow(e){
   const perUnit=e.c/e.q;
   const gpc=net!=null?net/perUnit:null;
   return {id:e.i,name:meta.n,shop:e.s,cost:e.c,qty:e.q,hq,unique:!!e.u,perUnit,trendT,upload:aggUpload(res),
-    now,avg,vel,net,gpc,gilDay:net!=null?net*vel:null};
+    now,avg,vel,velI,net,gpc,gilDay:net!=null?net*vel:null};
 }
 function compute(){
   if(state.cur==="__all"){
@@ -343,7 +346,7 @@ function compute(){
         if(r.gpc==null||r.vel<state.minVel)continue;
         if(!best||r.gpc>best.gpc)best=r;}
       return best?{...best,curName:c.name,curGroup:c.group,curId:c.id,curIc:c.ic}:
-        {curName:c.name,curGroup:c.group,curId:c.id,curIc:c.ic,name:"—",gpc:null,vel:0,net:null,gilDay:null,cost:null,qty:1,perUnit:null,now:null,avg:null,shop:"",trendT:null,upload:0};
+        {curName:c.name,curGroup:c.group,curId:c.id,curIc:c.ic,name:"—",gpc:null,vel:0,velI:null,net:null,gilDay:null,cost:null,qty:1,perUnit:null,now:null,avg:null,shop:"",trendT:null,upload:0};
     });
   } else {
     const c=curById(state.cur);
@@ -364,26 +367,6 @@ function visibleRows(){
     const av=val(a),bv=val(b);
     if(av==null&&bv==null)return 0;if(av==null)return 1;if(bv==null)return -1;
     return d*(av-bv);});
-}
-
-/* Trend needs sales history, and asking for all 1,122 currency items doubles
-   the scan for rows most currencies never show. Only the rows on screen are
-   asked about, and their trends fill in behind the first render; misses are
-   remembered too, so changing currency or filter never asks twice. */
-const MAX_TRENDS=400;
-let trendsPending=false;
-async function loadTrends(){
-  if(!state.mkt||trendsPending)return;
-  const need=visibleRows().slice(0,MAX_TRENDS)
-    .map(r=>r.id).filter(id=>id!=null&&!(id in state.hist));
-  if(!need.length)return;
-  trendsPending=true;
-  try{
-    const res=await fetchHist(state.home,need);
-    for(const id of need)state.hist[id]=res.out[id]||null;
-    compute();render();
-  }catch(e){for(const id of need)state.hist[id]=null;}
-  finally{trendsPending=false;}
 }
 
 /* ---- render ---- */
@@ -435,10 +418,9 @@ function render(){
       `<td>${fmtK(r.now)}${agePill(r.upload)}</td>`+
       `<td>${fmtK(r.avg)}</td>`+
       `<td>${trendChip(r.trendT)}</td>`+
-      `<td>${r.vel?velCell(velAgg(r.vel)):"—"}</td>`+
+      `<td>${r.vel&&r.velI?velCell(r.velI):"—"}</td>`+
       `<td>${fmtK(r.gilDay)}</td></tr>`;}).join("");
 
-  loadTrends();
 
   const top=rows.filter(r=>r.gpc!=null).sort((a,b)=>b.gpc-a.gpc)[0];
   document.getElementById("kpiRate").textContent=top?fmt2(top.gpc)+" g":"—";
@@ -465,18 +447,23 @@ function updateScanTime(){const el=document.getElementById("lastScan");if(!el)re
 
 async function load(){
   const btn=document.getElementById("refresh");btn.disabled=true;clearErr();
+  const gen=++state.gen;
   try{
     setStatus("Fetching world list\u2026");
     await refreshTopology();buildHomeSelect(document.getElementById("home"),state.home);
     state.worlds=await fetchWorlds();
     for(const[id,nm]of Object.entries(state.worlds))if(nm===state.home)state.homeId=+id;
-    const sell=await fetchAgg(state.home,ALL_IDS,(d,t)=>setStatus(`Pricing ${ALL_IDS.length} currency items on ${state.home}\u2026 ${d}/${t} batches`));
-    state.mkt=sell.out;
-    state.hist={};
+    const home=state.home;
+    const [sell,hist]=await Promise.all([
+      fetchAgg(home,ALL_IDS,(d,t)=>setStatus(`Pricing ${ALL_IDS.length} currency items on ${home}\u2026 ${d}/${t} batches`)),
+      /* the whole month of sales, for Avg 30d, Trend and Units/day: twelve batches */
+      fetchHist(home,ALL_IDS)]);
+    if(gen!==state.gen)return;
+    state.mkt=sell.out;state.hist=hist.out;
     compute();render();updateScanTime();
     setStatus(`Priced <b>${ALL_IDS.length}</b> items across <b>${CD.currencies.length}</b> currencies on <b>${state.home}</b>.`);
-    finishStatus([sell]);
-  }catch(e){showErr(e);}finally{btn.disabled=false;}
+    finishStatus([sell,hist]);
+  }catch(e){if(gen===state.gen)showErr(e);}finally{if(gen===state.gen)btn.disabled=false;}
 }
 
 const re=()=>{if(state.mkt){compute();render();}};

@@ -85,7 +85,7 @@ Four deliberate choices run through the whole thing:
 | **Currencies** | Which marketable item each currency buys at the best gil rate |
 | **Scrips** | The two collectible → scrip → materia loops, valued live |
 | **Duties** | Valuable drops from dungeons, deep dungeons, variant, Eureka, Bozja and Occult Crescent, with drop rates |
-| **Flips** | Cross-world flips on mounts, minions, hairstyles and outfit coffers |
+| **Flips** | Cross-world flips on every tradeable mount, minion, hairstyle, emote and outfit coffer |
 | **Retainers** | What the four exploration ventures bring back that is worth selling |
 | **Submersibles** | Which voyage route earns the most for your sub build and resend schedule |
 | **Workshop** | All 162 Free Company workshop projects, costed phase by phase against their sale price |
@@ -126,19 +126,20 @@ difference between a recipe looking unprofitable and actually being profitable.
 Turn on *Hide no-sales* and sort by profit to find what's worth bulk-crafting.
 
 *Skip dead items* (on by default) leaves out anything that has not sold in 30 days, which makes a
-refresh much faster. The dead list rebuilds itself weekly; **shift-click Refresh** for a full
-rescan of every item, dead ones included.
+refresh much faster. Each skipped item is checked again a week after it was last found dead, so
+anything that starts selling comes back on its own, and every world keeps its own list.
+**Shift-click Refresh** for a full rescan of every item, dead ones included.
 
 ### Precrafts
 
 Every craftable intermediate in the game (900+), scanned as a deliberately simple one-step flip:
 buy the materials → craft it once → sell it HQ. No precrafting chains, no FC workshop bonuses,
 just the single craft. Filter by crafter class and level range, and click any row for its
-material shopping list.
+material shopping list. Mat cost includes the shards and crystals the craft burns.
 
-*Deep 30d* swaps the quick recent-average for a true 30-day history pull — slower, but more
-reliable on thin markets. Intermediates with thin HQ markets may show no sales; switching *Sell*
-to NQ often reveals the real bulk market.
+Avg 30d, Trend and Units/day come from a month of real sales on your world, as on the Dashboard.
+Intermediates with thin HQ markets may show no sales; switching *Sell* to NQ often reveals the real
+bulk market.
 
 ### Currencies
 
@@ -163,15 +164,18 @@ grade V and VI materia. These drop slowly and their rewards are thin on the mark
 
 ### Scrips
 
-Two scrip-flip loops, valued live:
+Two scrip-flip loops, valued live, over all 224 Rarefied collectables the Collectable Appraiser
+takes for crafters' scrips:
 
 - **Orange** collectibles (lvl 100, 144 scrips) → grade XII materia at 500 scrips
-- **Purple** collectibles (lvl 92–98, 142–198 scrips) → grade XI materia at 250 scrips
+- **Purple** collectibles (lvl 50–98, 54–198 scrips) → crafter materia from grade IV to XI, at 25–250 scrips
 
 Revenue per craft is what those scrips are worth as materia on your home world; profit subtracts
-the material cost. `gil/scrip` uses whichever of the three crafter materia (Competence, Cunning,
-Command) at that grade sells highest, net of tax. Lower-level Purple collectibles give fewer
+the material cost, shards and crystals included. `gil/scrip` uses whichever crafter materia that
+scrip buys sells for the most per scrip, net of tax. Lower-level Purple collectibles give fewer
 scrips but often use much cheaper materials — sorting by profit shows which loop actually wins.
+Filter by *Class* to see only your crafter. The collectables, their scrip rewards and the materia
+costs are read from the game's collectable and scrip shop tables and rebaked after each patch.
 
 In this tab's recipe trees, precrafts are bought NQ wherever they're listed (you'd rather buy
 than precraft here) and only expanded into their own materials when nothing is for sale.
@@ -200,25 +204,33 @@ sell a handful of times a month on any one world.
 
 ### Flips
 
-No crafting involved — pure arbitrage. Scans mounts, minions, hairstyles, outfit coffers and
-emotes (the tradeable `Ballroom Etiquette` manuals) across every world on the data centres you
-have picked, finds the cheapest listing anywhere, and compares it to the 30-day average sale
-price on your home world. The world name is colour-coded: orange means a
-world hop is required, teal means it's already on your world.
+No crafting involved — pure arbitrage. Scans every tradeable mount, minion, hairstyle, outfit coffer
+and emote (the `Ballroom Etiquette` manuals), about 400 items read from the game's own item data
+and rebaked after each patch, across every world on the data centres you have picked. It finds the
+cheapest listing anywhere and compares it with what the item sells for on your home world: the
+30-day average, or your world's cheapest listing when that is lower, since you would have to
+undercut it (**caps** beside *Sell now* marks those rows). The world name is colour-coded: orange
+means a world hop is required, teal means it's already on your world.
 
 Rare, slow-moving items are exactly where current listings lie most, so this tab leans hardest
-on sales history.
+on sales history. A row nothing has sold on your world in 30 days carries a ⚠ and never makes the
+headline card.
 
 ### Retainers
 
 What the four 18-hour exploration ventures (Field, Highland, Woodland and Waterside) bring back
 that is worth selling: 26 drops, mostly minions plus a few expensive furnishings. Anything worth
 only a few thousand gil is left off, because it is a venture reward but not a reason to send one.
+The drops, their tiers and how often each comes back are read from players' logged ventures in
+Infi's `Ventures.json` and rebaked after each patch; a new drop is listed when it comes back from
+under 10% of ventures and sells for 5,000 gil or more in both Europe and North America.
 
 Ten of the rows are tagged **only from this venture**: they have no other source in the game (not
 craftable, not sold by a vendor, not a quest, duty or gathering drop, and not returned by a
-different venture). The rest can also be had elsewhere, and each row says where. The **Tier(s)**
-column gives the venture tiers in Roman numerals; a higher tier needs a higher-level retainer.
+different venture). The rest can also be had elsewhere, and each row says where; a drop added by a
+rebake names the other sources it found in the desk's own data, or says they are unchecked. The
+**Tier(s)** column gives the venture tiers in Roman numerals, with how often the drop comes back at
+its best tier; a higher tier needs a higher-level retainer.
 
 The headline cards rank the four ventures by their most valuable drop. Filter to one venture, tick
 *Venture-exclusive only*, or tick *Only what is actually selling* to drop anything with no sales
@@ -287,9 +299,10 @@ shifts thirty a day, and sorting this way sinks the dead stock on its own. The b
 (profit per unit × units per day) is still shown in the headline cards.
 
 The columns read Item, Bought from, Vendor cost, Sell now, Sell avg 30d, Trend, Profit/unit,
-Margin, Units/day and Gil/day. Trend is pulled only for the rows on screen and fills in just
-after the table draws, since fetching 30 days of sales for all 4,943 items would take fifty
-extra batches. Tick **Show ALL vendor items** to see the whole 4,943 including the losers;
+Margin, Units/day and Gil/day. Sell avg 30d, Trend and Units/day come from 30 days of sales on your
+world, read for every item that could turn a profit on either its listing or Universalis' quick
+average; fetching all 4,943 would take fifty extra batches, so a row that only appears under
+**Show ALL vendor items** fills its numbers in just after the table draws. Tick **Show ALL vendor items** to see the whole 4,943 including the losers;
 it's off by default because most vendor stock never sells for more than it costs.
 
 **Sell price** has three bases. *Realistic* (the default) takes the lower of the cheapest
@@ -346,6 +359,11 @@ each line with which finished item it's for. Worlds stay in the order they were 
 ticking items off never moves the world you're halfway through buying. Prices are captured at the time of adding, and each
 line is badged against the recent average so you can see whether you're buying into a dip or
 overpaying. Crystals, shards and clusters are excluded — assumed stocked.
+
+**Crystals.** Every crafting cost on the desk includes the shards, crystals and clusters the
+recipe burns, priced off the board. They are left out of the recipe trees to keep them short, with
+their total shown under each tree; tick **Show crystals** in the sidebar of the Dashboard,
+Precrafts, Scrips, Workshop or a list to list them in the tree as well. Each tab remembers it.
 
 **Teamcraft simulator.** Every craftable row on the **Dashboard**, **Precrafts** and list tabs —
 and every craftable material inside a crafting tree, including the Workshop's — has a Teamcraft button, marked with its TC logo, that opens that exact
@@ -450,15 +468,17 @@ so you know whether you're acting on a live market or yesterday's.
 All market data comes from the [Universalis](https://universalis.app) API — free, keyless and
 CORS-open. Item and recipe metadata is baked into the file.
 
-The **Submersibles** and **Duties** drop rates come from
+The **Submersibles**, **Duties** and **Retainers** drop rates come from
 [Infi's FFXIVGachaSpreadsheet](https://github.com/Infiziert90/FFXIVGachaSpreadsheet) exports
 (`Submarines.json`, `DeepDungeonSacks.json`, `EurekaBunnies.json`, `FieldOpLockboxes.json`,
-`OccultTreasuresV2.json`, `ChestDropsV2.json`) — the loot records uploaded by the SubmarineTracker
+`OccultTreasuresV2.json`, `ChestDropsV2.json`, `Ventures.json`) — the loot records uploaded by the SubmarineTracker
 and related plugins — baked in by `tools/rebake.js`, which a weekly job reruns after each patch. Sector positions, survey times, tanks and
 part stats come from the game's `SubmarineExploration`, `SubmarinePart` and `SubmarineRank` tables,
 and the stat breakpoints from [SubmarineTracker](https://github.com/Infiziert90/SubmarineTracker).
 Exchange costs are read from `SpecialShop`, as are the **Currencies** shops
-(`tools/build-currencies.js`). The **Workshop** projects come from the
+(`tools/build-currencies.js`). The **Scrips** collectables come from the `CollectablesShop*` tables
+(`tools/build-scrips.js`), and the **Flips** items from `Item` and `ItemAction`: whatever unlocks a
+mount, minion, hairstyle or emote, and every outfit coffer (`tools/build-flips.js`). The **Workshop** projects come from the
 `CompanyCraft*` tables, and the recipes under each turn-in from Teamcraft's public data.
 
 The **Vendors** dataset is built by `tools/build-vendors.js` from the game's own `GilShopItem`,
@@ -483,7 +503,8 @@ stale or missing prices.
 
 ## Keeping it current
 
-Recipes, currency shops, vendor stock, submersible routes, workshop projects and duty drops are baked into
+Recipes, currency shops, vendor stock, submersible routes, workshop projects, duty drops, scrip
+collectables, flip items and venture drops are baked into
 the file, so a patch that adds new ones needs them pulled again. That happens on its own: a free GitHub Actions job checks
 every Monday, and from 10 to 38 days after a patch it rebakes, checks the result and pushes it. If a
 patch needs a human, it pushes nothing and opens an issue instead. By hand it is one command — see
@@ -493,7 +514,7 @@ patch needs a human, it pushes nothing and opens an issue instead. By hand it is
 node tools/rebake.js
 ```
 
-It downloads the latest public game data and crowd-sourced loot rates, rebuilds the seven
+It downloads the latest public game data and crowd-sourced loot rates, rebuilds the ten
 datasets and writes them into `src/data/` and `index.html`. It needs only Node.js, and nothing it touches needs a
 key or an account.
 
@@ -553,10 +574,10 @@ duplicating some code — which is why the shared chunks exist.
 - Prices from a data centre in another region are informational: you cannot travel there.
 - Daily ceilings are rankings, not forecasts.
 - Nothing accounts for crafting stats, materia, food, or whether you can actually hit HQ.
-- The Dashboard, Precrafts, Currencies, Vendors, Submersibles, Workshop and Duties data are rebaked
-  automatically after each patch, but only from 10 days after it, so a brand-new recipe, shop or vendor
+- The Dashboard, Precrafts, Currencies, Vendors, Submersibles, Workshop, Duties, Scrips, Flips and
+  Retainers data are rebaked automatically after each patch, but only from 10 days after it, so a brand-new recipe, shop or vendor
   can be missing until then.
-- Submersible and duty drop rates are crowd-sourced averages. They describe a lot of voyages and
+- Submersible, duty and venture drop rates are crowd-sourced averages. They describe a lot of voyages and
   coffers, not your next one, and a rate on a thin sample (a few hundred coffers) can move a long way.
 - The cross-world panel reads the 50 cheapest listings per scope. That is across the scope, not
   per world, which is what sets the number: a data centre is eight worlds, so 50 leaves roughly
@@ -576,6 +597,31 @@ duplicating some code — which is why the shared chunks exist.
 
 ### 15 September 2026
 
+**Second pass: costs, flips and rebakes**
+- **Crystals are costed everywhere.** Precrafts and Scrips had left shards and crystals out of the
+  material cost, so cheap intermediates looked more profitable than they are. A new **Show crystals**
+  toggle lists them in the recipe trees on the Dashboard, Precrafts, Scrips, Workshop and lists. List
+  rows saved from Precrafts or Scrips before this get their crystals back when the desk loads.
+- **Avg 30d is a 30-day median on every tab.** Vendors, Currencies, Precrafts, Retainers and the
+  Submersibles loot view had been reading Universalis' short rolling mean under that name, which the
+  median fix above did not reach. Precrafts no longer needs *Deep 30d*, which is gone: it always reads
+  a month of sales, and so does Currencies. Units/day on those tabs is a 30-day figure too.
+- **Flips** prices a sale at your world's cheapest listing when that is below the 30-day average (you
+  would have to undercut it), marks a row with no sales in 30 days ⚠, and keeps those off the card.
+- **Skip dead items** checks each skipped item again a week after it was last found dead, and keeps a
+  list per world. The old list reset its timer on every scan, so anything skipped was never checked
+  again by anyone who scanned weekly, and a list built on one world applied to all of them.
+- **Scrips, Flips and Retainers are rebaked after each patch** like the rest. Scrips now covers all 224
+  Rarefied collectables from level 50 up, not only the level 92–100 ones, and values a purple scrip at
+  the best of every materia it buys. Flips scans all 395 tradeable mounts, minions, hairstyles, emotes
+  and outfit coffers; the old hand list had 21 crafting materials and furnishings filed as mounts and
+  minions (Ifrit's Horn, Tiny Crown). Retainers shows how often each drop comes back.
+- Before its first scan, changing *Sell on* or *Mats from* on the Dashboard no longer starts one.
+- Vendors and Currencies drop a price pull that finishes after you have switched world, rather than
+  writing the old world's numbers over the new one's.
+- The cross-world panel's **I want** box takes a typed number again. It redrew itself on every
+  keystroke and put the caret back at the start, so typing 50 gave 5.
+
 **Prices you can trust**
 - **Hide ⚠ outliers** now starts ticked on the Dashboard, Precrafts and Workshop. Unticked, the
   Dashboard was topped by listings at 999,999,999 gil. Anyone who had the desk open before gets the
@@ -587,8 +633,6 @@ duplicating some code — which is why the shared chunks exist.
   "sale" at a joke price had pushed an item's 30-day average to 181M on three sales.
 - **Best time to sell** follows UK clocks through the year. It had been an hour out all winter, and
   its bars now say units sold, which is what they count.
-- On Precrafts, a blank **Trend** says to tick *Deep 30d*, since that is what it needs, rather than
-  blaming thin history.
 
 **Scans**
 - A Dashboard scan no longer loses batches to Universalis' connection limit. It had opened about

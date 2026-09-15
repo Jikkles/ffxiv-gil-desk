@@ -246,9 +246,17 @@ const hopDist=(a,b)=>Math.floor(dist3(a,b)*0.035);
    listing. Cheap materials carry the odd troll sale - Piety Materia II has
    averaged 38k on a data centre where it lists for a few hundred - and one of
    those was enough to put a shallow sector at the top of the whole table. */
+/* The average is the 30-day median across the data centre wherever that history
+   has been read, as on every other tab; the aggregate's short rolling mean only
+   stands in until it has. */
+function dcAvg(id,res){
+  const h=state.hist?state.hist[id]:null;
+  if(h)return histAvg(h,false).avg;
+  return aggAvg(res,false,"dc")??aggAvg(res,true,"dc");
+}
 function netPrice(id){
   const res=state.mkt?state.mkt[id]:null;
-  const avg=aggAvg(res,false,"dc")??aggAvg(res,true,"dc");
+  const avg=dcAvg(id,res);
   const low=aggPrice(res,false,"dc")??aggPrice(res,true,"dc");
   const p=avg!=null&&low!=null?Math.min(avg,low):(avg??low);
   return p!=null?p*(1-state.tax):null;
@@ -347,7 +355,7 @@ function computeLoot(){
     const res=state.mkt?state.mkt[e.id]:null;
     const vp=SUB.vendor[e.id]||null;
     const now=vp?null:aggPrice(state.world?state.world[e.id]:null,false,"world");
-    const avg=vp?null:(aggAvg(res,false,"dc")??aggAvg(res,true,"dc"));
+    const avg=vp?null:dcAvg(e.id,res);
     const h=state.hist?state.hist[e.id]:null;
     const vi=vel30(h);const trend=trend30(h);
     const net=avg!=null?avg*(1-state.tax):null;

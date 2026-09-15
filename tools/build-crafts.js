@@ -22,7 +22,6 @@ const vm = require("vm");
 const { OUT, ROOT, need, readJSON, items, marketable, latestGameData } = require("./lib/common");
 
 const JOBS = { 8: "CRP", 9: "BSM", 10: "ARM", 11: "GSM", 12: "LTW", 13: "WVR", 14: "ALC", 15: "CUL" };
-const CRYSTAL_MAX = 19;   // shards, crystals and clusters are ids 2-19: the Precrafts trees leave them out
 
 /* the desk's own category words, so a new row's tag matches every other tab */
 function loadCatLabel() {
@@ -129,7 +128,8 @@ function loadCatLabel() {
       if (!old && id > knownMax) { tag = patch; tagged++; }
     }
     if (tag) e.patch = tag;
-    e.ings = r.ingredients.filter(i => i.id > CRYSTAL_MAX).map(i => ({ id: i.id, name: nameOf(i.id) || "#" + i.id, amount: i.amount }));
+    /* shards, crystals and clusters (ids 2-19) stay in: they are part of what a craft costs */
+    e.ings = r.ingredients.map(i => ({ id: i.id, name: nameOf(i.id) || "#" + i.id, amount: i.amount }));
     pre[id] = e;
   }
   const preAdded = [...preIds].filter(id => !oldPre[id]), preDropped = Object.keys(oldPre).filter(id => !preIds.has(+id));
