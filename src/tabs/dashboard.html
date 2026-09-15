@@ -105,7 +105,7 @@ tr.detail>td{background:var(--bg2);border-bottom:1px solid var(--line);padding:0
       <summary><span class="hw-ic"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="M7.8 7.9a2.3 2.3 0 0 1 4.4.9c0 1.6-2.2 1.9-2.2 3.2M10 14.4v.1"/></svg></span><span class="hw-title">How this works</span><span class="hw-hint">profit on every craft, and how to find the ones worth making</span><span class="hw-car">▸</span></summary>
       <div class="hw-body">
         <div class="hw-sec"><h4>What it works out</h4><p>Profit on 9,400+ things you can craft: what each sells for on your world, less tax, less what its materials cost across the data centres in <b>Mats from</b>. That is thousands of prices, so this tab only scans when you press <b>Refresh</b>.</p></div>
-        <div class="hw-sec"><h4>Reading the table</h4><p><b>Mat cost</b> assumes you craft any intermediate that is cheaper to make than to buy (<b>Precraft-optimised</b>); switch to <b>Buy all mats</b> to price everything off the board. Open a row for the whole recipe, buy or craft at every step, and the world to buy each material on.</p></div>
+        <div class="hw-sec"><h4>Reading the table</h4><p><b>Mat cost</b> assumes you craft any intermediate that is cheaper to make than to buy (<b>Precraft-optimised</b>); switch to <b>Buy all mats</b> to price everything off the board. Open a row for the whole recipe, buy or craft at every step, and the world to buy each material on. A material an NPC sells for less than the board asks, or that has no listing, is bought from the NPC: the tree says <b>NPC</b> and the zone, and hovering names the vendor.</p></div>
         <div class="hw-sec"><h4>Getting the most from it</h4><p>Tick <b>Hide no-sales</b> and sort by <b>Profit/unit</b> or <b>Gil/day</b>. Gil/day is how much gil an item moves on your world, not what you will pocket. <b>Skip dead items</b> leaves out anything unsold for 30 days; shift-click Refresh to check them again. <b>Tour</b>, top right, walks through this page.</p></div>
       </div>
     </details>
@@ -134,7 +134,7 @@ tr.detail>td{background:var(--bg2);border-bottom:1px solid var(--line);padding:0
       </table>
     </div>
 
-    <p class="foot">Gil/day = profit/unit × the <b>units</b> that sell a day on <span class="homename">Spriggan</span> over 30 days — a stack of 99 is 99 units and one sale, which is why Units/day and the sale count beside Avg 30d are different numbers. You capture a slice of that, so it's a ranking not a promise. Sell now = cheapest current <span class="homename">Spriggan</span> listing (⚠ = far from the 30-day average, likely noise). Mat cost defaults to <b>Precraft-optimised</b>: every intermediate that is cheaper to craft than to buy is costed as crafted, all the way down the tree. Switch it to <b>Buy all mats</b> to price every direct material straight off the board instead, with <b>craftable intermediates priced HQ</b> and raw mats NQ. In the tree, each craftable node shows HQ <b>buy</b> vs <b>craft</b>-it-yourself, and the <b>Precraft-optimised</b> total is what you'd pay crafting the cheaper intermediates. Item icons and data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a> and <a href="https://xivapi.com" target="_blank" rel="noopener">XIVAPI</a>.</p>
+    <p class="foot">Gil/day = profit/unit × the <b>units</b> that sell a day on <span class="homename">Spriggan</span> over 30 days — a stack of 99 is 99 units and one sale, which is why Units/day and the sale count beside Avg 30d are different numbers. You capture a slice of that, so it's a ranking not a promise. Sell now = cheapest current <span class="homename">Spriggan</span> listing (⚠ = far from the 30-day average, likely noise). Mat cost defaults to <b>Precraft-optimised</b>: every intermediate that is cheaper to craft than to buy is costed as crafted, all the way down the tree. Switch it to <b>Buy all mats</b> to price every direct material straight off the board instead, with <b>craftable intermediates priced HQ</b> and raw mats NQ. Either way, a material an NPC sells for gil all year is costed at the NPC's price wherever that beats the board, or the board has none (NPC stock is NQ). In the tree, each craftable node shows HQ <b>buy</b> vs <b>craft</b>-it-yourself, and the <b>Precraft-optimised</b> total is what you'd pay crafting the cheaper intermediates. Item icons and data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a> and <a href="https://xivapi.com" target="_blank" rel="noopener">XIVAPI</a>.</p>
   </main>
 </div>
 
@@ -170,7 +170,8 @@ function avg30(s,wantHQ){if(!s)return{avg:null,n:0,fb:false};
   if(s.a&&s.a[0]!=null)return{avg:s.a[0],n:s.a[1],fb:true};
   return{avg:null,n:0,fb:false};}
 
-function buyOf(id){const hq=!!RECIPES[id];const m=aggPrice(state.chaos[id],hq,"dc");return{price:m.price,worldId:m.worldId,world:m.price!=null?wname(m.worldId):null,hop:(m.worldId!=null&&m.worldId!==state.homeId),hq};}
+/* the cheaper of the board and an NPC shop (see npcBuy) */
+function buyOf(id){const hq=!!RECIPES[id];const m=aggPrice(state.chaos[id],hq,"dc");return npcBuy({price:m.price,worldId:m.worldId,world:m.price!=null?wname(m.worldId):null,hop:(m.worldId!=null&&m.worldId!==state.homeId),hq},id);}
 function craftUnit(id){const r=RECIPES[id];if(!r)return null;let s=0;for(const ing of r.ingredients){const b=bestOf(ing.id);if(b==null)return null;s+=b*ing.amount;}return s/r.yields;}
 function bestOf(id){if(id in state._best)return state._best[id];state._best[id]=null;const b=buyOf(id).price;const c=RECIPES[id]?craftUnit(id):null;
   let best;if(b==null&&c==null)best=null;else if(b==null)best=c;else if(c==null)best=b;else best=Math.min(b,c);state._best[id]=best;return best;}
@@ -188,24 +189,23 @@ function hopsOf(id){if(id in state._hops)return state._hops[id];state._hops[id]=
 /*__SHARED_XW__*/
 
 
+/* This tab's scans are not cached, unlike every other tab's. A full scan is
+   several million characters of prices and history, more than the whole browser
+   store the desk shares holds, so saving it crowded out the saved lists and the
+   shopping list. It bought little: the scan only runs when asked, and Refresh
+   always fetches fresh anyway. */
 async function fetchAgg(scope,ids,onProgress){
-  const ck=`agg:${scope}:${hashIds(ids)}`;const hit=Cache.get(ck,NET.CACHE_TTL_MS);
-  if(hit){if(onProgress)onProgress(1,1);return{out:hit,failed:[],fromCache:true};}
   const res=await runBatches(ids,async b=>{
     const r=await tfetch(`https://universalis.app/api/v2/aggregated/${scope}/${b.join(",")}`);
     if(!r.ok)throw new Error("HTTP "+r.status+" \u00b7 "+scope);
     const j=await r.json();const m={};for(const row of(j.results||[]))m[row.itemId]=compressAgg(row);return m;},onProgress);
-  if(!res.failed.length)Cache.set(ck,res.out);
   return res;}
 async function fetchHist(scope,ids,onProgress){
-  const ck=`hist:${scope}:${hashIds(ids)}`;const hit=Cache.get(ck,NET.CACHE_TTL_MS);
-  if(hit){if(onProgress)onProgress(1,1);return{out:hit,failed:[],fromCache:true};}
   const res=await runBatches(ids,async b=>{
     const r=await tfetch(`https://universalis.app/api/v2/history/${scope}/${b.join(",")}?entriesToReturn=${HIST_ENTRIES}&entriesWithin=${HIST_SECS}&statsWithin=${HIST_SECS*1000}`);
     if(!r.ok)throw new Error("HTTP "+r.status+" \u00b7 history");
     const j=await r.json();const src=j.items||(j.itemID?{[j.itemID]:j}:{});
     const m={};for(const k in src)m[k]=summarizeHist(src[k]);return m;},onProgress);
-  if(!res.failed.length)Cache.set(ck,res.out);
   return res;}
 async function fetchWorlds(){
   const hit=Cache.get("worlds",NET.WORLDS_TTL_MS);if(hit)return hit;
@@ -227,8 +227,7 @@ function readDead(){try{const r=JSON.parse(localStorage.getItem(DEAD_KEY)||"null
 function deadTimes(world){const d=readDead()[world];return d&&typeof d==="object"?d:{};}
 function getDeadList(world){const now=Date.now(),t=deadTimes(world),s=new Set();
   for(const id in t)if(now-t[id]<DEAD_TTL)s.add(+id);return s;}
-function saveDeadTimes(world,t){const all=readDead();all[world]=t;
-  try{localStorage.setItem(DEAD_KEY,JSON.stringify(all));}catch(e){}}
+function saveDeadTimes(world,t){const all=readDead();all[world]=t;storeSet(DEAD_KEY,JSON.stringify(all));}
 function closureIds(ids){const seen=new Set(ids);const st=[...ids];
   while(st.length){const id=st.pop();const r=RECIPES[id];if(!r)continue;
     for(const ing of r.ingredients)if(!seen.has(ing.id)){seen.add(ing.id);st.push(ing.id);}}
@@ -307,13 +306,13 @@ function nodeHTML(id,amount,path,depth){
   const open=state.tree.has(path),hasKids=!!r;
   const buyCheaper=(craft==null)||(buy.price!=null&&buy.price<=craft);
   const buyCls=buy.price==null?"dim":(buyCheaper?"cheap":"dim"),craftCls=(craft!=null&&!buyCheaper)?"cheap":"dim";
-  const bavg=buyAvg(state.chaos[id],buy.hq);const stk=stockBadge(buy.price,bavg);
+  const bavg=buy.npc?null:buyAvg(state.chaos[id],buy.hq);const stk=stockBadge(buy.price,bavg);
   const saveBadge=(r&&craft!=null&&buy.price!=null&&craft<buy.price)?`<span class="badge">craft −${fmtK(buy.price-craft)}</span>`:"";
   let h=`<div class="node${hasKids?' clickable':''}" ${hasKids?`data-np="${path}"`:''} style="padding-left:${depth*20}px">
     <div class="nlabel"><button class="shopbtn sm" data-shopmat="${id}|${amount}" title="Add ${amount}× to shopping list">+</button><button class="listbtn sm" data-listadd="${id}" title="Add to a saved list">📋</button><button class="xwbtn sm" data-xw="${id}" data-xwname="${xesc(escapeName(id))}" data-xwqty="${amount}" title="Compare this item's price and stock on every world">\ud83c\udf10</button>${teamcraftHTML(id,'sm')}<span class="ntoggle ${hasKids?'has':'leaf'} ${open?'open':''}">${hasKids?'<span class="c"></span>':'·'}</span>${iconHTML(id)}
       <span><span class="nqty">${amount}×</span>${escapeName(id)}${saveBadge}${stk}</span></div>
-    <div class="price ${buyCls}">${buy.price!=null?'buy '+fmt(buy.price)+' <span class="qtag '+(buy.hq?'hq':'')+'">'+(buy.hq?'HQ':'NQ')+'</span>':'<span class="dim">no listing</span>'}${bavg!=null?'<span class="navg">avg '+fmtK(bavg)+stk+'</span>':''}</div>
-    <div class="server ${buy.price==null?'dim':(buy.hop?'hop':'home')}">${buy.price!=null?buy.world+(buy.hop?' · hop':''):'—'}</div>
+    <div class="price ${buyCls}">${buy.npc?npcPriceHTML(buy):buy.price!=null?'buy '+fmt(buy.price)+' <span class="qtag '+(buy.hq?'hq':'')+'">'+(buy.hq?'HQ':'NQ')+'</span>':'<span class="dim">no listing</span>'}${bavg!=null?'<span class="navg">avg '+fmtK(bavg)+stk+'</span>':''}</div>
+    ${buy.npc?npcServerHTML(buy):`<div class="server ${buy.price==null?'dim':(buy.hop?'hop':'home')}">${buy.price!=null?buy.world+(buy.hop?' · hop':''):'—'}</div>`}
     <div class="price ${craftCls} ncraft">${craft!=null?'craft '+fmt(craft):'<span class="dim">—</span>'}</div>
     <div class="line">${fmt(best!=null?best*amount:null)}</div></div>`;
   if(hasKids&&open) for(const ing of r.ingredients){if(isCrystal(ing.id)&&!state.showCrystals)continue;h+=nodeHTML(ing.id,ing.amount,path+">"+ing.id,depth+1);}
@@ -468,7 +467,7 @@ document.getElementById("status").innerHTML="";syncStartScan();
 })();
 
 /* ===== v14: shopping list glue ===== */
-window.__shopEntry=(id,amount)=>{const b=buyOf(id);return{id:+id,name:escapeName(id),qty:+amount,unit:b.price,worldId:b.worldId,world:b.world,hq:b.hq,avg:Shop.avgFrom(state.chaos[id],b.hq)};};
+window.__shopEntry=(id,amount)=>{const b=buyOf(id);return{id:+id,name:escapeName(id),qty:+amount,unit:b.price,worldId:b.worldId,world:b.world,hq:b.hq,npc:b.npc?npcWhere(b.npc):null,avg:b.npc?null:Shop.avgFrom(state.chaos[id],b.hq)};};
 /* v16: build a self-contained entry (name, quality, whole recipe subtree) for the saved lists */
 /* Rows saved before the categories were rebuilt still carry the tag they were
    given then, and some of those were simply wrong - a reagent filed as Gear. The

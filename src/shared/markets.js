@@ -277,6 +277,44 @@ function homeChanged(world){
   syncDcNames();return false;
 }
 
+/* ---- NPC gil shops as a place to buy materials ----
+   Hundreds of crafting materials are sold by an NPC for gil, and the board often
+   wants more for them, or has none listed at all. Every craft used to be costed
+   off the board alone, so a recipe could look dearer than it is, or go unpriced
+   because one material had no listing. The shell fills the slot below with the
+   baked index (tools/build-vendors.js): one vendor each, seasonal shops left out.
+   A buy is the cheaper of the board and the NPC, and the NPC wins a tie, since it
+   never runs out and needs no world visit. An NPC sells NQ only. */
+const NPC_RAW=[/*__NPC_PRICES__*/][0]||null;
+const NPC_SHOP=(function(){const m=new Map();
+  if(!NPC_RAW||!Array.isArray(NPC_RAW.r))return m;
+  const cap=s=>s?s.charAt(0).toUpperCase()+s.slice(1):"";
+  for(const[id,price,p,z,x,y,locked]of NPC_RAW.r)
+    m.set(id,{price,npc:cap(NPC_RAW.p[p]),zone:z>=0?NPC_RAW.z[z]:null,x,y,locked:!!locked});
+  return m;})();
+function npcOf(id){return NPC_SHOP.get(+id)||null;}
+/* buy is a tab's own board buy, {price,worldId,world,hop,hq}; the NPC one keeps it as board */
+function npcBuy(buy,id){const v=npcOf(id);
+  if(!v||(buy.price!=null&&buy.price<v.price))return buy;
+  return{price:v.price,worldId:null,world:"NPC",hop:false,hq:false,npc:v,board:buy};}
+/* "Name, Zone (x, y)", for the shopping list and tooltips */
+function npcWhere(v){return v.npc+(v.zone?", "+v.zone+(v.x?" ("+v.x+", "+v.y+")":""):"");}
+function npcTitle(b){const v=b.npc;
+  let t="Sold by "+npcWhere(v)+" for "+Math.round(v.price).toLocaleString("en-GB")+" gil.";
+  if(v.locked)t+=" Their shop opens after a quest or achievement.";
+  const bp=b.board&&b.board.price;
+  t+=bp!=null?" Cheapest on the board: "+Math.round(bp).toLocaleString("en-GB")+(b.board.world?" on "+b.board.world:"")+".":" None listed on the board.";
+  return t.replace(/&/g,"&amp;").replace(/"/g,"&quot;");}
+let _npcCss=false;
+function npcCss(){if(_npcCss)return;_npcCss=true;
+  const s=document.createElement("style");s.id="npccss";
+  s.textContent=".server.npc{color:var(--aether);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:help}"+
+    ".npctag{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--aether);border:1px solid color-mix(in srgb,var(--aether) 40%,transparent);border-radius:5px;padding:0 4px;margin-left:4px}";
+  (document.head||document.documentElement).appendChild(s);}
+/* the two tree cells a bought material shows: its price, and where to buy it */
+function npcPriceHTML(b){npcCss();return'<span title="'+npcTitle(b)+'">npc '+fmt(b.price)+' <span class="qtag">NQ</span></span>';}
+function npcServerHTML(b,style){npcCss();
+  return'<div class="server npc"'+(style?' style="'+style+'"':'')+' title="'+npcTitle(b)+'">'+(b.npc.locked?'🔒 ':'')+'NPC'+(b.npc.zone?' · '+dcEsc(b.npc.zone):'')+'</div>';}
 function buyAvg(res,hq){const q=side(res,hq);if(!q)return null;return q.ad!=null?q.ad:(q.aw!=null?q.aw:null);}
 function stockBadge(buyPrice,avg){if(buyPrice==null||avg==null||avg<=0)return"";
   const under=Math.round((1-buyPrice/avg)*100);

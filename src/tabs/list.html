@@ -10,9 +10,9 @@
 /*__UI_CSS__*/
 /* ---- list only ---- */
 .tree{padding:12px 16px 14px}
-.thead{display:grid;grid-template-columns:1fr 132px 152px 132px 110px 110px;gap:18px;font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);padding:0 6px 6px;border-bottom:1px solid var(--line)}
+.thead{display:grid;grid-template-columns:1fr 132px 152px 132px 112px;gap:18px;font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);padding:0 6px 6px;border-bottom:1px solid var(--line)}
 .thead .r{text-align:center}
-.node{display:grid;grid-template-columns:1fr 132px 152px 132px 110px 110px;gap:18px;align-items:center;padding:5px 6px;border-radius:7px;font-family:"JetBrains Mono",monospace;font-size:13px}
+.node{display:grid;grid-template-columns:1fr 132px 152px 132px 112px;gap:18px;align-items:center;padding:5px 6px;border-radius:7px;font-family:"JetBrains Mono",monospace;font-size:13px}
 .node:hover{background:var(--row-hover)}
 .node.clickable{cursor:pointer}
 .nlabel{display:flex;align-items:center;gap:7px;font-family:"Inter",sans-serif}
@@ -55,7 +55,7 @@
 .forecast{color:var(--muted);font-size:11px;font-family:"JetBrains Mono",monospace}
 .forecast b{color:var(--gil)}
 @media(max-width:820px){.thead{grid-template-columns:1fr 78px 84px 72px;gap:8px}
-.thead .hcraft,.node .ncraft,.thead .hvendor,.node .nvendor{display:none}
+.thead .hcraft,.node .ncraft{display:none}
 .node{grid-template-columns:1fr 78px 84px 72px;gap:8px}}
 .sell-time{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
 .sell-time h4{margin:0 0 8px;font-size:11px;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.1em;color:var(--faint)}
@@ -139,7 +139,7 @@
       <summary><span class="hw-ic"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="M7.8 7.9a2.3 2.3 0 0 1 4.4.9c0 1.6-2.2 1.9-2.2 3.2M10 14.4v.1"/></svg></span><span class="hw-title">How this works</span><span class="hw-hint">your own list of items to keep an eye on</span><span class="hw-car">▸</span></summary>
       <div class="hw-body">
         <div class="hw-sec"><h4>What it works out</h4><p>A list you fill yourself. Press 📋 on any row of any tab, or on a material inside a crafting tree, and pick this list: the item lands here with live prices and, for a craft, its whole recipe.</p></div>
-        <div class="hw-sec"><h4>Reading the table</h4><p>The columns match the Dashboard: sell now, 30-day average, material cost, profit, margin, units and gil a day. Open a row for its crafting tree. A raw material is still priced, just with no crafting cost.</p></div>
+        <div class="hw-sec"><h4>Reading the table</h4><p>The columns match the Dashboard: sell now, 30-day average, material cost, profit, margin, units and gil a day. Open a row for its crafting tree. A raw material is still priced, just with no crafting cost. A material an NPC sells for less than the board is bought from the NPC.</p></div>
         <div class="hw-sec"><h4>Worth knowing</h4><p><b>✎ Rename</b> gives the list its own name, <b>＋ List</b> in the tab bar makes another (up to five), <b>Clear list</b> empties it with an undo, and <b>✕ Remove list</b> deletes the tab. Lists are kept in this browser only and never uploaded.</p></div>
       </div>
       <template class="guide">
@@ -223,10 +223,11 @@ function avg30(s,wantHQ){if(!s)return{avg:null,n:0,fb:false};
   return{avg:null,n:0,fb:false};}
 
 // ---- buy / craft costs (memoised per refresh) ----
-function buyOf(id){const hq=!!RECIPES[id];const m=aggPrice(state.chaos[id],hq,"dc");return{price:m.price,worldId:m.worldId,world:m.price!=null?wname(m.worldId):null,hop:(m.worldId!=null&&m.worldId!==state.homeId),hq};}
+/* the cheaper of the board and an NPC shop (see npcBuy) */
+function buyOf(id){const hq=!!RECIPES[id];const m=aggPrice(state.chaos[id],hq,"dc");return npcBuy({price:m.price,worldId:m.worldId,world:m.price!=null?wname(m.worldId):null,hop:(m.worldId!=null&&m.worldId!==state.homeId),hq},id);}
 function craftUnit(id){const r=RECIPES[id];if(!r)return null;let s=0;for(const ing of r.ingredients){const b=bestOf(ing.id);if(b==null)return null;s+=b*ing.amount;}return s/r.yields;}
-function bestOf(id){if(id in state._best)return state._best[id];const b=buyOf(id).price;const c=RECIPES[id]?craftUnit(id):null;const v=VENDOR_PRICES[id]!=null?VENDOR_PRICES[id]:null;
-  const cands=[b,c,v].filter(x=>x!=null);let best=cands.length?Math.min(...cands):null;state._best[id]=best;return best;}
+function bestOf(id){if(id in state._best)return state._best[id];state._best[id]=null;const b=buyOf(id).price;const c=RECIPES[id]?craftUnit(id):null;
+  const best=b==null?c:(c==null?b:Math.min(b,c));state._best[id]=best;return best;}
 /* how many of the things you actually buy under the optimised plan sit off your world */
 function hopsOf(id){if(id in state._hops)return state._hops[id];state._hops[id]=0;
   const r=RECIPES[id],b=buyOf(id),c=r?craftUnit(id):null;
@@ -317,22 +318,18 @@ function sortRows(){const q=state.query.trim().toLowerCase();
 
 // recursive crafting tree
 function nodeHTML(id,amount,path,depth){
-  const r=RECIPES[id],buy=buyOf(id),craft=r?craftUnit(id):null,vendor=VENDOR_PRICES[id]!=null?VENDOR_PRICES[id]:null,best=bestOf(id);
+  const r=RECIPES[id],buy=buyOf(id),craft=r?craftUnit(id):null,best=bestOf(id);
   const open=state.tree.has(path),hasKids=!!r;
-  let cheapest=null,cheapestVal=Infinity;
-  if(buy.price!=null&&buy.price<=cheapestVal){cheapest='buy';cheapestVal=buy.price;}
-  if(craft!=null&&craft<cheapestVal){cheapest='craft';cheapestVal=craft;}
-  if(vendor!=null&&vendor<cheapestVal){cheapest='vendor';cheapestVal=vendor;}
-  const buyCls=buy.price==null?"dim":(cheapest==='buy'?"cheap":"dim"), craftCls=(craft!=null&&cheapest==='craft')?"cheap":"dim", vendorCls=(vendor!=null&&cheapest==='vendor')?"cheap":"dim";
-  const bavg=buyAvg(state.chaos[id],buy.hq);const stk=stockBadge(buy.price,bavg);
+  const buyCheaper=(craft==null)||(buy.price!=null&&buy.price<=craft);
+  const buyCls=buy.price==null?"dim":(buyCheaper?"cheap":"dim"),craftCls=(craft!=null&&!buyCheaper)?"cheap":"dim";
+  const bavg=buy.npc?null:buyAvg(state.chaos[id],buy.hq);const stk=stockBadge(buy.price,bavg);
   const saveBadge=(r&&craft!=null&&buy.price!=null&&craft<buy.price)?`<span class="badge">craft −${fmtK(buy.price-craft)}</span>`:"";
   let h=`<div class="node${hasKids?' clickable':''}" ${hasKids?`data-np="${path}"`:''} style="padding-left:${depth*20}px">
     <div class="nlabel"><button class="shopbtn sm" data-shopmat="${id}|${amount}" title="Add ${amount}× to shopping list">+</button><button class="xwbtn sm" data-xw="${id}" data-xwname="${xesc(escapeName(id))}" data-xwqty="${amount}" title="Compare this item's price and stock on every world">\ud83c\udf10</button>${teamcraftHTML(id,'sm')}<span class="ntoggle ${hasKids?'has':'leaf'} ${open?'open':''}">${hasKids?'<span class="c"></span>':'·'}</span>${iconHTML(id)}
       <span><span class="nqty">${amount}×</span>${escapeName(id)}${saveBadge}${stk}</span></div>
-    <div class="price ${buyCls}">${buy.price!=null?'buy '+fmt(buy.price)+' <span class="qtag '+(buy.hq?'hq':'')+'">'+(buy.hq?'HQ':'NQ')+'</span>':'<span class="dim">no listing</span>'}${bavg!=null?'<span class="navg">avg '+fmtK(bavg)+stk+'</span>':''}</div>
-    <div class="server ${buy.price==null?'dim':(buy.hop?'hop':'home')}">${buy.price!=null?buy.world+(buy.hop?' · hop':''):'—'}</div>
+    <div class="price ${buyCls}">${buy.npc?npcPriceHTML(buy):buy.price!=null?'buy '+fmt(buy.price)+' <span class="qtag '+(buy.hq?'hq':'')+'">'+(buy.hq?'HQ':'NQ')+'</span>':'<span class="dim">no listing</span>'}${bavg!=null?'<span class="navg">avg '+fmtK(bavg)+stk+'</span>':''}</div>
+    ${buy.npc?npcServerHTML(buy):`<div class="server ${buy.price==null?'dim':(buy.hop?'hop':'home')}">${buy.price!=null?buy.world+(buy.hop?' · hop':''):'—'}</div>`}
     <div class="price ${craftCls} ncraft">${craft!=null?'craft '+fmt(craft):'<span class="dim">—</span>'}</div>
-    <div class="price ${vendorCls} nvendor">${vendor!=null?'vendor '+fmt(vendor):'<span class="dim">—</span>'}</div>
     <div class="line">${fmt(best!=null?best*amount:null)}</div></div>`;
   if(hasKids&&open) for(const ing of r.ingredients) if(state.showCrystals||!CRYSTAL_IDS.has(ing.id)) h+=nodeHTML(ing.id,ing.amount,path+">"+ing.id,depth+1);
   return h;
@@ -340,7 +337,6 @@ function nodeHTML(id,amount,path,depth){
 function escapeName(id){const n=(RECIPES[id]&&RECIPES[id].name)||(NAMES[id])||("#"+id);return n;}
 
 const CRYSTAL_IDS=new Set([2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]);
-const VENDOR_PRICES={10386:120,12888:617};
 
 function sellTimeHTML(s, wantHQ) {
   if (!s) {
@@ -376,7 +372,7 @@ function treeHTML(r){
   const bestUnit=bestTotal/rec.yields, save=r.matBuyAll-bestTotal;
   const opt=state.matBasis!=="buyall",live=' <span class="dim" title="This is the basis the table is costing against right now">&larr; in use</span>';
   return `<div class="tree">
-    <div class="thead"><div>Buy all of these, craft once → ${r.yields}× ${r.name}</div><div class="r">Buy (${dcLabel()})</div><div class="r">Buy on</div><div class="r hcraft">Craft it</div><div class="r hvendor">Vendor</div><div class="r">Line (best)</div></div>
+    <div class="thead"><div>Buy all of these, craft once → ${r.yields}× ${r.name}</div><div class="r">Buy (${dcLabel()})</div><div class="r">Buy on</div><div class="r hcraft">Craft it</div><div class="r">Line (best)</div></div>
     ${body}
     <div class="tfoot">
       <span><span class="lab">Buy-all /craft</span><b>${fmt(r.matBuyAll)}</b>${opt?'':live}</span>
@@ -544,7 +540,7 @@ function updateStrip(){
 })();
 
 /* ===== v14: shopping list glue ===== */
-window.__shopEntry=(id,amount)=>{const b=buyOf(id);return{id:+id,name:escapeName(id),qty:+amount,unit:b.price,worldId:b.worldId,world:b.world,hq:b.hq,avg:Shop.avgFrom(state.chaos[id],b.hq)};};
+window.__shopEntry=(id,amount)=>{const b=buyOf(id);return{id:+id,name:escapeName(id),qty:+amount,unit:b.price,worldId:b.worldId,world:b.world,hq:b.hq,npc:b.npc?npcWhere(b.npc):null,avg:b.npc?null:Shop.avgFrom(state.chaos[id],b.hq)};};
 /* Under the optimised basis the list should hold what you actually buy: anything
    cheaper to craft is expanded into its own materials instead of bought. */
 function shopLeaves(id,amount,into,seen){

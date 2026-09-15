@@ -358,7 +358,15 @@ and Submersibles have nothing to buy with gil, so they don't carry one. It group
 each line with which finished item it's for. Worlds stay in the order they were first added, so
 ticking items off never moves the world you're halfway through buying. Prices are captured at the time of adding, and each
 line is badged against the recent average so you can see whether you're buying into a dip or
-overpaying. Crystals, shards and clusters are excluded — assumed stocked.
+overpaying. Crystals, shards and clusters are excluded — assumed stocked. Anything cheaper from an NPC
+goes under an **NPC shops** group, each line naming the vendor, zone and map position.
+
+**NPC shops.** Wherever a crafting tab costs a material, it takes the cheaper of the market board
+and an NPC gil shop, and the NPC wins a tie, since it never sells out. That covers every material
+used in a recipe or a workshop turn-in that an NPC sells all year (526 of them); seasonal shops are
+left out. The recipe tree shows **NPC** and the zone in *Buy on*, with the vendor, map position and
+the board's cheapest price on hover; 🔒 marks the 15 whose shop opens after a quest or achievement.
+NPC stock is NQ, so on the Dashboard's *Buy all mats* basis an NPC can undercut an HQ listing.
 
 **Crystals.** Every crafting cost on the desk includes the shards, crystals and clusters the
 recipe burns, priced off the board. They are left out of the recipe trees to keep them short, with
@@ -488,10 +496,17 @@ items that are tradable, listed in a gil shop, and sellable on the market board.
 `SizeFactor`/offset transform; 2,842 of the 4,943 items resolve to a coordinate and 4,568 to a
 named NPC.
 
+The same script writes the desk's **NPC price index** (`src/data/npc-prices.json`): every item used in a
+Teamcraft recipe or a `CompanyCraftSupplyItem` turn-in that a non-seasonal gil shop sells, marketable
+or not, with one vendor and map position each. Shops no NPC stands at directly are left out, since some
+are unused. The shell hands it to every crafting tab.
+
 The network layer batches 100 item IDs per request, runs 5 requests concurrently, retries twice
 with backoff on rate limits and server errors, and caches responses in `localStorage` for 12
-minutes (world lists for 24 hours). **Refresh** always skips that cache and pulls fresh prices;
-it never touches your saved lists, shopping list or settings.
+minutes (world lists for 24 hours). The Dashboard is the exception: a full scan is larger than the
+browser store the desk shares, so it is never cached. **Refresh** always skips that cache and pulls
+fresh prices; it never touches your saved lists, shopping list or settings. When the store is full,
+cached prices are dropped to make room for your own data.
 
 Universalis rate-limits heavy scans, and its rate-limit responses don't carry CORS headers, so a
 large refresh will log some `blocked by CORS policy` errors in the browser console. These are
@@ -596,6 +611,21 @@ duplicating some code — which is why the shared chunks exist.
 ## Changelog
 
 ### 15 September 2026
+
+**NPC shops and a full browser store**
+- **Materials an NPC sells are bought from the NPC when that is cheaper.** Every craft cost used only
+  the market board, but 526 crafting materials are sold by an NPC for gil all year, and on a typical data
+  centre the board wants more than the NPC for over a hundred of them. That touched more than a
+  thousand recipes, and a recipe needing one with no listing could not be priced at all. The
+  Dashboard, Precrafts, Scrips, Workshop and lists now buy each material at the cheaper of the board
+  and the NPC. The tree says **NPC** and the zone (hover for the vendor, their map position and the
+  board's price), and the shopping list puts those lines under their own **NPC shops** group. The two
+  prices lists and Scrips had typed in by hand, and their Vendor column, are gone.
+- **A Dashboard scan no longer fills the browser's storage.** It cached several million characters
+  of prices, more than the store every tab shares can hold, so the shopping list could fail to save
+  while the page said "Added". The Dashboard no longer caches its scan (Refresh always fetched fresh
+  anyway), a full store now drops cached prices to make room for your lists and shopping list, and a
+  save that still fails says so. Clearing the cache had also been leaving some entries behind.
 
 **Second pass: costs, flips and rebakes**
 - **Crystals are costed everywhere.** Precrafts and Scrips had left shards and crystals out of the

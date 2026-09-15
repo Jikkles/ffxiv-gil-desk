@@ -15,9 +15,9 @@ h2{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.16em;te
 .ptext{color:var(--purple)}
 .otext{color:var(--orange)}
 .tree{padding:13px 16px 15px}
-.thead{display:grid;grid-template-columns:1fr 132px 152px 132px 110px 110px;gap:18px;font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);padding:0 6px 7px;border-bottom:1px solid var(--line)}
+.thead{display:grid;grid-template-columns:1fr 132px 152px 132px 112px;gap:18px;font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);padding:0 6px 7px;border-bottom:1px solid var(--line)}
 .thead .r{text-align:center}
-.node{display:grid;grid-template-columns:1fr 132px 152px 132px 110px 110px;gap:18px;align-items:center;padding:5px 6px;font-family:"JetBrains Mono",monospace;font-size:13px;border-bottom:1px solid var(--panel2)}
+.node{display:grid;grid-template-columns:1fr 132px 152px 132px 112px;gap:18px;align-items:center;padding:5px 6px;font-family:"JetBrains Mono",monospace;font-size:13px;border-bottom:1px solid var(--panel2)}
 .node:hover{background:var(--row-hover)}
 .node.clickable{cursor:pointer}
 .ntoggle{width:14px;flex:none;display:inline-flex;justify-content:center;color:var(--faint);margin-right:6px}
@@ -45,7 +45,7 @@ h2{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.16em;te
 .tfoot .lab{color:var(--faint);text-transform:uppercase;font-size:10px;letter-spacing:.1em;margin-right:6px}
 .tfoot b{font-weight:500}
 @media(max-width:860px){.thead{grid-template-columns:1fr 84px 96px 70px;gap:8px}
-.thead .hcraft,.node .ncraft,.thead .hvendor,.node .nvendor{display:none}
+.thead .hcraft,.node .ncraft{display:none}
 .node{grid-template-columns:1fr 84px 96px 70px;gap:8px}}
 </style>
 <script>try{var __t=localStorage.getItem("gildesk:theme:v1");document.documentElement.setAttribute("data-theme",__t==="light"?"light":"dark");}catch(e){document.documentElement.setAttribute("data-theme","dark");}</script>
@@ -105,7 +105,7 @@ h2{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.16em;te
       <div class="hw-body">
         <div class="hw-sec"><h4>What it works out</h4><p>Two loops: craft a collectable, turn it in for crafters&rsquo; scrips, spend the scrips on materia and sell it. <b>Orange</b>: level 100 collectables, for grade XII materia. <b>Purple</b>: every Rarefied collectable from level 50 to 98, for materia from grade IV to XI.</p></div>
         <div class="hw-sec"><h4>Reading the table</h4><p><b>Revenue/craft</b> is what one collectable&rsquo;s scrips are worth as materia on your world, using whichever materia that scrip buys sells best for its scrip cost. <b>Profit/craft</b> takes off the materials. The table below prices the materia itself.</p></div>
-        <div class="hw-sec"><h4>Worth knowing</h4><p>Lower-level Purple collectables give fewer scrips but often cost far less to make, so sort by profit rather than by scrips. In these recipe trees a precraft is bought NQ wherever it is listed, and only broken down into its own materials when none are for sale. Crystals are costed but hidden; tick <b>Show crystals</b> to list them.</p></div>
+        <div class="hw-sec"><h4>Worth knowing</h4><p>Lower-level Purple collectables give fewer scrips but often cost far less to make, so sort by profit rather than by scrips. In these recipe trees a precraft is bought NQ wherever it is listed or an NPC sells it, and only broken down into its own materials when none are for sale. Crystals are costed but hidden; tick <b>Show crystals</b> to list them.</p></div>
       </div>
       <template class="guide">
         <div data-spot="#scrip" data-side="right" data-title="Which loop">Show both loops, or just <b>Purple</b> or <b>Orange</b>, and pick a <b>Class</b>.</div>
@@ -145,7 +145,7 @@ h2{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.16em;te
     <tbody id="mrows"></tbody>
   </table></div>
 
-  <p class="foot">Scrip yields and materia costs are read from the game's own collectable and scrip shop tables, at top collectability, and rebaked after each patch. "gil/scrip" uses whichever crafter materia that scrip buys sells for the most per scrip on <span class="homename">Spriggan</span>, net of tax. Material cost, shards and crystals included, buys each precraft NQ at the cheapest <span class="dcname">Chaos</span> price where it is listed, and only expands/crafts a precraft when it has no listings; raw mats NQ. Only crafting (Craftsman&rsquo;s) materia are shown; materia sells NQ. Lower-level Purple gives fewer scrips but often cheaper mats — sort by profit to see which actually wins. Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>.</p>
+  <p class="foot">Scrip yields and materia costs are read from the game's own collectable and scrip shop tables, at top collectability, and rebaked after each patch. "gil/scrip" uses whichever crafter materia that scrip buys sells for the most per scrip on <span class="homename">Spriggan</span>, net of tax. Material cost, shards and crystals included, buys each precraft NQ at the cheapest <span class="dcname">Chaos</span> price where it is listed, and only expands/crafts a precraft when it has no listings; raw mats NQ. Anything an NPC sells for gil all year is bought from the NPC when that is cheaper than the board, or the board has none. Only crafting (Craftsman&rsquo;s) materia are shown; materia sells NQ. Lower-level Purple gives fewer scrips but often cheaper mats — sort by profit to see which actually wins. Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>.</p>
   </main>
 </div>
 
@@ -173,8 +173,10 @@ function aggPrice(res,hq,scope){const q=side(res,hq);const m=q&&(scope==="world"
 function aggAvg(res,hq,scope){const q=side(res,hq);const a=q?(scope==="world"?q.aw:q.ad):null;return a!=null?a:null;}
 function aggVel(res,hq,scope){const q=side(res,hq);const d=q?(scope==="world"?q.vw:q.vd):null;return d!=null?d:0;}
 function wname(id){return(state.worlds&&state.worlds[id])||CHAOS_FALLBACK[id]||LIGHT_FALLBACK[id]||(id?("world "+id):"—");}
-const VENDOR_PRICES={10386:120,12888:617};
 function rawNQ(id){return aggPrice(state.chaos[id],false,"dc");}
+/* bought NQ, at the cheaper of the board and an NPC shop (see npcBuy) */
+function buyNQ(id){const m=rawNQ(id);
+  return npcBuy({price:m.price,worldId:m.worldId,world:m.price!=null?wname(m.worldId):null,hop:(m.worldId!=null&&m.worldId!==state.homeId),hq:false},id);}
 function preHQ(id){return aggPrice(state.chaos[id],true,"dc");}
 
 /*__SHARED_A__*/
@@ -217,7 +219,7 @@ async function load(){const btn=document.getElementById("refresh");btn.disabled=
 function costNode(n,path){
   const myPath=path!=null?path:String(n.id);
   const base={id:n.id,name:n.name,amount:n.amount,craftable:!!n.craftable,path:myPath};
-  const nq=rawNQ(n.id);const buyUnit=nq.price;
+  const nq=buyNQ(n.id);const buyUnit=nq.price;base.npc=nq.npc?nq:null;
   if(!n.craftable){base.unit=buyUnit;base.buyUnit=buyUnit;base.craftUnit=null;base.q="NQ";base.mode="buy";base.world=nq.worldId;base.missing=buyUnit==null;base.total=buyUnit!=null?buyUnit*n.amount:null;base.children=[];base.showKids=false;return base;}
   const kids=(n.ings||[]).map(ing=>costNode(ing,myPath+">"+ing.id));
   let craftSum=0,kbad=false;for(const k of kids){if(k.total==null)kbad=true;else craftSum+=k.total;}
@@ -260,22 +262,19 @@ function nodeRows(kids,depth){let h="";
     const canExpand=!!(k.children&&k.children.length);
     const open=canExpand&&(state.matOpen.has(k.path)?!k.showKids:k.showKids);
     const tag=k.mode==="buy"?"buy NQ":"craft";
-    const bavg=buyAvg(state.chaos[k.id],false);
+    const bavg=k.npc?null:buyAvg(state.chaos[k.id],false);
     const stk=stockBadge(k.buyUnit,bavg);
-    const vendor=VENDOR_PRICES[k.id]!=null?VENDOR_PRICES[k.id]:null;
     /* the highlight follows the basis this page actually costs against: a
        precraft that is listed is bought, even when crafting it would be
        cheaper. The craft column still shows what that would have cost. */
     const buyCls=k.buyUnit==null?"dim":(k.mode==="buy"?"cheap":"dim");
     const craftCls=(k.craftUnit!=null&&k.mode==="craft")?"cheap":"dim";
-    const vendorCls=(vendor!=null&&(k.buyUnit==null||vendor<k.buyUnit))?"cheap":"dim";
     const saveBadge=(k.craftUnit!=null&&k.buyUnit!=null&&k.craftUnit<k.buyUnit)?`<span class="badge">craft −${fmtK(k.buyUnit-k.craftUnit)}</span>`:"";
-    const where=k.missing?'<span class="muted">no listing</span>':(k.mode==="craft"?'<span class="muted">—</span>':`<span class="server ${(k.world!=null&&k.world!==state.homeId)?'hop':'home'}">${wname(k.world)}${(k.world!=null&&k.world!==state.homeId)?' · hop':''}</span>`);
+    const where=k.missing?'<span class="muted">no listing</span>':(k.mode==="craft"?'<span class="muted">—</span>':k.npc?npcServerHTML(k.npc):`<span class="server ${(k.world!=null&&k.world!==state.homeId)?'hop':'home'}">${wname(k.world)}${(k.world!=null&&k.world!==state.homeId)?' · hop':''}</span>`);
     h+=`<div class="node${canExpand?' clickable':''}"${canExpand?` data-mp="${k.path}"`:''}><div class="nlabel" style="padding-left:${ind}px"><button class="shopbtn sm" data-shopmat="${k.id}|${k.amount}" title="Add ${k.amount}× to shopping list">+</button><button class="listbtn sm" data-listadd="${k.id}" title="Add to a saved list">📋</button><button class="xwbtn sm" data-xw="${k.id}" data-xwname="${xesc(k.name)}" data-xwqty="${k.amount}" title="Compare this item's price and stock on every world">\ud83c\udf10</button>${canExpand?`<span class="ntoggle ${open?'open':''}"><span class="c"></span></span>`:''}${depth>0?'<span class="branch">└</span>':''}${iconHTML(k.id)}<span><span class="nqty">${k.amount}×</span>${k.name}<span class="mtag ${k.mode}">${tag}</span>${saveBadge}${stk}</span></div>
-      <div class="price ${buyCls}">${k.buyUnit!=null?'buy '+fmt(k.buyUnit)+' <span class="qtag">NQ</span>':'<span class="dim">no listing</span>'}${bavg!=null?'<span class="navg">avg '+fmtK(bavg)+stk+'</span>':''}</div>
+      <div class="price ${buyCls}">${k.npc?npcPriceHTML(k.npc):k.buyUnit!=null?'buy '+fmt(k.buyUnit)+' <span class="qtag">NQ</span>':'<span class="dim">no listing</span>'}${bavg!=null?'<span class="navg">avg '+fmtK(bavg)+stk+'</span>':''}</div>
       <div>${where}</div>
       <div class="price ${craftCls} ncraft">${k.craftUnit!=null?'craft '+fmt(k.craftUnit):'<span class="dim">—</span>'}</div>
-      <div class="price ${vendorCls} nvendor">${vendor!=null?'vendor '+fmt(vendor):'<span class="dim">—</span>'}</div>
       <div class="line nline">${fmt(k.total)}</div></div>`;
     if(open)h+=nodeRows(k.children,depth+1);}
   return h;}
@@ -298,7 +297,7 @@ function renderColl(){if(!state.collRows)return;
     tb.appendChild(tr);
     if(open){const dr=document.createElement("tr");dr.className="detail";const td=document.createElement("td");td.colSpan=5;
       const ex=EX[r.scripType];const g=state.gps[r.scripType];
-      td.innerHTML=`<div class="tree"><div class="thead"><div>Craft this → turn in for ${r.scrips} ${r.scripType==='purple'?'Purple':'Orange'} scrips → grade ${r.grade} materia</div><div class="r">Buy (${dcLabel()})</div><div class="r">Buy on</div><div class="r hcraft">Craft it</div><div class="r hvendor">Vendor</div><div class="r">Line (best)</div></div>
+      td.innerHTML=`<div class="tree"><div class="thead"><div>Craft this → turn in for ${r.scrips} ${r.scripType==='purple'?'Purple':'Orange'} scrips → grade ${r.grade} materia</div><div class="r">Buy (${dcLabel()})</div><div class="r">Buy on</div><div class="r hcraft">Craft it</div><div class="r">Line (best)</div></div>
         ${nodeRows(r.kids,0)}
         <div class="tfoot">
           <span><span class="lab">Material cost</span><b>${fmt(r.mat)}</b></span>
@@ -380,7 +379,7 @@ document.getElementById("status").innerHTML='Click <b>Refresh</b> to load live p
 window.__shopAddItem=id=>{if(!state.chaos)return Shop.toast("Refresh prices first");
   const r=(state.collRows||[]).find(x=>x.id==id);if(!r)return;
   const out=[];const walk=(n,mult)=>{const need=n.amount*mult;
-    if(n.mode==="buy"){out.push({id:n.id,name:n.name,qty:need,unit:n.unit,worldId:n.world,world:n.world!=null?wname(n.world):null,hq:false,avg:Shop.avgFrom(state.chaos[n.id],false)});return;}
+    if(n.mode==="buy"){out.push({id:n.id,name:n.name,qty:need,unit:n.unit,worldId:n.world,world:n.npc?"NPC":n.world!=null?wname(n.world):null,hq:false,npc:n.npc?npcWhere(n.npc.npc):null,avg:n.npc?null:Shop.avgFrom(state.chaos[n.id],false)});return;}
     const crafts=Math.ceil(need/(n.yields||1));(n.children||[]).forEach(k=>walk(k,crafts));};
   r.kids.forEach(k=>walk(k,1));
   if(!out.length)return Shop.toast("Nothing marketable to buy");
@@ -388,9 +387,9 @@ window.__shopAddItem=id=>{if(!state.chaos)return Shop.toast("Refresh prices firs
 
 window.__shopAddMat=s=>{if(!state.chaos)return Shop.toast("Refresh prices first");
   const i=s.lastIndexOf("|"),id=+s.slice(0,i),qty=+s.slice(i+1);
-  const nq=rawNQ(id);let name=null;
+  const nq=buyNQ(id);let name=null;
   (state.collRows||[]).forEach(r=>r.kids.forEach(function w(n){if(n.id===id&&name==null)name=n.name;(n.children||[]).forEach(w);}));
-  Shop.add([{id,name:name||("#"+id),qty,unit:nq.price,worldId:nq.worldId,world:nq.worldId!=null?wname(nq.worldId):null,hq:false,avg:Shop.avgFrom(state.chaos[id],false)}],null);};
+  Shop.add([{id,name:name||("#"+id),qty,unit:nq.price,worldId:nq.worldId,world:nq.world,hq:false,npc:nq.npc?npcWhere(nq.npc):null,avg:nq.npc?null:Shop.avgFrom(state.chaos[id],false)}],null);};
 
 /* ===== saved-list glue =====
    a collectable carries its whole crafting tree over, so the list tab can price the

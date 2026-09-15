@@ -102,7 +102,7 @@ tr.detail>td{background:var(--bg2);border-bottom:1px solid var(--line);padding:0
       <summary><span class="hw-ic"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="M7.8 7.9a2.3 2.3 0 0 1 4.4.9c0 1.6-2.2 1.9-2.2 3.2M10 14.4v.1"/></svg></span><span class="hw-title">How this works</span><span class="hw-hint">what Free Company projects cost to build and sell for</span><span class="hw-car">▸</span></summary>
       <div class="hw-body">
         <div class="hw-sec"><h4>What it works out</h4><p>All 162 Free Company workshop projects (submersible and airship parts, housing exteriors, aetherial wheels), costed from turn-ins bought on your data centre against what the finished project sells for on your world.</p></div>
-        <div class="hw-sec"><h4>Reading the table</h4><p>Click a project for its phases, each turn-in with how many sets it needs, and the recipe under every craftable turn-in. <b>Precraft-optimised</b> crafts any turn-in cheaper to make than to buy; <b>Buy turn-ins</b> prices them all off the board. Either quality is accepted, so each turn-in is priced at the cheaper of NQ and HQ.</p></div>
+        <div class="hw-sec"><h4>Reading the table</h4><p>Click a project for its phases, each turn-in with how many sets it needs, and the recipe under every craftable turn-in. <b>Precraft-optimised</b> crafts any turn-in cheaper to make than to buy; <b>Buy turn-ins</b> prices them all off the board. Either quality is accepted, so each turn-in is priced at the cheaper of NQ and HQ, or at an NPC's price where one sells it for less.</p></div>
         <div class="hw-sec"><h4>Worth knowing</h4><p>Drafts, company credits and workshop time are not gil, so they are not counted. Big projects sell rarely: a ⚠ marks one with no sales in 30 days, and those are kept out of the headline cards.</p></div>
       </div>
       <template class="guide">
@@ -134,7 +134,7 @@ tr.detail>td{background:var(--bg2);border-bottom:1px solid var(--line);padding:0
       </table>
     </div>
 
-    <p class="foot">Projects are read from the game&rsquo;s own <b>CompanyCraftSequence</b>, <b>CompanyCraftPart</b>, <b>CompanyCraftProcess</b> and <b>CompanyCraftSupplyItem</b> tables, so every phase, set size and set count is exactly what the workshop asks for. Recipes under each turn-in come from Teamcraft&rsquo;s public data. Mat cost counts every turn-in across every phase; under <b>Precraft-optimised</b> a turn-in that is cheaper to craft than to buy is costed as crafted, recursively, including its crystals. Turn-ins accept either quality, so each is priced at whichever of NQ and HQ is cheaper.
+    <p class="foot">Projects are read from the game&rsquo;s own <b>CompanyCraftSequence</b>, <b>CompanyCraftPart</b>, <b>CompanyCraftProcess</b> and <b>CompanyCraftSupplyItem</b> tables, so every phase, set size and set count is exactly what the workshop asks for. Recipes under each turn-in come from Teamcraft&rsquo;s public data. Mat cost counts every turn-in across every phase; under <b>Precraft-optimised</b> a turn-in that is cheaper to craft than to buy is costed as crafted, recursively, including its crystals. Turn-ins accept either quality, so each is priced at whichever of NQ and HQ is cheaper, and a turn-in or material an NPC sells for gil all year is bought from the NPC when that beats the board.
       A project also needs its <b>draft</b> (bought with company credits) and a workshop, and several members can hand in at once &mdash; none of that costs gil, so none of it is counted here. Finished projects only ever sell NQ.
       Gil/day = profit per project &times; the units that sell a day on <span class="homename">Spriggan</span> over 30 days &mdash; a ranking, not a promise: these are slow, lumpy markets. Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>.</p>
   </main>
@@ -209,14 +209,15 @@ async function fetchWorlds(){
 
 /* ---- costing ----
    A turn-in takes either quality, so it is bought at whichever listing is
-   cheaper; crafting it is its recipe's materials at their own best, plus
-   the crystals, divided by what one craft yields. */
+   cheaper, or from an NPC shop when that is cheaper still (see npcBuy);
+   crafting it is its recipe's materials at their own best, plus the
+   crystals, divided by what one craft yields. */
 function buyOf(id){
   const res=state.chaos?state.chaos[id]:null;
   const n=aggPrice(res,false,"dc"),h=aggPrice(res,true,"dc");
   const hq=h.price!=null&&(n.price==null||h.price<n.price);
   const m=hq?h:n;
-  return{price:m.price,worldId:m.worldId,world:m.price!=null?wname(m.worldId):null,hop:(m.worldId!=null&&m.worldId!==state.homeId),hq};
+  return npcBuy({price:m.price,worldId:m.worldId,world:m.price!=null?wname(m.worldId):null,hop:(m.worldId!=null&&m.worldId!==state.homeId),hq},id);
 }
 function crystalCost(r){let s=0;for(const[c,a]of r.cx){const b=buyOf(c).price;if(b!=null)s+=b*a;}return s;}
 function craftUnit(id){const r=RECIPES[id];if(!r)return null;let s=crystalCost(r);
@@ -289,15 +290,15 @@ function nodeHTML(id,amount,path,depth,sets){
   const open=state.tree.has(path),hasKids=!!r;
   const buyCheaper=(craft==null)||(buy.price!=null&&buy.price<=craft);
   const buyCls=buy.price==null?"dim":(buyCheaper?"cheap":"dim"),craftCls=(craft!=null&&!buyCheaper)?"cheap":"dim";
-  const bavg=buyAvg(state.chaos[id],buy.hq);const stk=stockBadge(buy.price,bavg);
+  const bavg=buy.npc?null:buyAvg(state.chaos[id],buy.hq);const stk=stockBadge(buy.price,bavg);
   const saveBadge=(r&&craft!=null&&buy.price!=null&&craft<buy.price)?`<span class="badge">craft −${fmtK(buy.price-craft)}</span>`:"";
   const setTag=sets?`<span class="nsets">${sets[1]} set${sets[1]===1?"":"s"} of ${sets[0]}</span>`:"";
   const jobTag=r&&depth===0&&r.job?`<span class="nsets">${r.job} ${r.lvl}</span>`:"";
   let h=`<div class="node${hasKids?' clickable':''}" ${hasKids?`data-np="${path}"`:''} style="padding-left:${depth*20+6}px">
     <div class="nlabel"><button class="shopbtn sm" data-shopmat="${id}|${Math.ceil(amount)}" title="Add ${Math.ceil(amount)}× to shopping list">+</button><button class="listbtn sm" data-listadd="${id}" title="Add to a saved list">📋</button><button class="xwbtn sm" data-xw="${id}" data-xwname="${xesc(nameOf(id))}" data-xwqty="${Math.ceil(amount)}" title="Compare this item's price and stock on every world">🌐</button>${teamcraftHTML(id,'sm')}<span class="ntoggle ${hasKids?'has':'leaf'} ${open?'open':''}">${hasKids?'<span class="c"></span>':'·'}</span>${iconHTML(id)}
       <span><span class="nqty">${fmt(amount)}×</span>${nameOf(id)}${setTag}${jobTag}${saveBadge}${stk}</span></div>
-    <div class="price ${buyCls}">${buy.price!=null?'buy '+fmt(buy.price)+' <span class="qtag '+(buy.hq?'hq':'')+'">'+(buy.hq?'HQ':'NQ')+'</span>':'<span class="dim">no listing</span>'}${bavg!=null?'<span class="navg">avg '+fmtK(bavg)+stk+'</span>':''}</div>
-    <div class="server ${buy.price==null?'dim':(buy.hop?'hop':'home')}">${buy.price!=null?buy.world+(buy.hop?' · hop':''):'—'}</div>
+    <div class="price ${buyCls}">${buy.npc?npcPriceHTML(buy):buy.price!=null?'buy '+fmt(buy.price)+' <span class="qtag '+(buy.hq?'hq':'')+'">'+(buy.hq?'HQ':'NQ')+'</span>':'<span class="dim">no listing</span>'}${bavg!=null?'<span class="navg">avg '+fmtK(bavg)+stk+'</span>':''}</div>
+    ${buy.npc?npcServerHTML(buy):`<div class="server ${buy.price==null?'dim':(buy.hop?'hop':'home')}">${buy.price!=null?buy.world+(buy.hop?' · hop':''):'—'}</div>`}
     <div class="price ${craftCls} ncraft">${craft!=null?'craft '+fmt(craft):'<span class="dim">—</span>'}</div>
     <div class="line">${fmt(best!=null?best*amount:null)}</div></div>`;
   if(hasKids&&open){for(const[g,a]of r.g)h+=nodeHTML(g,a*amount/r.y,path+">"+g,depth+1,null);
@@ -425,7 +426,7 @@ document.querySelectorAll("thead th[data-k]").forEach(th=>{if(th.style.cursor===
 })();
 
 /* ===== shopping list + saved-list glue ===== */
-window.__shopEntry=(id,amount)=>{const b=buyOf(id);return{id:+id,name:nameOf(id),qty:+amount,unit:b.price,worldId:b.worldId,world:b.world,hq:b.hq,avg:Shop.avgFrom(state.chaos[id],b.hq)};};
+window.__shopEntry=(id,amount)=>{const b=buyOf(id);return{id:+id,name:nameOf(id),qty:+amount,unit:b.price,worldId:b.worldId,world:b.world,hq:b.hq,npc:b.npc?npcWhere(b.npc):null,avg:b.npc?null:Shop.avgFrom(state.chaos[id],b.hq)};};
 /* under the optimised basis the list holds what you actually buy: a turn-in
    cheaper to craft is broken into its own materials instead */
 function shopLeaves(id,amount,into,seen){

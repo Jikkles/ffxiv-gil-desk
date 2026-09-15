@@ -197,6 +197,9 @@ const ICON_INDEX = /*@string data/icon-index.txt*/""
 /* every craftable item as "item-id-delta recipe-id", both base36 — the
    second half of a Teamcraft simulator URL, which nothing else here knows */
 const RECIPE_INDEX = /*@string data/recipe-index.txt*/""
+/* crafting materials an NPC sells for gil all year, with one vendor each: the crafting
+   tabs buy a material there when the board is dearer or has none */
+const NPC_PRICES = /*@json data/npc-prices.json*/null;
 /* the guided tour and the example page it walks through */
 const TOUR_JS = /*@string tour/tour.js*/"";
 const TOUR_MOCK = /*@string tour/mock.html*/"";
@@ -228,7 +231,9 @@ function htmlFor(key){
     .replace("/*__SHARED_B__*/",()=>SHARED_B)
     .replace("/*__SHARED_SHOP__*/",()=>SHARED_SHOP)
     .replace("/*__SHARED_LIST__*/",()=>SHARED_LIST)
-    .replace("/*__SHARED_XW__*/",()=>SHARED_XW);
+    .replace("/*__SHARED_XW__*/",()=>SHARED_XW)
+    /* last, because the slot sits inside the shared market code put in just above */
+    .replace("/*__NPC_PRICES__*/",()=>JSON.stringify(NPC_PRICES));
 }
 /* ===== v24 tab icons =====
    Inline SVG rather than emoji: emoji are full-colour bitmaps that differ on

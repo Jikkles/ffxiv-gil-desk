@@ -1,7 +1,7 @@
 /* A last look at index.html after a rebake, before anything is committed:
    - every <script> in the page and in every tab still parses
    - the Dashboard, Precrafts, Currencies, Vendors, Submersibles, Workshop, Duties, Scrips, Flips and
-     Retainers data did not shrink
+     Retainers data, and the NPC price index, did not shrink
      by more than a quarter
      against the last commit (a source changing its format would show up as a collapse)
      node tools/check-bake.js
@@ -35,6 +35,7 @@ function counts(docs) {
   const CD = dataset(docs, "currencies", "CD"), VD = dataset(docs, "vendors", "VD");
   const DATA = dataset(docs, "all", "DATA"), PRE = dataset(docs, "precraft", "PRE");
   const T4 = dataset(docs, "materia", "T4"), FLIPS = dataset(docs, "flips", "FLIP_ITEMS"), RET = dataset(docs, "retainer", "VITEMS");
+  const NPC = dataset(docs, "shell", "NPC_PRICES");
   return {
     "currencies": CD ? CD.currencies.length : 0,
     "currency offers": CD ? CD.currencies.reduce((s, c) => s + c.items.length, 0) : 0,
@@ -50,6 +51,7 @@ function counts(docs) {
     "scrip collectables": T4 ? T4.collectibles.length : 0,
     "flip items": FLIPS ? FLIPS.length : 0,
     "retainer drops": RET ? RET.length : 0,
+    "NPC-sold materials": NPC ? NPC.r.length : 0,
   };
 }
 

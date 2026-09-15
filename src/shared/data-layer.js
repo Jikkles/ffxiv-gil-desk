@@ -52,19 +52,44 @@ const Cache={
   get(k,ttl){if(Cache.skip){try{localStorage.removeItem(this.key(k));}catch(e){}return null;}
     try{const raw=localStorage.getItem(this.key(k));if(!raw)return null;
     const{t,d}=JSON.parse(raw);if(Date.now()-t>ttl){localStorage.removeItem(this.key(k));return null;}return d;}catch(e){return null;}},
-  set(k,d){try{localStorage.setItem(this.key(k),JSON.stringify({t:Date.now(),d}));}
-    catch(e){this.evict();try{localStorage.setItem(this.key(k),JSON.stringify({t:Date.now(),d}));}catch(e2){}}},
-  evict(){const now=Date.now();
-    for(let i=localStorage.length-1;i>=0;i--){const k=localStorage.key(i);if(!k||!k.startsWith(`gildesk:${CACHE_VER}:`))continue;
-      try{const{t}=JSON.parse(localStorage.getItem(k));if(now-t>NET.CACHE_TTL_MS)localStorage.removeItem(k);}catch(e){localStorage.removeItem(k);}}},
-  clear(){for(let i=localStorage.length-1;i>=0;i--){const k=localStorage.key(i);
-    if(k&&k.startsWith(`gildesk:${CACHE_VER}:`))localStorage.removeItem(k);}},
+  /* A full store first loses the expired prices, then every cached price: a cache
+     is only ever a shortcut, and a price it cannot keep is fetched again next time. */
+  set(k,d){const v=JSON.stringify({t:Date.now(),d});
+    try{localStorage.setItem(this.key(k),v);return;}catch(e){}
+    this.evict();try{localStorage.setItem(this.key(k),v);return;}catch(e){}
+    this.clear();try{localStorage.setItem(this.key(k),v);}catch(e){}},
+  /* The keys are read into a list before any is removed: the browser is free to
+     reorder its keys as they go, and walking them by index while deleting left
+     some entries behind. */
+  keys(){const out=[];try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k)out.push(k);}}catch(e){}return out;},
+  /* Drops the expired entries. The time is read off the front of each entry rather
+     than parsing the whole thing, so this is cheap enough to run as every tab opens. */
+  evict(){const now=Date.now(),pre=`gildesk:${CACHE_VER}:`;
+    try{for(const k of this.keys()){if(!k.startsWith(pre))continue;
+      const m=/^\{"t":(\d+)/.exec(localStorage.getItem(k)||"");
+      if(!m||now-+m[1]>NET.CACHE_TTL_MS)localStorage.removeItem(k);}}catch(e){}},
+  clear(){const pre=`gildesk:${CACHE_VER}:`;
+    try{for(const k of this.keys())if(k.startsWith(pre))localStorage.removeItem(k);}catch(e){}},
   /* Whatever an earlier CACHE_VER left behind, dropped without parsing it. The
      pattern matches the price-cache namespace only, so saved lists
      (gildesk:lists:...) and the shopping list are never in range. */
-  sweepOld(){try{for(let i=localStorage.length-1;i>=0;i--){const k=localStorage.key(i);
-    if(k&&/^gildesk:v\d+:/.test(k)&&!k.startsWith(`gildesk:${CACHE_VER}:`))localStorage.removeItem(k);}}catch(e){}}};
+  sweepOld(){try{for(const k of this.keys())
+    if(/^gildesk:v\d+:/.test(k)&&!k.startsWith(`gildesk:${CACHE_VER}:`))localStorage.removeItem(k);}catch(e){}}};
 Cache.sweepOld();
+/* A cached price is never read after its twelve minutes, but it stayed in the store
+   until a save ran out of room, and a tab that no longer caches (the Dashboard)
+   never read its own old entries back to expire them. */
+Cache.evict();
+/* Saves something the user made - a list, the shopping list, a setting - and says
+   whether it stuck. Every tab shares one browser store of about five million
+   characters, and cached prices used to be able to fill it: the next save of the
+   shopping list then failed without a word while the page said "Added". When the
+   store is full, every cached price is dropped to make room, since those can be
+   fetched again and the user's own data cannot. */
+function storeSet(key,value){
+  try{localStorage.setItem(key,value);return true;}catch(e){}
+  try{Cache.clear();localStorage.setItem(key,value);return true;}catch(e){}
+  return false;}
 /* Refresh means refresh. Prices are cached for twelve minutes, so a click
    inside that window handed back exactly what was already on screen - and
    the status line told you to shift-click for a fresh pull, which nothing

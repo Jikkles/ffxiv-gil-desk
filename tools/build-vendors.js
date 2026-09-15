@@ -1,8 +1,9 @@
 /* Builds the Vendors tab's data (tools/.cache/out/VENDORS.json): every marketable item an
-   NPC sells for plain gil, what it costs, and one vendor to buy it from.
+   NPC sells for plain gil, what it costs, and one vendor to buy it from. Also builds the
+   desk's NPC price index (tools/.cache/out/NPC_PRICES.json), which the crafting tabs read.
      node tools/build-vendors.js
    Read from the game's GilShopItem, GilShop, Item, ENpcBase, ENpcResident, Level, Map,
-   PlaceName and TerritoryType tables.
+   PlaceName, TerritoryType and CompanyCraftSupplyItem tables, and Teamcraft's recipes.
 
    Which vendor is shown, when several stock the item: one with a map position before one
    without, a town vendor before one out in a field zone or a housing ward, then the lowest
@@ -13,8 +14,15 @@
    Output shape, as src/tabs/vendors.html reads it:
      z zones, p NPC names, c UI categories, g groups: lookup lists the rows index into
      r rows: [id, name, gil cost, c, g, p (-1 none), z (-1 none), map x, map y, stack size,
-              quest or achievement locked 0/1, vendors stocking it, seasonal shop 0/1] */
-const { writeJSON, sheet, OUT } = require("./lib/common");
+              quest or achievement locked 0/1, vendors stocking it, seasonal shop 0/1]
+
+   The NPC price index is every item used in a recipe or a workshop turn-in that an NPC sells
+   for gil all year, marketable or not, so a craft can buy a material from the NPC when the
+   board is dearer or has none. Seasonal shops are left out, since they close, and so are
+   shops no NPC stands at directly, which may not be reachable at all.
+     z zones, p NPC names: lookup lists the rows index into
+     r rows: [id, gil cost, p, z (-1 none), map x, map y, quest or achievement locked 0/1] */
+const { writeJSON, readJSON, need, sheet, OUT } = require("./lib/common");
 const path = require("path");
 
 /* ================= things a human may need to extend after a big patch =================
@@ -93,23 +101,29 @@ for (const r of sheet("Level")) {
 const stocked = new Map();
 for (const r of sheet("GilShopItem")) {
   const id = +r.Item, shop = +r["#"].split(".")[0];
-  if (!id || !marketable(id) || !shops[shop]) continue;
+  if (!id || !ITEM[id] || !shops[shop]) continue;
   if (!stocked.has(id)) stocked.set(id, []);
   stocked.get(id).push({ shop, locked: !!(+r["QuestRequired[0]"] || +r["QuestRequired[1]"] || +r.AchievementRequired) });
 }
 
-const lists = { z: [], p: [], c: [] };
-const index = (list, v) => { let i = lists[list].indexOf(v); if (i < 0) { i = lists[list].length; lists[list].push(v); } return i; };
-const rows = [];
-for (const id of [...stocked.keys()].sort((a, b) => a - b)) {
-  const lines = stocked.get(id), it = ITEM[id];
+/* the NPCs stocking these shop lines, and the one to show */
+function vendorOf(lines) {
   const npcs = new Set();
   for (const l of lines) for (const n of shopNpcs.get(l.shop) || []) npcs.add(n);
   const best = [...npcs].sort((a, b) => {
     const sa = spot.get(a), sb = spot.get(b);
     return (!sa - !sb) || ((sa && !sa.town) - (sb && !sb.town)) || a - b;
   })[0];
-  const where = best != null ? spot.get(best) : null;
+  return { npcs, best, where: best != null ? spot.get(best) : null };
+}
+
+const lists = { z: [], p: [], c: [] };
+const index = (list, v) => { let i = lists[list].indexOf(v); if (i < 0) { i = lists[list].length; lists[list].push(v); } return i; };
+const rows = [];
+for (const id of [...stocked.keys()].sort((a, b) => a - b)) {
+  if (!marketable(id)) continue;
+  const lines = stocked.get(id), it = ITEM[id];
+  const { npcs, best, where } = vendorOf(lines);
   const cat = uiName[it.ItemUICategory] || "";
   rows.push([id, it.Name, +it.PriceMid, index("c", cat), GROUPS.indexOf(groupOf(cat)),
     best != null ? index("p", npcName[best]) : -1,
@@ -123,4 +137,21 @@ for (const id of [...stocked.keys()].sort((a, b) => a - b)) {
 writeJSON(path.join(OUT, "VENDORS.json"), { z: lists.z, p: lists.p, c: lists.c, g: GROUPS, r: rows });
 const located = rows.filter(r => r[6] >= 0).length, named = rows.filter(r => r[5] >= 0).length;
 console.log(`VENDORS: ${rows.length} items, ${named} with a named NPC, ${located} with a map position, ${rows.filter(r => r[12]).length} seasonal`);
+
+/* ---- the NPC price index for the crafting tabs ---- */
+const used = new Set();
+for (const r of readJSON(need("recipes.json"))) for (const g of r.ingredients || []) used.add(+g.id);
+for (const r of sheet("CompanyCraftSupplyItem")) if (+r.Item) used.add(+r.Item);
+const npc = { z: [], p: [], r: [] };
+const nIndex = (list, v) => { let i = npc[list].indexOf(v); if (i < 0) { i = npc[list].length; npc[list].push(v); } return i; };
+for (const id of [...stocked.keys()].sort((a, b) => a - b)) {
+  if (!used.has(id)) continue;
+  const lines = stocked.get(id).filter(l => !+shops[l.shop].FestivalId && shopNpcs.has(l.shop));
+  if (!lines.length) continue;
+  const { best, where } = vendorOf(lines);
+  npc.r.push([id, +ITEM[id].PriceMid, nIndex("p", npcName[best]), where ? nIndex("z", where.zone) : -1,
+    where ? where.x : 0, where ? where.y : 0, lines.every(l => l.locked) ? 1 : 0]);
+}
+writeJSON(path.join(OUT, "NPC_PRICES.json"), npc);
+console.log(`NPC_PRICES: ${npc.r.length} crafting materials sold by an NPC, ${npc.r.filter(r => !marketable(r[0])).length} not on the board, ${npc.r.filter(r => r[6]).length} behind a quest or achievement`);
 for (const n of notes) console.log("  " + n);

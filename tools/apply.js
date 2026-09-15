@@ -2,6 +2,7 @@
    - the CD, VD, SUB, WS, DUTY, T4, FLIP_ITEMS and VITEMS datasets of the Currencies, Vendors,
      Submersibles, Workshop, Duties, Scrips, Flips and Retainers tabs, and the DATA and PRE recipe
      catalogues of the Dashboard and Precrafts
+   - NPC_PRICES, the NPC price index the shell hands to every crafting tab
    - ICON_INDEX and ITEM_INDEX: any item those tabs show that the desk has no icon or
      searchable name for yet is added (existing entries are left exactly as they are)
    - RECIPE_INDEX: rebuilt whole from Teamcraft's recipes, so new crafts get their
@@ -30,6 +31,18 @@ for (const [tab, name, file, dataName] of [["currencies", "CD", "CURRENCIES.json
   const before = minifyJSON(readSrc(data)).length;
   writeSrc(data, formatJSON(json));
   report.push(`${tab.padEnd(12)} ${name.padEnd(5)} ${(before / 1024).toFixed(0)} KB -> ${(json.length / 1024).toFixed(0)} KB`);
+}
+
+/* ---- the NPC price index, which the shell hands to every crafting tab ---- */
+{
+  if (!readSrc("index.html").includes("const NPC_PRICES = /*@json data/npc-prices.json*/null;"))
+    throw new Error('src/index.html has no "const NPC_PRICES = /*@json data/npc-prices.json*/null;" line to fill');
+  const text = fs.readFileSync(need("out/NPC_PRICES.json"), "utf8");
+  JSON.parse(text);
+  const json = text.replace(/<\//g, "<\\/");
+  const before = minifyJSON(readSrc("data/npc-prices.json")).length;
+  writeSrc("data/npc-prices.json", formatJSON(json));
+  report.push(`${"shell".padEnd(12)} ${"NPC_PRICES"} ${(before / 1024).toFixed(0)} KB -> ${(json.length / 1024).toFixed(0)} KB`);
 }
 
 /* ---- icons and search names for everything those tabs show ---- */

@@ -75,13 +75,13 @@ since it reads the other outputs to say where else a venture drop comes from.
 | `build-subs.js` | the above | `SUB` — seas, sectors, loot per visit, parts, rank bonuses |
 | `build-workshop.js` | the above | `WS` — every FC project, its phases, the recipes under its turn-ins |
 | `build-currencies.js` | the game tables | `CURRENCIES` — each listed currency's marketable items, cost and shop |
-| `build-vendors.js` | the game tables | `VENDORS` — every marketable gil-shop item, its price, one NPC and map position |
+| `build-vendors.js` | the game tables + Teamcraft `recipes` | `VENDORS` — every marketable gil-shop item, its price, one NPC and map position; `NPC_PRICES` — every crafting material or workshop turn-in an NPC sells all year, for the crafting tabs |
 | `build-duties.js` | the above + `build-currencies.js`'s potsherd shops + Universalis EU/NA prices | `DUTY` — worthwhile drops with rates or exchange costs |
 | `build-crafts.js` | Teamcraft `recipes` + the game tables + the catalogues already in `src/data/` | `DASHBOARD` — every marketable item a personal recipe makes, with its recipe; `PRECRAFTS` — every craftable item used as an ingredient. Keeps each row's order and the Dashboard's HQ/NQ choices, and tags items new to the game with the patch for the Precrafts *new* badge |
 | `build-scrips.js` | the `CollectablesShop*` tables + Teamcraft `recipes` + `build-currencies.js`'s scrip shops | `SCRIPS` — every crafted collectable the appraiser takes for purple or orange crafters' scrips, its scrips at top collectability and its whole recipe tree; every crafter materia each scrip buys |
 | `build-flips.js` | `Item` + `ItemAction` | `FLIPS` — every marketable mount, minion, hairstyle, emote and outfit coffer |
 | `build-retainers.js` | Infi's `Ventures` + Universalis EU/NA prices + the other outputs | `RETAINERS` — exploration venture drops worth selling, their tiers and drop chance; keeps each existing row's hand-checked note on other sources |
-| `apply.js` | the ten outputs | writes `CD`, `VD`, `SUB`, `WS`, `DUTY`, `DATA`, `PRE`, `T4`, `FLIP_ITEMS`, `VITEMS` to `src/data/currencies.json`, `vendors.json`, `submersibles.json`, `workshop.json`, `duties.json`, `dashboard.json`, `precrafts.json`, `scrips.json`, `flips.json`, `retainers.json`; adds any missing icons and search names; rebuilds `RECIPE_INDEX`; runs `build.js` |
+| `apply.js` | the ten outputs | writes `CD`, `VD`, `SUB`, `WS`, `DUTY`, `DATA`, `PRE`, `T4`, `FLIP_ITEMS`, `VITEMS` to `src/data/currencies.json`, `vendors.json`, `submersibles.json`, `workshop.json`, `duties.json`, `dashboard.json`, `precrafts.json`, `scrips.json`, `flips.json`, `retainers.json`, and `NPC_PRICES` to `npc-prices.json`; adds any missing icons and search names; rebuilds `RECIPE_INDEX`; runs `build.js` |
 
 `apply.js` only replaces those files in `src/data/`. Every other tab, and all the page code, is untouched.
 

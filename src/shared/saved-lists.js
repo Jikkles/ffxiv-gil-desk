@@ -33,8 +33,7 @@ const Lists={
     out.order=[...new Set(raw.map(Number).filter(n=>LIST_SLOTS.indexOf(n)>=0))];
     return out;},
   write(d){
-    try{localStorage.setItem(LIST_KEY,JSON.stringify(d));}
-    catch(e){Lists.toast("Browser storage is full — could not save");return false;}
+    if(!storeSet(LIST_KEY,JSON.stringify(d))){Lists.toast("Browser storage is full — could not save");return false;}
     Lists.broadcast();Lists.paint();
     try{if(window.__listChanged)window.__listChanged();}catch(e){}
     return true;},

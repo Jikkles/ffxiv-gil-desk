@@ -23,9 +23,12 @@ const Shop={
   read(){try{const r=JSON.parse(localStorage.getItem(SHOP_KEY)||"null");
     if(r&&Array.isArray(r.items))return r;}catch(e){}
     return{t:0,open:false,items:[]};},
-  write(d){d.t=Date.now();try{localStorage.setItem(SHOP_KEY,JSON.stringify(d));}catch(e){}Shop.render();},
+  write(d){d.t=Date.now();const ok=storeSet(SHOP_KEY,JSON.stringify(d));
+    if(!ok)Shop.toast("Browser storage is full — the shopping list was not saved");
+    Shop.render();return ok;},
 
-  /* entries: [{id,name,qty,unit,worldId,world,hq}] · label: finished item these mats are for
+  /* entries: [{id,name,qty,unit,worldId,world,hq,npc}] · label: finished item these mats are for
+     npc, when set, is where an NPC sells it ("Name, Zone (x, y)"), and world is then "NPC"
      crystals/shards/clusters (ids 2–19) are excluded — assumed stocked, not shopped for */
   add(entries,label){
     const d=Shop.read();let added=0;
@@ -36,16 +39,17 @@ const Shop={
       const k=e.id+":"+(e.hq?1:0);
       const ex=d.items.find(x=>x.key===k);
       if(ex){ex.qty+=e.qty;
-        if(e.unit!=null){ex.unit=e.unit;ex.worldId=e.worldId!=null?e.worldId:ex.worldId;ex.world=e.world||ex.world;}
+        if(e.unit!=null){ex.unit=e.unit;ex.worldId=e.worldId!=null?e.worldId:ex.worldId;ex.world=e.world||ex.world;ex.npc=e.npc||null;
+          if(e.npc)ex.avg=null;}
         if(e.avg!=null)ex.avg=e.avg;
         if(label&&!(ex.for||[]).includes(label))(ex.for=ex.for||[]).push(label);
         ex.done=false;}
       else d.items.push({key:k,id:e.id,name:e.name,qty:e.qty,unit:e.unit!=null?e.unit:null,
         avg:e.avg!=null&&isFinite(e.avg)?e.avg:null,
-        worldId:e.worldId!=null?e.worldId:null,world:e.world||null,hq:!!e.hq,for:label?[label]:[],done:false});
+        worldId:e.worldId!=null?e.worldId:null,world:e.world||null,npc:e.npc||null,hq:!!e.hq,for:label?[label]:[],done:false});
     }
     if(!added)return Shop.toast("Nothing to add");
-    d.open=true;Shop.write(d);
+    d.open=true;if(!Shop.write(d))return;
     Shop.toast(label?`Added ${added} mat${added!==1?"s":""} · ${label}`:`Added to shopping list`);
   },
 
@@ -67,14 +71,15 @@ const Shop={
      put. It used to rank them by how many un-ticked items each had and how much
      gil was left in them, so ticking a thing off re-ranked the worlds underneath
      you and the run you were halfway down moved somewhere else. A Map keeps
-     first-seen order, and the sort below only lifts home to the top and drops
-     the unlistable to the bottom - both of which hold still while you shop. */
+     first-seen order, and the sort below only lifts home to the top, then the
+     NPC shops (bought on any world), and drops the unlistable to the bottom -
+     all of which hold still while you shop. */
   groups(items,homeName){
     const by=new Map();
     for(const it of items){const w=it.world||"No listing";
       if(!by.has(w))by.set(w,[]);
       by.get(w).push(it);}
-    const gs=[...by].map(([w,its])=>({world:w,home:w===homeName,items:its,
+    const gs=[...by].map(([w,its])=>({world:w,home:w===homeName,npc:w==="NPC",items:its,
       count:its.filter(i=>!i.done).length,
       subtotal:its.reduce((s,i)=>s+(i.unit!=null?i.unit*i.qty:0),0),
       remaining:its.filter(i=>!i.done).reduce((s,i)=>s+(i.unit!=null?i.unit*i.qty:0),0)}));
@@ -82,6 +87,7 @@ const Shop={
     gs.sort((a,b)=>{
       if((a.world==="No listing")!==(b.world==="No listing"))return a.world==="No listing"?1:-1;
       if(a.home!==b.home)return a.home?-1:1;
+      if(a.npc!==b.npc)return a.npc?-1:1;
       return 0;});
     return gs;
   },
@@ -103,7 +109,7 @@ const Shop={
     const total=d.items.reduce((s,i)=>s+(i.unit!=null?i.unit*i.qty:0),0);
     const remaining=live.reduce((s,i)=>s+(i.unit!=null?i.unit*i.qty:0),0);
     const gs=Shop.groups(d.items,homeName);
-    const nWorlds=gs.filter(g=>g.world!=="No listing"&&g.count>0).length;
+    const nWorlds=gs.filter(g=>g.world!=="No listing"&&!g.npc&&g.count>0).length;
     const summary=d.items.length
       ?`${live.length} item${live.length!==1?"s":""} · ~${SFMTK(remaining)} gil · ${nWorlds} world${nWorlds!==1?"s":""}`
       :`empty — use 🛒 on a row to add its materials`;
@@ -115,16 +121,17 @@ const Shop={
       h+=`<div class="sp-body">`;
       for(const g of gs){
         const tag=g.world==="No listing"?`<span class="sp-tag dim">check manually</span>`
+          :g.npc?`<span class="sp-tag npc">cheaper than the board</span>`
           :g.home?`<span class="sp-tag home">home ✓</span>`:`<span class="sp-tag hop">hop</span>`;
-        h+=`<div class="sp-world"><b>${g.world}</b>${tag}<span class="sp-wsum">${g.count} item${g.count!==1?"s":""} · ${SFMT(g.remaining)} gil</span></div>`;
+        h+=`<div class="sp-world"><b>${g.npc?"NPC shops":g.world}</b>${tag}<span class="sp-wsum">${g.count} item${g.count!==1?"s":""} · ${SFMT(g.remaining)} gil</span></div>`;
         for(const it of g.items){
           const forTtl=(it.for&&it.for.length)?` title="For: ${it.for.join(", ").replace(/"/g,"&quot;")}"`:"";
           h+=`<div class="sp-row${it.done?" done":""}"${forTtl}>
             <button class="sp-chk" data-shopact="done" data-shopkey="${it.key}" title="${it.done?"Un-tick":"Tick off as bought"}">${it.done?"✓":""}</button>
-            <span class="sp-name"><span class="sp-qty">${it.qty}×</span>${it.name}<span class="qtag ${it.hq?"hq":""}">${it.hq?"HQ":"NQ"}</span></span>
+            <span class="sp-name"><span class="sp-qty">${it.qty}×</span>${it.name}<span class="qtag ${it.hq?"hq":""}">${it.hq?"HQ":"NQ"}</span>${it.npc?`<span class="sp-npc" title="${String(it.npc).replace(/"/g,"&quot;")}">${it.npc}</span>`:""}</span>
             <span class="sp-step"><button data-shopact="dec" data-shopkey="${it.key}" title="−1">−</button><button data-shopact="inc" data-shopkey="${it.key}" title="+1">+</button></span>
             <span class="sp-unit">${it.unit!=null?SFMT(it.unit)+" ea":"—"}</span>
-            <span class="sp-avg${shopAvgBadge(it.unit,it.avg)?" has-badge":""}">${it.avg!=null?`<span class="sp-avgv" title="Recent average sale price across the DC at the time this was added">avg ${SFMT(it.avg)}</span>`:`<span class="sp-avgv dim">no avg</span>`}${shopAvgBadge(it.unit,it.avg)}</span>
+            <span class="sp-avg${shopAvgBadge(it.unit,it.avg)?" has-badge":""}">${it.npc?`<span class="sp-avgv dim" title="An NPC's price never changes">fixed</span>`:it.avg!=null?`<span class="sp-avgv" title="Recent average sale price across the DC at the time this was added">avg ${SFMT(it.avg)}</span>`:`<span class="sp-avgv dim">no avg</span>`}${shopAvgBadge(it.unit,it.avg)}</span>
             <span class="sp-line">${it.unit!=null?SFMT(it.unit*it.qty):"—"}</span>
             <button class="sp-del" data-shopact="del" data-shopkey="${it.key}" title="Remove">✕</button></div>`;
         }
@@ -172,6 +179,8 @@ const Shop={
     #shopPanel .sp-tag{font-size:10px;padding:1px 7px;border-radius:99px;border:1px solid var(--line,var(--line))}
     #shopPanel .sp-tag.home{color:var(--win,var(--win));border-color:var(--win-line)}
     #shopPanel .sp-tag.hop{color:var(--hop,var(--hop));border-color:var(--hop-line)}
+    #shopPanel .sp-tag.npc{color:var(--aether,var(--aether));border-color:color-mix(in srgb,var(--aether) 40%,transparent)}
+    #shopPanel .sp-npc{color:var(--faint,var(--faint));font-size:11px;overflow:hidden;text-overflow:ellipsis;cursor:help}
     #shopPanel .sp-tag.dim,#shopPanel .dim{color:var(--faint,var(--faint))}
     #shopPanel .sp-row{display:grid;grid-template-columns:20px minmax(0,1fr) max-content max-content max-content max-content 22px;gap:9px;align-items:center;
       padding:4px 14px;font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--ink,var(--ink))}
