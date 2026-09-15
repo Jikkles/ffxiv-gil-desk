@@ -72,6 +72,8 @@
 .curcost{margin-left:auto;display:flex;align-items:center;gap:6px;padding-left:22px;flex:none;white-space:nowrap;font-family:"JetBrains Mono",monospace;font-size:13px}
 .curcost .ricon{margin-right:0;width:20px;height:20px}
 .curcost b{font-weight:500;color:var(--aether)}
+/* long names (Allagan Tomestones of ...) are cut short; the whole name is on the hover */
+.curcost .cname{font-family:"Inter",sans-serif;font-size:12px;color:var(--ink2);max-width:220px;overflow:hidden;text-overflow:ellipsis}
 .curcost .q{font-size:11px;color:var(--faint)}
 .name.wide{width:100%;min-width:390px}
 .balbox input{min-width:96px}
@@ -180,7 +182,7 @@
       <template class="guide">
         <div data-spot="#curbar" data-side="bottom" data-title="Pick a currency">Each icon is a currency. The ⭐ tile at the start shows the best buy for every currency at once.</div>
         <div data-spot="#kpiRate" data-side="bottom" data-title="Best rate">The gil one unit of currency turns into on the best item in view. That is the one to spend on.</div>
-        <div data-spot="#rows .curcost" data-side="right" data-title="What it costs">The chip on the right of each item is what one costs in the currency. A split such as (500÷3) means the vendor sells a bundle.</div>
+        <div data-spot="#rows .curcost" data-side="right" data-title="What it costs">The chip on the right of each item names the currency and what one costs in it. A split such as (500÷3) means the vendor sells a bundle.</div>
         <div data-spot="#basis" data-side="right" data-title="Value at">Which sale price the rate is worked out on: <b>Avg 30d</b> (the middle price of 30 days of sales), <b>Current lowest</b>, or <b>Conservative</b>, the lower of the two.</div>
         <div data-spot="#minVel, #showTribal" data-side="right" data-title="Slow sellers and tribal currencies"><b>Min units/day</b> hides items that barely sell; set it to <b>Any</b> to see a whole shop. Tick <b>Tribal currencies</b> to add those to the icons.</div>
       </template>
@@ -379,7 +381,7 @@ function costChip(r){
   if(r.perUnit==null)return "";
   const split=r.qty>1?` <span class="q">(${fmt(r.cost)}&divide;${r.qty})</span>`:"";
   const name=r.curName||(curById(state.cur)||{}).name||"";
-  return `<span class="curcost" title="${xesc(name)} × ${fmtCost(r.perUnit)} for one">${rowIcon(r.curIc)}<b>×${fmtCost(r.perUnit)}</b>${split}</span>`;
+  return `<span class="curcost" title="${xesc(name)} × ${fmtCost(r.perUnit)} for one">${name?`<span class="cname">${xesc(name)}</span>`:""}${rowIcon(r.curIc)}<b>×${fmtCost(r.perUnit)}</b>${split}</span>`;
 }
 /* the desk-wide column set: every tab reads Item, Sell now, Avg 30d, Trend,
    Units/day, Gil/day, with anything tab-specific riding inside the item cell */
