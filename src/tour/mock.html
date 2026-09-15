@@ -65,6 +65,11 @@ body.t-tabs .tabnote,body.t-tabs .tabstem,body.t-tabs .tabband{display:block}
       <div class="field sel"><label>Mat cost</label><select tabindex="-1"><option>Precraft-optimised</option></select></div>
       <div class="field sel"><label>Tax</label><select tabindex="-1"><option>5%</option></select></div>
     </div>
+    <div class="sgroup" data-t="side crafter">
+      <div class="slabel">Your crafter</div>
+      <div class="field sel"><label>Class</label><select tabindex="-1"><option>All crafters</option></select></div>
+      <label class="chk"><input type="checkbox" tabindex="-1"> Precrafts only</label>
+    </div>
     <div class="sgroup" data-t="side filters">
       <div class="slabel">Categories</div>
       <div class="snav" id="catNav"></div>
@@ -79,7 +84,7 @@ body.t-tabs .tabnote,body.t-tabs .tabstem,body.t-tabs .tabband{display:block}
       <div class="hicon" data-t="hero">💰</div>
       <div data-t="hero">
         <h1>Dashboard</h1>
-        <p class="sub">A profit scanner across <b>9,482</b> personal-craft items — consumables, furniture, intermediate materials, gear, tools and dyes. Sell prices benchmark against <b class="homename"></b>; <b>Avg 30d</b> is the real anchor, so a lone inflated listing shows up for what it is. Click any item for its full crafting tree.</p>
+        <p class="sub">A profit scanner across <b>9,490</b> personal-craft items — consumables, furniture, precrafts and other materials, gear, tools and dyes. Pick your <b>Class</b> and level to see only what you can make. Sell prices benchmark against <b class="homename"></b>; <b>Avg 30d</b> is the real anchor, so a lone inflated listing shows up for what it is. Click any item for its full crafting tree.</p>
       </div>
       <div class="kpis" data-t="kpis">
         <div class="kpi"><div class="ki">🪙</div><div class="kbody"><div class="k">Best profit / unit</div><div class="v gil">1,289,698 g</div><div class="s">Smaller Water Otter Fountain</div></div></div>
@@ -150,15 +155,15 @@ function age(a,tag){const t=tag?' data-t="age"':"";
 /* id, name, tag, subtitle, sell, quality, listing age, avg 30d, sales, trend %, mat cost, profit, margin, units/day, gil/day,
    outlier (a price the ⚠ flags; the tour points at the first one) */
 const ROWS=[
-  [39421,"Smaller Water Otter Fountain","furniture","Outdoor Furnishing",1999999,"NQ","1h",1142851,14,80,610301,1289698,64,"0.47","601.9k"],
-  [51251,"Lattice Window Seat","furniture","Furnishing",2389450,"NQ","<1h",2832791,7,-23,1016137,1253841,52,"0.23","292.6k"],
-  [4361,"Electrum Gorget","gear","Necklace",1150000,"HQ","<1h",12000,2,null,2403,1090097,95,"0.07","76.3k",1],
-  [15559,"Mighty Thunderbolt","gear","Lancer's Arm",1000000,"HQ","<1h",600000,2,null,12610,937390,94,"0.07","62.5k"],
-  [13090,"Oriental Grass Plot","furniture","Outdoor Furnishing",2222222,"NQ","2d",1999996,6,null,1242808,868303,39,"0.20","173.7k"],
-  [49254,"Courtly Lover's Cane","gear","Two-handed Conjurer's Arm",850000,"HQ","<1h",454330,38,-1.1,58043,749457,88,"1.27","949.3k"],
-  [49306,"Courtly Lover's Earrings of Fending","gear","Earrings",792144,"HQ","<1h",404170,26,-48,32061,720476,91,"0.87","624.4k"],
-  [49267,"Courtly Lover's Pendulums","gear","Sage's Arm",745923,"HQ","<1h",478474,19,23,74012,634615,85,"0.63","401.9k"],
-  [38895,"Indagator's Needle","tool","Weaver's Primary Tool",599999,"HQ","4h",300000,1,null,27442,542557,90,"0.03","18.1k"]
+  [39421,"Smaller Water Otter Fountain","furniture","Outdoor Furnishing · GSM · lvl 90",1999999,"NQ","1h",1142851,14,80,610301,1289698,64,"0.47","601.9k"],
+  [51251,"Lattice Window Seat","furniture","Furnishing · CRP · lvl 100",2389450,"NQ","<1h",2832791,7,-23,1016137,1253841,52,"0.23","292.6k"],
+  [4361,"Electrum Gorget","gear","Necklace · GSM · lvl 43",1150000,"HQ","<1h",12000,2,null,2403,1090097,95,"0.07","76.3k",1],
+  [15559,"Mighty Thunderbolt","gear","Lancer's Arm · CRP · lvl 50",1000000,"HQ","<1h",600000,2,null,12610,937390,94,"0.07","62.5k"],
+  [13090,"Oriental Grass Plot","furniture","Outdoor Furnishing · ALC · lvl 59",2222222,"NQ","2d",1999996,6,null,1242808,868303,39,"0.20","173.7k"],
+  [49254,"Courtly Lover's Cane","gear","Two-handed Conjurer's Arm · CRP · lvl 100",850000,"HQ","<1h",454330,38,-1.1,58043,749457,88,"1.27","949.3k"],
+  [49306,"Courtly Lover's Earrings of Fending","gear","Earrings · GSM · lvl 100",792144,"HQ","<1h",404170,26,-48,32061,720476,91,"0.87","624.4k"],
+  [49267,"Courtly Lover's Pendulums","gear","Sage's Arm · GSM · lvl 100",745923,"HQ","<1h",478474,19,23,74012,634615,85,"0.63","401.9k"],
+  [38895,"Indagator's Needle","tool","Weaver's Primary Tool · GSM · lvl 90",599999,"HQ","4h",300000,1,null,27442,542557,90,"0.03","18.1k"]
 ];
 /* the first row's recipe, one level open: [id, name, qty, depth, craftable, open,
    buy, quality, avg, dip badge, world (0-2 a hop, "home", or [npc zone] for an NPC shop), craft, line, craft saving] */

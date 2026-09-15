@@ -1,8 +1,8 @@
 # Rebaking the desk after a patch
 
-The **Dashboard**, **Precrafts**, **Currencies**, **Vendors**, **Submersibles**, **Workshop**, **Duties**, **Scrips**,
-**Flips** and **Retainers** tabs carry baked game data — recipes, currency shops, NPC gil shops, sectors and loot
-rates, workshop projects and recipes, duty drops and exchanges, scrip collectables, flip items and venture
+The **Dashboard**, **Gathering**, **Currencies**, **Vendors**, **Submersibles**, **Workshop**, **Duties + Maps**, **Scrips**,
+**Flips** and **Retainers** tabs carry baked game data — recipes, gathering nodes, currency shops, NPC gil shops, sectors
+and loot rates, workshop projects and recipes, duty drops, exchanges and treasure maps, scrip collectables, flip items and venture
 drops — alongside the desk's item icon, search-name and Teamcraft recipe indexes. A
 patch that adds a recipe, a shop, a sea, a workshop project, a deep dungeon or a field operation needs that
 data pulled again. These scripts do it in one go.
@@ -59,7 +59,7 @@ over the first week or two. Rebaking again later simply picks up the better numb
 
 Each step can also be run on its own: `fetch-data.js` (add `--missing` to fetch only files not yet
 cached), `build-subs.js`, `build-workshop.js`, `build-currencies.js`, `build-vendors.js`, `build-duties.js`,
-`build-crafts.js`, `build-scrips.js`, `build-flips.js`, `build-retainers.js`, then `apply.js` to write the results. Run
+`build-crafts.js`, `build-scrips.js`, `build-gathering.js`, `build-flips.js`, `build-retainers.js`, then `apply.js` to write the results. Run
 `build-currencies.js` before `build-duties.js` and `build-scrips.js`, which read its shops, and `build-retainers.js` last,
 since it reads the other outputs to say where else a venture drop comes from.
 `check-bake.js` looks the result over before you commit. It is the same check the weekly job runs.
@@ -68,20 +68,21 @@ since it reads the other outputs to say where else a venture drop comes from.
 
 | Step | Source | Gives |
 | --- | --- | --- |
-| `fetch-data.js` | [ffxiv-datamining](https://github.com/xivapi/ffxiv-datamining) `csv/en/` | `Item`, `ItemUICategory`, `SpecialShop`, `TomestonesItem`, `GCScripShopItem`, `GilShop`, `GilShopItem`, `ENpcBase`, `ENpcResident`, `Level`, `Map`, `PlaceName`, `TerritoryType`, `ItemAction`, `RetainerTask*`, `Submarine*`, `CompanyCraft*` and `CollectablesShop*` game tables |
-| | [Teamcraft](https://github.com/ffxiv-teamcraft/ffxiv-teamcraft) `libs/data/src/lib/json/` | `recipes`, `item-icons`, `submarine-parts` |
+| `fetch-data.js` | [ffxiv-datamining](https://github.com/xivapi/ffxiv-datamining) `csv/en/` | `Item`, `ItemUICategory`, `SpecialShop`, `TomestonesItem`, `GCScripShopItem`, `GilShop`, `GilShopItem`, `ENpcBase`, `ENpcResident`, `Level`, `Map`, `PlaceName`, `TerritoryType`, `ItemAction`, `RetainerTask*`, `Submarine*`, `CompanyCraft*`, `CollectablesShop*`, `TreasureHuntRank` and `TreasureSpot` game tables |
+| | [Teamcraft](https://github.com/ffxiv-teamcraft/ffxiv-teamcraft) `libs/data/src/lib/json/` | `recipes`, `item-icons`, `submarine-parts`, `nodes` |
 | | [Infi's FFXIVGachaSpreadsheet](https://github.com/Infiziert90/FFXIVGachaSpreadsheet) `website/static/data/` | crowd-sourced loot: `Submarines`, `DeepDungeonSacks`, `EurekaBunnies`, `FieldOpLockboxes`, `OccultTreasuresV2`, `ChestDropsV2`, `Ventures` |
 | | [SubmarineTracker](https://github.com/Infiziert90/SubmarineTracker) `Data/Sectors.cs` | surveillance / retrieval / favor breakpoints per sector |
 | `build-subs.js` | the above | `SUB` — seas, sectors, loot per visit, parts, rank bonuses |
 | `build-workshop.js` | the above | `WS` — every FC project, its phases, the recipes under its turn-ins |
 | `build-currencies.js` | the game tables | `CURRENCIES` — each listed currency's marketable items, cost and shop |
 | `build-vendors.js` | the game tables + Teamcraft `recipes` | `VENDORS` — every marketable gil-shop item, its price, one NPC and map position; `NPC_PRICES` — every crafting material or workshop turn-in an NPC sells all year, for the crafting tabs |
-| `build-duties.js` | the above + `build-currencies.js`'s potsherd shops + Universalis EU/NA prices | `DUTY` — worthwhile drops with rates or exchange costs |
-| `build-crafts.js` | Teamcraft `recipes` + the game tables + the catalogues already in `src/data/` | `DASHBOARD` — every marketable item a personal recipe makes, with its recipe; `PRECRAFTS` — every craftable item used as an ingredient. Keeps each row's order and the Dashboard's HQ/NQ choices, and tags items new to the game with the patch for the Precrafts *new* badge |
+| `build-duties.js` | the above + `build-currencies.js`'s potsherd shops + Universalis EU/NA prices | `DUTY` — worthwhile drops with rates or exchange costs, including treasure map coffers and portal chests; every treasure map and portal with its whole marketable loot table |
+| `build-crafts.js` | Teamcraft `recipes` + the game tables + the catalogues already in `src/data/` | `DASHBOARD` — every marketable item a personal recipe makes, with its recipe, the crafter and level, whether it can be HQ and whether it is a precraft (an ingredient of some recipe). Keeps each row's order and HQ/NQ choice, and tags items new to the game with the patch for the *new* badge |
 | `build-scrips.js` | the `CollectablesShop*` tables + Teamcraft `recipes` + `build-currencies.js`'s scrip shops | `SCRIPS` — every crafted collectable the appraiser takes for purple or orange crafters' scrips, its scrips at top collectability and its whole recipe tree; every crafter materia each scrip buys |
-| `build-flips.js` | `Item` + `ItemAction` | `FLIPS` — every marketable mount, minion, hairstyle, emote and outfit coffer |
+| `build-gathering.js` | Teamcraft `nodes` + `Map` + `PlaceName` | `GATHERING` — every marketable Miner and Botanist item with each node it comes from: type, level, zone and coordinates, and spawn times for timed nodes |
+| `build-flips.js` | `Item` + `ItemAction` + Universalis EU/NA prices | `FLIPS` — every marketable mount, minion, hairstyle, emote and outfit coffer; orchestrion rolls, facewear and fashion accessories averaging 50k or more; General-purpose Pure White and Jet Black dye |
 | `build-retainers.js` | Infi's `Ventures` + Universalis EU/NA prices + the other outputs | `RETAINERS` — exploration venture drops worth selling, their tiers and drop chance; keeps each existing row's hand-checked note on other sources |
-| `apply.js` | the ten outputs | writes `CD`, `VD`, `SUB`, `WS`, `DUTY`, `DATA`, `PRE`, `T4`, `FLIP_ITEMS`, `VITEMS` to `src/data/currencies.json`, `vendors.json`, `submersibles.json`, `workshop.json`, `duties.json`, `dashboard.json`, `precrafts.json`, `scrips.json`, `flips.json`, `retainers.json`, and `NPC_PRICES` to `npc-prices.json`; adds any missing icons and search names; rebuilds `RECIPE_INDEX`; runs `build.js` |
+| `apply.js` | the ten outputs | writes `CD`, `VD`, `SUB`, `WS`, `DUTY`, `DATA`, `T4`, `FLIP_ITEMS`, `GATHER`, `VITEMS` to `src/data/currencies.json`, `vendors.json`, `submersibles.json`, `workshop.json`, `duties.json`, `dashboard.json`, `scrips.json`, `flips.json`, `gathering.json`, `retainers.json`, and `NPC_PRICES` to `npc-prices.json`; adds any missing icons and search names; rebuilds `RECIPE_INDEX`; runs `build.js` |
 
 `apply.js` only replaces those files in `src/data/`. Every other tab, and all the page code, is untouched.
 
@@ -113,6 +114,11 @@ Most patches need nothing but the command. Things that do need a small edit:
   added them yet; those sectors are treated as fully met until it does, so rebake again later.
 - **A new workshop category.** `build-workshop.js` warns; the Workshop tab's `groupOf()` and
   category list need the new one.
+- **A new treasure map portal.** `build-duties.js` notes `unlabelled portal "…"`; add it to `PORTALS`
+  with the item ids of the maps that open it (they are in `TreasureHuntRank`). A new map, and the zones
+  it digs in, need nothing.
+- **A new gathering node type or a zone to skip.** `build-gathering.js` reads `TYPES` and `SKIP_ZONES`
+  at the top of the file.
 - **A new kind of unlock item.** `build-flips.js` notes unlock items that are neither a hairstyle nor an
   emote; add a line to `KIND` if they belong on Flips, and an option to the Flips tab's category list.
 - **A new venture drop with no other source found.** Nothing to do for the rebake: `build-retainers.js`
@@ -124,4 +130,5 @@ Most patches need nothing but the command. Things that do need a small edit:
 
 Thresholds live in `MIN` in `build-duties.js`: the lower of the Europe and North America 30-day
 average an item needs to be listed (40k for dungeons and variant, 100k for deep dungeons, 50k for
-field operations).
+field operations, 40k for treasure maps and portals). Flips has its own `MIN` in `build-flips.js` (50k
+for orchestrion rolls, facewear and fashion accessories).

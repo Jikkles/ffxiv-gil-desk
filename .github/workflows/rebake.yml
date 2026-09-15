@@ -1,4 +1,4 @@
-# Keeps the Dashboard, Precrafts, Currencies, Vendors, Submersibles, Workshop and Duties data current after each patch.
+# Keeps the desk's baked game data current after each patch.
 # Every Monday it checks for new game data. From 10 to 38 days after a patch it rebakes,
 # checks the result and pushes it to main. If the rebake needs a human (a warning, a note
 # or a failed check) nothing is pushed and an issue labelled "rebake" says why.
@@ -48,7 +48,7 @@ jobs:
       - name: Rebake
         if: steps.due.outputs.rebake == 'true'
         env:
-          PATCH: ${{ steps.due.outputs.patch }}   # the Precrafts "new" badge
+          PATCH: ${{ steps.due.outputs.patch }}   # the Dashboard "new" badge
         run: |
           set -o pipefail
           node tools/rebake.js 2>&1 | tee rebake.log

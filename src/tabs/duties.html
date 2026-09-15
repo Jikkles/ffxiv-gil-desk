@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Duties</title>
+<title>Duties + Maps</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -23,23 +23,44 @@ thead th span{display:inline-block;min-width:.8em}
 .gpill.eureka{color:#7fd8d4;border-color:#2c4a4a;background:#7fd8d412}
 .gpill.bozja{color:#f3a0b6;border-color:#5a2f3c;background:#f3a0b612}
 .gpill.occult{color:#c0e08a;border-color:#3f4a2c;background:#c0e08a12}
+.gpill.maps{color:#e8b87a;border-color:#56412a;background:#e8b87a12}
+.gpill.portals{color:#8fb3ff;border-color:#2f3f63;background:#8fb3ff12}
 :root[data-theme="light"] .gpill.dungeons{color:#2b6ea8;border-color:#b8d5ec}
 :root[data-theme="light"] .gpill.deep{color:#6d4bc7;border-color:#c9bdf0}
 :root[data-theme="light"] .gpill.variant{color:#8a6414;border-color:#e0cfa8}
 :root[data-theme="light"] .gpill.eureka{color:#1d7a76;border-color:#b3ddda}
 :root[data-theme="light"] .gpill.bozja{color:#b0455f;border-color:#eec2ce}
 :root[data-theme="light"] .gpill.occult{color:#5a7a1e;border-color:#cfdfae}
+:root[data-theme="light"] .gpill.maps{color:#8a5a14;border-color:#e6cfae}
+:root[data-theme="light"] .gpill.portals{color:#2f5bb0;border-color:#bccdef}
 .chance{font-family:"JetBrains Mono",monospace}
 .chance .cur{display:inline-flex;align-items:center;gap:5px}
 .chance .cur .iconbox{width:18px;height:18px;border-radius:4px}
 .chance .cur .iconbox img{width:18px;height:18px}
 .chance .fate{color:var(--faint);font-size:11px}
 .snav button .q{margin-left:auto}
-/* six content types is two rows of three, so the intro keeps a readable width */
+/* eight content types is two rows of four, so the intro keeps a readable width */
 /* the shared hero turns its cards into one flex row at runtime; two classes outrank it */
-.hero .kpis.six{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));flex:0 1 760px}
-.hero .kpis.six .kpi{flex:none}
-@media(max-width:1300px){.hero{flex-wrap:wrap}.hero .kpis.six{flex:1 1 100%}}
+.hero .kpis.eight{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));flex:0 1 980px}
+.hero .kpis.eight .kpi{flex:none}
+@media(max-width:1500px){.hero{flex-wrap:wrap}.hero .kpis.eight{flex:1 1 100%}}
+/* maps & portals view: a map's loot table opens under its row */
+#mtbl tr.row{cursor:pointer}
+.where{font-family:"Inter",sans-serif;font-size:12px;color:var(--ink2);white-space:normal;max-width:230px;margin:0 auto}
+#mtbl td.where{max-width:200px}
+.where .t{display:block;font-size:11px;color:var(--faint)}
+.portalic{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;flex:none;background:var(--panel2);border:1px solid var(--line);font-size:15px}
+.loot{padding:10px 18px 14px}
+.loot table{width:100%;border-collapse:collapse}
+.loot th{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);text-align:right;padding:4px 8px;border-bottom:1px solid var(--line);font-weight:400}
+.loot th:first-child,.loot td:first-child{text-align:left}
+.loot td{padding:4px 8px;text-align:right;font-family:"JetBrains Mono",monospace;font-size:12.5px;border-bottom:1px solid var(--line)}
+.loot td .lname{display:flex;align-items:center;gap:8px;font-family:"Inter",sans-serif}
+.loot td .iconbox{width:22px;height:22px;border-radius:6px}
+.loot td .iconbox img{width:22px;height:22px}
+.loot tr.dim td{color:var(--faint)}
+.loot .lnote{margin-top:8px;font-size:11px;color:var(--faint);font-family:"JetBrains Mono",monospace}
+.hidden-field{display:none!important}
 </style>
 <script>try{var __t=localStorage.getItem("gildesk:theme:v1");document.documentElement.setAttribute("data-theme",__t==="light"?"light":"dark");}catch(e){document.documentElement.setAttribute("data-theme","dark");}</script>
 </head>
@@ -61,13 +82,20 @@ thead th span{display:inline-block;min-width:.8em}
       <label class="chk" title="Hide rows whose listing sits far from what has actually sold"><input type="checkbox" id="hideWarn"> Hide &#9888; unreliable</label>
     </div>
     <div class="sgroup">
+      <div class="slabel">View</div>
+      <div class="field sel" title="Drops lists every item worth money and where it comes from. Maps &amp; portals lists each treasure map and portal dungeon, what one coffer or chest is worth, and its whole loot table."><label for="view">Show</label><select id="view">
+        <option value="drops">Drops</option>
+        <option value="maps">Maps &amp; portals</option>
+      </select></div>
+    </div>
+    <div class="sgroup">
       <div class="slabel">Filters</div>
-      <div class="field sel"><label for="how">Obtained by</label><select id="how">
+      <div class="field sel" id="howField"><label for="how">Obtained by</label><select id="how">
         <option value="all">Drops and exchanges</option>
         <option value="drop">Drops only</option>
         <option value="exchange">Currency exchanges only</option>
       </select></div>
-      <div class="field sel"><label for="minPrice">Min Avg 30d</label><select id="minPrice">
+      <div class="field sel" id="minPriceField"><label for="minPrice">Min Avg 30d</label><select id="minPrice">
         <option value="0">Any price</option>
         <option value="100000" selected>100k+</option>
         <option value="500000">500k+</option>
@@ -90,30 +118,48 @@ thead th span{display:inline-block;min-width:.8em}
     <div class="hero">
       <div class="hicon">&#128481;&#65039;</div>
       <div>
-        <h1><b>Duties</b></h1>
-        <p class="sub">The drops worth chasing in instanced and field content &mdash; dungeon minions and furnishings, deep dungeon sacks, variant exchanges, Eureka, Bozja and Occult Crescent &mdash; with <b>how often each one actually drops</b>, from crowd-sourced records of <b id="nOpen">thousands</b> of coffers and runs, priced live on <b class="homename">Spriggan</b>.</p>
+        <h1><b>Duties + Maps</b></h1>
+        <p class="sub">The drops worth chasing in instanced and field content &mdash; dungeon minions and furnishings, deep dungeon sacks, variant exchanges, Eureka, Bozja, Occult Crescent, treasure map coffers and the portal dungeons maps open &mdash; with <b>how often each one actually drops</b>, from crowd-sourced records of <b id="nOpen">thousands</b> of coffers and runs, priced live on <b class="homename">Spriggan</b>. Switch <b>Show</b> to <b>Maps &amp; portals</b> to see what one map is worth opened.</p>
       </div>
-      <div class="kpis six" id="kpis"></div>
+      <div class="kpis eight" id="kpis"></div>
     </div>
 
     <details class="howto" data-howto="duties">
-      <summary><span class="hw-ic"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="M7.8 7.9a2.3 2.3 0 0 1 4.4.9c0 1.6-2.2 1.9-2.2 3.2M10 14.4v.1"/></svg></span><span class="hw-title">How this works</span><span class="hw-hint">which drops are worth running content for</span><span class="hw-car">▸</span></summary>
+      <summary><span class="hw-ic"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="M7.8 7.9a2.3 2.3 0 0 1 4.4.9c0 1.6-2.2 1.9-2.2 3.2M10 14.4v.1"/></svg></span><span class="hw-title">How this works</span><span class="hw-hint">which drops, maps and portals are worth running</span><span class="hw-car">▸</span></summary>
       <div class="hw-body">
-        <div class="hw-sec"><h4>What it works out</h4><p>Drops that sell for real money from dungeons, deep dungeons, variant and criterion, Eureka, Bozja and Occult Crescent, with how often each one actually drops, from crowd-sourced records of thousands of runs and coffers.</p></div>
-        <div class="hw-sec"><h4>Reading the table</h4><p><b>Chance</b> is per run for a dungeon (every chest added together, and you still have to win the loot roll), otherwise per coffer or sack. <b>Expected</b> is what one run, coffer or sack is worth from that item: chance × average price after tax. Exchanges show their currency cost instead, and Expected becomes gil per unit of currency.</p></div>
-        <div class="hw-sec"><h4>Worth knowing</h4><p>Rare drops sell a few times a month on any one world, so <b>Sell now</b> is your world and everything else is measured across your data centre. Narrow it with <b>Content</b> and <b>Obtained by</b>. A few FATE drops have no recorded rate, and say so.</p></div>
+        <div class="hw-sec"><h4>What it works out</h4><p>Drops that sell for real money from dungeons, deep dungeons, variant and criterion, Eureka, Bozja, Occult Crescent, treasure map coffers and the portal dungeons maps open, with how often each one actually drops, from crowd-sourced records of thousands of runs and coffers. <b>Show</b> switches to <b>Maps &amp; portals</b>: every treasure map and portal, what one coffer or chest is worth, and its whole loot table.</p></div>
+        <div class="hw-sec"><h4>Reading the table</h4><p><b>Chance</b> is per run for a dungeon (every chest added together, and you still have to win the loot roll), per chest opened in a map portal (one for every room you clear), otherwise per coffer or sack. <b>Expected</b> is what one run, coffer or sack is worth from that item: chance × average price after tax. Exchanges show their currency cost instead, and Expected becomes gil per unit of currency. In <b>Maps &amp; portals</b>, <b>Per coffer</b> adds that up over every sellable drop, so you can set it against what the map itself sells for; click a row for its loot.</p></div>
+        <div class="hw-sec"><h4>Worth knowing</h4><p>Rare drops sell a few times a month on any one world, so <b>Sell now</b> is your world and everything else is measured across your data centre. Narrow it with <b>Content</b> and <b>Obtained by</b>. A few FATE drops have no recorded rate, and say so. Coffers are recorded by zone, and most zones dig up two kinds of map, so those maps share one loot table (a Loboskin and a Br'aaxskin coffer count together). Portal odds are not recorded, so Per coffer is for the coffer you dig up, not the portal it might open.</p></div>
       </div>
       <template class="guide">
-        <div data-spot="#catNav" data-side="right" data-title="Content">Narrow the list to one kind of content: dungeons, deep dungeons, variant, Eureka, Bozja or Occult Crescent.</div>
-        <div data-spot="#how" data-side="right" data-title="Obtained by">Drops, currency exchanges, or both.</div>
-        <div data-spot="#tbl th[data-k=pct]" data-side="bottom" data-title="Chance">Per run for a dungeon (every chest added together, and you still roll for it), otherwise per coffer or sack. An exchange shows what it costs instead.</div>
+        <div data-spot="#view" data-side="right" data-title="Drops or maps"><b>Drops</b> lists items worth money and where they come from. <b>Maps &amp; portals</b> lists every treasure map and portal dungeon with what one coffer or chest is worth.</div>
+        <div data-spot="#catNav" data-side="right" data-title="Content">Narrow the list to one kind of content: dungeons, deep dungeons, variant, Eureka, Bozja, Occult Crescent, treasure map coffers or map portals.</div>
+        <div data-spot="#how" data-side="right" data-title="Obtained by">Drops, currency exchanges, or both. Only shown on the Drops view.</div>
+        <div data-spot="#tbl th[data-k=pct]" data-side="bottom" data-title="Chance">Per run for a dungeon (every chest added together, and you still roll for it), per chest opened in a map portal, otherwise per coffer or sack. An exchange shows what it costs instead.</div>
         <div data-spot="#tbl th[data-k=ev]" data-side="bottom" data-title="Expected">What one run, coffer or sack is worth from this item: chance × average price after tax. For an exchange, gil per unit of currency.</div>
+        <div data-spot="#mtbl th[data-k=ev]" data-side="bottom" data-title="Per coffer">What one dug-up coffer or portal chest is worth: every sellable drop's chance × its average price after tax, added up. Compare it with the map's own <b>Avg 30d</b> to decide whether to open a map or sell it.</div>
+        <div data-spot="#mrows tr.row:first-child" data-side="bottom" data-title="Open a map">Click a map or portal for its whole loot table, likeliest earners first.</div>
         <div data-spot="#soldOnly, #hideWarn" data-side="right" data-title="What gets hidden"><b>Only what is actually selling</b> hides drops with no sales across your data centre; <b>Hide ⚠ unreliable</b> drops prices that sit far from real sales.</div>
       </template>
     </details>
 
     <div class="status" id="status">Loading duty drop prices&hellip;</div>
     <div id="errbox"></div>
+
+    <div class="tablewrap"><table id="mtbl" hidden>
+      <thead><tr>
+        <th data-k="name" style="cursor:default">Map or portal</th>
+        <th data-k="where">Where <span></span></th>
+        <th data-k="ev" data-sorted title="What one treasure coffer, or one portal chest, is worth: every sellable drop's chance × its Avg 30d after tax, added up">Per coffer <span>&#9662;</span></th>
+        <th data-k="bestEv" title="The drop that adds most to Per coffer">Best drop <span></span></th>
+        <th data-k="now" title="Cheapest listing of the map on your home world">Sell now <span></span></th>
+        <th data-k="avg" title="Average sale price of the map across your data centre over 30 days">Avg 30d <span></span></th>
+        <th data-k="trend" title="Which way the map's price is moving">Trend <span></span></th>
+        <th data-k="vel" title="Maps sold a day across your data centre">Units/day <span></span></th>
+        <th data-k="gilDay" title="The map's Avg 30d after tax multiplied by units sold a day">Gil/day <span></span></th>
+      </tr></thead>
+      <tbody id="mrows"></tbody>
+    </table></div>
 
     <div class="tablewrap"><table id="tbl" hidden>
       <thead><tr>
@@ -131,7 +177,7 @@ thead th span{display:inline-block;min-width:.8em}
     </table></div>
 
     <p class="foot">
-      <b>Where the rates come from.</b> Drop chances are read from <a href="https://github.com/Infiziert90/FFXIVGachaSpreadsheet" target="_blank" rel="noopener">Infi&rsquo;s crowd-sourced loot records</a> (updated <span id="lootDate">recently</span>), summed across every patch each coffer has been recorded in: deep dungeon sacks, Eureka lockboxes and bunny coffers, Bozja lockboxes, Occult Crescent treasure, pot and bunny coffers, and dungeon chests. A dungeon&rsquo;s chance is <b>per run</b> &mdash; every chest in the duty added together &mdash; and is the chance the item appears, not that you win it: in a party it still goes to a loot roll. A deep dungeon or field coffer chance is per coffer or sack. <b>Exchanges</b> show the currency they cost instead, read from the game&rsquo;s own shop tables, and their Expected figure is gil per unit of currency. A handful of notorious-monster FATE drops, Cassie Earring and Blitzring among them, have no recorded rate at all and say so.
+      <b>Where the rates come from.</b> Drop chances are read from <a href="https://github.com/Infiziert90/FFXIVGachaSpreadsheet" target="_blank" rel="noopener">Infi&rsquo;s crowd-sourced loot records</a> (updated <span id="lootDate">recently</span>), summed across every patch each coffer has been recorded in: deep dungeon sacks, Eureka lockboxes and bunny coffers, Bozja lockboxes, Occult Crescent treasure, pot and bunny coffers, dungeon chests, dug-up treasure map coffers and portal dungeon chests. Which maps dig in which zone comes from the game&rsquo;s own treasure spot tables; coffers are recorded by zone, so maps that share zones share one loot table. A portal chest chance is per chest opened. A dungeon&rsquo;s chance is <b>per run</b> &mdash; every chest in the duty added together &mdash; and is the chance the item appears, not that you win it: in a party it still goes to a loot roll. A deep dungeon or field coffer chance is per coffer or sack. <b>Exchanges</b> show the currency they cost instead, read from the game&rsquo;s own shop tables, and their Expected figure is gil per unit of currency. A handful of notorious-monster FATE drops, Cassie Earring and Blitzring among them, have no recorded rate at all and say so.
       Only drops that sell for real money are listed &mdash; roughly 40k and up from dungeons, variant exchanges and field operations, 100k and up from deep dungeons, whose sacks are otherwise mostly glamour weapons &mdash; so the everyday materia and potions are left off. An item with several sources shows the likeliest one, and the rest on hover.
       Sell now = cheapest listing on <span class="homename">Spriggan</span>. Avg 30d, Trend, Units/day and Gil/day are measured across <span id="scopeName">Chaos</span>, because a rare drop sells a handful of times a month on any one world. Gil/day = Avg 30d &times; (1 &minus; tax) &times; Units/day.
       Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>.
@@ -146,19 +192,27 @@ const ICON_INDEX = /*__ICON_INDEX__*/;
    duty, pct: chance, n: sample size} or an exchange {cost, cur, curId}, or a
    notorious monster FATE drop {fate: 1} with no recorded rate */
 const DUTY = /*@json data/duties.json*/null;
-const IDS = DUTY.items.map(x => x.i);
+/* every treasure map and portal, with its whole marketable loot table as [item, chance]:
+   {k: "coffer"|"portal", p: name, exp, maps: [map item ids], zones, rec: coffers opened} */
+const MAPS = DUTY.maps || [];
+const NAMES = DUTY.names || {};
+/* the drops, plus every map loot item and the maps themselves */
+const IDS = [...new Set([...DUTY.items.map(x => x.i), ...MAPS.flatMap(m => [...m.maps, ...m.loot.map(l => l[0])])])];
+const ITEM_NAME = {}; for (const it of DUTY.items) ITEM_NAME[it.i] = it.n; Object.assign(ITEM_NAME, NAMES);
 const GROUPS = [
   {g:"Dungeons",slug:"dungeons",ic:"&#127984;",label:"Dungeons"},
   {g:"Deep dungeons",slug:"deep",ic:"&#127744;",label:"Deep dungeons"},
   {g:"Variant & Criterion",slug:"variant",ic:"&#127919;",label:"Variant & Criterion"},
   {g:"Eureka",slug:"eureka",ic:"&#10052;&#65039;",label:"Eureka"},
   {g:"Bozja",slug:"bozja",ic:"&#9876;&#65039;",label:"Bozja"},
-  {g:"Occult Crescent",slug:"occult",ic:"&#127769;",label:"Occult Crescent"}
+  {g:"Occult Crescent",slug:"occult",ic:"&#127769;",label:"Occult Crescent"},
+  {g:"Treasure maps",slug:"maps",ic:"&#128506;&#65039;",label:"Treasure maps"},
+  {g:"Map portals",slug:"portals",ic:"&#128682;",label:"Map portals"}
 ];
 const SLUG = {}; for (const x of GROUPS) SLUG[x.g] = x.slug;
 
 let state={home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],query:"",tax:0.05,sortKey:"gilDay",sortDir:-1,mkt:null,hist:null,rows:null,scopeDc:"Chaos",
-  group:"all",how:"all",soldOnly:true,hideWarn:false,minPrice:100000,summary:""};
+  group:"all",how:"all",soldOnly:true,hideWarn:false,minPrice:100000,summary:"",view:"drops",msortKey:"ev",msortDir:-1,mopen:new Set()};
 
 /*__SHARED_A__*/
 /*__SHARED_B__*/
@@ -254,14 +308,99 @@ function visibleRows(){
 }
 
 function srcText(s){return s.g==="Dungeons"?`${s.p}`:`${s.p} · ${s.f}`;}
-function srcTitle(list){return list.map(s=>`${s.g}: ${s.p}${s.f&&s.f!=="exchange"?" · "+s.f:""} — ${s.pct!=null?fmtPct(s.pct)+(s.n?" of "+fmt(s.n)+(s.g==="Dungeons"?" runs":" opened"):""):s.cost!=null?s.cost+" "+s.cur:"FATE drop, no recorded rate"}`).join("\n");}
+/* what a chance is counted over: a dungeon run, a portal chest, or a coffer or sack */
+function perWhat(g){return g==="Dungeons"?"runs":g==="Map portals"?"chests opened":"opened";}
+function srcTitle(list){return list.map(s=>`${s.g}: ${s.p}${s.f&&s.f!=="exchange"?" · "+s.f:""} — ${s.pct!=null?fmtPct(s.pct)+(s.n?" of "+fmt(s.n)+" "+perWhat(s.g):""):s.cost!=null?s.cost+" "+s.cur:"FATE drop, no recorded rate"}`).join("\n");}
 function chanceCell(r){
   const s=r.lead;
-  if(s.pct!=null)return `<span title="${s.n?`Seen in ${fmt(s.n)} ${s.g==="Dungeons"?"recorded runs":"recorded coffers"}`:""}">${fmtPct(s.pct)}</span>`;
+  if(s.pct!=null)return `<span title="${s.n?`Seen in ${fmt(s.n)} ${s.g==="Dungeons"?"recorded runs":s.g==="Map portals"?"recorded portal chests":"recorded coffers"}`:""}">${fmtPct(s.pct)}</span>`;
   if(s.cost!=null)return `<span class="cur" title="${xesc(s.cur)}">${iconHTML(s.curId)}×${fmt(s.cost)}</span>`;
   return `<span class="fate" title="Notorious monster FATE reward; nobody has recorded how often it drops">rare FATE drop</span>`;
 }
+/* ===== maps & portals =====
+   One row a map you can buy or sell (maps whose coffers the records cannot tell apart share
+   one loot table), and one a portal dungeon. Per coffer is the whole loot table priced: every
+   drop's chance × its 30-day average after tax, so a drop with no sales adds nothing. */
+function mapValue(m){
+  let ev=0,best=null;const lines=[];
+  for(const[id,pct]of m.loot){
+    const h=state.hist?state.hist[id]:null;const avg=h&&h.a&&h.a[0]!=null?h.a[0]:null;
+    const v=avg!=null?avg*(1-state.tax)*pct/100:null;
+    if(v!=null){ev+=v;if(!best||v>best.v)best={id,v,pct};}
+    lines.push({id,pct,avg,v});}
+  lines.sort((a,b)=>(b.v??-1)-(a.v??-1)||b.pct-a.pct);
+  return{ev,best,lines};
+}
+function mapName(id){return ITEM_NAME[id]||("#"+id);}
+function shortMap(id){return mapName(id).replace(/ ?Timeworn ?/," ").replace(/ Map$/,"").trim();}
+function mapRows(){
+  const out=[];
+  for(const m of MAPS){
+    const val=mapValue(m);
+    const where=m.k==="portal"?"Portal dungeon":"Dug-up coffer";
+    const whereSub=m.k==="portal"?"opened by "+m.maps.map(shortMap).join(" or "):(m.zones.length===1?m.zones[0]:m.zones.length+" "+m.exp+" zones");
+    if(m.k==="portal")out.push({m,val,key:"portal|"+m.p,id:null,name:m.p,group:"Map portals",where,whereSub,now:null,avg:null,trend:null,vel:null,velI:null,gilDay:null,upload:0});
+    else for(const id of m.maps){
+      const res=state.mkt?state.mkt[id]:null,h=state.hist?state.hist[id]:null;
+      const avg=h&&h.a&&h.a[0]!=null?h.a[0]:null,vi=vel30(h);
+      const now=aggPrice(res,false,"world")??aggPrice(res,true,"world");
+      out.push({m,val,key:"map|"+id,id,name:mapName(id),group:"Treasure maps",where,whereSub,now,avg,trend:trend30(h),vel:vi.perDay,velI:vi,
+        gilDay:(avg!=null&&vi.perDay)?avg*(1-state.tax)*vi.perDay:null,upload:aggUpload(res),shared:m.maps.length>1});
+    }
+  }
+  const q=state.query.toLowerCase();
+  const rows=out.filter(r=>{
+    if((state.group==="Treasure maps"||state.group==="Map portals")&&r.group!==state.group)return false;
+    if(q&&!((r.name+" "+r.m.p+" "+r.whereSub+" "+(r.m.zones||[]).join(" ")).toLowerCase().includes(q)||r.m.loot.some(l=>mapName(l[0]).toLowerCase().includes(q))))return false;
+    return true;});
+  const k=state.msortKey,d=state.msortDir;
+  const val=x=>k==="ev"?x.val.ev:k==="bestEv"?(x.val.best?x.val.best.v:null):k==="trend"?(x.trend?x.trend.pct:null):x[k];
+  return rows.sort((a,b)=>{
+    if(k==="where")return d*(a.where.localeCompare(b.where)||a.whereSub.localeCompare(b.whereSub));
+    const av=val(a),bv=val(b);if(av==null&&bv==null)return 0;if(av==null)return 1;if(bv==null)return -1;return d*(av-bv);});
+}
+function lootHTML(r){
+  const m=r.m,unit=m.k==="portal"?"chest":"coffer";
+  const body=r.val.lines.map(l=>`<tr class="${l.v==null?"dim":""}"><td><span class="lname"><button class="listbtn sm" data-listadd="${l.id}" title="Add to a saved list">📋</button><button class="xwbtn sm" data-xw="${l.id}" data-xwname="${xesc(mapName(l.id))}" title="Compare this item's price and stock on every world">🌐</button>${iconHTML(l.id)}${mapName(l.id)}</span></td>`+
+    `<td>${fmtPct(l.pct)}</td><td>${fmtK(l.avg)}</td><td>${l.v==null?"—":fmtK(l.v)}</td></tr>`).join("");
+  const others=m.k==="coffer"&&m.maps.length>1?` The records cannot tell ${m.maps.map(shortMap).join(" and ")} coffers apart, so they share this table.`:"";
+  const zones=m.zones&&m.zones.length>1?` Dug up in ${m.zones.join(", ")}.`:"";
+  return `<div class="loot"><table><thead><tr><th>Drop</th><th>Chance per ${unit}</th><th>Avg 30d</th><th>Worth per ${unit}</th></tr></thead><tbody>${body}</tbody></table>`+
+    `<div class="lnote">From ${fmt(m.rec)} recorded ${unit}s${m.k==="portal"?" (a run opens one for every room you clear)":""}. Only drops that sell on the market board are listed and counted; a drop with no sales in 30 days adds nothing.${others}${zones}</div></div>`;
+}
+function renderMaps(){
+  const rows=mapRows();
+  document.getElementById("mtbl").hidden=!rows.length;
+  const tb=document.getElementById("mrows");
+  tb.innerHTML=rows.map(r=>{
+    const open=state.mopen.has(r.key),unit=r.m.k==="portal"?"chest":"coffer";
+    const icon=r.id?iconHTML(r.id):'<span class="portalic">&#128682;</span>';
+    const tools=r.id?`<span class="rowtools"><button class="listbtn" data-listadd="${r.id}" title="Add to a saved list">📋</button><button class="xwbtn" data-xw="${r.id}" data-xwname="${xesc(r.name)}" title="Compare this map's price and stock on every world">🌐</button></span>`:"";
+    const sub=r.id?(r.shared?`coffer shared with ${r.m.maps.filter(x=>x!==r.id).map(shortMap).join(", ")}`:`${r.m.exp} map`):`${r.m.exp} portal`;
+    const best=r.val.best?`<span title="${fmtPct(r.val.best.pct)} per ${unit} · worth ${fmtK(r.val.best.v)} a ${unit}">${xesc(mapName(r.val.best.id))}</span>`:"—";
+    return `<tr class="row${open?" open":""}" data-mkey="${xesc(r.key)}">`+
+      `<td><div class="name rich">${tools}<span class="caret"></span>${icon}<span class="nmeta"><span class="n">${r.name}</span><span class="t">${sub}</span></span></div></td>`+
+      `<td><div class="where"><span class="gpill ${SLUG[r.group]}">${r.where}</span><span class="t">${xesc(r.whereSub)}</span></div></td>`+
+      `<td>${state.hist?fmtK(r.val.ev):"—"}</td>`+
+      `<td class="where">${best}</td>`+
+      `<td>${r.id?fmtK(r.now)+agePill(r.upload):"—"}</td>`+
+      `<td>${r.id?fmtK(r.avg):"—"}</td>`+
+      `<td>${r.id?trendChip(r.trend):"—"}</td>`+
+      `<td>${r.vel?velCell(r.velI):"—"}</td>`+
+      `<td>${fmtK(r.gilDay)}</td></tr>`+
+      (open?`<tr class="detail"><td colspan="9">${lootHTML(r)}</td></tr>`:"");}).join("");
+  renderKpis();
+  setStatus(rows.length?state.summary+` · ${rows.length} maps and portals shown · click one for its loot`:"No map or portal matches this search.");
+}
+/* the drop-only filters mean nothing to a map's loot table, so they step aside there */
+function syncView(){const maps=state.view==="maps";
+  document.getElementById("howField").classList.toggle("hidden-field",maps);
+  document.getElementById("minPriceField").classList.toggle("hidden-field",maps);
+  document.getElementById("mtbl").hidden=!maps||!state.rows;
+  if(maps)document.getElementById("tbl").hidden=true;}
 function render(){
+  syncView();
+  if(state.view==="maps")return renderMaps();
   const rows=visibleRows();
   const tbl=document.getElementById("tbl");
   tbl.hidden=!rows.length;
@@ -323,11 +462,11 @@ async function load(){
     for(const[id,nm]of Object.entries(worlds))if(nm===state.home)state.homeId=+id;
     state.scopeDc=dcOfWorld(state.home)||state.dc;
     document.getElementById("scopeName").textContent=state.scopeDc;
-    const sell=await fetchAgg(state.home,IDS,(d,t)=>setStatus(`Pricing ${IDS.length} duty drops on ${state.home}… ${d}/${t} batches`));
+    const sell=await fetchAgg(state.home,IDS,(d,t)=>setStatus(`Pricing ${IDS.length} drops and maps on ${state.home}… ${d}/${t} batches`));
     state.mkt=sell.out;
     const hist=await fetchHist(state.scopeDc,IDS,(d,t)=>setStatus(`Reading ${state.scopeDc} sales history… ${d}/${t} batches`));
     state.hist=hist.out;
-    state.summary=`Priced <b>${IDS.length}</b> duty drops on <b>${state.home}</b>, with ${state.scopeDc}-wide sales behind the average and the daily rate`;
+    state.summary=`Priced <b>${IDS.length}</b> drops and maps on <b>${state.home}</b>, with ${state.scopeDc}-wide sales behind the average and the daily rate`;
     compute();render();updateScanTime();
     finishStatus([sell,hist]);
   }catch(e){showErr(e);}finally{btn.disabled=false;}
@@ -346,6 +485,11 @@ document.getElementById("home").addEventListener("change",e=>{homeChanged(e.targ
 document.getElementById("search").addEventListener("input",e=>{state.query=e.target.value.trim();rerender();});
 document.getElementById("grp").addEventListener("change",e=>{state.group=e.target.value;syncNav();rerender();});
 document.getElementById("how").addEventListener("change",e=>{state.how=e.target.value;rerender();});
+document.getElementById("view").addEventListener("change",e=>{state.view=e.target.value;if(state.rows)render();else syncView();});
+document.getElementById("mrows").addEventListener("click",e=>{
+  if(e.target.closest("button,a"))return;
+  const tr=e.target.closest("tr.row");if(!tr)return;
+  const k=tr.dataset.mkey;if(state.mopen.has(k))state.mopen.delete(k);else state.mopen.add(k);rerender();});
 document.getElementById("minPrice").addEventListener("change",e=>{state.minPrice=+e.target.value;rerender();});
 document.getElementById("soldOnly").addEventListener("change",e=>{state.soldOnly=e.target.checked;rerender();});
 document.getElementById("hideWarn").addEventListener("change",e=>{state.hideWarn=e.target.checked;rerender();});
@@ -353,11 +497,14 @@ document.getElementById("tax").addEventListener("change",e=>{state.tax=+e.target
 document.getElementById("refresh").addEventListener("click",load);
 document.querySelectorAll("thead th[data-k]").forEach(th=>{
   if(th.style.cursor==="default")return;
+  const inMaps=!!th.closest("#mtbl");
   th.addEventListener("click",()=>{
     const k=th.dataset.k;
-    if(state.sortKey===k)state.sortDir*=-1;else{state.sortKey=k;state.sortDir=(k==="group")?1:-1;}
-    document.querySelectorAll("thead th").forEach(x=>{x.removeAttribute("data-sorted");const s=x.querySelector("span");if(s)s.textContent="";});
-    th.setAttribute("data-sorted","");th.querySelector("span").textContent=state.sortDir<0?"▾":"▴";
+    if(inMaps){if(state.msortKey===k)state.msortDir*=-1;else{state.msortKey=k;state.msortDir=(k==="where")?1:-1;}}
+    else if(state.sortKey===k)state.sortDir*=-1;else{state.sortKey=k;state.sortDir=(k==="group")?1:-1;}
+    const dir=inMaps?state.msortDir:state.sortDir;
+    th.closest("thead").querySelectorAll("th").forEach(x=>{x.removeAttribute("data-sorted");const s=x.querySelector("span");if(s)s.textContent="";});
+    th.setAttribute("data-sorted","");th.querySelector("span").textContent=dir<0?"▾":"▴";
     rerender();
   });
 });
@@ -378,9 +525,11 @@ document.querySelectorAll("thead th[data-k]").forEach(th=>{
 
 /* saved lists: a duty drop goes over as a plain item, with where it came from */
 window.__listEntry=id=>{
-  id=+id;const it=DUTY.items.find(x=>x.i===id);if(!it)return null;
+  id=+id;const it=DUTY.items.find(x=>x.i===id);
+  if(!it){const m=MAPS.find(x=>x.maps.includes(id)||x.loot.some(l=>l[0]===id));
+    return m?{id,name:mapName(id),kind:"item",group:"item",q:"nq",note:m.maps.includes(id)?"Treasure map":`${m.k==="portal"?"Map portals":"Treasure maps"} · ${m.p}`,recipes:{},src:"Duties + Maps"}:null;}
   const s=leadOf(it.src);
-  return{id,name:it.n,kind:"item",group:"item",q:"nq",note:`${s.g} · ${srcText(s)}`,recipes:{},src:"Duties"};
+  return{id,name:it.n,kind:"item",group:"item",q:"nq",note:`${s.g} · ${srcText(s)}`,recipes:{},src:"Duties + Maps"};
 };
 </script>
 </body>

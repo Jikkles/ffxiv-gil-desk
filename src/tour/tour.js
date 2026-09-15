@@ -25,6 +25,8 @@ window.Tour=(function(){
       body:"Pulls live prices from Universalis. Other tabs load on their own, but the Dashboard checks over 9,000 items, so it waits for you to press this. <b>Skip dead items</b> leaves out anything unsold in 30 days and checks each one again a week later; <b>shift-click</b> rescans everything now."},
     {sec:"Side panel",title:"Filters",spot:"filters",focus:"side",side:"right",
       body:"Hide items that don’t sell or have suspect prices, list shards and crystals in each recipe with <b>Show crystals</b> (they’re costed either way), measure profit against the cheapest listing or the 30-day average, set the market tax, and narrow the list to one category. Each tab remembers its own."},
+    {sec:"Side panel",title:"Your crafter",spot:"crafter",focus:"side",side:"right",
+      body:"Pick your <b>Class</b> and a level range and the list keeps only what you can make. <b>Precrafts only</b> narrows it to intermediates, the crafts that go into other recipes. <b>Sell</b> prices each item at the quality it usually trades at; switch it to HQ or NQ to price everything one way."},
     {sec:"Page info",title:"What this tab does",spot:"hero",side:"bottom",zoom:1.5,
       body:"Every tab opens with a short summary of what it works out."},
     {sec:"Page info",title:"How this works",spot:"howto",side:"bottom",zoom:1.6,
@@ -58,14 +60,14 @@ window.Tour=(function(){
     {sec:"Row buttons",title:"Open in Teamcraft",spot:"b-tc",focus:"rowhead",state:{tree:1,shop:1},side:"bottom",zoom:2.3,
       body:"Opens this exact recipe in the Teamcraft craft simulator, so you can check a rotation before you commit. Only items you craft have one."},
     {sec:"Tabs",title:"The other tabs",spot:"tabs",state:{tabs:1},side:"bottom",
-      body:"Each tab is its own way of making gil, laid out like this one. Pick any of them from the bar."},
+      body:"Each tab is its own way of making gil, laid out like this one: gathering, currencies, scrips, duties and treasure maps, flips, retainers, submersibles, the workshop and vendors. Pick any of them from the bar."},
     {sec:"Tabs",title:"Search, and this tour",spot:"tabright",side:"bottom",zoom:1.8,next:"Finish",
       body:"Search for any item by name from any tab (press <b>/</b> to jump in). <b>Tour</b> brings this walkthrough back whenever you want it."}
   ];
   /* one line under each tab on the "other tabs" step */
-  const TAB_NOTES={all:"Profit on 9,400+ crafts",precraft:"Buy, craft and sell intermediates",
+  const TAB_NOTES={all:"Profit on 9,400+ crafts and precrafts",gathering:"Gil an hour from Miner and Botanist",
     currencies:"Best gil rate for each currency",materia:"Collectables to scrips to materia",
-    duties:"Valuable drops, with drop rates",flips:"Buy low on one world, sell on another",
+    duties:"Valuable drops, maps and portals",flips:"Buy low on one world, sell on another",
     retainer:"What ventures bring back",submersible:"Best voyage for your sub build",
     workshop:"FC projects, costed phase by phase",vendors:"NPC items that resell for more",
     list:"Your own lists of items"};

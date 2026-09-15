@@ -1,6 +1,51 @@
 {
-  "groups": ["Dungeons","Deep dungeons","Variant & Criterion","Eureka","Bozja","Occult Crescent"],
+  "groups": [
+    "Dungeons",
+    "Deep dungeons",
+    "Variant & Criterion",
+    "Eureka",
+    "Bozja",
+    "Occult Crescent",
+    "Treasure maps",
+    "Map portals"
+  ],
   "items": [
+    {
+      "i": 33850,
+      "n": "A Better Tomorrow Orchestrion Roll",
+      "c": "Orchestrion Roll",
+      "src": [
+        {
+          "g": "Treasure maps",
+          "p": "Gliderskin or Zonureskin map",
+          "f": "treasure coffer",
+          "pct": 2.777,
+          "n": 6230
+        }
+      ]
+    },
+    {
+      "i": 21283,
+      "n": "A Father's Pride Orchestrion Roll",
+      "c": "Orchestrion Roll",
+      "src": [
+        {"g":"Map portals","p":"The Lost Canals of Uznair","f":"portal chest","pct":0.782,"n":11764},
+        {
+          "g": "Map portals",
+          "p": "The Shifting Altars of Uznair",
+          "f": "portal chest",
+          "pct": 0.625,
+          "n": 29283
+        },
+        {
+          "g": "Treasure maps",
+          "p": "Gaganaskin or Gazelleskin map",
+          "f": "treasure coffer",
+          "pct": 0.042,
+          "n": 11779
+        }
+      ]
+    },
     {
       "i": 27912,
       "n": "A Long Fall Orchestrion Roll",
@@ -9,6 +54,21 @@
         {"g":"Dungeons","p":"The Twinning","f":"Shadowbringers dungeon chests","pct":9.329,"n":8687},
         {"g":"Deep dungeons","p":"Eureka Orthos","f":"Gold-tinged Sack","pct":0.985,"n":7920},
         {"g":"Deep dungeons","p":"Eureka Orthos","f":"Silver-tinged Sack","pct":0.547,"n":14806}
+      ]
+    },
+    {
+      "i": 39603,
+      "n": "A Victory Fanfare Reborn Orchestrion Roll",
+      "c": "Orchestrion Roll",
+      "src": [
+        {"g":"Treasure maps","p":"Ophiotauroskin map","f":"treasure coffer","pct":2.547,"n":7147},
+        {
+          "g": "Treasure maps",
+          "p": "Saigaskin or Kumbhiraskin map",
+          "f": "treasure coffer",
+          "pct": 2.473,
+          "n": 3842
+        }
       ]
     },
     {
@@ -159,6 +219,14 @@
       "n": "Archangel Wings",
       "c": "Miscellany",
       "src": [
+        {"g":"Treasure maps","p":"Ophiotauroskin map","f":"treasure coffer","pct":6.1,"n":7147},
+        {
+          "g": "Treasure maps",
+          "p": "Saigaskin or Kumbhiraskin map",
+          "f": "treasure coffer",
+          "pct": 5.648,
+          "n": 3842
+        },
         {
           "g": "Occult Crescent",
           "p": "Occult Crescent · North Horn",
@@ -414,6 +482,36 @@
       ]
     },
     {
+      "i": 15982,
+      "n": "Autumnal Ginkgo Tree",
+      "c": "Outdoor Furnishing",
+      "src": [
+        {
+          "g": "Treasure maps",
+          "p": "Gaganaskin or Gazelleskin map",
+          "f": "treasure coffer",
+          "pct": 10.468,
+          "n": 11779
+        },
+        {"g":"Map portals","p":"The Aquapolis","f":"portal chest","pct":3.688,"n":8107}
+      ]
+    },
+    {
+      "i": 15981,
+      "n": "Autumnal Maple Tree",
+      "c": "Outdoor Furnishing",
+      "src": [
+        {
+          "g": "Treasure maps",
+          "p": "Gaganaskin or Gazelleskin map",
+          "f": "treasure coffer",
+          "pct": 10.417,
+          "n": 11779
+        },
+        {"g":"Map portals","p":"The Aquapolis","f":"portal chest","pct":3.713,"n":8107}
+      ]
+    },
+    {
       "i": 25040,
       "n": "Axe of the Demon",
       "c": "Marauder's Arm",
@@ -445,6 +543,14 @@
       "n": "Ballroom Etiquette - Decadent Decoration",
       "c": "Miscellany",
       "src": [
+        {
+          "g": "Map portals",
+          "p": "The Shifting Oubliettes of Lyhe Ghiah",
+          "f": "portal chest",
+          "pct": 11.165,
+          "n": 9610
+        },
+        {"g":"Map portals","p":"The Dungeons of Lyhe Ghiah","f":"portal chest","pct":10.64,"n":2951},
         {
           "g": "Occult Crescent",
           "p": "Occult Crescent · North Horn",
@@ -735,6 +841,35 @@
       ]
     },
     {
+      "i": 23897,
+      "n": "Birdbath",
+      "c": "Outdoor Furnishing",
+      "src": [
+        {
+          "g": "Map portals",
+          "p": "The Hidden Canals of Uznair",
+          "f": "portal chest",
+          "pct": 3.046,
+          "n": 46951
+        },
+        {
+          "g": "Map portals",
+          "p": "The Shifting Altars of Uznair",
+          "f": "portal chest",
+          "pct": 0.437,
+          "n": 29283
+        },
+        {"g":"Map portals","p":"The Lost Canals of Uznair","f":"portal chest","pct":0.408,"n":11764},
+        {
+          "g": "Treasure maps",
+          "p": "Gaganaskin or Gazelleskin map",
+          "f": "treasure coffer",
+          "pct": 0.085,
+          "n": 11779
+        }
+      ]
+    },
+    {
       "i": 48162,
       "n": "Black Embroidered Parasol",
       "c": "Miscellany",
@@ -774,6 +909,15 @@
           "pct": 0.125,
           "n": 36727
         }
+      ]
+    },
+    {
+      "i": 50797,
+      "n": "Blade Unbroken Orchestrion Roll",
+      "c": "Orchestrion Roll",
+      "src": [
+        {"g":"Map portals","p":"Vault Oneiron","f":"portal chest","pct":0.775,"n":108413},
+        {"g":"Map portals","p":"Cenote Ja Ja Gural","f":"portal chest","pct":0.478,"n":18838}
       ]
     },
     {
@@ -818,6 +962,28 @@
       ]
     },
     {
+      "i": 17862,
+      "n": "Born of the Boughs - The Theme of Gridania Orchestrion Roll",
+      "c": "Orchestrion Roll",
+      "src": [
+        {"g":"Map portals","p":"The Lost Canals of Uznair","f":"portal chest","pct":0.502,"n":11764},
+        {
+          "g": "Map portals",
+          "p": "The Shifting Altars of Uznair",
+          "f": "portal chest",
+          "pct": 0.393,
+          "n": 29283
+        },
+        {
+          "g": "Treasure maps",
+          "p": "Gaganaskin or Gazelleskin map",
+          "f": "treasure coffer",
+          "pct": 0.017,
+          "n": 11779
+        }
+      ]
+    },
+    {
       "i": 12112,
       "n": "Boundless Expanse Fountain",
       "c": "Outdoor Furnishing",
@@ -830,10 +996,39 @@
       "src": [{"g":"Deep dungeons","p":"Heaven-on-High","f":"Platinum-haloed Sack","pct":0.611,"n":6548}]
     },
     {
+      "i": 17632,
+      "n": "Breaking Boundaries Orchestrion Roll",
+      "c": "Orchestrion Roll",
+      "src": [
+        {"g":"Map portals","p":"The Aquapolis","f":"portal chest","pct":1.542,"n":8107},
+        {
+          "g": "Treasure maps",
+          "p": "Archaeoskin, Wyvernskin or Dragonskin map",
+          "f": "treasure coffer",
+          "pct": 0.199,
+          "n": 4523
+        }
+      ]
+    },
+    {
       "i": 23214,
       "n": "Burning Hakutaku Eye",
       "c": "Reagent",
       "src": [{"g":"Eureka","p":"Eureka Pagos","f":"gold bunny coffer","pct":21.453,"n":592}]
+    },
+    {
+      "i": 39592,
+      "n": "Burning Horn",
+      "c": "Miscellany",
+      "src": [
+        {
+          "g": "Map portals",
+          "p": "The Shifting Gymnasion Agonon",
+          "f": "portal chest",
+          "pct": 5.593,
+          "n": 17986
+        }
+      ]
     },
     {
       "i": 21924,
@@ -855,6 +1050,43 @@
       "n": "Byakko Throne",
       "c": "Furnishing",
       "src": [{"g":"Bozja","p":"Zadnor","f":"Zadnor Lockbox","pct":0.062,"n":270821}]
+    },
+    {
+      "i": 16810,
+      "n": "Calamity Unbound Orchestrion Roll",
+      "c": "Orchestrion Roll",
+      "src": [
+        {"g":"Map portals","p":"The Aquapolis","f":"portal chest","pct":0.962,"n":8107},
+        {
+          "g": "Treasure maps",
+          "p": "Archaeoskin, Wyvernskin or Dragonskin map",
+          "f": "treasure coffer",
+          "pct": 0.133,
+          "n": 4523
+        }
+      ]
+    },
+    {
+      "i": 33027,
+      "n": "Calf Leather",
+      "c": "Leather",
+      "src": [
+        {
+          "g": "Treasure maps",
+          "p": "Gliderskin or Zonureskin map",
+          "f": "treasure coffer",
+          "pct": 22.247,
+          "n": 6230
+        },
+        {
+          "g": "Map portals",
+          "p": "The Shifting Oubliettes of Lyhe Ghiah",
+          "f": "portal chest",
+          "pct": 10.416,
+          "n": 9610
+        },
+        {"g":"Map portals","p":"The Dungeons of Lyhe Ghiah","f":"portal chest","pct":9.929,"n":2951}
+      ]
     },
     {
       "i": 32801,
@@ -1165,6 +1397,28 @@
       ]
     },
     {
+      "i": 21280,
+      "n": "Crimson Sunrise Orchestrion Roll",
+      "c": "Orchestrion Roll",
+      "src": [
+        {"g":"Map portals","p":"The Lost Canals of Uznair","f":"portal chest","pct":0.833,"n":11764},
+        {
+          "g": "Map portals",
+          "p": "The Shifting Altars of Uznair",
+          "f": "portal chest",
+          "pct": 0.69,
+          "n": 29283
+        },
+        {
+          "g": "Treasure maps",
+          "p": "Gaganaskin or Gazelleskin map",
+          "f": "treasure coffer",
+          "pct": 0.042,
+          "n": 11779
+        }
+      ]
+    },
+    {
       "i": 22542,
       "n": "Crossed Halberds",
       "c": "Wall-mounted",
@@ -1205,24 +1459,18 @@
       ]
     },
     {
-      "i": 30055,
-      "n": "Dalmascan Draped Top",
-      "c": "Body",
+      "i": 39604,
+      "n": "Dangertek Orchestrion Roll",
+      "c": "Orchestrion Roll",
       "src": [
         {
-          "g": "Occult Crescent",
-          "p": "Occult Crescent · South Horn",
-          "f": "silver treasure coffer",
-          "pct": 1.233,
-          "n": 135881
+          "g": "Treasure maps",
+          "p": "Saigaskin or Kumbhiraskin map",
+          "f": "treasure coffer",
+          "pct": 3.123,
+          "n": 3842
         },
-        {
-          "g": "Occult Crescent",
-          "p": "Occult Crescent · South Horn",
-          "f": "bronze treasure coffer",
-          "pct": 0.126,
-          "n": 836762
-        }
+        {"g":"Treasure maps","p":"Ophiotauroskin map","f":"treasure coffer","pct":2.728,"n":7147}
       ]
     },
     {
@@ -1322,6 +1570,20 @@
       ]
     },
     {
+      "i": 32222,
+      "n": "Dragon Icon",
+      "c": "Furnishing",
+      "src": [
+        {
+          "g": "Treasure maps",
+          "p": "Gliderskin or Zonureskin map",
+          "f": "treasure coffer",
+          "pct": 4.719,
+          "n": 6230
+        }
+      ]
+    },
+    {
       "i": 32856,
       "n": "Drippy",
       "c": "Minion",
@@ -1391,6 +1653,27 @@
       "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Bronze-tinged Sack","pct":0.609,"n":13298}]
     },
     {
+      "i": 27977,
+      "n": "Enchanted Elm Lumber",
+      "c": "Lumber",
+      "src": [
+        {
+          "g": "Map portals",
+          "p": "The Shifting Oubliettes of Lyhe Ghiah",
+          "f": "portal chest",
+          "pct": 12.154,
+          "n": 9610
+        },
+        {
+          "g": "Map portals",
+          "p": "The Dungeons of Lyhe Ghiah",
+          "f": "portal chest",
+          "pct": 11.826,
+          "n": 2951
+        }
+      ]
+    },
+    {
       "i": 30872,
       "n": "Ephemeral Necromancer",
       "c": "Minion",
@@ -1427,10 +1710,44 @@
       ]
     },
     {
+      "i": 46171,
+      "n": "Everkeep Lamppost",
+      "c": "Tabletop",
+      "src": [
+        {"g":"Treasure maps","p":"Gargantuaskin map","f":"treasure coffer","pct":1.925,"n":63519},
+        {
+          "g": "Treasure maps",
+          "p": "Loboskin or Br'aaxskin map",
+          "f": "treasure coffer",
+          "pct": 0.524,
+          "n": 10121
+        }
+      ]
+    },
+    {
+      "i": 51262,
+      "n": "Everkeep Monitor",
+      "c": "Tabletop",
+      "src": [
+        {"g":"Map portals","p":"Vault Oneiron","f":"portal chest","pct":0.532,"n":108413},
+        {"g":"Map portals","p":"Cenote Ja Ja Gural","f":"portal chest","pct":0.483,"n":18838}
+      ]
+    },
+    {
+      "i": 51263,
+      "n": "Everkeep Stereo",
+      "c": "Tabletop",
+      "src": [
+        {"g":"Map portals","p":"Cenote Ja Ja Gural","f":"portal chest","pct":0.573,"n":18838},
+        {"g":"Map portals","p":"Vault Oneiron","f":"portal chest","pct":0.549,"n":108413}
+      ]
+    },
+    {
       "i": 40375,
       "n": "Exciting Dynamite",
       "c": "Minion",
       "src": [
+        {"g":"Map portals","p":"The Excitatron 6000","f":"portal chest","pct":7.553,"n":6885},
         {
           "g": "Deep dungeons",
           "p": "Pilgrim's Traverse",
@@ -1441,10 +1758,43 @@
       ]
     },
     {
+      "i": 38609,
+      "n": "Exciting Neon Wall Light",
+      "c": "Wall-mounted",
+      "src": [
+        {
+          "g": "Treasure maps",
+          "p": "Saigaskin or Kumbhiraskin map",
+          "f": "treasure coffer",
+          "pct": 5.57,
+          "n": 3842
+        },
+        {"g":"Treasure maps","p":"Ophiotauroskin map","f":"treasure coffer","pct":5.303,"n":7147}
+      ]
+    },
+    {
+      "i": 39590,
+      "n": "Exciting Tonic",
+      "c": "Miscellany",
+      "src": [{"g":"Map portals","p":"The Excitatron 6000","f":"portal chest","pct":5.621,"n":6885}]
+    },
+    {
       "i": 12082,
       "n": "Expanse Barding",
       "c": "Other",
       "src": [{"g":"Bozja","p":"Zadnor","f":"Zadnor Lockbox","pct":0.1,"n":270821}]
+    },
+    {
+      "i": 14835,
+      "n": "Expeditioner's Pantalettes",
+      "c": "Legs",
+      "src": [{"g":"Map portals","p":"The Aquapolis","f":"portal chest","pct":1.308,"n":8107}]
+    },
+    {
+      "i": 14836,
+      "n": "Expeditioner's Thighboots",
+      "c": "Feet",
+      "src": [{"g":"Map portals","p":"The Aquapolis","f":"portal chest","pct":1.196,"n":8107}]
     },
     {
       "i": 23318,
@@ -1462,6 +1812,30 @@
       ]
     },
     {
+      "i": 45070,
+      "n": "Figmental Weapon Coffer",
+      "c": "Miscellany",
+      "src": [
+        {"g":"Map portals","p":"Cenote Ja Ja Gural","f":"portal chest","pct":6.678,"n":18838},
+        {"g":"Map portals","p":"Vault Oneiron","f":"portal chest","pct":4.582,"n":108413}
+      ]
+    },
+    {
+      "i": 48229,
+      "n": "Flexible Leather Band",
+      "c": "Leather",
+      "src": [
+        {
+          "g": "Treasure maps",
+          "p": "Loboskin or Br'aaxskin map",
+          "f": "treasure coffer",
+          "pct": 25.422,
+          "n": 10121
+        },
+        {"g":"Treasure maps","p":"Gargantuaskin map","f":"treasure coffer","pct":12.809,"n":63519}
+      ]
+    },
+    {
       "i": 16813,
       "n": "Fog of Phantom Orchestrion Roll",
       "c": "Orchestrion Roll",
@@ -1474,6 +1848,15 @@
           "cur": "Gelmorran Potsherd",
           "curId": 15422
         }
+      ]
+    },
+    {
+      "i": 52357,
+      "n": "For Hope and Happiness Orchestrion Roll",
+      "c": "Orchestrion Roll",
+      "src": [
+        {"g":"Map portals","p":"Vault Oneiron","f":"portal chest","pct":0.363,"n":108413},
+        {"g":"Map portals","p":"Cenote Ja Ja Gural","f":"portal chest","pct":0.212,"n":18838}
       ]
     },
     {
@@ -1829,6 +2212,12 @@
       ]
     },
     {
+      "i": 47965,
+      "n": "Gimme Kitten",
+      "c": "Minion",
+      "src": [{"g":"Map portals","p":"Vault Oneiron","f":"portal chest","pct":1.474,"n":108413}]
+    },
+    {
       "i": 23888,
       "n": "Glass Jars",
       "c": "Tabletop",
@@ -1839,6 +2228,34 @@
       "n": "Goldemar's Horn",
       "c": "Bone",
       "src": [{"g":"Eureka","p":"Eureka Hydatos","f":"Duty-free (Goldemar)","fate":1}]
+    },
+    {
+      "i": 32858,
+      "n": "Golden Beaver",
+      "c": "Minion",
+      "src": [
+        {
+          "g": "Map portals",
+          "p": "The Shifting Oubliettes of Lyhe Ghiah",
+          "f": "portal chest",
+          "pct": 0.302,
+          "n": 9610
+        }
+      ]
+    },
+    {
+      "i": 32203,
+      "n": "Goobbue Lamp",
+      "c": "Tabletop",
+      "src": [
+        {
+          "g": "Map portals",
+          "p": "The Shifting Oubliettes of Lyhe Ghiah",
+          "f": "portal chest",
+          "pct": 0.572,
+          "n": 9610
+        }
+      ]
     },
     {
       "i": 48179,
@@ -1964,6 +2381,15 @@
       ]
     },
     {
+      "i": 52631,
+      "n": "Indigo Twill Cloth",
+      "c": "Cloth",
+      "src": [
+        {"g":"Map portals","p":"Vault Oneiron","f":"portal chest","pct":3.274,"n":108413},
+        {"g":"Map portals","p":"Cenote Ja Ja Gural","f":"portal chest","pct":2.5,"n":18838}
+      ]
+    },
+    {
       "i": 8357,
       "n": "Inferno Battleaxe",
       "c": "Marauder's Arm",
@@ -2003,6 +2429,22 @@
           "f": "Sack of Platinum Light",
           "pct": 0.09,
           "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 44934,
+      "n": "Ja Ja Gural Tree",
+      "c": "Outdoor Furnishing",
+      "src": [
+        {"g":"Map portals","p":"Cenote Ja Ja Gural","f":"portal chest","pct":2.325,"n":18838},
+        {"g":"Treasure maps","p":"Gargantuaskin map","f":"treasure coffer","pct":1.877,"n":63519},
+        {
+          "g": "Treasure maps",
+          "p": "Loboskin or Br'aaxskin map",
+          "f": "treasure coffer",
+          "pct": 0.534,
+          "n": 10121
         }
       ]
     },
@@ -2077,6 +2519,12 @@
       ]
     },
     {
+      "i": 7032,
+      "n": "Lotus Leaf",
+      "c": "Reagent",
+      "src": [{"g":"Treasure maps","p":"A Realm Reborn maps","f":"treasure coffer","pct":4.501,"n":1955}]
+    },
+    {
       "i": 23037,
       "n": "Lunar Barding",
       "c": "Other",
@@ -2142,6 +2590,12 @@
       "n": "Manipulative Moggle Mogfoil",
       "c": "Red Mage's Arm",
       "src": [{"g":"Deep dungeons","p":"Palace of the Dead","f":"Gold-trimmed Sack","pct":0.59,"n":6774}]
+    },
+    {
+      "i": 7772,
+      "n": "Mariner Cotton Cloth",
+      "c": "Cloth",
+      "src": [{"g":"Treasure maps","p":"A Realm Reborn maps","f":"treasure coffer","pct":6.343,"n":1955}]
     },
     {
       "i": 41595,
@@ -2214,6 +2668,26 @@
       "src": [{"g":"Deep dungeons","p":"Palace of the Dead","f":"Gold-trimmed Sack","pct":0.59,"n":6774}]
     },
     {
+      "i": 40376,
+      "n": "Mikra Lyssa",
+      "c": "Minion",
+      "src": [
+        {
+          "g": "Map portals",
+          "p": "The Shifting Gymnasion Agonon",
+          "f": "portal chest",
+          "pct": 8.39,
+          "n": 17986
+        }
+      ]
+    },
+    {
+      "i": 47964,
+      "n": "Mini Yan",
+      "c": "Minion",
+      "src": [{"g":"Map portals","p":"Vault Oneiron","f":"portal chest","pct":1.482,"n":108413}]
+    },
+    {
       "i": 43583,
       "n": "Mischief Maker",
       "c": "Minion",
@@ -2226,6 +2700,12 @@
           "n": 55961
         }
       ]
+    },
+    {
+      "i": 8026,
+      "n": "Mist Silk",
+      "c": "Cloth",
+      "src": [{"g":"Treasure maps","p":"A Realm Reborn maps","f":"treasure coffer","pct":3.887,"n":1955}]
     },
     {
       "i": 39473,
@@ -2292,6 +2772,15 @@
       ]
     },
     {
+      "i": 44506,
+      "n": "Modern Aesthetics - Doing the Wave",
+      "c": "Miscellany",
+      "src": [
+        {"g":"Map portals","p":"Cenote Ja Ja Gural","f":"portal chest","pct":4.958,"n":18838},
+        {"g":"Map portals","p":"Vault Oneiron","f":"portal chest","pct":4.622,"n":108413}
+      ]
+    },
+    {
       "i": 32835,
       "n": "Modern Aesthetics - Early to Rise",
       "c": "Miscellany",
@@ -2355,6 +2844,21 @@
           "pct": 0.053,
           "n": 241859
         }
+      ]
+    },
+    {
+      "i": 43606,
+      "n": "Modern Aesthetics - It Takes Two",
+      "c": "Miscellany",
+      "src": [
+        {
+          "g": "Treasure maps",
+          "p": "Loboskin or Br'aaxskin map",
+          "f": "treasure coffer",
+          "pct": 9.989,
+          "n": 10121
+        },
+        {"g":"Treasure maps","p":"Gargantuaskin map","f":"treasure coffer","pct":7.136,"n":63519}
       ]
     },
     {
@@ -2485,6 +2989,28 @@
       "n": "Murderous Moggle Mogfists",
       "c": "Pugilist's Arm",
       "src": [{"g":"Deep dungeons","p":"Palace of the Dead","f":"Gold-trimmed Sack","pct":0.62,"n":6774}]
+    },
+    {
+      "i": 17861,
+      "n": "Navigator's Glory - The Theme of Limsa Lominsa Orchestrion Roll",
+      "c": "Orchestrion Roll",
+      "src": [
+        {"g":"Map portals","p":"The Lost Canals of Uznair","f":"portal chest","pct":0.434,"n":11764},
+        {
+          "g": "Map portals",
+          "p": "The Shifting Altars of Uznair",
+          "f": "portal chest",
+          "pct": 0.413,
+          "n": 29283
+        },
+        {
+          "g": "Treasure maps",
+          "p": "Gaganaskin or Gazelleskin map",
+          "f": "treasure coffer",
+          "pct": 0.017,
+          "n": 11779
+        }
+      ]
     },
     {
       "i": 16564,
@@ -2824,6 +3350,50 @@
       ]
     },
     {
+      "i": 36368,
+      "n": "On Blade's Edge Orchestrion Roll",
+      "c": "Orchestrion Roll",
+      "src": [
+        {"g":"Treasure maps","p":"Ophiotauroskin map","f":"treasure coffer","pct":2.658,"n":7147},
+        {
+          "g": "Treasure maps",
+          "p": "Saigaskin or Kumbhiraskin map",
+          "f": "treasure coffer",
+          "pct": 2.473,
+          "n": 3842
+        }
+      ]
+    },
+    {
+      "i": 30266,
+      "n": "On Our Fates Alight Orchestrion Roll",
+      "c": "Orchestrion Roll",
+      "src": [
+        {
+          "g": "Treasure maps",
+          "p": "Gliderskin or Zonureskin map",
+          "f": "treasure coffer",
+          "pct": 2.97,
+          "n": 6230
+        }
+      ]
+    },
+    {
+      "i": 15828,
+      "n": "On Windy Meadows Orchestrion Roll",
+      "c": "Orchestrion Roll",
+      "src": [
+        {"g":"Map portals","p":"The Aquapolis","f":"portal chest","pct":1.283,"n":8107},
+        {
+          "g": "Treasure maps",
+          "p": "Archaeoskin, Wyvernskin or Dragonskin map",
+          "f": "treasure coffer",
+          "pct": 0.199,
+          "n": 4523
+        }
+      ]
+    },
+    {
       "i": 47335,
       "n": "Ornamental Shrublet Horn",
       "c": "Other",
@@ -2854,6 +3424,35 @@
       "n": "Petit Punutiy",
       "c": "Minion",
       "src": [{"g":"Dungeons","p":"Ihuykatumu","f":"Dawntrail dungeon chests","pct":5.18,"n":40171}]
+    },
+    {
+      "i": 36629,
+      "n": "Phonograph Plate",
+      "c": "Metal",
+      "src": [
+        {
+          "g": "Treasure maps",
+          "p": "Saigaskin or Kumbhiraskin map",
+          "f": "treasure coffer",
+          "pct": 0.078,
+          "n": 3842
+        }
+      ]
+    },
+    {
+      "i": 44269,
+      "n": "Pile of Gold",
+      "c": "Furnishing",
+      "src": [
+        {
+          "g": "Treasure maps",
+          "p": "Loboskin or Br'aaxskin map",
+          "f": "treasure coffer",
+          "pct": 1.482,
+          "n": 10121
+        },
+        {"g":"Map portals","p":"Cenote Ja Ja Gural","f":"portal chest","pct":1.205,"n":18838}
+      ]
     },
     {
       "i": 47334,
@@ -3024,21 +3623,6 @@
       "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Bronze-tinged Sack","pct":1.173,"n":13298}]
     },
     {
-      "i": 16616,
-      "n": "Red Viola Corsage",
-      "c": "Head",
-      "src": [
-        {"g":"Deep dungeons","p":"Eureka Orthos","f":"Bronze-tinged Sack","pct":0.466,"n":13298},
-        {
-          "g": "Bozja",
-          "p": "Bozjan Southern Front",
-          "f": "Southern Front Lockbox",
-          "pct": 0.099,
-          "n": 175738
-        }
-      ]
-    },
-    {
       "i": 13849,
       "n": "Replica Heavy High Allagan Coat",
       "c": "Body",
@@ -3050,6 +3634,21 @@
           "pct": 0.334,
           "n": 8691
         }
+      ]
+    },
+    {
+      "i": 37491,
+      "n": "Resplendent Feather",
+      "c": "Miscellany",
+      "src": [
+        {
+          "g": "Map portals",
+          "p": "The Shifting Gymnasion Agonon",
+          "f": "portal chest",
+          "pct": 8.601,
+          "n": 17986
+        },
+        {"g":"Map portals","p":"The Excitatron 6000","f":"portal chest","pct":6.492,"n":6885}
       ]
     },
     {
@@ -3086,6 +3685,21 @@
       "n": "Royal Hound",
       "c": "Minion",
       "src": [{"g":"Dungeons","p":"The Underkeep","f":"Dawntrail dungeon chests","pct":4.864,"n":166443}]
+    },
+    {
+      "i": 36637,
+      "n": "Royal Lunatender",
+      "c": "Minion",
+      "src": [
+        {"g":"Treasure maps","p":"Ophiotauroskin map","f":"treasure coffer","pct":8.843,"n":7147},
+        {
+          "g": "Treasure maps",
+          "p": "Saigaskin or Kumbhiraskin map",
+          "f": "treasure coffer",
+          "pct": 7.574,
+          "n": 3842
+        }
+      ]
     },
     {
       "i": 29402,
@@ -3733,6 +4347,12 @@
       ]
     },
     {
+      "i": 7544,
+      "n": "Spriggan Cap",
+      "c": "Head",
+      "src": [{"g":"Treasure maps","p":"A Realm Reborn maps","f":"treasure coffer","pct":2.762,"n":1955}]
+    },
+    {
       "i": 25047,
       "n": "Staff of the Demon",
       "c": "Two–handed Thaumaturge's Arm",
@@ -3922,6 +4542,21 @@
       "src": [{"g":"Bozja","p":"Zadnor","f":"Zadnor Lockbox","pct":0.061,"n":270821}]
     },
     {
+      "i": 30088,
+      "n": "Sungold Talos",
+      "c": "Minion",
+      "src": [
+        {"g":"Map portals","p":"The Dungeons of Lyhe Ghiah","f":"portal chest","pct":8.268,"n":2951},
+        {
+          "g": "Map portals",
+          "p": "The Shifting Oubliettes of Lyhe Ghiah",
+          "f": "portal chest",
+          "pct": 5.317,
+          "n": 9610
+        }
+      ]
+    },
+    {
       "i": 24143,
       "n": "Suzaku Barding",
       "c": "Other",
@@ -4016,10 +4651,28 @@
       "src": [{"g":"Deep dungeons","p":"Eureka Orthos","f":"Gold-tinged Sack","pct":0.328,"n":7920}]
     },
     {
+      "i": 52630,
+      "n": "Sweatcloth",
+      "c": "Cloth",
+      "src": [
+        {"g":"Map portals","p":"Vault Oneiron","f":"portal chest","pct":3.207,"n":108413},
+        {"g":"Map portals","p":"Cenote Ja Ja Gural","f":"portal chest","pct":2.309,"n":18838}
+      ]
+    },
+    {
       "i": 15598,
       "n": "Sword of the Round",
       "c": "Gladiator's Arm",
       "src": [{"g":"Deep dungeons","p":"Heaven-on-High","f":"Platinum-haloed Sack","pct":0.382,"n":6548}]
+    },
+    {
+      "i": 50795,
+      "n": "Taco Delight Orchestrion Roll",
+      "c": "Orchestrion Roll",
+      "src": [
+        {"g":"Map portals","p":"Vault Oneiron","f":"portal chest","pct":0.905,"n":108413},
+        {"g":"Map portals","p":"Cenote Ja Ja Gural","f":"portal chest","pct":0.621,"n":18838}
+      ]
     },
     {
       "i": 43579,
@@ -4060,6 +4713,7 @@
       "n": "Thavnairian Armlets",
       "c": "Hands",
       "src": [
+        {"g":"Map portals","p":"The Aquapolis","f":"portal chest","pct":0.95,"n":8107},
         {
           "g": "Occult Crescent",
           "p": "Occult Crescent · North Horn",
@@ -4081,6 +4735,7 @@
       "n": "Thavnairian Bustier",
       "c": "Body",
       "src": [
+        {"g":"Map portals","p":"The Aquapolis","f":"portal chest","pct":0.974,"n":8107},
         {
           "g": "Deep dungeons",
           "p": "Palace of the Dead",
@@ -4110,6 +4765,7 @@
       "n": "Thavnairian Turban",
       "c": "Head",
       "src": [
+        {"g":"Map portals","p":"The Aquapolis","f":"portal chest","pct":1.32,"n":8107},
         {
           "g": "Occult Crescent",
           "p": "Occult Crescent · North Horn",
@@ -4149,6 +4805,15 @@
       ]
     },
     {
+      "i": 46845,
+      "n": "The Faces We Wear - Professorial Glasses",
+      "c": "Miscellany",
+      "src": [
+        {"g":"Map portals","p":"Vault Oneiron","f":"portal chest","pct":3.164,"n":108413},
+        {"g":"Map portals","p":"Cenote Ja Ja Gural","f":"portal chest","pct":1.789,"n":18838}
+      ]
+    },
+    {
       "i": 44262,
       "n": "The Faces We Wear - Rose-colored Spectacles",
       "c": "Miscellany",
@@ -4161,6 +4826,15 @@
           "cur": "Rokkon Potsherd",
           "curId": 39884
         }
+      ]
+    },
+    {
+      "i": 46842,
+      "n": "The Faces We Wear - Tactical Goggles",
+      "c": "Miscellany",
+      "src": [
+        {"g":"Map portals","p":"Vault Oneiron","f":"portal chest","pct":3.056,"n":108413},
+        {"g":"Map portals","p":"Cenote Ja Ja Gural","f":"portal chest","pct":1.688,"n":18838}
       ]
     },
     {
@@ -4360,6 +5034,21 @@
       ]
     },
     {
+      "i": 17863,
+      "n": "The Twin Faces of Fate - The Theme of Ul'dah Orchestrion Roll",
+      "c": "Orchestrion Roll",
+      "src": [
+        {
+          "g": "Map portals",
+          "p": "The Shifting Altars of Uznair",
+          "f": "portal chest",
+          "pct": 0.434,
+          "n": 29283
+        },
+        {"g":"Map portals","p":"The Lost Canals of Uznair","f":"portal chest","pct":0.391,"n":11764}
+      ]
+    },
+    {
       "i": 22483,
       "n": "Their Deadly Mission Orchestrion Roll",
       "c": "Orchestrion Roll",
@@ -4427,6 +5116,13 @@
       "c": "Orchestrion Roll",
       "src": [
         {
+          "g": "Treasure maps",
+          "p": "Gliderskin or Zonureskin map",
+          "f": "treasure coffer",
+          "pct": 2.777,
+          "n": 6230
+        },
+        {
           "g": "Deep dungeons",
           "p": "Pilgrim's Traverse",
           "f": "Sack of Gilded Light",
@@ -4443,6 +5139,15 @@
       ]
     },
     {
+      "i": 46848,
+      "n": "Torch",
+      "c": "Miscellany",
+      "src": [
+        {"g":"Map portals","p":"Vault Oneiron","f":"portal chest","pct":2.887,"n":108413},
+        {"g":"Map portals","p":"Cenote Ja Ja Gural","f":"portal chest","pct":1.587,"n":18838}
+      ]
+    },
+    {
       "i": 48185,
       "n": "Torquetum of Sanctifying Light",
       "c": "Astrologian's Arm",
@@ -4453,6 +5158,21 @@
           "f": "Sack of Platinum Light",
           "pct": 0.136,
           "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 46107,
+      "n": "Training Mat",
+      "c": "Rug",
+      "src": [
+        {"g":"Treasure maps","p":"Gargantuaskin map","f":"treasure coffer","pct":1.859,"n":63519},
+        {
+          "g": "Treasure maps",
+          "p": "Loboskin or Br'aaxskin map",
+          "f": "treasure coffer",
+          "pct": 0.524,
+          "n": 10121
         }
       ]
     },
@@ -4474,6 +5194,30 @@
           "f": "Sack of Platinum Light",
           "pct": 0.098,
           "n": 36727
+        }
+      ]
+    },
+    {
+      "i": 41805,
+      "n": "Twilight Gemstone",
+      "c": "Miscellany",
+      "src": [
+        {"g":"Map portals","p":"Cenote Ja Ja Gural","f":"portal chest","pct":4.804,"n":18838},
+        {"g":"Map portals","p":"Vault Oneiron","f":"portal chest","pct":4.394,"n":108413}
+      ]
+    },
+    {
+      "i": 15827,
+      "n": "Twilight over Thanalan Orchestrion Roll",
+      "c": "Orchestrion Roll",
+      "src": [
+        {"g":"Map portals","p":"The Aquapolis","f":"portal chest","pct":1.209,"n":8107},
+        {
+          "g": "Treasure maps",
+          "p": "Archaeoskin, Wyvernskin or Dragonskin map",
+          "f": "treasure coffer",
+          "pct": 0.177,
+          "n": 4523
         }
       ]
     },
@@ -4567,6 +5311,45 @@
       ]
     },
     {
+      "i": 49847,
+      "n": "Unfriendly Yan Neon Wall Light",
+      "c": "Wall-mounted",
+      "src": [
+        {"g":"Map portals","p":"Vault Oneiron","f":"portal chest","pct":1.124,"n":108413},
+        {"g":"Map portals","p":"Cenote Ja Ja Gural","f":"portal chest","pct":0.844,"n":18838}
+      ]
+    },
+    {
+      "i": 8156,
+      "n": "Unhidden Leather Map",
+      "c": "Miscellany",
+      "src": [
+        {
+          "g": "Treasure maps",
+          "p": "Archaeoskin, Wyvernskin or Dragonskin map",
+          "f": "treasure coffer",
+          "pct": 12.226,
+          "n": 4523
+        },
+        {"g":"Treasure maps","p":"A Realm Reborn maps","f":"treasure coffer","pct":5.575,"n":1955}
+      ]
+    },
+    {
+      "i": 16807,
+      "n": "Unspoken Orchestrion Roll",
+      "c": "Orchestrion Roll",
+      "src": [
+        {"g":"Map portals","p":"The Aquapolis","f":"portal chest","pct":0.863,"n":8107},
+        {
+          "g": "Treasure maps",
+          "p": "Archaeoskin, Wyvernskin or Dragonskin map",
+          "f": "treasure coffer",
+          "pct": 0.332,
+          "n": 4523
+        }
+      ]
+    },
+    {
       "i": 23892,
       "n": "Verdant Partition",
       "c": "Furnishing",
@@ -4616,6 +5399,21 @@
       ]
     },
     {
+      "i": 15829,
+      "n": "Whisper of the Land Orchestrion Roll",
+      "c": "Orchestrion Roll",
+      "src": [
+        {"g":"Map portals","p":"The Aquapolis","f":"portal chest","pct":1.357,"n":8107},
+        {
+          "g": "Treasure maps",
+          "p": "Archaeoskin, Wyvernskin or Dragonskin map",
+          "f": "treasure coffer",
+          "pct": 0.31,
+          "n": 4523
+        }
+      ]
+    },
+    {
       "i": 48161,
       "n": "White Embroidered Parasol",
       "c": "Miscellany",
@@ -4640,6 +5438,35 @@
           "f": "silver pot coffer",
           "pct": 2.085,
           "n": 39083
+        }
+      ]
+    },
+    {
+      "i": 37484,
+      "n": "White Lace Parasol",
+      "c": "Miscellany",
+      "src": [
+        {"g":"Map portals","p":"The Excitatron 6000","f":"portal chest","pct":8.134,"n":6885},
+        {
+          "g": "Map portals",
+          "p": "The Shifting Gymnasion Agonon",
+          "f": "portal chest",
+          "pct": 6.511,
+          "n": 17986
+        }
+      ]
+    },
+    {
+      "i": 39484,
+      "n": "Wind-up Aidoneus",
+      "c": "Minion",
+      "src": [
+        {
+          "g": "Map portals",
+          "p": "The Shifting Gymnasion Agonon",
+          "f": "portal chest",
+          "pct": 0.534,
+          "n": 17986
         }
       ]
     },
@@ -4678,6 +5505,20 @@
       ]
     },
     {
+      "i": 26789,
+      "n": "Wind-up Fuath",
+      "c": "Minion",
+      "src": [
+        {
+          "g": "Treasure maps",
+          "p": "Gliderskin or Zonureskin map",
+          "f": "treasure coffer",
+          "pct": 7.961,
+          "n": 6230
+        }
+      ]
+    },
+    {
       "i": 41477,
       "n": "Wind-up Golbez",
       "c": "Minion",
@@ -4696,6 +5537,20 @@
       "n": "Wind-up Magus Sisters",
       "c": "Minion",
       "src": [{"g":"Dungeons","p":"The Tower Of Zot","f":"Endwalker dungeon chests","pct":4.528,"n":23456}]
+    },
+    {
+      "i": 38453,
+      "n": "Wind-up Philos",
+      "c": "Minion",
+      "src": [
+        {
+          "g": "Map portals",
+          "p": "The Shifting Gymnasion Agonon",
+          "f": "portal chest",
+          "pct": 0.506,
+          "n": 17986
+        }
+      ]
     },
     {
       "i": 38448,
@@ -4741,6 +5596,12 @@
       ]
     },
     {
+      "i": 46829,
+      "n": "Yan Horn",
+      "c": "Other",
+      "src": [{"g":"Map portals","p":"Vault Oneiron","f":"portal chest","pct":2.179,"n":108413}]
+    },
+    {
       "i": 24286,
       "n": "Ying-Yang's Tissue",
       "c": "Reagent",
@@ -4762,5 +5623,917 @@
       "src": [{"g":"Bozja","p":"Zadnor","f":"Zadnor Lockbox","pct":0.101,"n":270821}]
     }
   ],
+  "maps": [
+    {
+      "k": "portal",
+      "p": "The Aquapolis",
+      "exp": "A Realm Reborn",
+      "maps": [12243],
+      "rec": 8107,
+      "loot": [
+        [12931,11.176],
+        [12932,11.163],
+        [12935,10.226],
+        [16906,6.402],
+        [12523,4.848],
+        [17574,4.675],
+        [12933,4.576],
+        [12934,4.576],
+        [14957,4.576],
+        [12633,4.564],
+        [15981,3.713],
+        [15982,3.688],
+        [16907,2.911],
+        [12527,2.455],
+        [15983,1.85],
+        [6177,1.702],
+        [17019,1.641],
+        [16724,1.604],
+        [16725,1.604],
+        [16729,1.604],
+        [16732,1.554],
+        [13275,1.542],
+        [16726,1.542],
+        [17632,1.542],
+        [16731,1.517],
+        [14830,1.505],
+        [15945,1.505],
+        [16721,1.431],
+        [16728,1.431],
+        [16730,1.394],
+        [14833,1.382],
+        [6188,1.357],
+        [15829,1.357],
+        [15984,1.357],
+        [10387,1.32],
+        [14835,1.308],
+        [14831,1.295],
+        [15828,1.283],
+        [16727,1.234],
+        [15827,1.209],
+        [14836,1.196],
+        [10388,1.172],
+        [14832,1.172],
+        [13272,1.122],
+        [14834,1.11],
+        [13769,1.098],
+        [10389,1.073],
+        [10396,0.987],
+        [10393,0.974],
+        [10395,0.974],
+        [16810,0.962],
+        [10391,0.95],
+        [10394,0.95],
+        [10390,0.937],
+        [12052,0.913],
+        [10392,0.9],
+        [16807,0.863],
+        [7566,0.765],
+        [15447,0.728],
+        [12053,0.691],
+        [12049,0.678],
+        [9349,0.567],
+        [14173,0.543],
+        [5375,0.506],
+        [14155,0.506],
+        [16733,0.506],
+        [7567,0.493],
+        [14149,0.481],
+        [14172,0.481],
+        [12056,0.456],
+        [14171,0.456],
+        [16705,0.456],
+        [12584,0.444],
+        [14146,0.444],
+        [16706,0.444],
+        [14157,0.432],
+        [14174,0.432],
+        [12619,0.382],
+        [15645,0.382],
+        [5339,0.37],
+        [14152,0.37],
+        [14156,0.37],
+        [15649,0.37],
+        [16707,0.37],
+        [7564,0.358],
+        [16708,0.358],
+        [8202,0.345],
+        [14175,0.333],
+        [12621,0.321],
+        [12593,0.296],
+        [14153,0.296],
+        [12054,0.284],
+        [12618,0.284],
+        [14150,0.284],
+        [12057,0.259],
+        [12617,0.247],
+        [6184,0.185],
+        [14147,0.173],
+        [12567,0.16],
+        [12620,0.148]
+      ]
+    },
+    {
+      "k": "portal",
+      "p": "The Shifting Altars of Uznair",
+      "exp": "Stormblood",
+      "maps": [17836,24794],
+      "rec": 29283,
+      "loot": [
+        [23375,12.717],
+        [22464,12.4],
+        [22463,9.285],
+        [23376,8.944],
+        [24222,8.336],
+        [24804,8.124],
+        [24336,8.029],
+        [23899,3.364],
+        [20757,3.169],
+        [20756,3.091],
+        [20760,3.039],
+        [20759,2.916],
+        [20758,2.773],
+        [23901,1.66],
+        [23878,1.653],
+        [24527,1.305],
+        [24903,0.744],
+        [24256,0.741],
+        [24259,0.724],
+        [24247,0.714],
+        [24248,0.714],
+        [21280,0.69],
+        [24244,0.683],
+        [24250,0.68],
+        [24257,0.676],
+        [24253,0.659],
+        [24260,0.659],
+        [24254,0.656],
+        [24252,0.652],
+        [24246,0.642],
+        [24245,0.635],
+        [21283,0.625],
+        [24251,0.618],
+        [24249,0.611],
+        [24258,0.584],
+        [23897,0.437],
+        [17863,0.434],
+        [17861,0.413],
+        [17862,0.393],
+        [17978,0.372]
+      ]
+    },
+    {
+      "k": "portal",
+      "p": "The Lost Canals of Uznair",
+      "exp": "Stormblood",
+      "maps": [17836,24794],
+      "rec": 11764,
+      "loot": [
+        [23375,16.661],
+        [22464,16.287],
+        [22463,12.207],
+        [23376,10.923],
+        [24222,8.917],
+        [24336,8.722],
+        [24804,8.722],
+        [23899,4.344],
+        [23878,2.312],
+        [24527,1.19],
+        [21280,0.833],
+        [21283,0.782],
+        [24257,0.748],
+        [24252,0.723],
+        [24248,0.714],
+        [24260,0.697],
+        [24244,0.68],
+        [24251,0.646],
+        [24259,0.629],
+        [24258,0.604],
+        [24249,0.587],
+        [24254,0.587],
+        [24253,0.553],
+        [24256,0.553],
+        [24247,0.544],
+        [24250,0.544],
+        [17862,0.502],
+        [24245,0.493],
+        [24246,0.459],
+        [17861,0.434],
+        [23897,0.408],
+        [17863,0.391],
+        [17978,0.391],
+        [24903,0.094]
+      ]
+    },
+    {
+      "k": "portal",
+      "p": "The Hidden Canals of Uznair",
+      "exp": "Stormblood",
+      "maps": [19770],
+      "rec": 46951,
+      "loot": [
+        [24336,25.755],
+        [24804,23.109],
+        [23375,8.117],
+        [22474,6.743],
+        [22476,6.549],
+        [24002,5.501],
+        [21060,5.495],
+        [24527,4.696],
+        [24222,4.236],
+        [24903,3.076],
+        [23897,3.046],
+        [21922,2.875],
+        [23901,0.518],
+        [20758,0.373],
+        [20760,0.362],
+        [20759,0.358],
+        [20756,0.341],
+        [20757,0.324],
+        [24252,0.06],
+        [24250,0.055],
+        [24260,0.051],
+        [24245,0.049],
+        [24248,0.049],
+        [24256,0.049],
+        [24246,0.047],
+        [24247,0.047],
+        [24249,0.047],
+        [24258,0.047],
+        [24257,0.045],
+        [24244,0.043],
+        [24259,0.04],
+        [24253,0.036],
+        [24254,0.034],
+        [24251,0.03]
+      ]
+    },
+    {
+      "k": "portal",
+      "p": "The Shifting Oubliettes of Lyhe Ghiah",
+      "exp": "Shadowbringers",
+      "maps": [26745,33328],
+      "rec": 9610,
+      "loot": [
+        [33869,31.082],
+        [27977,12.154],
+        [30135,11.228],
+        [32830,11.165],
+        [33027,10.416],
+        [31091,8.824],
+        [30088,5.317],
+        [33124,4.62],
+        [33121,4.318],
+        [32203,0.572],
+        [32858,0.302]
+      ]
+    },
+    {
+      "k": "portal",
+      "p": "The Dungeons of Lyhe Ghiah",
+      "exp": "Shadowbringers",
+      "maps": [26745,33328],
+      "rec": 2951,
+      "loot": [
+        [33869,29.787],
+        [27977,11.826],
+        [31091,11.691],
+        [30135,10.674],
+        [32830,10.64],
+        [33027,9.929],
+        [30088,8.268],
+        [33124,4.371],
+        [33121,4.338]
+      ]
+    },
+    {
+      "k": "portal",
+      "p": "The Excitatron 6000",
+      "exp": "Endwalker",
+      "maps": [36612,39593],
+      "rec": 6885,
+      "loot": [
+        [41653,28.163],
+        [39589,24.285],
+        [40700,23.762],
+        [37484,8.134],
+        [40375,7.553],
+        [37491,6.492],
+        [39590,5.621]
+      ]
+    },
+    {
+      "k": "portal",
+      "p": "The Shifting Gymnasion Agonon",
+      "exp": "Endwalker",
+      "maps": [39591,39918],
+      "rec": 17986,
+      "loot": [
+        [41653,33.593],
+        [39589,19.404],
+        [40700,16.869],
+        [37491,8.601],
+        [40376,8.39],
+        [37484,6.511],
+        [39592,5.593],
+        [39484,0.534],
+        [38453,0.506]
+      ]
+    },
+    {
+      "k": "portal",
+      "p": "Cenote Ja Ja Gural",
+      "exp": "Dawntrail",
+      "maps": [43557,44349],
+      "rec": 18838,
+      "loot": [
+        [48228,12.416],
+        [45072,10.739],
+        [44133,10.505],
+        [45070,6.678],
+        [45006,6.232],
+        [44506,4.958],
+        [48152,4.878],
+        [41805,4.804],
+        [45005,4.799],
+        [46261,4.114],
+        [44257,3.992],
+        [50830,3.854],
+        [43572,3.381],
+        [44494,3.206],
+        [52631,2.5],
+        [44934,2.325],
+        [52630,2.309],
+        [48104,2.012],
+        [45038,1.794],
+        [46845,1.789],
+        [46842,1.688],
+        [46848,1.587],
+        [48225,1.545],
+        [44269,1.205],
+        [44323,1.067],
+        [49847,0.844],
+        [49846,0.786],
+        [46106,0.711],
+        [50795,0.621],
+        [46105,0.595],
+        [46147,0.579],
+        [51263,0.573],
+        [51262,0.483],
+        [50797,0.478],
+        [52357,0.212]
+      ]
+    },
+    {
+      "k": "portal",
+      "p": "Vault Oneiron",
+      "exp": "Dawntrail",
+      "maps": [46185],
+      "rec": 108413,
+      "loot": [
+        [46261,11.932],
+        [48228,8.804],
+        [45072,7.529],
+        [50830,6.447],
+        [44506,4.622],
+        [45070,4.582],
+        [41805,4.394],
+        [45006,4.316],
+        [48152,4.314],
+        [44257,3.372],
+        [52631,3.274],
+        [52630,3.207],
+        [46845,3.164],
+        [46842,3.056],
+        [46848,2.887],
+        [44494,2.429],
+        [43572,2.288],
+        [46829,2.179],
+        [46105,1.772],
+        [46106,1.669],
+        [46147,1.586],
+        [47964,1.482],
+        [47965,1.474],
+        [48225,1.357],
+        [45005,1.278],
+        [49847,1.124],
+        [49846,1.076],
+        [50795,0.905],
+        [50797,0.775],
+        [45038,0.654],
+        [48104,0.609],
+        [51263,0.549],
+        [51262,0.532],
+        [52357,0.363]
+      ]
+    },
+    {
+      "k": "coffer",
+      "p": "A Realm Reborn maps",
+      "exp": "A Realm Reborn",
+      "maps": [6688,6689,6690,6691,6692,8156],
+      "rec": 1955,
+      "loot": [
+        [9521,30.946],
+        [7047,8.542],
+        [7042,8.44],
+        [7771,7.775],
+        [5531,7.724],
+        [5532,7.11],
+        [5501,7.008],
+        [5530,6.957],
+        [5119,6.905],
+        [14271,6.905],
+        [5274,6.343],
+        [7772,6.343],
+        [5502,6.292],
+        [5261,5.831],
+        [8156,5.575],
+        [7046,5.217],
+        [7043,5.166],
+        [7044,4.962],
+        [7045,4.859],
+        [8021,4.757],
+        [7032,4.501],
+        [7041,4.041],
+        [8026,3.887],
+        [8028,3.683],
+        [7544,2.762],
+        [5357,2.506],
+        [9299,2.404],
+        [5358,2.353],
+        [9296,2.302],
+        [6188,0.358],
+        [8202,0.358],
+        [6177,0.307],
+        [6184,0.102]
+      ],
+      "zones": [
+        "Middle La Noscea",
+        "South Shroud",
+        "Coerthas Central Highlands",
+        "Eastern La Noscea",
+        "Eastern Thanalan",
+        "Western La Noscea",
+        "Lower La Noscea",
+        "East Shroud",
+        "Northern Thanalan",
+        "Upper La Noscea",
+        "North Shroud",
+        "Western Thanalan",
+        "Central Shroud",
+        "Mor Dhona",
+        "Southern Thanalan",
+        "Central Thanalan",
+        "Outer La Noscea"
+      ]
+    },
+    {
+      "k": "coffer",
+      "p": "Archaeoskin, Wyvernskin or Dragonskin map",
+      "exp": "Heavensward",
+      "maps": [12241,12242,12243],
+      "rec": 4523,
+      "loot": [
+        [12646,22.087],
+        [12645,21.8],
+        [8156,12.226],
+        [14271,4.179],
+        [6177,1.901],
+        [13275,1.879],
+        [13746,0.884],
+        [14931,0.531],
+        [14932,0.531],
+        [16807,0.332],
+        [15829,0.31],
+        [12647,0.199],
+        [15828,0.199],
+        [17632,0.199],
+        [15827,0.177],
+        [16810,0.133],
+        [12649,0.088]
+      ],
+      "zones": [
+        "The Sea of Clouds",
+        "The Churning Mists",
+        "Coerthas Western Highlands",
+        "The Dravanian Forelands",
+        "The Dravanian Hinterlands"
+      ]
+    },
+    {
+      "k": "coffer",
+      "p": "Gaganaskin or Gazelleskin map",
+      "exp": "Stormblood",
+      "maps": [17835,17836],
+      "rec": 11779,
+      "loot": [
+        [20270,16.903],
+        [15984,15.799],
+        [15983,15.748],
+        [18032,12.115],
+        [20272,10.485],
+        [15982,10.468],
+        [15981,10.417],
+        [21205,8.023],
+        [21206,7.929],
+        [20273,6.316],
+        [20271,6.079],
+        [20537,5.629],
+        [17985,3.685],
+        [23375,0.45],
+        [24527,0.348],
+        [17977,0.212],
+        [23878,0.204],
+        [23899,0.144],
+        [22463,0.102],
+        [22464,0.102],
+        [23897,0.085],
+        [23376,0.068],
+        [21280,0.042],
+        [21283,0.042],
+        [22474,0.025],
+        [22476,0.025],
+        [17861,0.017],
+        [17862,0.017]
+      ],
+      "zones": ["The Ruby Sea","The Lochs","The Azim Steppe","The Peaks","The Fringes","Yanxia"]
+    },
+    {
+      "k": "coffer",
+      "p": "Gliderskin or Zonureskin map",
+      "exp": "Shadowbringers",
+      "maps": [26744,26745],
+      "rec": 6230,
+      "loot": [
+        [30135,23.403],
+        [31091,23.034],
+        [33027,22.247],
+        [26789,7.961],
+        [32222,4.719],
+        [30266,2.97],
+        [27918,2.937],
+        [33122,2.777],
+        [33123,2.777],
+        [33850,2.777],
+        [27953,0.947],
+        [27976,0.931],
+        [28905,0.867],
+        [27975,0.851],
+        [27974,0.674],
+        [27292,0.128]
+      ],
+      "zones": ["The Rak'tika Greatwood","Kholusia","Amh Araeng","Lakeland","Il Mheg","The Tempest"]
+    },
+    {
+      "k": "coffer",
+      "p": "Saigaskin or Kumbhiraskin map",
+      "exp": "Endwalker",
+      "maps": [36611,36612],
+      "rec": 3842,
+      "loot": [
+        [38686,35.138],
+        [39589,12.363],
+        [40700,11.322],
+        [36637,7.574],
+        [36341,5.648],
+        [38609,5.57],
+        [37403,5.492],
+        [39413,5.154],
+        [36369,3.332],
+        [39604,3.123],
+        [36368,2.473],
+        [39603,2.473],
+        [36628,0.104],
+        [35859,0.078],
+        [36629,0.078],
+        [37488,0.078]
+      ],
+      "zones": ["Labyrinthos","Garlemald","Mare Lamentorum","Ultima Thule","Thavnair"]
+    },
+    {
+      "k": "coffer",
+      "p": "Ophiotauroskin map",
+      "exp": "Endwalker",
+      "maps": [39591],
+      "rec": 7147,
+      "loot": [
+        [38686,35.399],
+        [40700,11.949],
+        [39589,11.249],
+        [36637,8.843],
+        [36341,6.1],
+        [39413,5.639],
+        [38609,5.303],
+        [37403,5.233],
+        [39604,2.728],
+        [36368,2.658],
+        [39603,2.547],
+        [36369,2.351]
+      ],
+      "zones": ["Elpis"]
+    },
+    {
+      "k": "coffer",
+      "p": "Loboskin or Br'aaxskin map",
+      "exp": "Dawntrail",
+      "maps": [43556,43557],
+      "rec": 10121,
+      "loot": [
+        [48229,25.422],
+        [45072,15.868],
+        [44133,10.374],
+        [43606,9.989],
+        [48228,9.831],
+        [46261,6.521],
+        [44323,3.33],
+        [45005,2.549],
+        [46773,2.292],
+        [50830,2.144],
+        [48225,1.64],
+        [44257,1.591],
+        [44269,1.482],
+        [45038,1.166],
+        [44132,1.008],
+        [46147,0.83],
+        [48104,0.741],
+        [46106,0.721],
+        [46105,0.652],
+        [44934,0.534],
+        [46107,0.524],
+        [46171,0.524],
+        [44322,0.267]
+      ],
+      "zones": ["Heritage Found","Kozama'uka","Shaaloani","Urqopacha","Yak T'el"]
+    },
+    {
+      "k": "coffer",
+      "p": "Gargantuaskin map",
+      "exp": "Dawntrail",
+      "maps": [46185],
+      "rec": 63519,
+      "loot": [
+        [45072,16.513],
+        [48228,14.533],
+        [48229,12.809],
+        [44133,12.728],
+        [43606,7.136],
+        [46261,7.094],
+        [45005,5.005],
+        [46773,3.89],
+        [44323,2.678],
+        [45038,2.484],
+        [50830,2.099],
+        [48225,1.984],
+        [46171,1.925],
+        [44934,1.877],
+        [46107,1.859],
+        [48104,1.601],
+        [44257,1.551],
+        [46147,0.79],
+        [46106,0.743],
+        [46105,0.701]
+      ],
+      "zones": ["Living Memory"]
+    }
+  ],
+  "names": {
+    "5119": "Peacock Ore",
+    "5261": "Aqueous Whetstone",
+    "5274": "Minium",
+    "5339": "Carbon Fiber",
+    "5357": "Swan Feather",
+    "5358": "Eagle Feather",
+    "5375": "Teak Lumber",
+    "5501": "Potash",
+    "5502": "Lime Sulphur",
+    "5530": "Coke",
+    "5531": "Animal Fat",
+    "5532": "Hardened Sap",
+    "6177": "Bluebird",
+    "6184": "Wind-up Tonberry",
+    "6188": "Tiny Bulb",
+    "6688": "Timeworn Leather Map",
+    "6689": "Timeworn Goatskin Map",
+    "6690": "Timeworn Toadskin Map",
+    "6691": "Timeworn Boarskin Map",
+    "6692": "Timeworn Peisteskin Map",
+    "7041": "Blue Fox Hide",
+    "7042": "Chinchilla Hide",
+    "7043": "Ahriman Tears",
+    "7044": "Exquisite Buttons",
+    "7045": "Morbol Saliva",
+    "7046": "Cutting Oil",
+    "7047": "Frosted Glass Lens",
+    "7564": "Baby Opo-opo",
+    "7566": "Minute Mindflayer",
+    "7567": "Tight-beaked Parrot",
+    "7771": "Dress Material",
+    "8021": "Rush Grass",
+    "8028": "Polarized Glass",
+    "8202": "Nutkin",
+    "9296": "Imperial Shadow Visor",
+    "9299": "Imitation Mistbeard Mask",
+    "9349": "Mummy's Little Mummy",
+    "9521": "Belah'dian Silver",
+    "10388": "Thavnairian Bolero",
+    "10389": "Thavnairian Gloves",
+    "10390": "Thavnairian Sarouel",
+    "10391": "Thavnairian Babouches",
+    "10392": "Thavnairian Headdress",
+    "10395": "Thavnairian Tights",
+    "10396": "Thavnairian Sandals",
+    "12049": "Unicolt",
+    "12052": "Owlet",
+    "12053": "Ugly Duckling",
+    "12054": "Gaelikitten",
+    "12056": "Lesser Panda",
+    "12057": "Page 63",
+    "12241": "Timeworn Archaeoskin Map",
+    "12242": "Timeworn Wyvernskin Map",
+    "12243": "Timeworn Dragonskin Map",
+    "12523": "Aurum Regis Ingot",
+    "12527": "Adamantite Ingot",
+    "12567": "Griffin Leather",
+    "12584": "Astral Birch Lumber",
+    "12593": "Astral Silk",
+    "12617": "Grade 2 Strength Dissolvent",
+    "12618": "Grade 2 Dexterity Dissolvent",
+    "12619": "Grade 2 Vitality Dissolvent",
+    "12620": "Grade 2 Intelligence Dissolvent",
+    "12621": "Grade 2 Mind Dissolvent",
+    "12633": "Skyspring Water",
+    "12645": "Thavnairian Leather",
+    "12646": "Thavnairian Silk",
+    "12647": "Atomos Corpulence",
+    "12649": "Steel Wheel Bearing",
+    "12931": "Purified Coke",
+    "12932": "Raziqcoat",
+    "12933": "Dryad Sap",
+    "12934": "Moonbeam Silk",
+    "12935": "Odorless Animal Fat",
+    "13272": "Falconer's Shirt",
+    "13275": "Paissa Brat",
+    "13746": "Falconer's Hemp",
+    "13769": "Falconer's Bottoms",
+    "14146": "High Mythrite Ingot",
+    "14147": "Eikon Mythrite",
+    "14149": "Eikon Iron Ingot",
+    "14150": "Eikon Metal",
+    "14152": "Eikon Cloth",
+    "14153": "Eikon Fiber",
+    "14155": "Eikon Leather",
+    "14156": "Eikon Hide",
+    "14157": "Treated Camphorwood Lumber",
+    "14171": "Grade 3 Strength Dissolvent",
+    "14172": "Grade 3 Dexterity Dissolvent",
+    "14173": "Grade 3 Vitality Dissolvent",
+    "14174": "Grade 3 Intelligence Dissolvent",
+    "14175": "Grade 3 Mind Dissolvent",
+    "14271": "Faded Copy of The Only Path",
+    "14830": "Expeditioner's Coat",
+    "14831": "Expeditioner's Kecks",
+    "14832": "Expeditioner's Moccasins",
+    "14833": "Expeditioner's Tabard",
+    "14834": "Expeditioner's Gloves",
+    "14931": "Antique Rug",
+    "14932": "Antique Leather",
+    "14957": "Old-growth Camphorwood Log",
+    "15447": "Dwarf Rabbit",
+    "15645": "Luminous Fiber",
+    "15649": "Glass Fiber",
+    "15945": "Pellitory",
+    "15983": "Maple Leaf Pile",
+    "15984": "Ginkgo Leaf Pile",
+    "16705": "Heavy Metal Ingot",
+    "16706": "Scintillant Ingot",
+    "16707": "Star Velvet",
+    "16708": "Hemicyon Leather",
+    "16721": "Star Cotton Boll",
+    "16724": "Tungstite",
+    "16725": "Luminium Ore",
+    "16726": "Zeolite Ore",
+    "16727": "Titanium Carbide",
+    "16728": "Scintillant Nugget",
+    "16729": "Invisible Silk",
+    "16730": "Hemicyon Hide",
+    "16731": "Goblacquer",
+    "16732": "Goblinol",
+    "16733": "Demicrystal",
+    "16906": "Wool Top",
+    "16907": "New World Macrame",
+    "17019": "Plundered Treasure",
+    "17574": "Flannel",
+    "17835": "Timeworn Gaganaskin Map",
+    "17836": "Timeworn Gazelleskin Map",
+    "17977": "Unmoving Maneki Moogle",
+    "17978": "Matanga Lamp",
+    "17985": "Moai Statue",
+    "18032": "Stygian Ash",
+    "19770": "Timeworn Thief's Map",
+    "20270": "Nagxian Silk",
+    "20271": "Ratanhia Leaves",
+    "20272": "Taoist's Wool",
+    "20273": "Nagxian Leather",
+    "20537": "Wind-up Namazu",
+    "20756": "Eggplant Knight Flower Vase",
+    "20757": "Garlic Jester Flower Vase",
+    "20758": "Mandragora Queen Flower Vase",
+    "20759": "Onion Prince Flower Vase",
+    "20760": "Tomato King Flower Vase",
+    "21060": "Wind-up Matanga",
+    "21205": "Hannish Wool",
+    "21206": "Thavnairian Wool",
+    "21922": "The Gold Whisker",
+    "22463": "Holy Linen",
+    "22464": "Ala Mhigan Weave",
+    "22474": "Crimson Sunset Orchestrion Roll",
+    "22476": "A Mother's Pride Orchestrion Roll",
+    "23375": "Cloth Cointe Quaint",
+    "23376": "Leather Cointe Quaint",
+    "23878": "Little Chef's Playset",
+    "23899": "Brick Garden Circle",
+    "23901": "Divine Chandelier",
+    "24002": "Capybara Pup",
+    "24222": "Ballroom Etiquette - Scholarly Certitude",
+    "24244": "Procoptodon Skin",
+    "24245": "Gyr Abanian Carbon Rods",
+    "24246": "Tatara Iron Sand",
+    "24247": "Stardust Cotton Yarn",
+    "24248": "Gyr Abanian Wax",
+    "24249": "High-gloss Urushi",
+    "24250": "Chigusa Ingot",
+    "24251": "Evergleam Ingot",
+    "24252": "Urunday Lumber",
+    "24253": "Procoptodon Leather",
+    "24254": "Stardust Cotton Cloth",
+    "24256": "Grade 4 Reisui of Strength",
+    "24257": "Grade 4 Reisui of Dexterity",
+    "24258": "Grade 4 Reisui of Vitality",
+    "24259": "Grade 4 Reisui of Intelligence",
+    "24260": "Grade 4 Reisui of Mind",
+    "24336": "Whisperfine Fleece",
+    "24527": "Plush Pile",
+    "24794": "Seemingly Special Timeworn Map",
+    "24804": "Waterproof Cloth",
+    "24903": "Hedgehoglet",
+    "26744": "Timeworn Gliderskin Map",
+    "26745": "Timeworn Zonureskin Map",
+    "27292": "Stuffed Fuath",
+    "27918": "Insatiable Orchestrion Roll",
+    "27953": "Fine Glass Fiber",
+    "27974": "Steer Hide",
+    "27975": "Indigo Cloth",
+    "27976": "Fireglass Leather",
+    "28905": "Shell Leather",
+    "30135": "Cloth-softening Powder",
+    "31091": "Seacloth",
+    "33121": "Everywhere and Nowhere Orchestrion Roll",
+    "33123": "Dangerous Words Orchestrion Roll",
+    "33124": "Unmatching Pieces Orchestrion Roll",
+    "33328": "Ostensibly Special Timeworn Map",
+    "33869": "Frontier Cloth",
+    "35859": "Excite-I-Mask",
+    "36369": "Finality Orchestrion Roll",
+    "36611": "Timeworn Saigaskin Map",
+    "36612": "Timeworn Kumbhiraskin Map",
+    "36628": "Cloth of Happiness",
+    "37403": "Sweet Lawn Ornaments",
+    "37488": "Exciting Fiber",
+    "38686": "Exciting Leather",
+    "39413": "Exciting Balloon",
+    "39589": "Hagnos Cloth",
+    "39591": "Timeworn Ophiotauroskin Map",
+    "39593": "Potentially Special Timeworn Map",
+    "39918": "Conceivably Special Timeworn Map",
+    "40700": "Malake Karpasos",
+    "41653": "Athletikos Cloth",
+    "43556": "Timeworn Loboskin Map",
+    "43557": "Timeworn Br'aaxskin Map",
+    "43572": "Honeysuckler",
+    "44132": "Timeless Turali Cloth",
+    "44133": "Mamonite",
+    "44257": "Ribboned Parasol",
+    "44322": "Roads Forsaken Orchestrion Roll",
+    "44323": "Pathmaker Orchestrion Roll",
+    "44349": "Presumably Special Timeworn Map",
+    "44494": "The Lawnblazer",
+    "45005": "The Faces We Wear - Cat Eye Glasses",
+    "45006": "The Faces We Wear - Slim Frame Glasses",
+    "45038": "Cast Stones in Shadow Orchestrion Roll",
+    "45072": "Corduroy Felt",
+    "46105": "Dumbbell Rack",
+    "46106": "Training Bench",
+    "46147": "Etched in Memory Orchestrion Roll",
+    "46185": "Timeworn Gargantuaskin Map",
+    "46261": "Summerlight Linen",
+    "46773": "DAM",
+    "48104": "Chocobo Chick Fountain",
+    "48152": "The Faces We Wear - Coeurl Eyeglasses",
+    "48225": "Fun and Games Orchestrion Roll",
+    "48228": "Dichromatic Dye",
+    "49846": "Everkeep Mixing Booth",
+    "50830": "Cloth of Legend"
+  },
   "updated": "Sun, 13 Sep 2026 13:21:05 GMT"
 }

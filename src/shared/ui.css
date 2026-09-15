@@ -263,6 +263,7 @@ tr.row.open .caret{transform:rotate(90deg);border-left-color:var(--aether)}
 .pill.gear{color:#f3a0b6;border-color:#5a2f3c;background:#f3a0b612}
 .pill.tool{color:#9fb6ff;border-color:#33406a;background:#9fb6ff12}
 .pill.dye{color:#d8a0f0;border-color:#4a3357;background:#d8a0f012}
+.pill.music{color:#6fc3d6;border-color:#2c4650;background:#6fc3d612}
 .pill.minion,.pill.mount{color:#7fd8d4;border-color:#2c4a4a;background:#7fd8d412}
 :root[data-theme="light"] .pill{background:#0000000a}
 :root[data-theme="light"] .pill.potion,:root[data-theme="light"] .pill.medicine{color:#6d4bc7;border-color:#c9bdf0}
@@ -412,10 +413,14 @@ thead th[data-sorted]{box-shadow:inset 0 -2px 0 var(--c1)}
 .pill.outfit{color:#ffb38a;border-color:#5a3f2e;background:#ffb38a12}
 .pill.framer{color:#c0e08a;border-color:#3f4a2c;background:#c0e08a12}
 .pill.emote{color:#f3c46e;border-color:#544426;background:#f3c46e12}
+.pill.facewear{color:#9fd0ff;border-color:#2f4a63;background:#9fd0ff12}
+.pill.accessory{color:#f3a0b6;border-color:#5a2f3c;background:#f3a0b612}
 .pill.orange{color:#f0a868;border-color:#5a4130;background:#f0a86812}
 .pill.purple{color:#b89cff;border-color:#3a3357;background:#b89cff12}
 :root[data-theme="light"] .pill.hairstyle{color:#b0459b;border-color:#eec2e4}
 :root[data-theme="light"] .pill.outfit{color:#b35a20;border-color:#e8c6ad}
+:root[data-theme="light"] .pill.facewear{color:#2b6ea8;border-color:#b8d5ec}
+:root[data-theme="light"] .pill.accessory{color:#b0455f;border-color:#eec2ce}
 :root[data-theme="light"] .pill.framer{color:#5a7a1e;border-color:#cfdfae}
 :root[data-theme="light"] .pill.emote{color:#8a6414;border-color:#e0cfa8}
 :root[data-theme="light"] .pill.orange{color:#9c5716;border-color:#e6c3a0}

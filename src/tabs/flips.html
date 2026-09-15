@@ -106,12 +106,19 @@
         <option value="Hairstyle">Hairstyles</option>
         <option value="Outfit Coffer">Outfit Coffers</option>
         <option value="Emote">Emotes</option>
+        <option value="Orchestrion Roll">Orchestrion Rolls</option>
+        <option value="Facewear">Facewear</option>
+        <option value="Fashion Accessory">Fashion Accessories</option>
+        <option value="Dye">Dyes</option>
       </select>
     </div>
       <div class="field sel">
       <label>Min profit</label>
       <select id="minProfit">
         <option value="0">Any profit</option>
+        <option value="50000">50k+</option>
+        <option value="100000">100k+</option>
+        <option value="250000">250k+</option>
         <option value="500000">500k+</option>
         <option value="1000000" selected>1M+</option>
         <option value="2000000">2M+</option>
@@ -123,6 +130,8 @@
       <label>Min avg price</label>
       <select id="minAvg">
         <option value="0">Any price</option>
+        <option value="100000">100k+</option>
+        <option value="250000">250k+</option>
         <option value="500000">500k+</option>
         <option value="1000000">1M+</option>
         <option value="2000000" selected>2M+</option>
@@ -148,7 +157,7 @@
       <div class="hicon">🔀</div>
       <div>
         <h1><b>Flips</b></h1>
-        <p class="sub">Scans mounts, minions, hairstyles, outfit coffers and emotes across every world on the data centres you pick — <span class="dcname">Chaos</span> by default. Buy cheap on another world, sell high on <span class="homename">Spriggan</span>.</p>
+        <p class="sub">Scans mounts, minions, hairstyles, outfit coffers, emotes, pricier orchestrion rolls, facewear and fashion accessories, and Pure White and Jet Black dye across every world on the data centres you pick — <span class="dcname">Chaos</span> by default. Buy cheap on another world, sell high on <span class="homename">Spriggan</span>.</p>
       </div>
     <div class="kpis">
     <div class="kpi"><div class="ki">🪙</div><div class="kbody"><div class="k">Best flip profit</div><div class="v gil" id="kpiBest">—</div><div class="s" id="kpiBestName">waiting for data…</div></div></div>
@@ -162,15 +171,15 @@
   <details class="howto" data-howto="flips">
       <summary><span class="hw-ic"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="M7.8 7.9a2.3 2.3 0 0 1 4.4.9c0 1.6-2.2 1.9-2.2 3.2M10 14.4v.1"/></svg></span><span class="hw-title">How this works</span><span class="hw-hint">buy on one world, sell on yours</span><span class="hw-car">▸</span></summary>
       <div class="hw-body">
-        <div class="hw-sec"><h4>What it works out</h4><p>No crafting: world-to-world trading on mounts, minions, hairstyles, outfit coffers and emotes. It finds the cheapest listing on any world in <b>Buy from</b> and compares it with what the item really sells for on your world.</p></div>
+        <div class="hw-sec"><h4>What it works out</h4><p>No crafting: world-to-world trading on mounts, minions, hairstyles, outfit coffers, emotes, orchestrion rolls, facewear, fashion accessories such as parasols and wings, and General-purpose Pure White and Jet Black dye. Rolls, facewear and accessories are only listed if they average 50k or more in both Europe and North America. It finds the cheapest listing on any world in <b>Buy from</b> and compares it with what the item really sells for on your world.</p></div>
         <div class="hw-sec"><h4>Reading the table</h4><p><b>Buy</b> names the world to buy on: orange means you will have to travel, teal means it is already on yours. <b>Profit/flip</b> is what it sells for on your world, after tax, less the buy price: the 30-day average, or the cheapest listing already on your world when that is lower, since you would have to undercut it.</p></div>
-        <div class="hw-sec"><h4>Worth knowing</h4><p>Rare items are where listings lie most, so profit rests on real sales, but never above what your world is already listing it for. <b>caps</b> beside <b>Sell now</b> marks a row priced at that listing, and ⚠ one nothing has sold on your world in 30 days, which the headline card leaves out. <b>Min profit</b> and <b>Min avg price</b> cut out small flips, and <b>Hide same-world deals</b> leaves only the ones that need a hop.</p></div>
+        <div class="hw-sec"><h4>Worth knowing</h4><p>Rare items are where listings lie most, so profit rests on real sales, but never above what your world is already listing it for. <b>caps</b> beside <b>Sell now</b> marks a row priced at that listing, and ⚠ one nothing has sold on your world in 30 days, which the headline card leaves out. <b>Min profit</b> and <b>Min avg price</b> cut out small flips (they start at 1M and 2M, which hides most rolls, facewear and dyes: lower them, or pick a <b>Category</b>, to see those), and <b>Hide same-world deals</b> leaves only the ones that need a hop.</p></div>
       </div>
       <template class="guide">
         <div data-spot="#dcBtn" data-side="right" data-title="Buy from">The data centres searched for the cheapest listing. More of them finds more deals, but the scan takes longer.</div>
         <div data-spot="#tbl th[data-k=buyPrice]" data-side="bottom" data-title="Buy (cheapest)">The lowest listing and the world it is on: <b>orange</b> means you will have to travel, <b>teal</b> that it is on your own world.</div>
         <div data-spot="#tbl th[data-k=profit]" data-side="bottom" data-title="Profit/flip">The 30-day average sale on your world, or the cheapest listing there if that is lower, after tax, less the buy price. <b>caps</b> beside <b>Sell now</b> marks a row held to that listing; ⚠ one with no sales on your world in 30 days.</div>
-        <div data-spot="#grp, #minProfit, #minAvg, #hideHome" data-side="right" data-title="Filters">Pick a category, cut out small flips, and tick <b>Hide same-world deals</b> to see only the ones worth a hop.</div>
+        <div data-spot="#grp, #minProfit, #minAvg, #hideHome" data-side="right" data-title="Filters">Pick a category, cut out small flips, and tick <b>Hide same-world deals</b> to see only the ones worth a hop. Rolls, facewear and dyes rarely clear the 1M / 2M defaults, so lower <b>Min profit</b> and <b>Min avg price</b> for those.</div>
       </template>
     </details>
 
@@ -343,8 +352,11 @@ function visibleRows(){
 
 const CAT_CLASS={
   'Mount':'mount','Minion':'minion','Hairstyle':'hairstyle',
-  'Outfit Coffer':'outfit',"Framer's Kit":'framer','Emote':'emote'
+  'Outfit Coffer':'outfit',"Framer's Kit":'framer','Emote':'emote',
+  'Orchestrion Roll':'music','Facewear':'facewear','Fashion Accessory':'accessory','Dye':'dye'
 };
+/* the longer category names are shortened on the row pill, so they leave the item name room */
+const CAT_SHORT={'Orchestrion Roll':'Roll','Fashion Accessory':'Accessory'};
 
 function updateScanTime(){const el=document.getElementById("lastScan");if(!el)return;const now=new Date();el._scanTime=now;function tick(){if(!el._scanTime)return;const age=(Date.now()-el._scanTime)/1000;el.textContent=el._scanTime.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit",second:"2-digit"});el.style.color=age<1800?"var(--win)":"var(--loss)";}tick();if(el._ticker)clearInterval(el._ticker);el._ticker=setInterval(tick,30000);}
 function render(){
@@ -371,7 +383,7 @@ function render(){
     const sellNowTag=r.sellNow!=null?fmt(r.sellNow)+capTag+agePill(r.uploadSell):'<span class="no-data">—</span>';
 
     tr.innerHTML=`
-      <td><div class="name"><span class="n"><button class="shopbtn" data-shopitem="${r.id}" title="Add this item to shopping list">🛒</button><button class="listbtn" data-listadd="${r.id}" title="Add to a saved list">📋</button><button class="xwbtn" data-xw="${r.id}" data-xwname="${xesc(r.name)}" title="Compare this item's price and stock on every world">\ud83c\udf10</button>${iconHTML(r.id)}${r.name}<span class="pill ${catCls}">${r.cat}</span></span></div>
+      <td><div class="name"><span class="n"><button class="shopbtn" data-shopitem="${r.id}" title="Add this item to shopping list">🛒</button><button class="listbtn" data-listadd="${r.id}" title="Add to a saved list">📋</button><button class="xwbtn" data-xw="${r.id}" data-xwname="${xesc(r.name)}" title="Compare this item's price and stock on every world">\ud83c\udf10</button>${iconHTML(r.id)}${r.name}<span class="pill ${catCls}">${CAT_SHORT[r.cat]||r.cat}</span></span></div>
           <div class="sub">Buy data: ${ago(r.upload)}</div></td>
       <td>${r.buyPrice!=null?fmt(r.buyPrice):'<span class="no-data">—</span>'} ${worldTag}${warnTag}</td>
       <td>${sellNowTag}</td>

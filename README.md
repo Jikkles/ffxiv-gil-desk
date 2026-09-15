@@ -80,12 +80,12 @@ Four deliberate choices run through the whole thing:
 
 | Tab | What it works out |
 | --- | --- |
-| **Dashboard** | Profit scanner across 9,400+ personal-craft items |
-| **Precrafts** | Every craftable intermediate, as a one-step buy-craft-sell flip |
+| **Dashboard** | Profit scanner across 9,400+ personal-craft items, precrafts included, filtered to your class and level |
+| **Gathering** | Gil an hour from every Miner and Botanist item, and when timed nodes are up |
 | **Currencies** | Which marketable item each currency buys at the best gil rate |
 | **Scrips** | The two collectible → scrip → materia loops, valued live |
-| **Duties** | Valuable drops from dungeons, deep dungeons, variant, Eureka, Bozja and Occult Crescent, with drop rates |
-| **Flips** | Cross-world flips on every tradeable mount, minion, hairstyle, emote and outfit coffer |
+| **Duties + Maps** | Valuable drops from dungeons, deep dungeons, variant, Eureka, Bozja, Occult Crescent, treasure maps and map portals, with drop rates; what one map is worth opened |
+| **Flips** | Cross-world flips on every tradeable mount, minion, hairstyle, emote and outfit coffer, the pricier orchestrion rolls, facewear and fashion accessories, and Pure White and Jet Black dye |
 | **Retainers** | What the four exploration ventures bring back that is worth selling |
 | **Submersibles** | Which voyage route earns the most for your sub build and resend schedule |
 | **Workshop** | All 162 Free Company workshop projects, costed phase by phase against their sale price |
@@ -108,7 +108,14 @@ costs and how many of it are stocked on each world. Both are described under
 
 ### Dashboard
 
-The broad sweep: consumables, furniture, intermediate materials, gear, tools and dyes.
+The broad sweep: consumables, furniture, precrafts and other materials, gear, tools and dyes.
+
+**Your crafter** narrows the list to what you can make: pick a *Class* and a *Min lvl* / *Max lvl*
+(an item several crafters can make counts for each of them), and tick *Precrafts only* for the
+intermediates, the crafts that go into another recipe. This replaced the old Precrafts tab, and
+`#precrafts` links now open the Dashboard. *Sell* prices each item at the quality it usually trades
+at; switch it to *HQ* or *NQ* to price everything one way (an item no recipe can make HQ always
+sells NQ). Plenty of intermediates only really sell NQ.
 
 **Mat cost** has two bases and defaults to *Precraft-optimised*: every intermediate that is
 cheaper to craft than to buy is costed as crafted, recursively, all the way down the tree —
@@ -123,6 +130,9 @@ Click any item to open its full crafting tree. Each craftable node inside the tr
 you'd pay if you crafted the intermediates that are cheaper to make than to buy. That's the
 difference between a recipe looking unprofitable and actually being profitable.
 
+An open tree also shows the **best time to sell**: which hours of the day the item's sales over the
+last 30 days landed in, with the three busiest picked out.
+
 Turn on *Hide no-sales* and sort by profit to find what's worth bulk-crafting.
 
 *Skip dead items* (on by default) leaves out anything that has not sold in 30 days, which makes a
@@ -130,16 +140,32 @@ refresh much faster. Each skipped item is checked again a week after it was last
 anything that starts selling comes back on its own, and every world keeps its own list.
 **Shift-click Refresh** for a full rescan of every item, dead ones included.
 
-### Precrafts
+### Gathering
 
-Every craftable intermediate in the game (900+), scanned as a deliberately simple one-step flip:
-buy the materials → craft it once → sell it HQ. No precrafting chains, no FC workshop bonuses,
-just the single craft. Filter by crafter class and level range, and click any row for its
-material shopping list. Mat cost includes the shards and crystals the craft burns.
+Every marketable item a Miner or Botanist gathers from a node (about 730), ranked by **gil an hour**:
+an estimate of how many you gather in an hour, times its price after tax. The nodes, their levels,
+where they are and when timed ones spawn come from Teamcraft's node data and are rebaked after each
+patch. An item from several nodes is ranked on its best one: a regular node first, then the timed
+node that spawns most often.
 
-Avg 30d, Trend and Units/day come from a month of real sales on your world, as on the Dashboard.
-Intermediates with thin HQ markets may show no sales; switching *Sell* to NQ often reveals the real
-bulk market.
+**Per hour** comes from *Your gathering* in the sidebar, so set it to what your gear really gets:
+
+- a **regular node** can be worked all hour: *Nodes an hour* × *Swings a node* × *Items a swing*
+  (60 × 6 × 2 = 720 by default)
+- a **timed node** is only up for a short window, so it counts *Swings a node* × *Items a swing* once
+  for every window in a real hour (an Eorzean day is 70 minutes)
+
+**Gil/hour** is Per hour × the price in *Price* (the current cheapest listing, or the 30-day
+average) after tax. Tick *Cap at a day's sales* to count no more an hour than your world buys in a
+whole day, so an item that barely sells cannot top the list. The **Node** column says whether the
+best node is regular or timed, and a timed one says when it is next up or how long it has left, in
+real minutes; *Nodes: Timed, up now* shows only those. Each row names the zone, area and map
+coordinates.
+
+Shards and crystals (their nodes yield far more a swing), spearfishing and the Diadem are left out.
+**Hidden items** only turn up on some visits to a node, and some need a Folklore book or enough
+Perception, so they stay out of the list unless you tick *Include hidden items*, and their Per hour
+is an overestimate.
 
 ### Currencies
 
@@ -180,7 +206,7 @@ costs are read from the game's collectable and scrip shop tables and rebaked aft
 In this tab's recipe trees, precrafts are bought NQ wherever they're listed (you'd rather buy
 than precraft here) and only expanded into their own materials when nothing is for sale.
 
-### Duties
+### Duties + Maps
 
 The drops worth chasing in instanced and field content, with how often each one actually drops:
 
@@ -196,6 +222,19 @@ The drops worth chasing in instanced and field content, with how often each one 
 - **Bozja** — Southern Front and Zadnor lockboxes, and the Bozjan Cluster exchange.
 - **Occult Crescent** — treasure, pot and bunny coffers in both horns (the Occult accessories of
   Blood and Magic among them), and the Enlightenment silver and gold piece exchanges.
+- **Treasure maps** — the coffer a timeworn map digs up. Coffers are recorded by zone, and most
+  zones dig up two kinds of map (which maps dig where is read from the game's treasure spot tables),
+  so those maps share one loot table: a Loboskin and a Br'aaxskin coffer count together. Elpis and
+  Living Memory only dig up Ophiotauroskin and Gargantuaskin maps, so theirs are exact.
+- **Map portals** — the portal dungeons maps open, from the Aquapolis to Vault Oneiron. Every room's
+  chest is recorded as one, so the chance is per chest opened, and a run opens one for every room you
+  clear.
+
+Switch **Show** to **Maps & portals** for one row a map and one a portal: what one dug-up coffer or
+portal chest is worth (*Per coffer*: every sellable drop's chance × its 30-day average after tax,
+added up), its best drop, and the map's own market price, so you can decide whether to open a map or
+sell it. Click a row for its whole loot table. Portal odds are not recorded, so Per coffer is for
+the coffer you dig up, not the portal it might open.
 
 Only drops that sell for real money are listed. **Expected** is what one run, coffer or sack is worth
 from that item (chance × average after tax), or gil per unit of currency for an exchange. Sell now
@@ -205,8 +244,11 @@ sell a handful of times a month on any one world.
 ### Flips
 
 No crafting involved — pure arbitrage. Scans every tradeable mount, minion, hairstyle, outfit coffer
-and emote (the `Ballroom Etiquette` manuals), about 400 items read from the game's own item data
-and rebaked after each patch, across every world on the data centres you have picked. It finds the
+and emote (the `Ballroom Etiquette` manuals), plus orchestrion rolls, *The Faces We Wear* facewear,
+fashion accessories such as parasols and wings, and General-purpose Pure White and Jet Black dye:
+about 600 items read from the game's own item data and rebaked after each patch. Rolls, facewear
+and accessories run to hundreds of cheap items, so only those averaging 50k or more in both Europe
+and North America are listed. Everything is scanned across every world on the data centres you have picked. It finds the
 cheapest listing anywhere and compares it with what the item sells for on your home world: the
 30-day average, or your world's cheapest listing when that is lower, since you would have to
 undercut it (**caps** beside *Sell now* marks those rows). The world name is colour-coded: orange
@@ -351,9 +393,9 @@ loading the Dashboard's 9,000-item catalogue.
 ## Shared features
 
 **Shopping list.** The 🛒 button adds an item's materials to a list shared across every tab. It is
-on the rows of the Dashboard, Precrafts, Scrips and your lists, where it adds the recipe's
+on the rows of the Dashboard, Scrips and your lists, where it adds the recipe's
 materials; on Workshop, where it adds every turn-in the project needs; and on Flips, Retainers and
-Vendors, where it adds the item itself. Currencies, Duties
+Vendors, where it adds the item itself. Currencies, Duties + Maps, Gathering
 and Submersibles have nothing to buy with gil, so they don't carry one. It groups by world (flagging which need a hop), tracks a running gil total, and tags
 each line with which finished item it's for. Worlds stay in the order they were first added, so
 ticking items off never moves the world you're halfway through buying. Prices are captured at the time of adding, and each
@@ -371,18 +413,18 @@ NPC stock is NQ, so on the Dashboard's *Buy all mats* basis an NPC can undercut 
 **Crystals.** Every crafting cost on the desk includes the shards, crystals and clusters the
 recipe burns, priced off the board. They are left out of the recipe trees to keep them short, with
 their total shown under each tree; tick **Show crystals** in the sidebar of the Dashboard,
-Precrafts, Scrips, Workshop or a list to list them in the tree as well. Each tab remembers it.
+Scrips, Workshop or a list to list them in the tree as well. Each tab remembers it.
 
-**Teamcraft simulator.** Every craftable row on the **Dashboard**, **Precrafts** and list tabs —
+**Teamcraft simulator.** Every craftable row on the **Dashboard** and list tabs —
 and every craftable material inside a crafting tree, including the Workshop's — has a Teamcraft button, marked with its TC logo, that opens that exact
 recipe in the [Teamcraft](https://ffxivteamcraft.com) craft simulator, so you can check a
 rotation before you commit. Rows that aren't crafted don't get one.
 
-**Tab links.** Every tab has its own address — `#dashboard`, `#precrafts`, `#currencies`,
+**Tab links.** Every tab has its own address — `#dashboard`, `#gathering`, `#currencies`,
 `#scrips`, `#duties`, `#flips`, `#retainers`, `#submersibles`, `#workshop`, `#vendors`, and
 `#list1` to `#list5` — so a link or bookmark opens the desk straight on that tab, and the browser's
 Back and Forward buttons step through the tabs you visited. An address for a list you don't have
-opens the Dashboard.
+opens the Dashboard, and so does the old `#precrafts`.
 
 **Guided tour.** A first visit that picks a world goes straight into a walkthrough of an example
 Dashboard with made-up prices, sized to your window: it dims everything but the part it is
@@ -482,7 +524,7 @@ The **Submersibles**, **Duties** and **Retainers** drop rates come from
 `OccultTreasuresV2.json`, `ChestDropsV2.json`, `Ventures.json`) — the loot records uploaded by the SubmarineTracker
 and related plugins — baked in by `tools/rebake.js`, which a weekly job reruns after each patch. Sector positions, survey times, tanks and
 part stats come from the game's `SubmarineExploration`, `SubmarinePart` and `SubmarineRank` tables,
-and the stat breakpoints from [SubmarineTracker](https://github.com/Infiziert90/SubmarineTracker).
+and the stat breakpoints from [SubmarineTracker](https://github.com/Infiziert90/SubmarineTracker). Which treasure maps dig in which zone comes from the game's `TreasureHuntRank` and `TreasureSpot` tables, and the **Gathering** nodes from Teamcraft's `nodes.json`.
 Exchange costs are read from `SpecialShop`, as are the **Currencies** shops
 (`tools/build-currencies.js`). The **Scrips** collectables come from the `CollectablesShop*` tables
 (`tools/build-scrips.js`), and the **Flips** items from `Item` and `ItemAction`: whatever unlocks a
@@ -589,7 +631,7 @@ duplicating some code — which is why the shared chunks exist.
 - Prices from a data centre in another region are informational: you cannot travel there.
 - Daily ceilings are rankings, not forecasts.
 - Nothing accounts for crafting stats, materia, food, or whether you can actually hit HQ.
-- The Dashboard, Precrafts, Currencies, Vendors, Submersibles, Workshop, Duties, Scrips, Flips and
+- The Dashboard, Gathering, Currencies, Vendors, Submersibles, Workshop, Duties + Maps, Scrips, Flips and
   Retainers data are rebaked automatically after each patch, but only from 10 days after it, so a brand-new recipe, shop or vendor
   can be missing until then.
 - Submersible, duty and venture drop rates are crowd-sourced averages. They describe a lot of voyages and
@@ -611,6 +653,19 @@ duplicating some code — which is why the shared chunks exist.
 ## Changelog
 
 ### 15 September 2026
+
+**Gathering, treasure maps, wider flips, and Precrafts folded into the Dashboard**
+- **New Gathering tab**, second on the bar: every marketable Miner and Botanist item ranked by gil an
+  hour, from an hourly estimate you set to match your gear, with live spawn timers on timed nodes.
+- **Precrafts is now part of the Dashboard.** The Dashboard already priced all but 154 of its
+  items, and those 154 cannot be sold on the market board. It gains *Class*, *Min lvl* / *Max lvl*,
+  *Precrafts only* and an HQ/NQ *Sell* switch, plus the best-time-to-sell chart in each recipe and
+  the patch *new* badge. It still waits for Refresh.
+- **Duties is now Duties + Maps**, with treasure map coffers and the ten portal dungeons as two new
+  content groups, and a *Maps & portals* view that prices a whole map or portal chest.
+- **Flips** adds orchestrion rolls, facewear and fashion accessories that average 50k or more, and
+  General-purpose Pure White and Jet Black dye, with lower *Min profit* and *Min avg price* options.
+- The tour, How this works panels and Show me guides cover all of it.
 
 **NPC shops and a full browser store**
 - **Materials an NPC sells are bought from the NPC when that is cheaper.** Every craft cost used only

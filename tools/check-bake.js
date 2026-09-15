@@ -1,6 +1,6 @@
 /* A last look at index.html after a rebake, before anything is committed:
    - every <script> in the page and in every tab still parses
-   - the Dashboard, Precrafts, Currencies, Vendors, Submersibles, Workshop, Duties, Scrips, Flips and
+   - the Dashboard, Gathering, Currencies, Vendors, Submersibles, Workshop, Duties + Maps, Scrips, Flips and
      Retainers data, and the NPC price index, did not shrink
      by more than a quarter
      against the last commit (a source changing its format would show up as a collapse)
@@ -33,7 +33,8 @@ const dataset = (docs, tab, name) => {
 function counts(docs) {
   const SUB = dataset(docs, "submersible", "SUB"), WS = dataset(docs, "workshop", "WS"), DUTY = dataset(docs, "duties", "DUTY");
   const CD = dataset(docs, "currencies", "CD"), VD = dataset(docs, "vendors", "VD");
-  const DATA = dataset(docs, "all", "DATA"), PRE = dataset(docs, "precraft", "PRE");
+  const DATA = dataset(docs, "all", "DATA");
+  const GATHER = dataset(docs, "gathering", "GATHER");
   const T4 = dataset(docs, "materia", "T4"), FLIPS = dataset(docs, "flips", "FLIP_ITEMS"), RET = dataset(docs, "retainer", "VITEMS");
   const NPC = dataset(docs, "shell", "NPC_PRICES");
   return {
@@ -46,10 +47,11 @@ function counts(docs) {
     "workshop projects": WS ? WS.projects.length : 0,
     "workshop recipes": WS ? Object.keys(WS.recipes).length : 0,
     "duty items": DUTY ? DUTY.items.length : 0,
+    "maps and portals": DUTY && DUTY.maps ? DUTY.maps.length : 0,
     "dashboard crafts": DATA ? DATA.finished.length : 0,
-    "precrafts": PRE ? Object.keys(PRE).length : 0,
     "scrip collectables": T4 ? T4.collectibles.length : 0,
     "flip items": FLIPS ? FLIPS.length : 0,
+    "gathered items": GATHER ? GATHER.length : 0,
     "retainer drops": RET ? RET.length : 0,
     "NPC-sold materials": NPC ? NPC.r.length : 0,
   };

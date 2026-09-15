@@ -40,6 +40,17 @@ tr.detail>td{background:var(--bg2);border-bottom:1px solid var(--line);padding:0
 .tfoot .lab{color:var(--faint);text-transform:uppercase;font-size:10px;letter-spacing:.1em;margin-right:6px} .tfoot b{font-weight:500}
 .forecast{color:var(--muted);font-size:11px;font-family:"JetBrains Mono",monospace}
 .forecast b{color:var(--gil)}
+.patch-badge{font-family:"JetBrains Mono",monospace;font-size:8.5px;letter-spacing:.04em;text-transform:uppercase;
+    padding:1px 5px;border-radius:5px;border:1px solid #3f5133;color:#9fd47f;background:#141d10;margin-left:5px}
+.sell-time{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.sell-time h4{margin:0 0 8px;font-size:11px;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.1em;color:var(--faint)}
+.st-bars{display:flex;align-items:flex-end;gap:2px;height:36px;width:100%}
+.st-bar{flex:1;min-width:0;border-radius:2px 2px 0 0;background:var(--line);position:relative;transition:background .15s}
+.st-bar.peak{background:var(--acc)}
+.st-bar.ok{background:var(--aether-line)}
+.st-bar:hover::after{content:attr(title);position:absolute;bottom:calc(100% + 4px);left:50%;transform:translateX(-50%);background:#1a2530;color:#e7eef4;font-size:10px;white-space:nowrap;padding:2px 6px;border-radius:4px;pointer-events:none;z-index:10}
+.st-labels{display:flex;justify-content:space-between;margin-top:3px;font-size:9px;font-family:'JetBrains Mono',monospace;color:var(--faint)}
+.st-note{font-size:10px;color:var(--faint);margin-top:6px;font-family:'JetBrains Mono',monospace}
 @media(max-width:1100px){
   .thead{grid-template-columns:1fr 78px 84px 72px;gap:8px} .thead .hcraft,.node .ncraft{display:none}
   .node{grid-template-columns:1fr 78px 84px 72px;gap:8px}
@@ -75,6 +86,14 @@ tr.detail>td{background:var(--bg2);border-bottom:1px solid var(--line);padding:0
       <div class="field sel"><label for="basis">Profit vs</label><select id="basis"><option value="listing">Current low</option><option value="avg30">30-day avg</option></select></div>
       <div class="field sel" title="Precraft-optimised assumes you craft any intermediate that is cheaper to make than to buy — which is what you actually do. Buy-all prices every direct material off the board instead."><label for="matbasis">Mat cost</label><select id="matbasis"><option value="opt" selected>Precraft-optimised</option><option value="buyall">Buy all mats</option></select></div>
       <div class="field sel"><label for="tax">Tax</label><select id="tax"><option value="0.05">5%</option><option value="0.03">3%</option><option value="0">0%</option></select></div>
+      <div class="field sel" title="Per item sells each craft at the quality it usually trades at. HQ or NQ sells everything at that quality instead; an item no recipe can make HQ always sells NQ."><label for="sq">Sell</label><select id="sq"><option value="auto">Per item</option><option value="hq">HQ</option><option value="nq">NQ</option></select></div>
+    </div>
+    <div class="sgroup">
+      <div class="slabel">Your crafter</div>
+      <div class="field sel"><label for="job">Class</label><select id="job"><option value="all">All crafters</option><option>CRP</option><option>BSM</option><option>ARM</option><option>GSM</option><option>LTW</option><option>WVR</option><option>ALC</option><option>CUL</option></select></div>
+      <div class="field"><label for="minLvl">Min lvl</label><input type="number" id="minLvl" value="1" min="1" max="100"></div>
+      <div class="field"><label for="maxLvl">Max lvl</label><input type="number" id="maxLvl" value="100" min="1" max="100"></div>
+      <label class="chk" title="Only intermediates: crafted items that go into another recipe, which is what the old Precrafts tab listed"><input type="checkbox" id="preOnly"> Precrafts only</label>
     </div>
     <div class="sgroup">
       <div class="slabel">Categories</div>
@@ -91,7 +110,7 @@ tr.detail>td{background:var(--bg2);border-bottom:1px solid var(--line);padding:0
       <div class="hicon">💰</div>
       <div>
         <h1>Dashboard</h1>
-        <p class="sub">A profit scanner across <b id="nItems">9,400+</b> personal-craft items — consumables, furniture, intermediate materials, gear, tools and dyes. Sell prices benchmark against <b class="homename">Spriggan</b>; <b>Avg 30d</b> is the real anchor, so a lone inflated listing shows up for what it is. Click any item for its full crafting tree.</p>
+        <p class="sub">A profit scanner across <b id="nItems">9,400+</b> personal-craft items — consumables, furniture, precrafts and other materials, gear, tools and dyes. Pick your <b>Class</b> and level to see only what you can make. Sell prices benchmark against <b class="homename">Spriggan</b>; <b>Avg 30d</b> is the real anchor, so a lone inflated listing shows up for what it is. Click any item for its full crafting tree.</p>
       </div>
     <div class="kpis">
       <div class="kpi"><div class="ki">🪙</div><div class="kbody"><div class="k">Best profit / unit</div><div class="v gil" id="kpiBest">—</div><div class="s" id="kpiBestName">waiting for data…</div></div></div>
@@ -104,8 +123,8 @@ tr.detail>td{background:var(--bg2);border-bottom:1px solid var(--line);padding:0
     <details class="howto" data-howto="dashboard" data-guide="tour">
       <summary><span class="hw-ic"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="M7.8 7.9a2.3 2.3 0 0 1 4.4.9c0 1.6-2.2 1.9-2.2 3.2M10 14.4v.1"/></svg></span><span class="hw-title">How this works</span><span class="hw-hint">profit on every craft, and how to find the ones worth making</span><span class="hw-car">▸</span></summary>
       <div class="hw-body">
-        <div class="hw-sec"><h4>What it works out</h4><p>Profit on 9,400+ things you can craft: what each sells for on your world, less tax, less what its materials cost across the data centres in <b>Mats from</b>. That is thousands of prices, so this tab only scans when you press <b>Refresh</b>.</p></div>
-        <div class="hw-sec"><h4>Reading the table</h4><p><b>Mat cost</b> assumes you craft any intermediate that is cheaper to make than to buy (<b>Precraft-optimised</b>); switch to <b>Buy all mats</b> to price everything off the board. Open a row for the whole recipe, buy or craft at every step, and the world to buy each material on. A material an NPC sells for less than the board asks, or that has no listing, is bought from the NPC: the tree says <b>NPC</b> and the zone, and hovering names the vendor. Shards and crystals are costed but left out of each recipe to keep it short; tick <b>Show crystals</b> to list them.</p></div>
+        <div class="hw-sec"><h4>What it works out</h4><p>Profit on 9,400+ things you can craft, precrafts included: what each sells for on your world, less tax, less what its materials cost across the data centres in <b>Mats from</b>. That is thousands of prices, so this tab only scans when you press <b>Refresh</b>. Pick your <b>Class</b> and a level range to see only what you can make, and tick <b>Precrafts only</b> for intermediates, the crafts that go into other recipes.</p></div>
+        <div class="hw-sec"><h4>Reading the table</h4><p><b>Mat cost</b> assumes you craft any intermediate that is cheaper to make than to buy (<b>Precraft-optimised</b>); switch to <b>Buy all mats</b> to price everything off the board. Open a row for the whole recipe, buy or craft at every step, and the world to buy each material on. A material an NPC sells for less than the board asks, or that has no listing, is bought from the NPC: the tree says <b>NPC</b> and the zone, and hovering names the vendor. Shards and crystals are costed but left out of each recipe to keep it short; tick <b>Show crystals</b> to list them. <b>Sell</b> prices each item at the quality it usually trades at; plenty of intermediates only really sell NQ, so switch it to <b>NQ</b> to find that market. An open recipe also shows the <b>best time to sell</b>: the hours of the day its sales land in.</p></div>
         <div class="hw-sec"><h4>Getting the most from it</h4><p>Tick <b>Hide no-sales</b> and sort by <b>Profit/unit</b> or <b>Gil/day</b>. Gil/day is how much gil an item moves on your world, not what you will pocket. <b>Hide ⚠ outliers</b> starts ticked, so prices far from real sales stay out of the way. <b>Skip dead items</b> leaves out anything unsold for 30 days and checks each one again a week later, for each world on its own; shift-click Refresh to check them all now. <b>Tour</b>, top right, walks through this page.</p></div>
       </div>
     </details>
@@ -157,7 +176,7 @@ const ago=ms=>{if(!ms)return"no uploads";const s=(Date.now()-ms)/1000;if(s<3600)
 
 /* the desk opens here, so this tab scans only when Refresh is pressed (see autoLoad) */
 window.MANUAL_SCAN=true;
-let state={home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],skipDead:true,tax:0.05,group:"all",hideNo:true,hideOutlier:true,showCrystals:false,query:"",basis:"listing",matBasis:"opt",
+let state={home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],skipDead:true,tax:0.05,group:"all",hideNo:true,hideOutlier:true,showCrystals:false,query:"",basis:"listing",matBasis:"opt",sellQ:"auto",job:"all",minLvl:1,maxLvl:100,preOnly:false,
   sortKey:"profit",sortDir:-1,worlds:null,sell:null,hist:null,chaos:null,rows:null,expanded:new Set(),tree:new Set(),_best:{},_hops:{}};
 
 function side(res,hq){return res?(hq?res.h:res.n):null;}
@@ -265,9 +284,13 @@ async function load(){const btn=document.getElementById("refresh");btn.disabled=
    comes back if the first scan fails */
 function syncStartScan(){document.getElementById("startScan").hidden=!!state.rows;}
 
+/* the quality a row sells at: its own usual one, or the sidebar's pick where a recipe can make it */
+function sellsHQ(f){return state.sellQ==="hq"?!f.nohq:state.sellQ==="nq"?false:f.q==="hq";}
+/* several crafters can make some recipes: show them all */
+function jobLabel(r){return r.jobs?r.jobs.join("/"):r.job;}
 function compute(){state._best={};state._hops={};const rows=[];
   const opt=state.matBasis!=="buyall";
-  for(const f of FINISHED){const fid=f.id,wantHQ=f.q==="hq",r=RECIPES[fid];
+  for(const f of FINISHED){const fid=f.id,wantHQ=sellsHQ(f),r=RECIPES[fid];
     const listing=aggPrice(state.sell[fid],wantHQ,"world").price;
     const a=avg30(state.hist[fid],wantHQ);const tr30=trend30(state.hist[fid],wantHQ);
     /* units a day, not sales a day: one sale of a stack of 99 is 99 units */
@@ -287,13 +310,13 @@ function compute(){state._best={};state._hops={};const rows=[];
     const profit=(net!=null&&!missing&&cost!=null)?net-cost:null;
     const margin=(profit!=null&&basis)?profit/basis:null;
     const daily=(profit!=null)?profit*vel:null;
-    rows.push({id:fid,name:f.name,kind:f.kind,group:f.group,q:f.q.toUpperCase(),note:f.note,yields:r.yields,
+    rows.push({id:fid,name:f.name,kind:f.kind,group:f.group,q:wantHQ?"HQ":"NQ",wantHQ,note:f.note,yields:r.yields,job:f.job,jobs:f.jobs||null,lvl:f.lvl,pre:!!f.pre,patch:f.patch||null,
       sell:listing,avg30:a.avg,n30:a.n,avgFb:!!a.fb,trendT:tr30,trend:tr30?tr30.pct:null,outlier,cost,costBuyAll:buyAllUnit,costOpt:optUnit,matBuyAll:buyAll,
       matOpt:optUnit!=null?optUnit*r.yields:null,profit,margin,vel,velI:v30,daily,missing,hop,upload:fresh});}
   state.rows=rows;state.rowById={};for(const r of rows)state.rowById[r.id]=r;}
 
 function visibleRows(){const q=state.query.trim().toLowerCase();
-  let rows=state.rows.filter(r=>{if(state.group!=="all"&&r.group!==state.group)return false;if(state.hideNo&&!(r.vel>0))return false;if(state.hideOutlier&&r.outlier)return false;if(q&&!r.name.toLowerCase().includes(q))return false;return true;});
+  let rows=state.rows.filter(r=>{if(state.group!=="all"&&r.group!==state.group)return false;if(state.job!=="all"&&!(r.jobs?r.jobs.includes(state.job):r.job===state.job))return false;if(r.lvl<state.minLvl||r.lvl>state.maxLvl)return false;if(state.preOnly&&!r.pre)return false;if(state.hideNo&&!(r.vel>0))return false;if(state.hideOutlier&&r.outlier)return false;if(q&&!r.name.toLowerCase().includes(q))return false;return true;});
   rows.sort((a,b)=>{const k=state.sortKey;let av=a[k],bv=b[k];if(k==="name")return a.name.localeCompare(b.name)*(state.sortDir*-1);av=(av==null||!isFinite(av))?-Infinity:av;bv=(bv==null||!isFinite(bv))?-Infinity:bv;return(av-bv)*state.sortDir;});
   return rows;}
 
@@ -337,9 +360,29 @@ function treeHTML(r){const rec=RECIPES[r.id];let body="";
       <span><span class="lab">Avg 30d</span><b>${r.avg30==null?'—':fmt(r.avg30)+` (${r.n30} sold)`}</b></span>
       <span><span class="lab">Trend</span><b>${trendChip(r.trendT)}</b></span>
       <span><span class="lab">Profit/unit</span><b class="${r.profit==null?'':(r.profit>=0?'profit win':'profit loss')}">${r.profit==null?'—':fmt(r.profit)}</b></span>
-    </div></div>`;
+      <span><span class="lab">Class / lvl</span><b>${jobLabel(r)} · ${r.lvl}</b></span>
+    </div>
+    ${sellTimeHTML(state.hist[r.id],r.wantHQ)}</div>`;
 }
 
+/* which hours of the day this item's sales land in, over the 30 days of history */
+function sellTimeHTML(s,wantHQ){
+  const head='<div class="sell-time"><h4>Best time to sell</h4>';
+  if(!s)return head+'<span class="st-note">Not enough history data.</span></div>';
+  const buckets=new Array(24).fill(0);let total=0;
+  const add=(b,c)=>{for(const h in b)buckets[+h]+=b[h];total+=c;};
+  if(wantHQ)add(s.bh||{},s.ch||0);else add(s.bn||{},s.cn||0);
+  if(total<3)return head+'<span class="st-note">Not enough sales to determine a pattern.</span></div>';
+  const maxB=Math.max(...buckets,1);
+  const sorted=buckets.map((v,i)=>({h:i,v})).sort((a,b)=>b.v-a.v);
+  const topHours=sorted.slice(0,3).map(x=>x.h).sort((a,b)=>a-b),okHours=sorted.slice(3,8).map(x=>x.h);
+  const bars=buckets.map((v,h)=>{const cls=topHours.includes(h)?'peak':okHours.includes(h)?'ok':'';
+    const label=String(h).padStart(2,'0')+':00 — '+v+' unit'+(v!==1?'s':'')+' sold';
+    return '<div class="st-bar '+cls+'" style="height:'+Math.max(4,Math.round(v/maxB*100))+'%" title="'+label+'"></div>';}).join('');
+  const topLabel=topHours.map(h=>String(h).padStart(2,'0')+':00').join(', ');
+  const labels=['00','06','12','18','23'].map(h=>'<span>'+h+'h</span>').join('');
+  return '<div class="sell-time"><h4>Best time to sell <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--acc)">'+topLabel+' UK</span></h4><div class="st-bars">'+bars+'</div><div class="st-labels">'+labels+'</div><span class="st-note">Based on '+total+' sales in last 30 days · teal = top 3 peak hours · hover for details</span></div>';
+}
 function updateScanTime(){const el=document.getElementById("lastScan");if(!el)return;const now=new Date();el._scanTime=now;function tick(){if(!el._scanTime)return;const age=(Date.now()-el._scanTime)/1000;el.textContent=el._scanTime.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit",second:"2-digit"});el.style.color=age<1800?"var(--win)":"var(--loss)";}tick();if(el._ticker)clearInterval(el._ticker);el._ticker=setInterval(tick,30000);}
 function render(){if(!state.rows)return;const shown=visibleRows();let rows=shown;const total=rows.length;const trunc=total>MAX_ROWS;if(trunc)rows=rows.slice(0,MAX_ROWS);
   const maxP=Math.max(1,...rows.map(r=>r.profit||0));const tb=document.getElementById("rows");tb.innerHTML="";
@@ -348,7 +391,7 @@ function render(){if(!state.rows)return;const shown=visibleRows();let rows=shown
     const cls=r.profit==null?"":(r.profit>=0?"win":"loss");const barW=r.profit>0?Math.round(r.profit/maxP*100):0;
     const yieldTag=r.yields>1?` <span class="q">×${r.yields}</span>`:"";
     const warn=r.outlier?` <span class="warn" title="Price outlier — either no current listing (an Avg 30d built on 1–2 sales is often manipulated) or the listing sits far from the 30-day average. Treat this row’s pricing as unreliable.">⚠</span>`:"";
-    tr.innerHTML=`<td><div class="name rich"><span class="rowtools"><button class="shopbtn" data-shopitem="${r.id}" title="Add all materials to shopping list">🛒</button><button class="listbtn" data-listadd="${r.id}" title="Add to a saved list">📋</button><button class="xwbtn" data-xw="${r.id}" data-xwname="${xesc(r.name)}" title="Compare this item's price and stock on every world">\ud83c\udf10</button>${teamcraftHTML(r.id)}</span><span class="caret"></span>${iconHTML(r.id)}<span class="nmeta"><span class="n">${r.name} <span class="pill ${r.kind}">${r.kind}</span></span><span class="t">${r.note}</span></span></div></td>
+    tr.innerHTML=`<td><div class="name rich"><span class="rowtools"><button class="shopbtn" data-shopitem="${r.id}" title="Add all materials to shopping list">🛒</button><button class="listbtn" data-listadd="${r.id}" title="Add to a saved list">📋</button><button class="xwbtn" data-xw="${r.id}" data-xwname="${xesc(r.name)}" title="Compare this item's price and stock on every world">\ud83c\udf10</button>${teamcraftHTML(r.id)}</span><span class="caret"></span>${iconHTML(r.id)}<span class="nmeta"><span class="n">${r.name} <span class="pill ${r.kind}">${r.kind}</span>${r.patch?'<span class="patch-badge">new '+r.patch+'</span>':''}</span><span class="t">${r.note} · ${jobLabel(r)} · lvl ${r.lvl}</span></span></div></td>
       <td>${fmt(r.sell)} <span class="q">${r.q}</span>${warn}${agePill(r.upload)}</td>
       <td>${fmt(r.avg30)}${r.avg30!=null?` <span class="q">${r.n30}×</span>`:''}${r.avgFb?' <span class=\"q\" title=\"No sales of the requested quality in the last 30 days — average includes both NQ and HQ\">mixed</span>':''}</td>
       <td>${trendChip(r.trendT)}</td>
@@ -370,7 +413,7 @@ function render(){if(!state.rows)return;const shown=visibleRows();let rows=shown
   const ds=prof.reduce((s,r)=>s+(r.daily||0),0);document.getElementById("kpiDaily").textContent=ds?fmtK(ds)+" g":"—";
   document.getElementById("kpiCount").textContent=prof.length+" / "+total;
   document.getElementById("kpiFresh").textContent="freshest data "+ago(Math.max(0,...rows.map(r=>r.upload||0)));
-  setStatus(`Sell vs <b>${state.home}</b> · profit on <b>${state.basis==="avg30"?"30-day avg":"current low"}</b> · mats <b>${state.matBasis==="buyall"?"bought whole":"precraft-optimised"}</b>, cheapest on ${dcLabel()} · ${total} match${trunc?` (top ${MAX_ROWS})`:""} · tax ${Math.round(state.tax*100)}% · click an item, then any craftable material to go deeper`);
+  setStatus(`Sell ${state.sellQ==='auto'?'':state.sellQ.toUpperCase()+' '}vs <b>${state.home}</b> · profit on <b>${state.basis==="avg30"?"30-day avg":"current low"}</b> · mats <b>${state.matBasis==="buyall"?"bought whole":"precraft-optimised"}</b>, cheapest on ${dcLabel()} · ${total} match${trunc?` (top ${MAX_ROWS})`:""} · tax ${Math.round(state.tax*100)}% · click an item, then any craftable material to go deeper`);
 }
 
 function setStatus(h){document.getElementById("status").innerHTML=h;}
@@ -415,6 +458,11 @@ document.getElementById("matbasis").addEventListener("change",e=>{state.matBasis
   if(state.rows){compute();render();}});
 document.getElementById("tax").addEventListener("change",e=>{state.tax=parseFloat(e.target.value);if(state.rows){compute();render();}});
 document.getElementById("hideNo").addEventListener("change",e=>{state.hideNo=e.target.checked;render();});
+document.getElementById("sq").addEventListener("change",e=>{state.sellQ=e.target.value;if(state.rows){compute();render();}});
+document.getElementById("job").addEventListener("change",e=>{state.job=e.target.value;render();});
+document.getElementById("minLvl").addEventListener("change",e=>{state.minLvl=+e.target.value||1;render();});
+document.getElementById("maxLvl").addEventListener("change",e=>{state.maxLvl=+e.target.value||100;render();});
+document.getElementById("preOnly").addEventListener("change",e=>{state.preOnly=e.target.checked;render();});
 document.getElementById("hideOutlier").addEventListener("change",e=>{state.hideOutlier=e.target.checked;render();});
 document.getElementById("showCrystals").addEventListener("change",e=>{state.showCrystals=e.target.checked;render();});
 document.getElementById("skipDead").addEventListener("change",e=>{state.skipDead=e.target.checked;if(state.rows)load();});
@@ -527,7 +575,7 @@ window.__listEntry=id=>{
     for(const g of r.ingredients)walk(g.id);};
   walk(id);
   const f=FINISHED.find(x=>+x.id===id);
-  if(f)return{id,name:f.name,kind:f.kind||"item",group:f.group||"item",q:f.q||"hq",note:f.note||"",recipes:rec,src:"Dashboard"};
+  if(f)return{id,name:f.name,kind:f.kind||"item",group:f.group||"item",q:sellsHQ(f)?"hq":"nq",note:f.note||"",recipes:rec,src:"Dashboard"};
   return{id,name:escapeName(id),kind:RECIPES[id]?"precraft":"materials",group:"materials",
     q:RECIPES[id]?"hq":"nq",note:RECIPES[id]?"Craftable material":"Raw material",recipes:rec,src:"Dashboard"};
 };

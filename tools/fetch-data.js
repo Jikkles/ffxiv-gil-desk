@@ -18,9 +18,9 @@ const FILES = [
     "CompanyCraftSequence", "CompanyCraftPart", "CompanyCraftProcess", "CompanyCraftSupplyItem",
     "CompanyCraftType", "CompanyCraftDraftCategory",
     "CollectablesShop", "CollectablesShopItem", "CollectablesShopItemGroup", "CollectablesShopRewardScrip",
-    "CollectablesShopRefine", "ItemAction", "RetainerTaskRandom", "RetainerTask"].map(n => [n + ".csv", DATAMINING + n + ".csv"]),
-  /* Teamcraft: recipes (workshop trees, simulator links), icons, sub part -> item */
-  ...["recipes", "item-icons", "submarine-parts"].map(n => [n + ".json", TEAMCRAFT + n + ".json"]),
+    "CollectablesShopRefine", "ItemAction", "RetainerTaskRandom", "RetainerTask", "TreasureHuntRank", "TreasureSpot"].map(n => [n + ".csv", DATAMINING + n + ".csv"]),
+  /* Teamcraft: recipes (workshop trees, simulator links), icons, sub part -> item, gathering nodes */
+  ...["recipes", "item-icons", "submarine-parts", "nodes"].map(n => [n + ".json", TEAMCRAFT + n + ".json"]),
   /* Infi's crowd-sourced loot records: submarine voyages and duty coffers */
   ...["Submarines", "DeepDungeonSacks", "EurekaBunnies", "FieldOpLockboxes", "OccultTreasuresV2", "ChestDropsV2", "Ventures", "LastUpdate"]
     .map(n => [n + ".json", INFI + n + ".json"]),

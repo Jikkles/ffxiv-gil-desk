@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gathering</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/*__UI_CSS__*/
+/* ---- gathering only ---- */
+thead th span{display:inline-block;min-width:.8em}
+/* where a node is runs long, so the item column is capped; the whole line is on hover */
+.name .nmeta{max-width:340px}
+.name .nmeta .t{max-width:340px}
+.node{font-family:"Inter",sans-serif;font-size:12px;color:var(--ink2);white-space:nowrap;display:flex;flex-direction:column;align-items:center;gap:3px}
+.node .more{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--faint)}
+.gpill{font-family:"JetBrains Mono",monospace;font-size:8.5px;letter-spacing:.07em;text-transform:uppercase;padding:2px 6px;border-radius:5px;border:1px solid var(--line);color:var(--muted)}
+.gpill.regular{color:#7fd49a;border-color:#2c4a39;background:#7fd49a12}
+.gpill.timed{color:#f3c46e;border-color:#544426;background:#f3c46e12}
+.gpill.ephemeral{color:#b89cff;border-color:#3a3357;background:#b89cff12}
+:root[data-theme="light"] .gpill.regular{color:#1e7a48;border-color:#b5dcc4}
+:root[data-theme="light"] .gpill.timed{color:#8a6414;border-color:#e0cfa8}
+:root[data-theme="light"] .gpill.ephemeral{color:#6d4bc7;border-color:#c9bdf0}
+.spawn{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--faint)}
+.spawn.up{color:var(--win)}
+.pill.min{color:#9fb6ff;border-color:#33406a;background:#9fb6ff12}
+.pill.btn{color:#7fd49a;border-color:#2c4a39;background:#7fd49a12}
+:root[data-theme="light"] .pill.min{color:#3a55b0;border-color:#c3cdf0}
+:root[data-theme="light"] .pill.btn{color:#1e7a48;border-color:#b5dcc4}
+.perhour{font-family:"JetBrains Mono",monospace}
+.perhour .q{margin-left:3px}
+.forecast{color:var(--muted);font-size:11px;font-family:"JetBrains Mono",monospace}
+.forecast b{color:var(--gil)}
+.side .field input[type=number]{width:100%}
+.snav button .q{margin-left:auto}
+</style>
+<script>try{var __t=localStorage.getItem("gildesk:theme:v1");document.documentElement.setAttribute("data-theme",__t==="light"?"light":"dark");}catch(e){document.documentElement.setAttribute("data-theme","dark");}</script>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="sgroup">
+      <div class="slabel">Filter items</div>
+      <div class="field inline"><label>&#128269;</label><input id="search" placeholder="item or zone…" autocomplete="off"></div>
+    </div>
+    <div class="sgroup">
+      <div class="slabel">Server</div>
+      <div class="field sel"><label for="home">Sell on</label><select id="home"></select></div>
+      <button class="btn primary wide" id="refresh">&#8635; Refresh</button>
+    </div>
+    <div class="sgroup">
+      <div class="slabel">Marketboard settings</div>
+      <label class="chk" title="Hide items with no sales on your world in the last 30 days"><input type="checkbox" id="hideNo" checked> Hide no-sales</label>
+      <label class="chk" title="Hide rows whose cheapest listing sits far from what has actually sold"><input type="checkbox" id="hideOutlier" checked> Hide &#9888; outliers</label>
+      <label class="chk" title="Hidden items only turn up on some visits to a node (and some need a Folklore book or enough Perception), so Per hour overstates them"><input type="checkbox" id="showHidden"> Include hidden items</label>
+      <label class="chk" title="Count no more an hour than your world buys in a whole day: gathering 600 of something that sells 40 a day only earns on 40 of them"><input type="checkbox" id="capDay"> Cap at a day&rsquo;s sales</label>
+    </div>
+    <div class="sgroup">
+      <div class="slabel">Your gathering</div>
+      <div class="field" title="How many regular nodes you work in an hour, walking between them included"><label for="nodesHr">Nodes an hour</label><input type="number" id="nodesHr" value="60" min="1" max="300"></div>
+      <div class="field" title="Gathering attempts a node gives you before it is spent"><label for="swings">Swings a node</label><input type="number" id="swings" value="6" min="1" max="30"></div>
+      <div class="field" title="Items each swing brings in on average, with your yield bonuses and skills"><label for="perSwing">Items a swing</label><input type="number" id="perSwing" value="2" min="0.5" max="20" step="0.5"></div>
+    </div>
+    <div class="sgroup">
+      <div class="slabel">Filters</div>
+      <div class="field sel" title="The price the hourly earnings are worked out at"><label for="basis">Price</label><select id="basis"><option value="now">Sell now</option><option value="avg">30-day avg</option></select></div>
+      <div class="field sel"><label for="nodeType">Nodes</label><select id="nodeType"><option value="all">Regular and timed</option><option value="regular">Regular only</option><option value="timed">Timed only</option><option value="up">Timed, up now</option></select></div>
+      <div class="field sel"><label for="tax">Tax</label><select id="tax"><option value="0.05">5%</option><option value="0.03">3%</option><option value="0">0%</option></select></div>
+      <div class="field"><label for="minLvl">Min lvl</label><input type="number" id="minLvl" value="1" min="1" max="100"></div>
+      <div class="field"><label for="maxLvl">Max lvl</label><input type="number" id="maxLvl" value="100" min="1" max="100"></div>
+    </div>
+    <div class="sgroup">
+      <div class="slabel">Class</div>
+      <select id="cls" hidden><option value="all">Both classes</option><option value="MIN">Miner</option><option value="BTN">Botanist</option></select>
+      <div class="snav" id="catNav"></div>
+    </div>
+    <div class="sgroup">
+      <div class="scancard"><span class="dot"></span>Last scan<br><b id="lastScan">&mdash;</b></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="hero">
+      <div class="hicon">&#9935;&#65039;</div>
+      <div>
+        <h1><b>Gathering</b></h1>
+        <p class="sub">Every <b id="nItems">700+</b> item a Miner or Botanist can gather and sell, ranked by <b>gil an hour</b>: an estimate of how many you can gather in an hour, times what each one sells for on <b class="homename">Spriggan</b>. Set <b>Your gathering</b> to match your gear, and timed nodes show when they are next up.</p>
+      </div>
+      <div class="kpis">
+        <div class="kpi"><div class="ki">&#9935;&#65039;</div><div class="kbody"><div class="k">Best gil / hour</div><div class="v gil" id="kpiBest">&mdash;</div><div class="s" id="kpiBestName">waiting for data&hellip;</div></div></div>
+        <div class="kpi"><div class="ki">&#9200;</div><div class="kbody"><div class="k">Best timed node</div><div class="v cy" id="kpiTimed">&mdash;</div><div class="s" id="kpiTimedName">&mdash;</div></div></div>
+        <div class="kpi"><div class="ki">&#127775;</div><div class="kbody"><div class="k">Timed nodes up now</div><div class="v" id="kpiUp">&mdash;</div><div class="s" id="kpiUpName">&mdash;</div></div></div>
+      </div>
+    </div>
+
+    <details class="howto" data-howto="gathering">
+      <summary><span class="hw-ic"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="M7.8 7.9a2.3 2.3 0 0 1 4.4.9c0 1.6-2.2 1.9-2.2 3.2M10 14.4v.1"/></svg></span><span class="hw-title">How this works</span><span class="hw-hint">what an hour of mining or botany is worth</span><span class="hw-car">▸</span></summary>
+      <div class="hw-body">
+        <div class="hw-sec"><h4>What it works out</h4><p>How much gil an hour of gathering one item brings in: an estimate of how many you gather in an hour, times its price after tax. A regular node can be worked all hour, so <b>Per hour</b> is <b>Nodes an hour</b> × <b>Swings a node</b> × <b>Items a swing</b>. A timed node is only up for a short window a few times a day, so it counts one visit for every window in a real hour (an Eorzean day is 70 minutes).</p></div>
+        <div class="hw-sec"><h4>Reading the table</h4><p><b>Node</b> says whether the best node is regular or timed, and when a timed one is next up, in real minutes. <b>Gil/hour</b> is Per hour × the price in <b>Price</b> after tax. The Eorzean spawn times are on the hover. Tick <b>Cap at a day&rsquo;s sales</b> to count no more an hour than your world buys in a whole day.</p></div>
+        <div class="hw-sec"><h4>Worth knowing</h4><p>The defaults suit a gatherer with decent gear using yield skills; set <b>Your gathering</b> to what you really see and every row follows. Shards and crystals, spearfishing and the Diadem are left out. <b>Hidden items</b> only turn up on some visits (and some need a Folklore book or enough Perception), so they are left out unless you tick <b>Include hidden items</b>, and their Per hour is an overestimate. Per hour for a timed node assumes you catch every window.</p></div>
+      </div>
+      <template class="guide">
+        <div data-spot="#nodesHr, #swings, #perSwing" data-side="right" data-title="Your gathering">Set these to what you actually get. <b>Per hour</b> on a regular node is nodes × swings × items a swing; a timed node uses swings × items a swing once per window.</div>
+        <div data-spot="#catNav" data-side="right" data-title="Class">Miner, Botanist, or both.</div>
+        <div data-spot="#nodeType" data-side="right" data-title="Nodes">Regular nodes you can work all hour, timed nodes, or only the timed nodes that are up right now.</div>
+        <div data-spot="#tbl th[data-k=node]" data-side="bottom" data-title="Node">Regular or timed. A timed node says when it is next up in real time, or how long it has left; hover for its Eorzean spawn times.</div>
+        <div data-spot="#tbl th[data-k=gilHr]" data-side="bottom" data-title="Gil/hour">Per hour × the price you picked in <b>Price</b>, after tax. Tick <b>Cap at a day&rsquo;s sales</b> to stop an item that barely sells from topping the list.</div>
+        <div data-spot="#rows tr:first-child td:first-child" data-side="bottom" data-title="Where to go">Each row names the zone, the area and the map coordinates of its best node; hover for every other node it comes from.</div>
+      </template>
+    </details>
+
+    <div class="status" id="status">Loading gathering prices&hellip;</div>
+    <div id="errbox"></div>
+
+    <div class="tablewrap"><table id="tbl" hidden>
+      <thead><tr>
+        <th data-k="name" style="cursor:default">Item</th>
+        <th data-k="node" title="Regular or timed, and when a timed node is next up">Node <span></span></th>
+        <th data-k="perHr" title="Estimated items gathered in an hour, from Your gathering">Per hour <span></span></th>
+        <th data-k="gilHr" data-sorted title="Per hour × the price in Price, after tax">Gil/hour <span>&#9662;</span></th>
+        <th data-k="now" title="Cheapest listing on your home world">Sell now <span></span></th>
+        <th data-k="avg" title="Median sale price on your home world over 30 days, weighted by units">Avg 30d <span></span></th>
+        <th data-k="trend" title="Which way the price is moving: the newer half of the sales history against the older half">Trend <span></span></th>
+        <th data-k="vel" title="Units sold a day, which is not sales a day: a stack of 99 leaving in one transaction is 99 units">Units/day <span></span></th>
+        <th data-k="gilDay" title="Avg 30d after tax multiplied by units sold a day: how much gil this item moves on your world">Gil/day <span></span></th>
+      </tr></thead>
+      <tbody id="rows"></tbody>
+    </table></div>
+
+    <p class="foot">
+      Node data from <a href="https://github.com/ffxiv-teamcraft/ffxiv-teamcraft" target="_blank" rel="noopener">Teamcraft</a>: what each node gives, its level, where it is and when a timed node spawns. An item from several nodes is ranked on its best one: a regular node first, then the timed node that spawns most often.
+      Per hour is an estimate from <b>Your gathering</b>: nodes an hour × swings a node × items a swing for a regular node; for a timed node, swings × items a swing for each spawn window in a real hour (a node spawning twice an Eorzean day is up about 1.7 times an hour). Gil/hour = Per hour × the chosen price × (1 &minus; tax); with <b>Cap at a day&rsquo;s sales</b>, Per hour is held to Units/day first.
+      Sell now = cheapest NQ listing on <span class="homename">Spriggan</span>. Avg 30d, Trend and Units/day are 30 days of sales there, and Gil/day = Avg 30d × (1 &minus; tax) × Units/day, as on every tab. Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>.
+    </p>
+  </main>
+</div>
+<script>
+const ICON_INDEX = /*__ICON_INDEX__*/;
+/*__UI_JS__*/
+
+/* every marketable gathered item with each node it comes from, best first:
+   {i, nm, ui, nodes: [{n: node id, c: MIN|BTN, t: node type, lv, z: zone, a: area, x, y,
+   sp: Eorzean spawn hours, d: minutes up, k: "timed"|"ephemeral" (regular when absent), h: hidden}]} */
+const GATHER = /*@json data/gathering.json*/null;
+const IDS = GATHER.map(g => g.i);
+
+let state={home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],query:"",tax:0.05,basis:"now",cls:"all",nodeType:"all",minLvl:1,maxLvl:100,
+  nodesHr:60,swings:6,perSwing:2,showHidden:false,hideNo:true,hideOutlier:true,capDay:false,sortKey:"gilHr",sortDir:-1,mkt:null,hist:null,rows:null};
+
+/*__SHARED_A__*/
+/*__SHARED_B__*/
+/*__SHARED_SHOP__*/
+/*__SHARED_LIST__*/
+/*__SHARED_XW__*/
+
+function side(res,hq){return res?(hq?res.h:res.n):null;}
+function aggPrice(res,hq,scope){const q=side(res,hq);const m=q&&(scope==="world"?q.mw:q.md);return m&&m[0]!=null?m[0]:null;}
+function aggUpload(res){return(res&&res.u)||0;}
+const fmt=n=>n==null||!isFinite(n)?"—":Math.round(n).toLocaleString("en-GB");
+const fmtK=n=>{if(n==null||!isFinite(n))return"—";const a=Math.abs(n);if(a>=1e6)return(n/1e6).toFixed(2)+"M";if(a>=1e3)return(n/1e3).toFixed(1)+"k";return Math.round(n).toString();};
+const ago=ms=>{if(!ms)return"no uploads";const s=(Date.now()-ms)/1000;if(s<3600)return Math.round(s/60)+"m ago";if(s<86400)return Math.round(s/3600)+"h ago";return Math.round(s/86400)+"d ago";};
+
+function setStatus(h){document.getElementById("status").innerHTML=h;}
+function clearErr(){document.getElementById("errbox").innerHTML="";}
+function showErr(e){document.getElementById("tbl").hidden=true;setStatus("Couldn't reach the market board.");
+  document.getElementById("errbox").innerHTML=`<div class="err"><b>Live prices didn't load.</b> ${e.message||e}. Universalis may be down or rate-limiting for a moment: wait a minute and press Refresh, or check <a href="https://universalis.app" target="_blank" rel="noopener" style="color:#ffd7db">universalis.app</a>.</div>`;}
+
+async function fetchAgg(scope,ids,onProgress){
+  const ck=`agg:${scope}:${hashIds(ids)}`;const hit=Cache.get(ck,NET.CACHE_TTL_MS);
+  if(hit){if(onProgress)onProgress(1,1);return{out:hit,failed:[],fromCache:true};}
+  const res=await runBatches(ids,async b=>{
+    const r=await tfetch(`https://universalis.app/api/v2/aggregated/${scope}/${b.join(",")}`);
+    if(!r.ok)throw new Error("HTTP "+r.status+" · "+scope);
+    const j=await r.json();const m={};for(const row of(j.results||[]))m[row.itemId]=compressAgg(row);return m;},onProgress);
+  if(!res.failed.length)Cache.set(ck,res.out);
+  return res;}
+async function fetchHist(scope,ids,onProgress){
+  const ck=`hist:${scope}:${hashIds(ids)}`;const hit=Cache.get(ck,NET.CACHE_TTL_MS);
+  if(hit){if(onProgress)onProgress(1,1);return{out:hit,failed:[],fromCache:true};}
+  const res=await runBatches(ids,async b=>{
+    const r=await tfetch(`https://universalis.app/api/v2/history/${scope}/${b.join(",")}?entriesToReturn=${HIST_ENTRIES}&entriesWithin=${HIST_SECS}&statsWithin=${HIST_SECS*1000}`);
+    if(!r.ok)throw new Error("HTTP "+r.status+" · history");
+    const j=await r.json();const src=j.items||(j.itemID?{[j.itemID]:j}:{});
+    const m={};for(const k in src)m[k]=summarizeHist(src[k]);return m;},onProgress);
+  if(!res.failed.length)Cache.set(ck,res.out);
+  return res;}
+async function fetchWorlds(){
+  const hit=Cache.get("worlds",NET.WORLDS_TTL_MS);if(hit)return hit;
+  try{const r=await tfetch("https://universalis.app/api/v2/worlds");const a=await r.json();
+    const m={};for(const w of a)m[w.id]=w.name;Cache.set("worlds",m);return m;}catch(e){return{};}}
+
+/* ===== Eorzean time =====
+   An Eorzean day is 70 real minutes: one Eorzean minute is 175/60 real seconds. */
+const ET_MIN_MS=175000/60, ET_DAY_MIN=1440;
+function etMinuteNow(){return Math.floor(Date.now()/ET_MIN_MS)%ET_DAY_MIN;}
+/* up now (with real minutes left) or real minutes until the next window */
+function spawnState(node){
+  if(!node.sp||!node.sp.length)return null;
+  const now=etMinuteNow(),dur=node.d||120;let next=Infinity;
+  for(const h of node.sp){const start=h*60;
+    const since=(now-start+ET_DAY_MIN)%ET_DAY_MIN;
+    if(since<dur)return{up:true,mins:Math.ceil((dur-since)*ET_MIN_MS/60000)};
+    next=Math.min(next,(start-now+ET_DAY_MIN)%ET_DAY_MIN);}
+  return{up:false,mins:Math.ceil(next*ET_MIN_MS/60000)};
+}
+function spawnHTML(node){const s=spawnState(node);if(!s)return"";
+  return s.up?`<span class="spawn up">up now · ${s.mins}m left</span>`:`<span class="spawn">up in ${s.mins>=60?Math.floor(s.mins/60)+"h "+(s.mins%60)+"m":s.mins+"m"}</span>`;}
+function etHours(node){return node.sp.map(h=>String(h).padStart(2,"0")+":00").join(" & ")+" ET, "+(node.d||120)/60+" Eorzean hours each";}
+
+/* items one visit, and visits an hour: all hour for a regular node, one per window for a timed one */
+function perHour(node){
+  const visit=state.swings*state.perSwing;
+  if(!node.k)return state.nodesHr*visit;
+  return node.sp.length*(60/70)*visit;
+}
+function whereText(node){return `${node.t} · lvl ${node.lv} · ${node.z}${node.a&&node.a!==node.z?" — "+node.a:""}${node.x!=null?` (${node.x.toFixed(1)}, ${node.y.toFixed(1)})`:""}`;}
+
+function priceRow(g){
+  const node=g.nodes[0];
+  const res=state.mkt?state.mkt[g.i]:null,h=state.hist?state.hist[g.i]:null;
+  const now=aggPrice(res,false,"world")??aggPrice(res,true,"world");
+  const a=h?avg30(h,false):{avg:null,n:0};
+  const vi=vel30(h,false),tr=trend30(h,false);
+  const price=state.basis==="avg"?(a.avg??now):(now??a.avg);
+  let ph=perHour(node);
+  const capped=state.capDay&&vi.perDay!=null&&ph>vi.perDay;
+  if(capped)ph=vi.perDay;
+  const net=price!=null?price*(1-state.tax):null;
+  const outlier=a.avg!=null&&(now==null||now>a.avg*2.5||now<a.avg*0.4);
+  return{g,id:g.i,name:g.nm,node,cls:node.c,lvl:node.lv,now,avg:a.avg,n30:a.n,trend:tr,vel:vi.perDay,velI:vi,
+    perHr:ph,capped,gilHr:net!=null?net*ph:null,gilDay:(a.avg!=null&&vi.perDay)?a.avg*(1-state.tax)*vi.perDay:null,
+    outlier,upload:aggUpload(res)};
+}
+function compute(){state.rows=GATHER.map(priceRow);}
+function avg30(s,wantHQ){if(!s)return{avg:null,n:0};const pick=wantHQ?s.h:s.n;
+  if(pick&&pick[0]!=null)return{avg:pick[0],n:pick[1]};
+  if(s.a&&s.a[0]!=null)return{avg:s.a[0],n:s.a[1]};return{avg:null,n:0};}
+
+function visibleRows(){
+  const q=state.query.toLowerCase();
+  const rows=(state.rows||[]).filter(r=>{
+    if(state.cls!=="all"&&!r.g.nodes.some(n=>n.c===state.cls))return false;
+    if(state.nodeType==="regular"&&r.node.k)return false;
+    if(state.nodeType==="timed"&&!r.node.k)return false;
+    if(state.nodeType==="up"){const s=spawnState(r.node);if(!s||!s.up)return false;}
+    if(r.lvl<state.minLvl||r.lvl>state.maxLvl)return false;
+    if(!state.showHidden&&r.node.h)return false;
+    if(state.hideNo&&!(r.vel>0))return false;
+    if(state.hideOutlier&&r.outlier)return false;
+    if(q&&!(r.name.toLowerCase().includes(q)||r.g.nodes.some(n=>(n.z+" "+n.a).toLowerCase().includes(q))))return false;
+    return true;});
+  const k=state.sortKey,d=state.sortDir;
+  const val=x=>k==="trend"?(x.trend?x.trend.pct:null):k==="node"?(x.node.k?(spawnState(x.node).up?-1:spawnState(x.node).mins):-Infinity):x[k];
+  return rows.sort((a,b)=>{const av=val(a),bv=val(b);if(av==null&&bv==null)return 0;if(av==null)return 1;if(bv==null)return -1;return d*(av-bv);});
+}
+
+function render(){
+  if(!state.rows)return;
+  const rows=visibleRows();
+  document.getElementById("tbl").hidden=!rows.length;
+  document.getElementById("rows").innerHTML=rows.map(r=>{
+    const n=r.node,kind=n.k||"regular";
+    const others=r.g.nodes.slice(1);
+    const title=r.g.nodes.map(x=>`${x.c==="MIN"?"Miner":"Botanist"} · ${whereText(x)}${x.k?" · "+etHours(x):""}${x.h?" · hidden item":""}`).join("\n");
+    const warn=r.outlier?` <span class="warn" title="No current listing, or the listing sits far from the 30-day average — treat this price as unreliable.">⚠</span>`:"";
+    const hidden=n.h?` <span class="q" title="A hidden item: it only turns up on some visits, and may need a Folklore book or enough Perception, so Per hour overstates it">hidden</span>`:"";
+    return `<tr class="row" style="cursor:default">`+
+      `<td><div class="name rich"><span class="rowtools"><button class="listbtn" data-listadd="${r.id}" title="Add to a saved list">📋</button><button class="xwbtn" data-xw="${r.id}" data-xwname="${xesc(r.name)}" title="Compare this item's price and stock on every world">🌐</button></span>`+
+        `${iconHTML(r.id)}<span class="nmeta"><span class="n"><a href="https://universalis.app/market/${r.id}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">${r.name}</a>`+
+        `<span class="pill ${n.c.toLowerCase()}">${n.c}</span>${warn}${hidden}</span>`+
+        `<span class="t" title="${xesc(title)}">${xesc(whereText(n))}</span></span></div></td>`+
+      `<td title="${xesc(n.k?etHours(n):"Up all the time")}"><div class="node"><span class="gpill ${kind}">${kind}</span>${n.k?`<span data-node="${r.id}">${spawnHTML(n)}</span>`:""}${others.length?`<span class="more">+${others.length} more</span>`:""}</div></td>`+
+      `<td class="perhour" title="${n.k?`${state.swings} swings × ${state.perSwing} a swing, ${n.sp.length} window${n.sp.length>1?"s":""} an Eorzean day`:`${state.nodesHr} nodes × ${state.swings} swings × ${state.perSwing} a swing`}${r.capped?" · held to what sells in a day":""}">${fmt(r.perHr)}${r.capped?' <span class="q">cap</span>':""}</td>`+
+      `<td class="forecast">${r.gilHr!=null&&r.gilHr>0?"<b>"+fmtK(r.gilHr)+"</b>/hr":"—"}</td>`+
+      `<td>${fmt(r.now)}${agePill(r.upload)}</td>`+
+      `<td>${fmt(r.avg)}${r.avg!=null&&r.n30?` <span class="q">${r.n30}×</span>`:""}</td>`+
+      `<td>${trendChip(r.trend)}</td>`+
+      `<td>${velCell(r.velI)}</td>`+
+      `<td class="forecast">${r.gilDay!=null&&r.gilDay>0?"<b>"+fmtK(r.gilDay)+"</b>/day":"—"}</td></tr>`;}).join("");
+  renderKpis(rows);
+  setStatus(rows.length?`Sell on <b>${state.home}</b> · gil an hour at <b>${state.basis==="avg"?"30-day avg":"current low"}</b> · ${state.nodesHr} nodes × ${state.swings} swings × ${state.perSwing} a swing · tax ${Math.round(state.tax*100)}% · ${rows.length} shown`
+    :"Nothing matches these filters — try untick <b>Hide no-sales</b>, or widen the level range.");
+}
+/* the cards read every row that passes the filters, never a ⚠ row */
+function renderKpis(rows){
+  const ok=rows.filter(r=>r.gilHr!=null&&r.gilHr>0&&!r.outlier);
+  const best=[...ok].sort((a,b)=>b.gilHr-a.gilHr)[0];
+  const timed=ok.filter(r=>r.node.k).sort((a,b)=>b.gilHr-a.gilHr)[0];
+  const up=ok.filter(r=>{const s=spawnState(r.node);return s&&s.up;}).sort((a,b)=>b.gilHr-a.gilHr);
+  document.getElementById("kpiBest").textContent=best?fmtK(best.gilHr)+" g":"—";
+  document.getElementById("kpiBestName").textContent=best?best.name:"nothing profitable in view";
+  document.getElementById("kpiTimed").textContent=timed?fmtK(timed.gilHr)+" g":"—";
+  document.getElementById("kpiTimedName").textContent=timed?timed.name:"no timed node in view";
+  document.getElementById("kpiUp").textContent=String(up.length);
+  document.getElementById("kpiUpName").textContent=up[0]?"best: "+up[0].name:"none up right now";
+}
+/* timed nodes come and go by the minute, so their line keeps itself current */
+setInterval(()=>{
+  if(!state.rows)return;
+  if(state.nodeType==="up"||state.sortKey==="node"){render();return;}
+  for(const el of document.querySelectorAll("[data-node]")){const r=state.rows.find(x=>x.id===+el.dataset.node);if(r)el.innerHTML=spawnHTML(r.node);}
+  renderKpis(visibleRows());
+},20000);
+
+function buildNav(){
+  const sel=document.getElementById("cls"),nav=document.getElementById("catNav");nav.innerHTML="";
+  const ic={all:"&#9638;",MIN:"&#9935;&#65039;",BTN:"&#127807;"};
+  const count=c=>c==="all"?GATHER.length:GATHER.filter(g=>g.nodes.some(n=>n.c===c)).length;
+  for(const o of sel.options){const b=document.createElement("button");b.type="button";b.dataset.cat=o.value;
+    b.innerHTML=`<span class="ic">${ic[o.value]}</span><span>${o.textContent}</span><span class="q">${count(o.value)}</span>`;
+    b.addEventListener("click",()=>{if(sel.value===o.value)return;sel.value=o.value;sel.dispatchEvent(new Event("change",{bubbles:true}));});
+    nav.appendChild(b);}
+}
+function syncNav(){const v=document.getElementById("cls").value;for(const b of document.querySelectorAll("#catNav button"))b.setAttribute("aria-current",String(b.dataset.cat===v));}
+
+function updateScanTime(){const el=document.getElementById("lastScan");if(!el)return;el._scanTime=new Date();
+  function t(){if(!el._scanTime)return;const age=(Date.now()-el._scanTime)/1000;el.textContent=el._scanTime.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit",second:"2-digit"});el.style.color=age<1800?"var(--win)":"var(--loss)";}
+  t();if(el._ticker)clearInterval(el._ticker);el._ticker=setInterval(t,30000);}
+async function load(){
+  const btn=document.getElementById("refresh");btn.disabled=true;clearErr();
+  try{
+    setStatus("Fetching world list…");
+    await refreshTopology();buildHomeSelect(document.getElementById("home"),state.home);
+    const worlds=await fetchWorlds();
+    for(const[id,nm]of Object.entries(worlds))if(nm===state.home)state.homeId=+id;
+    const[sell,hist]=await Promise.all([
+      fetchAgg(state.home,IDS,(d,t)=>setStatus(`Pricing ${IDS.length} gathered items on ${state.home}… ${d}/${t} batches`)),
+      fetchHist(state.home,IDS,(d,t)=>setStatus(`Reading ${state.home} sales history… ${d}/${t} batches`))]);
+    state.mkt=sell.out;state.hist=hist.out;
+    compute();render();updateScanTime();
+    finishStatus([sell,hist]);
+  }catch(e){showErr(e);}finally{btn.disabled=false;}
+}
+
+document.getElementById("nItems").textContent=GATHER.length;
+buildNav();
+buildHomeSelect(document.getElementById("home"),state.home);
+const recompute=()=>{if(state.rows){compute();render();}};
+const rerender=()=>{if(state.rows)render();};
+const num=(id,lo,def)=>{const v=parseFloat(document.getElementById(id).value);return isFinite(v)&&v>=lo?v:def;};
+document.getElementById("home").addEventListener("change",e=>{homeChanged(e.target.value);load();});
+document.getElementById("search").addEventListener("input",e=>{state.query=e.target.value.trim();rerender();});
+document.getElementById("cls").addEventListener("change",e=>{state.cls=e.target.value;syncNav();rerender();});
+document.getElementById("nodeType").addEventListener("change",e=>{state.nodeType=e.target.value;rerender();});
+document.getElementById("basis").addEventListener("change",e=>{state.basis=e.target.value;recompute();});
+document.getElementById("tax").addEventListener("change",e=>{state.tax=+e.target.value;recompute();});
+document.getElementById("hideNo").addEventListener("change",e=>{state.hideNo=e.target.checked;rerender();});
+document.getElementById("hideOutlier").addEventListener("change",e=>{state.hideOutlier=e.target.checked;rerender();});
+document.getElementById("showHidden").addEventListener("change",e=>{state.showHidden=e.target.checked;rerender();});
+document.getElementById("capDay").addEventListener("change",e=>{state.capDay=e.target.checked;recompute();});
+document.getElementById("nodesHr").addEventListener("change",()=>{state.nodesHr=num("nodesHr",1,60);recompute();});
+document.getElementById("swings").addEventListener("change",()=>{state.swings=num("swings",1,6);recompute();});
+document.getElementById("perSwing").addEventListener("change",()=>{state.perSwing=num("perSwing",0.1,2);recompute();});
+document.getElementById("minLvl").addEventListener("change",e=>{state.minLvl=+e.target.value||1;rerender();});
+document.getElementById("maxLvl").addEventListener("change",e=>{state.maxLvl=+e.target.value||100;rerender();});
+document.getElementById("refresh").addEventListener("click",load);
+document.querySelectorAll("thead th[data-k]").forEach(th=>{
+  if(th.style.cursor==="default")return;
+  th.addEventListener("click",()=>{
+    const k=th.dataset.k;
+    if(state.sortKey===k)state.sortDir*=-1;else{state.sortKey=k;state.sortDir=k==="node"?1:-1;}
+    document.querySelectorAll("thead th").forEach(x=>{x.removeAttribute("data-sorted");const s=x.querySelector("span");if(s)s.textContent="";});
+    th.setAttribute("data-sorted","");th.querySelector("span").textContent=state.sortDir<0?"▾":"▴";
+    rerender();
+  });
+});
+/* settings persistence */
+(function(){
+  const SKEY="gildesk:gathering:settings";
+  function collect(){const s={};document.querySelectorAll("select[id],input[id]").forEach(el=>{
+    if(el.id==="search")return;s[el.id]=el.type==="checkbox"?el.checked:el.value;});return s;}
+  document.addEventListener("change",()=>{try{localStorage.setItem(SKEY,JSON.stringify(collect()));}catch(e){}});
+  try{const s=JSON.parse(localStorage.getItem(SKEY)||"{}");
+    for(const[id,v]of Object.entries(s)){const el=document.getElementById(id);if(!el)continue;
+      if(el.type==="checkbox")el.checked=!!v;else el.value=v;
+      if(id==="home"){state.home=el.value;syncHomeNames();continue;}
+      if(id==="dc"){continue;}
+      el.dispatchEvent(new Event("change"));}
+  }catch(e){}
+  syncNav();syncHomeNames();
+})();
+
+/* saved lists: a gathered item goes over as a plain material, with where to gather it */
+window.__listEntry=id=>{
+  id=+id;const g=GATHER.find(x=>x.i===id);if(!g)return null;const n=g.nodes[0];
+  return{id,name:g.nm,kind:"materials",group:"materials",q:"nq",note:`${n.c==="MIN"?"Miner":"Botanist"} · ${n.z}`,recipes:{},src:"Gathering"};
+};
+</script>
+</body>
+</html>
