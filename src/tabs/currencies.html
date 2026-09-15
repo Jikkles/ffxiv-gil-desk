@@ -145,7 +145,7 @@
       <div class="hicon">💱</div>
       <div>
         <h1><b>Currencies</b></h1>
-        <p class="sub">Pick a currency. This works out which marketable item it buys at the best gil-per-unit rate, then what that sells for on your home world after tax. Vendor costs come straight from the game&rsquo;s shop tables (patch 7.55); prices are live from Universalis.</p>
+        <p class="sub">Pick a currency. This works out which marketable item it buys at the best gil-per-unit rate, then what that sells for on your home world after tax. Vendor costs come straight from the game&rsquo;s shop tables, rebaked after every patch; prices are live from Universalis.</p>
       </div>
     <div class="kpis">
     <div class="kpi"><div class="ki">🪙</div><div class="kbody"><div class="k">Best rate</div><div class="v gil" id="kpiRate">&mdash;</div><div class="s" id="kpiRateName">waiting for data&hellip;</div></div></div>
@@ -183,7 +183,7 @@
   </table></div>
 
   <p class="foot">
-    Costs are read from the game&rsquo;s <b>SpecialShop</b> and <b>GCScripShopItem</b> tables at patch 7.55, filtered to items that are actually sellable on the market board. Where the same item is sold by more than one vendor for the same currency, the cheapest is used. Tomestone and scrip costs use the client&rsquo;s virtual-currency indices, resolved the same way the CurrencySpender plugin does it.
+    Costs are read from the game&rsquo;s <b>SpecialShop</b> and <b>GCScripShopItem</b> tables, rebaked after every patch and filtered to items that are actually sellable on the market board. Where the same item is sold by more than one vendor for the same currency, the cheapest is used. Tomestone and scrip costs use the client&rsquo;s virtual-currency indices, resolved the same way the CurrencySpender plugin does it.
     <b>Sell now</b> is the cheapest current listing on your world; <b>Avg 30d</b> is the recent average sale price &mdash; steadier for thin items, which is why it is the default basis. <b>Net</b> is that price after market tax.
     Some shop rows belong to vendors that no longer exist in-game, so the vendor name is shown on every row &mdash; if it looks like a dead NPC, treat the row with suspicion. Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>.
   </p>
