@@ -107,7 +107,7 @@ thead th span{display:inline-block;min-width:.8em}
       <div class="hw-body">
         <div class="hw-sec"><h4>What it works out</h4><p>How much gil an hour of gathering one item brings in: an estimate of how many you gather in an hour, times its price after tax. A regular node can be worked all hour, so <b>Per hour</b> is <b>Nodes an hour</b> × <b>Swings a node</b> × <b>Items a swing</b>. A timed node is only up for a short window a few times a day, so it counts one visit for every window in a real hour (an Eorzean day is 70 minutes). A fish is <b>Catches an hour</b>; a fish that only bites at certain Eorzean hours or in certain weather counts only the share of the time it is biting, and a big fish counts <b>Big fish a window</b> for each window.</p></div>
         <div class="hw-sec"><h4>Reading the table</h4><p><b>Node</b> says whether the best node or fishing spot is regular or timed, and when a timed one is next up, in real time; a fish&rsquo;s next window comes from the weather forecast. <b>Gil/hour</b> is Per hour × the price in <b>Price</b> after tax. The Eorzean spawn times, or a fish&rsquo;s hours and weather, are on the hover. Tick <b>Cap at a day&rsquo;s sales</b> to count no more an hour than your world buys in a whole day.</p></div>
-        <div class="hw-sec"><h4>Worth knowing</h4><p>The defaults suit a gatherer with decent gear using yield skills; set <b>Your gathering</b> to what you really see and every row follows. Shards and crystals, spearfishing, ocean fishing, Cosmic Exploration and the Diadem are left out. <b>Catches an hour</b> is the same for every fish, but a fish that rarely bites at its spot comes in well under it, so treat Gil/hour on fish as a best case; big fish that need other fish caught first say so on the hover. <b>Hidden items</b> only turn up on some visits (and some need a Folklore book or enough Perception), so they are left out unless you tick <b>Include hidden items</b>, and their Per hour is an overestimate. Per hour for a timed node assumes you catch every window.</p></div>
+        <div class="hw-sec"><h4>Worth knowing</h4><p>The defaults suit a gatherer with decent gear using yield skills; set <b>Your gathering</b> to what you really see and every row follows. Shards and crystals, spearfishing, ocean fishing, Cosmic Exploration and the Diadem are left out. <b>Catches an hour</b> is the same for every fish, but a fish that rarely bites at its spot comes in well under it, so Gil/hour is left blank for fish and Per hour is a best case; big fish that need other fish caught first say so on the hover. <b>Hidden items</b> only turn up on some visits (and some need a Folklore book or enough Perception), so they are left out unless you tick <b>Include hidden items</b>, and their Per hour is an overestimate. Per hour for a timed node assumes you catch every window.</p></div>
       </div>
       <template class="guide">
         <div data-spot="#nodesHr, #swings, #perSwing" data-side="right" data-title="Your gathering">Set these to what you actually get. <b>Per hour</b> on a regular node is nodes × swings × items a swing; a timed node uses swings × items a swing once per window.</div>
@@ -140,7 +140,7 @@ thead th span{display:inline-block;min-width:.8em}
 
     <p class="foot">
       Node and fishing spot data from <a href="https://github.com/ffxiv-teamcraft/ffxiv-teamcraft" target="_blank" rel="noopener">Teamcraft</a>: what each node gives, its level, where it is and when a timed node spawns. Fish hours, weather and big fish from the <a href="https://ff14fish.carbuncleplushy.com" target="_blank" rel="noopener">Carbuncle Plushy fish tracker</a>, with each zone&rsquo;s weather odds to forecast the next window. An item from several nodes is ranked on its best one: a regular node first, then the timed node that spawns most often.
-      Per hour is an estimate from <b>Your gathering</b>: nodes an hour × swings a node × items a swing for a regular node; for a timed node, swings × items a swing for each spawn window in a real hour (a node spawning twice an Eorzean day is up about 1.7 times an hour); for a fish, Catches an hour, times the share of the time it bites if it has hours or weather, or Big fish a window × windows a real hour for a big fish. Gil/hour = Per hour × the chosen price × (1 &minus; tax); with <b>Cap at a day&rsquo;s sales</b>, Per hour is held to Units/day first.
+      Per hour is an estimate from <b>Your gathering</b>: nodes an hour × swings a node × items a swing for a regular node; for a timed node, swings × items a swing for each spawn window in a real hour (a node spawning twice an Eorzean day is up about 1.7 times an hour); for a fish, Catches an hour, times the share of the time it bites if it has hours or weather, or Big fish a window × windows a real hour for a big fish. Gil/hour = Per hour × the chosen price × (1 &minus; tax), left blank for fish, whose bite rates are unknown; with <b>Cap at a day&rsquo;s sales</b>, Per hour is held to Units/day first.
       Sell now = cheapest NQ listing on <span class="homename">Spriggan</span>. Avg 30d, Trend and Units/day are 30 days of sales there, and Gil/day = Avg 30d × (1 &minus; tax) × Units/day, as on every tab. Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>.
     </p>
   </main>
@@ -294,7 +294,7 @@ function priceRow(g){
   const net=price!=null?price*(1-state.tax):null;
   const outlier=a.avg!=null&&(now==null||now>a.avg*2.5||now<a.avg*0.4);
   return{g,id:g.i,name:g.nm,node,cls:node.c,lvl:node.lv,now,avg:a.avg,n30:a.n,trend:tr,vel:vi.perDay,velI:vi,
-    perHr:ph,capped,gilHr:net!=null?net*ph:null,gilDay:(a.avg!=null&&vi.perDay)?a.avg*(1-state.tax)*vi.perDay:null,
+    perHr:ph,capped,gilHr:net!=null&&node.c!=="FSH"?net*ph:null,gilDay:(a.avg!=null&&vi.perDay)?a.avg*(1-state.tax)*vi.perDay:null,
     outlier,upload:aggUpload(res)};
 }
 function compute(){state.rows=GATHER.map(priceRow);}
@@ -353,11 +353,11 @@ function renderKpis(rows){
   const ok=rows.filter(r=>r.gilHr!=null&&r.gilHr>0&&!r.outlier);
   const best=[...ok].sort((a,b)=>b.gilHr-a.gilHr)[0];
   const timed=ok.filter(r=>r.node.k).sort((a,b)=>b.gilHr-a.gilHr)[0];
-  const up=ok.filter(r=>{const s=spawnState(r.node);return s&&s.up;}).sort((a,b)=>b.gilHr-a.gilHr);
+  const up=rows.filter(r=>!r.outlier&&(r.gilHr>0||r.gilDay>0)).filter(r=>{const s=spawnState(r.node);return s&&s.up;}).sort((a,b)=>(b.gilHr||0)-(a.gilHr||0)||(b.gilDay||0)-(a.gilDay||0));
   document.getElementById("kpiBest").textContent=best?fmtK(best.gilHr)+" g":"—";
-  document.getElementById("kpiBestName").textContent=best?best.name:"nothing profitable in view";
+  document.getElementById("kpiBestName").textContent=best?best.name:rows.length&&rows.every(r=>r.node.c==="FSH")?"fish have no Gil/hour":"nothing profitable in view";
   document.getElementById("kpiTimed").textContent=timed?fmtK(timed.gilHr)+" g":"—";
-  document.getElementById("kpiTimedName").textContent=timed?timed.name:"no timed node in view";
+  document.getElementById("kpiTimedName").textContent=timed?timed.name:rows.length&&rows.every(r=>r.node.c==="FSH")?"fish have no Gil/hour":"no timed node in view";
   document.getElementById("kpiUp").textContent=String(up.length);
   document.getElementById("kpiUpName").textContent=up[0]?"best: "+up[0].name:"none up right now";
 }
