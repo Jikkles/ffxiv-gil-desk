@@ -45,6 +45,7 @@ tbody td:nth-child(3){max-width:150px;overflow:hidden;text-overflow:ellipsis}
       <div class="slabel">Marketboard settings</div>
       <label class="chk" title="Only drops with no other source in the game"><input type="checkbox" id="exclOnly"> Venture-exclusive only</label>
       <label class="chk" title="Hide drops with no recorded sales in the last 30 days"><input type="checkbox" id="soldOnly"> Only what is actually selling</label>
+      <label class="chk" title="Hide drops nothing has sold of in 30 days, or whose listing sits far from what has actually sold"><input type="checkbox" id="hideOutlier"> Hide &#9888; outliers</label>
     </div>
     <div class="sgroup">
       <div class="slabel">Filters</div>
@@ -87,12 +88,12 @@ tbody td:nth-child(3){max-width:150px;overflow:hidden;text-overflow:ellipsis}
       <div class="hw-body">
         <div class="hw-sec"><h4>What it works out</h4><p>What the four 18-hour exploration ventures (Field, Highland, Woodland and Waterside) bring back that is worth selling: mostly minions, plus a few pricey furnishings.</p></div>
         <div class="hw-sec"><h4>Reading the table</h4><p><b>Venture</b> and <b>Tier(s)</b> say which venture brings it back and at what level; a higher tier needs a higher-level retainer. The percentage beside the tiers is how often it comes back at its best tier, from players&rsquo; logged ventures. <b>Only from this venture</b> marks a drop with no other source anywhere in the game.</p></div>
-        <div class="hw-sec"><h4>Worth knowing</h4><p>These sell a handful of times a month on any one world, so <b>Sell now</b> is your world and the rest is your data centre. Tick <b>Venture-exclusive only</b> for the drops you cannot get elsewhere, or <b>Only what is actually selling</b> to drop anything unsold for 30 days.</p></div>
+        <div class="hw-sec"><h4>Worth knowing</h4><p>These sell a handful of times a month on any one world, so <b>Sell now</b> is your world and the rest is your data centre. Tick <b>Venture-exclusive only</b> for the drops you cannot get elsewhere, or <b>Only what is actually selling</b> to drop anything unsold for 30 days. <b>Hide ⚠ outliers</b> also drops rows whose listing sits far from what has sold.</p></div>
       </div>
       <template class="guide">
         <div data-spot="#vfilter" data-side="right" data-title="Venture">Look at one venture: Field for combat retainers, Highland for miners, Woodland for botanists, Waterside for fishers.</div>
         <div data-spot="#tbl th[data-k=tier]" data-side="bottom" data-title="Tier(s)">Which venture tiers bring it back, and how often at the best of them. A higher tier needs a higher-level retainer.</div>
-        <div data-spot="#exclOnly, #soldOnly" data-side="right" data-title="Filters"><b>Venture-exclusive only</b> keeps drops with no other source in the game; <b>Only what is actually selling</b> drops anything unsold for 30 days.</div>
+        <div data-spot="#exclOnly, #soldOnly, #hideOutlier" data-side="right" data-title="Filters"><b>Venture-exclusive only</b> keeps drops with no other source in the game; <b>Only what is actually selling</b> drops anything unsold for 30 days; <b>Hide ⚠ outliers</b> also drops listings far from real sales.</div>
         <div data-spot="#kpis" data-side="bottom" data-title="The cards">The four ventures, ranked by their most valuable drop.</div>
       </template>
     </details>
@@ -128,7 +129,7 @@ const ICON_INDEX = /*__ICON_INDEX__*/;
 /*__UI_JS__*/
 
 let state={home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],query:"",tax:0.05,sortKey:"daily",sortDir:-1,mkt:null,hist:null,rows:null,scopeDc:"Chaos",
-  venture:"all",exclOnly:false,soldOnly:false,summary:""};
+  venture:"all",exclOnly:false,soldOnly:false,hideOutlier:false,summary:""};
 
 /* What the four 18-hour exploration ventures drop that is worth anything.
    x = nothing else in the game produces it. o = it drops here but can be had
@@ -204,7 +205,9 @@ function priceRow(e){
   const dcNow=aggPrice(res,false,"dc");
   const basis=avg!=null?avg:(dcNow!=null?dcNow:now);
   const net=basis!=null?basis*(1-state.tax):null;
-  return{id:e.i,name:e.n,venture:e.v,vl:e.vl||[e.v],tier:e.t,cat:e.c,excl:!!e.x,other:e.o||null,chance:e.p!=null?e.p:null,
+  /* the Duties test: nothing sold, or a listing far from what has sold */
+  const outlier=avg==null||(now!=null&&(now>avg*2.5||now<avg*0.4));
+  return{outlier,id:e.i,name:e.n,venture:e.v,vl:e.vl||[e.v],tier:e.t,cat:e.c,excl:!!e.x,other:e.o||null,chance:e.p!=null?e.p:null,
     now,avg,vel,velI:vi,trend,daily:(net!=null&&vel)?net*vel:null};
 }
 function compute(){state.rows=VITEMS.map(priceRow);}
@@ -217,7 +220,7 @@ function compute(){state.rows=VITEMS.map(priceRow);}
    price, and then it says so. */
 function countedRows(){
   return (state.rows||[]).filter(r=>
-    (!state.exclOnly||r.excl)&&(!state.soldOnly||r.avg!=null));
+    (!state.exclOnly||r.excl)&&(!state.soldOnly||r.avg!=null)&&!(state.hideOutlier&&r.outlier));
 }
 function ventureStats(){
   const rows=countedRows();
@@ -276,7 +279,7 @@ function render(){
         `<button class="listbtn" data-listadd="${r.id}" title="Add to a saved list">📋</button>`+
         `<button class="xwbtn" data-xw="${r.id}" data-xwname="${xesc(r.name)}" title="Compare this item's price and stock on every world">🌐</button>`+
         `${iconHTML(r.id)}<a href="https://universalis.app/market/${r.id}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">${r.name}</a>`+
-        `<span class="pill ${catSlug(r.cat)}" title="${r.cat}">${catLabel(r.cat)}</span></span>`+
+        `<span class="pill ${catSlug(r.cat)}" title="${r.cat}">${catLabel(r.cat)}</span>${r.outlier?`<span class="warn" title="${r.avg==null?"Nothing has sold across "+state.scopeDc+" in 30 days, so there is no real price behind this row":"The listing on your world sits far from what has actually sold"}">⚠</span>`:""}</span>`+
         `<span class="t" title="${r.excl?"Nothing else in the game produces this":r.other?"Also obtainable from "+r.other:"A newer drop: no other source turned up in the desk's own data, but nobody has checked the rest of the game by hand"}">`+
           `${r.excl?(r.vl.length>1?"Only from these ventures":"Only from this venture"):r.other?"Also from "+r.other:"Other sources not checked"}</span></div></td>`+
       `<td title="${r.vl.join(", ")}">${r.venture}</td>`+
@@ -318,6 +321,7 @@ document.getElementById("search").addEventListener("input",e=>{state.query=e.tar
 document.getElementById("vfilter").addEventListener("change",e=>{state.venture=e.target.value;if(state.rows)render();});
 document.getElementById("exclOnly").addEventListener("change",e=>{state.exclOnly=e.target.checked;if(state.rows)render();});
 document.getElementById("soldOnly").addEventListener("change",e=>{state.soldOnly=e.target.checked;if(state.rows)render();});
+document.getElementById("hideOutlier").addEventListener("change",e=>{state.hideOutlier=e.target.checked;if(state.rows)render();});
 document.getElementById("tax").addEventListener("change",e=>{state.tax=+e.target.value;if(state.rows){compute();render();}});
 document.getElementById("refresh").addEventListener("click",load);
 

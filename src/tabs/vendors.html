@@ -20,9 +20,6 @@
 .empty .icon{font-size:28px;line-height:1;opacity:.65}
 .empty .headline{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);margin-top:12px}
 .empty .body{color:var(--muted);font-size:14px;max-width:56ch;margin:9px auto 0}
-.copy-btn{all:unset;cursor:pointer;font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--aether);
-    border:1px solid var(--line);border-radius:7px;padding:4px 10px;background:var(--panel);margin-left:8px}
-.copy-btn:hover{border-color:var(--aether)}
 /* ten columns: a little less room either side of each keeps Gil/day on screen at 1600px */
 #tbl thead th,#tbl tbody td{padding-left:8px;padding-right:8px}
 /* and Sell now may put its freshness tag on a second line, so a wide price elsewhere
@@ -50,12 +47,11 @@
       <label>Sell on</label>
       <select id="home"></select>
     </div>
-      <button class="btn wide" id="copyList" title="Copy the visible rows as a shopping run">📋 Copy list</button>
       <button class="btn primary wide" id="refresh">↻ Refresh</button>
     </div>
     <div class="sgroup">
       <div class="slabel">Marketboard settings</div>
-      <label class="chk"><input type="checkbox" id="hideOutlier"> Hide ⚠ unreliable</label>
+      <label class="chk"><input type="checkbox" id="hideOutlier"> Hide ⚠ outliers</label>
       <label class="chk showall"><input type="checkbox" id="showAll"> Show ALL vendor items</label>
       <label class="chk"><input type="checkbox" id="density"> Compact rows</label>
     </div>
@@ -126,13 +122,13 @@
       <div class="hw-body">
         <div class="hw-sec"><h4>What it works out</h4><p>Every marketable item an NPC sells for plain gil, priced against the market board on your world. The vendor&rsquo;s price never changes, so a good row is a run you can repeat rather than a one-off snipe.</p></div>
         <div class="hw-sec"><h4>Reading the table</h4><p><b>Bought from</b> is the NPC, zone and map spot; <b>+n more</b> means other vendors stock it too. <b>locked?</b> means a quest or achievement may gate the shop, and <b>seasonal</b> that it only opens during an event. <b>Sell price</b> on <b>Realistic</b> uses the lower of the cheapest listing and the 30-day average (the middle price of real sales), since you will have to undercut to sell.</p></div>
-        <div class="hw-sec"><h4>Worth knowing</h4><p>Only profitable items show by default, sorted by <b>Gil/day</b>, so steady sellers beat huge margins that never sell. Most vendor stock has barely sold, so ⚠ is common: <b>Hide ⚠ unreliable</b> drops those rows, and <b>Show ALL vendor items</b> brings back the losers too.</p></div>
+        <div class="hw-sec"><h4>Worth knowing</h4><p>Only profitable items show by default, sorted by <b>Gil/day</b>, so steady sellers beat huge margins that never sell. Most vendor stock has barely sold, so ⚠ is common: <b>Hide ⚠ outliers</b> drops those rows, and <b>Show ALL vendor items</b> brings back the losers too.</p></div>
       </div>
       <template class="guide">
         <div data-spot="#tbl th[data-k=vendor]" data-side="bottom" data-title="Bought from">The NPC, zone and map spot. <b>+n more</b> means other vendors stock it; <b>locked?</b> means a quest or achievement may gate the shop, <b>seasonal</b> that it only opens during an event.</div>
         <div data-spot="#tbl th[data-k=cost]" data-side="bottom" data-title="Vendor cost">The fixed gil price the NPC charges. It never changes, so only the board price moves.</div>
         <div data-spot="#basis" data-side="right" data-title="Sell price"><b>Realistic</b> uses the lower of the cheapest listing and the 30-day average, since you will have to undercut to sell.</div>
-        <div data-spot="#hideOutlier, #showAll" data-side="right" data-title="What gets shown"><b>Hide ⚠ unreliable</b> drops prices not backed by real sales, which is most vendor stock. <b>Show ALL vendor items</b> adds the ones that lose money.</div>
+        <div data-spot="#hideOutlier, #showAll" data-side="right" data-title="What gets shown"><b>Hide ⚠ outliers</b> drops prices not backed by real sales, which is most vendor stock. <b>Show ALL vendor items</b> adds the ones that lose money.</div>
         <div data-spot="#minVel, #minProfit" data-side="right" data-title="Minimums">Set how fast an item must sell and how much it must make to be listed.</div>
       </template>
     </details>
@@ -161,7 +157,7 @@
     <b>Vendor cost</b> is the fixed gil price the NPC charges &mdash; it never changes, so the only moving part is what the board pays.
     <b>Sell price</b> on <i>Realistic</i> takes the lower of the cheapest current listing and the 30-day average, because you have to undercut the board to sell but a lone silly listing is not a real price.
     <span class="warn">⚠</span> means the price is not backed by real sales &mdash; either nothing has sold in 30 days, or the listing sits far from the average that did.
-    Most vendor stock is dead stock, so expect to see it a lot; the headline figures above ignore those rows entirely, and <i>Hide&nbsp;⚠&nbsp;unreliable</i> drops them from the table.
+    Most vendor stock is dead stock, so expect to see it a lot; the headline figures above ignore those rows entirely, and <i>Hide&nbsp;⚠&nbsp;outliers</i> drops them from the table.
     A <span class="seasonal">seasonal</span> tag means the shop only opens during an event.
     <b>Profit/unit</b> = sell &times; (1 &minus; tax) &minus; vendor cost. <b>Gil/day</b> = net sale price &times; units sold per day &mdash; a stack of 99 counts as 99, not as one sale &mdash; so a 40M margin on something that sells twice a year sinks below a 5k margin on something that shifts 30 a day. That is the market&rsquo;s pace rather than your cut; for what you actually keep, read <b>Profit/unit</b> against it, or the <b>Best profit / day</b> card.
     Locations come from the game's own shop data; many items are stocked by several NPCs, so <i>+n more</i> means you have closer options.
@@ -472,14 +468,6 @@ document.querySelectorAll("thead th[data-k]").forEach(th=>{
   });
 });
 
-document.getElementById("copyList").addEventListener("click",()=>{
-  const rows=visibleRows().filter(r=>r.profit>0).slice(0,MAX_ROWS);
-  if(!rows.length){Shop.toast("No profitable rows to copy");return;}
-  const lines=rows.map(r=>`${r.name} — ${fmt(r.cost)}g from ${r.npc||"?"}${r.zone?" ("+r.zone+(r.x?` ${r.x},${r.y}`:"")+")":""} → sell ~${fmt(r.sell)} on ${state.home} = ${fmtM(r.profit)} each, ${r.vel.toFixed(2)}/day`);
-  navigator.clipboard.writeText("VENDOR RUN · sell on "+state.home+"\n"+lines.join("\n")).then(()=>{
-    const b=document.getElementById("copyList");b.textContent="✓ Copied!";setTimeout(()=>b.textContent="📋 Copy list",2000);
-  },()=>Shop.toast("Clipboard blocked by the browser"));
-});
 
 /* ---- settings persistence + shift-click force refresh ---- */
 (function(){

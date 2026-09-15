@@ -108,6 +108,7 @@
       <div class="slabel">Marketboard settings</div>
       <label class="chk" style="margin-left:4px"><input type="checkbox" id="density"> Compact</label>
       <label class="chk" style="margin-left:4px" title="Shards, crystals and clusters are always costed. Tick this to list them in each recipe as well."><input type="checkbox" id="showCrystals"> Show crystals</label>
+      <label class="chk" style="margin-left:4px" title="Hide rows with no current listing, or a listing far from the 30-day average"><input type="checkbox" id="hideOutlier"> Hide &#9888; outliers</label>
     </div>
     <div class="sgroup">
       <div class="slabel">Filters</div>
@@ -147,7 +148,7 @@
         <div data-spot="#rename, #remove" data-side="bottom" data-title="Name or remove"><b>✎ Rename</b> gives the list its own name, and the tab follows. <b>✕ Remove list</b> deletes the tab.</div>
         <div data-spot="#clear" data-side="right" data-title="Clear list">Empties the list, with an <b>↩ Undo clear</b> that still works after a reload.</div>
         <div data-spot="#matbasis" data-side="right" data-title="Mat cost"><b>Precraft-optimised</b> crafts any intermediate that is cheaper to make; <b>Buy all mats</b> prices every material off the board. Either way, an NPC shop wins wherever it is cheaper.</div>
-        <div data-spot="#showCrystals" data-side="right" data-title="Show crystals">Shards, crystals and clusters are always in the cost. Tick this to list them in each recipe as well.</div>
+        <div data-spot="#showCrystals, #hideOutlier" data-side="right" data-title="Crystals and outliers">Shards, crystals and clusters are always in the cost; tick <b>Show crystals</b> to list them in each recipe as well. <b>Hide ⚠ outliers</b> tucks away rows whose price can’t be trusted.</div>
         <div data-spot="#rows tr:first-child" data-only data-side="bottom" data-title="Open a row">Click an item for its full crafting tree, just like the Dashboard.</div>
       </template>
     </details>
@@ -210,7 +211,7 @@ const fmt=n=>n==null||!isFinite(n)?"—":Math.round(n).toLocaleString("en-GB");
 const fmtK=n=>{if(n==null||!isFinite(n))return"—";if(Math.abs(n)>=1e6)return(n/1e6).toFixed(2)+"M";if(Math.abs(n)>=1e3)return(n/1e3).toFixed(1)+"k";return Math.round(n).toString();};
 const ago=ms=>{if(!ms)return"no uploads";const s=(Date.now()-ms)/1000;if(s<3600)return Math.round(s/60)+"m ago";if(s<86400)return Math.round(s/3600)+"h ago";return Math.round(s/86400)+"d ago";};
 
-let state={home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],tax:0.05,basis:"listing",matBasis:"opt",showCrystals:false,sortKey:"profit",sortDir:-1,query:"",
+let state={home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],tax:0.05,basis:"listing",matBasis:"opt",showCrystals:false,hideOutlier:false,sortKey:"profit",sortDir:-1,query:"",
   worlds:null,sell:null,hist:null,chaos:null,rows:null,expanded:new Set(),tree:new Set(),_best:{},_hops:{}};
 
 function side(res,hq){return res?(hq?res.h:res.n):null;}
@@ -314,7 +315,7 @@ function compute(){state._best={};state._hops={};const rows=[];
   state.rows=rows;}
 
 function sortRows(){const q=state.query.trim().toLowerCase();
-  const rows=state.rows.filter(r=>!q||r.name.toLowerCase().includes(q));rows.sort((x,y)=>{const k=state.sortKey;let a=x[k],b=y[k];
+  const rows=state.rows.filter(r=>(!q||r.name.toLowerCase().includes(q))&&!(state.hideOutlier&&r.outlier));rows.sort((x,y)=>{const k=state.sortKey;let a=x[k],b=y[k];
   if(k==="name")return x.name.localeCompare(y.name)*(state.sortDir*-1);a=(a==null||!isFinite(a))?-Infinity:a;b=(b==null||!isFinite(b))?-Infinity:b;return(a-b)*state.sortDir;});return rows;}
 
 // recursive crafting tree
@@ -495,6 +496,7 @@ document.getElementById("density").addEventListener("change",e=>{
   document.getElementById("tbl").classList.toggle("dense",e.target.checked);
 });
 document.getElementById("showCrystals").addEventListener("change",e=>{state.showCrystals=e.target.checked;if(state.rows)render();});
+document.getElementById("hideOutlier").addEventListener("change",e=>{state.hideOutlier=e.target.checked;if(state.rows)render();});
 
 
 function agePill(ms){

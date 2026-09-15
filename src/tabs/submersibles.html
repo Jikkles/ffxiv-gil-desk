@@ -88,6 +88,7 @@ tr.detail>td{position:static!important}
       <div class="slabel">Marketboard settings</div>
       <label class="chk" title="Count the loot you would sell on the market board, valued at its 30-day average after tax. Off, a route is worth only what the salvage fetches from an NPC."><input type="checkbox" id="useMarket" checked> Count market-board loot</label>
       <label class="chk" title="Hide routes whose sectors ask for more surveillance, retrieval or favor than this build has"><input type="checkbox" id="fitOnly"> Only routes this build maxes</label>
+      <label class="chk" title="Leave loot nothing has sold of in 30 days out of route values, and hide it, or loot listed far from what has sold, in the Loot view"><input type="checkbox" id="hideOutlier" checked> Hide &#9888; outliers</label>
     </div>
     <div class="sgroup">
       <div class="slabel">Filters</div>
@@ -123,7 +124,7 @@ tr.detail>td{position:static!important}
         <div data-spot="#views" data-side="bottom" data-title="Routes or Loot"><b>Routes</b> ranks every voyage worth sailing; <b>Loot</b> lists every item a voyage can bring back.</div>
         <div data-spot="#thr th[data-k=day]" data-side="bottom" data-title="Profit/day">What the whole fleet nets a day on your schedule, after repairs. A route longer than your resend gap only earns on the days it is back.</div>
         <div data-spot="#rows tr:first-child" data-side="bottom" data-title="Open a route">Click a route for what each sector brings back and whether your build meets its surveillance, retrieval and favor breakpoints.</div>
-        <div data-spot="#fitOnly, #useMarket" data-side="right" data-title="Filters"><b>Only routes this build maxes</b> hides routes your build falls short on. Untick <b>Count market-board loot</b> to value a route on NPC salvage alone.</div>
+        <div data-spot="#fitOnly, #useMarket, #hideOutlier" data-side="right" data-title="Filters"><b>Only routes this build maxes</b> hides routes your build falls short on. Untick <b>Count market-board loot</b> to value a route on NPC salvage alone. <b>Hide ⚠ outliers</b>, ticked to start with, leaves loot nobody has bought lately out of route values.</div>
       </template>
     </details>
 
@@ -171,7 +172,7 @@ const CLASS_CODE = {3:"S",2:"U",1:"W",4:"C",5:"Y",8:"S+",7:"U+",6:"W+",9:"C+",10
 const SLOTS = [["pHull",0],["pStern",1],["pBow",2],["pBridge",3]];
 
 let state={home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],query:"",tax:0.05,view:"routes",sortKey:"day",sortDir:-1,
-  rank:120,build:[8,8,7,9],subs:4,cadence:24,useMarket:true,fitOnly:false,sea:"all",maxSec:5,
+  rank:120,build:[8,8,7,9],subs:4,cadence:24,useMarket:true,fitOnly:false,hideOutlier:true,sea:"all",maxSec:5,
   world:null,mkt:null,hist:null,routes:null,loot:null,expanded:new Set(),summary:"",scopeDc:"Chaos"};
 
 function side(res,hq){return res?(hq?res.h:res.n):null;}
@@ -257,6 +258,8 @@ function dcAvg(id,res){
 function netPrice(id){
   const res=state.mkt?state.mkt[id]:null;
   const avg=dcAvg(id,res);
+  /* loot nobody has bought in 30 days would only be counted at its asking price */
+  if(avg==null&&state.hideOutlier)return null;
   const low=aggPrice(res,false,"dc")??aggPrice(res,true,"dc");
   const p=avg!=null&&low!=null?Math.min(avg,low):(avg??low);
   return p!=null?p*(1-state.tax):null;
@@ -359,7 +362,9 @@ function computeLoot(){
     const h=state.hist?state.hist[e.id]:null;
     const vi=vel30(h);const trend=trend30(h);
     const net=avg!=null?avg*(1-state.tax):null;
-    return{id:e.id,name:nameOf(e.id),cat:catOf(e.id),vendor:vp,secs:e.secs,
+    /* the Duties test: nothing sold, or a listing on your world far from what has sold */
+    const outlier=!vp&&(avg==null||(now!=null&&(now>avg*2.5||now<avg*0.4)));
+    return{outlier,id:e.id,name:nameOf(e.id),cat:catOf(e.id),vendor:vp,secs:e.secs,
       where:[...new Set(e.secs.map(x=>seaName(x.s.m)))].join(", "),
       best:e.secs[0],now,avg,trend,vel:vi.perDay,velI:vi,gilDay:(net!=null&&vi.perDay)?net*vi.perDay:null,
       upload:aggUpload(state.world?state.world[e.id]:null),per:e.secs[0].perRoll*e.secs[0].s.rpv};
@@ -379,6 +384,7 @@ function visibleRoutes(){
 function visibleLoot(){
   let r=state.loot||[];
   if(state.sea!=="all")r=r.filter(x=>x.secs.some(y=>y.s.m===+state.sea));
+  if(state.hideOutlier)r=r.filter(x=>!x.outlier);
   if(state.query){const q=state.query.toLowerCase();r=r.filter(x=>x.name.toLowerCase().includes(q)||x.where.toLowerCase().includes(q));}
   return sortRows(r);
 }
@@ -464,7 +470,7 @@ function render(){
       const tools=r.vendor?"":`<span class="rowtools"><button class="listbtn" data-listadd="${r.id}" title="Add to a saved list">📋</button><button class="xwbtn" data-xw="${r.id}" data-xwname="${xesc(r.name)}" title="Compare this item's price and stock on every world">🌐</button></span>`;
       const pill=r.vendor?'<span class="pill salvage">salvage</span>':`<span class="pill ${catSlug(r.cat)}" title="${r.cat}">${catLabel(r.cat)}</span>`;
       const link=r.vendor?r.name:`<a href="https://universalis.app/market/${r.id}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">${r.name}</a>`;
-      return `<tr class="row" style="cursor:default"><td><div class="name rich">${tools}${iconHTML(r.id)}<span class="nmeta"><span class="n">${link} ${pill}</span>`+
+      return `<tr class="row" style="cursor:default"><td><div class="name rich">${tools}${iconHTML(r.id)}<span class="nmeta"><span class="n">${link} ${pill}${r.outlier?`<span class="warn" title="${r.avg==null?"Nothing has sold across "+state.scopeDc+" in 30 days, so there is no real price behind this row":"The listing on your world sits far from what has actually sold"}">⚠</span>`:""}</span>`+
         `<span class="t" title="${r.secs.map(x=>seaName(x.s.m)+" "+x.s.l).join(", ")}">best: ${best.l} ${best.n} (${seaName(best.m)})${r.secs.length>1?` · +${r.secs.length-1} more`:""}</span></span></div></td>`+
         `<td>${r.per>=10?fmt(r.per):r.per.toFixed(2)}</td>`+
         `<td class="vend">${r.vendor?fmt(r.vendor):"—"}</td>`+
@@ -532,6 +538,7 @@ document.getElementById("subs").addEventListener("change",e=>{state.subs=+e.targ
 document.getElementById("cadence").addEventListener("change",e=>{state.cadence=+e.target.value;recompute();});
 document.getElementById("useMarket").addEventListener("change",e=>{state.useMarket=e.target.checked;recompute();});
 document.getElementById("fitOnly").addEventListener("change",e=>{state.fitOnly=e.target.checked;if(state.routes)render();});
+document.getElementById("hideOutlier").addEventListener("change",e=>{state.hideOutlier=e.target.checked;recompute();});
 document.getElementById("sea").addEventListener("change",e=>{state.sea=e.target.value;recompute();});
 document.getElementById("maxSec").addEventListener("change",e=>{state.maxSec=+e.target.value;recompute();});
 document.getElementById("tax").addEventListener("change",e=>{state.tax=+e.target.value;recompute();});

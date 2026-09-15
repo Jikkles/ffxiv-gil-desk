@@ -46,9 +46,6 @@
 .dense tbody td{padding:6px 11px!important}
 .dense tbody .name{gap:0}
 .dense .bar{display:none}
-.copy-btn{all:unset;cursor:pointer;font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--aether);
-    border:1px solid var(--line);border-radius:7px;padding:4px 10px;background:var(--panel);margin-left:8px}
-.copy-btn:hover{border-color:var(--aether)}
 .stale-warn{display:inline-block;color:var(--loss);font-size:13px;line-height:1;font-family:"JetBrains Mono",monospace;padding:2px 5px;margin-left:5px;border:1px solid var(--loss-line);border-radius:7px;background:var(--loss-soft);vertical-align:middle;cursor:help}
 .lvl-range{display:flex;align-items:center;gap:6px}
 .lvl-range input[type=range]{accent-color:var(--aether);width:90px}
@@ -87,12 +84,12 @@
       <button type="button" class="dcbtn" id="dcBtn" title="Choose which data centres to scan for cheap listings">Chaos <span class="dccar">&#9662;</span></button>
       <div class="dcmenu" id="dcMenu" hidden></div>
     </div>
-      <button class="btn wide" id="copyList" title="Copy visible items as shopping list">📋 Copy list</button>
       <button class="btn primary wide" id="refresh">↻ Refresh</button>
     </div>
     <div class="sgroup">
       <div class="slabel">Marketboard settings</div>
       <label class="chk"><input type="checkbox" id="hideHome"> Hide same-world deals</label>
+      <label class="chk" title="Hide flips whose resale price nobody has paid on your world in 30 days"><input type="checkbox" id="hideOutlier" checked> Hide &#9888; outliers</label>
       <label class="chk"><input type="checkbox" id="density"> Compact rows</label>
     </div>
     <div class="sgroup">
@@ -173,13 +170,13 @@
       <div class="hw-body">
         <div class="hw-sec"><h4>What it works out</h4><p>No crafting: world-to-world trading on mounts, minions, hairstyles, outfit coffers, emotes, orchestrion rolls, facewear, fashion accessories such as parasols and wings, and General-purpose Pure White and Jet Black dye. Rolls, facewear and accessories are only listed if they average 50k or more in both Europe and North America. It finds the cheapest listing on any world in <b>Buy from</b> and compares it with what the item really sells for on your world.</p></div>
         <div class="hw-sec"><h4>Reading the table</h4><p><b>Buy</b> names the world to buy on: orange means you will have to travel, teal means it is already on yours. <b>Profit/flip</b> is what it sells for on your world, after tax, less the buy price: the 30-day average, or the cheapest listing already on your world when that is lower, since you would have to undercut it.</p></div>
-        <div class="hw-sec"><h4>Worth knowing</h4><p>Rare items are where listings lie most, so profit rests on real sales, but never above what your world is already listing it for. <b>caps</b> beside <b>Sell now</b> marks a row priced at that listing, and ⚠ one nothing has sold on your world in 30 days, which the headline card leaves out. <b>Min profit</b> and <b>Min avg price</b> cut out small flips (they start at 1M and 2M, which hides most rolls, facewear and dyes: lower them, or pick a <b>Category</b>, to see those), and <b>Hide same-world deals</b> leaves only the ones that need a hop.</p></div>
+        <div class="hw-sec"><h4>Worth knowing</h4><p>Rare items are where listings lie most, so profit rests on real sales, but never above what your world is already listing it for. <b>caps</b> beside <b>Sell now</b> marks a row priced at that listing, and ⚠ one nothing has sold on your world in 30 days, which the headline card leaves out. <b>Hide ⚠ outliers</b> starts ticked, so those rows stay out of the table too. <b>Min profit</b> and <b>Min avg price</b> cut out small flips (they start at 1M and 2M, which hides most rolls, facewear and dyes: lower them, or pick a <b>Category</b>, to see those), and <b>Hide same-world deals</b> leaves only the ones that need a hop.</p></div>
       </div>
       <template class="guide">
         <div data-spot="#dcBtn" data-side="right" data-title="Buy from">The data centres searched for the cheapest listing. More of them finds more deals, but the scan takes longer.</div>
         <div data-spot="#tbl th[data-k=buyPrice]" data-side="bottom" data-title="Buy (cheapest)">The lowest listing and the world it is on: <b>orange</b> means you will have to travel, <b>teal</b> that it is on your own world.</div>
         <div data-spot="#tbl th[data-k=profit]" data-side="bottom" data-title="Profit/flip">The 30-day average sale on your world, or the cheapest listing there if that is lower, after tax, less the buy price. <b>caps</b> beside <b>Sell now</b> marks a row held to that listing; ⚠ one with no sales on your world in 30 days.</div>
-        <div data-spot="#grp, #minProfit, #minAvg, #hideHome" data-side="right" data-title="Filters">Pick a category, cut out small flips, and tick <b>Hide same-world deals</b> to see only the ones worth a hop. Rolls, facewear and dyes rarely clear the 1M / 2M defaults, so lower <b>Min profit</b> and <b>Min avg price</b> for those.</div>
+        <div data-spot="#grp, #minProfit, #minAvg, #hideHome, #hideOutlier" data-side="right" data-title="Filters">Pick a category, cut out small flips, and tick <b>Hide same-world deals</b> to see only the ones worth a hop. <b>Hide ⚠ outliers</b> keeps out flips nobody has bought on your world lately. Rolls, facewear and dyes rarely clear the 1M / 2M defaults, so lower <b>Min profit</b> and <b>Min avg price</b> for those.</div>
       </template>
     </details>
 
@@ -260,7 +257,7 @@ const ago=ms=>{if(!ms)return"no uploads";const s=(Date.now()-ms)/1000;if(s<120)r
 let state = {
   home: "Spriggan", homeId: 85, tax: 0.05,
   group: "all", query: "", minProfit: 1000000, minAvg: 2000000,
-  hideHome: false, sortKey: "profit", sortDir: -1,
+  hideHome: false, hideOutlier: true, sortKey: "profit", sortDir: -1,
   dc: "Chaos", dcs: ["Chaos"],
   worlds: null, chaos: null, hist: null, sell: null, rows: null
 };
@@ -334,6 +331,7 @@ function visibleRows(){
     if(state.group!=="all"&&r.cat!==state.group)return false;
     if(q&&!r.name.toLowerCase().includes(q))return false;
     if(state.hideHome&&r.isHome)return false;
+    if(state.hideOutlier&&r.outlier)return false;
     if(r.profit==null||r.profit<state.minProfit)return false;
     const avg=r.sellAvg??r.sellNow??0;
     if(avg<state.minAvg)return false;
@@ -456,6 +454,7 @@ document.getElementById("search").addEventListener("input",e=>{state.query=e.tar
 document.getElementById("minProfit").addEventListener("change",e=>{state.minProfit=+e.target.value;render();});
 document.getElementById("minAvg").addEventListener("change",e=>{state.minAvg=+e.target.value;render();});
 document.getElementById("hideHome").addEventListener("change",e=>{state.hideHome=e.target.checked;render();});
+document.getElementById("hideOutlier").addEventListener("change",e=>{state.hideOutlier=e.target.checked;render();});
 document.getElementById("tax").addEventListener("change",e=>{state.tax=+e.target.value;if(state.rows){compute();render();}} );
 buildHomeSelect(document.getElementById("home"),state.home);
 document.getElementById("home").addEventListener("change",e=>{homeChanged(e.target.value);load();});
@@ -476,14 +475,6 @@ document.getElementById("density").addEventListener("change",e=>{
   document.getElementById("tbl").classList.toggle("dense",e.target.checked);
 });
 
-document.getElementById("copyList").addEventListener("click",()=>{
-  const rows=visibleRows().filter(r=>r.profit>0);
-  if(!rows.length){alert("No profitable flips to copy.");return;}
-  const lines=rows.map(r=>`${r.name} — buy ${fmt(r.buyPrice)} on ${r.buyWorld||"?"} → sell ~${fmtM(r.sellBasis||0)} on ${state.home} (${fmtM(r.profit)} profit, ${velNum(r.vel)} units/day)`);
-  navigator.clipboard.writeText("FLIP LIST\n"+lines.join("\n")).then(()=>{
-    const b=document.getElementById("copyList");b.textContent="✓ Copied!";setTimeout(()=>b.textContent="📋 Copy list",2000);
-  });
-});
 
 
 function agePill(ms){

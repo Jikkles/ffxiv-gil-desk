@@ -79,7 +79,7 @@ thead th span{display:inline-block;min-width:.8em}
     <div class="sgroup">
       <div class="slabel">Marketboard settings</div>
       <label class="chk" title="Hide drops with no recorded sales across your data centre in the last 30 days"><input type="checkbox" id="soldOnly" checked> Only what is actually selling</label>
-      <label class="chk" title="Hide rows whose listing sits far from what has actually sold"><input type="checkbox" id="hideWarn"> Hide &#9888; unreliable</label>
+      <label class="chk" title="Hide rows whose listing sits far from what has actually sold"><input type="checkbox" id="hideWarn"> Hide &#9888; outliers</label>
     </div>
     <div class="sgroup">
       <div class="slabel">View</div>
@@ -139,7 +139,7 @@ thead th span{display:inline-block;min-width:.8em}
         <div data-spot="#tbl th[data-k=ev]" data-side="bottom" data-title="Expected">What one run, coffer or sack is worth from this item: chance × average price after tax. For an exchange, gil per unit of currency.</div>
         <div data-spot="#mtbl th[data-k=ev]" data-side="bottom" data-title="Per coffer">What one dug-up coffer or portal chest is worth: every sellable drop's chance × its average price after tax, added up. Compare it with the map's own <b>Avg 30d</b> to decide whether to open a map or sell it.</div>
         <div data-spot="#mrows tr.row:first-child" data-side="bottom" data-title="Open a map">Click a map or portal for its whole loot table, likeliest earners first.</div>
-        <div data-spot="#soldOnly, #hideWarn" data-side="right" data-title="What gets hidden"><b>Only what is actually selling</b> hides drops with no sales across your data centre; <b>Hide ⚠ unreliable</b> drops prices that sit far from real sales.</div>
+        <div data-spot="#soldOnly, #hideWarn" data-side="right" data-title="What gets hidden"><b>Only what is actually selling</b> hides drops with no sales across your data centre; <b>Hide ⚠ outliers</b> drops prices that sit far from real sales.</div>
       </template>
     </details>
 

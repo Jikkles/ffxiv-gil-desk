@@ -69,6 +69,7 @@ h2{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.16em;te
     <div class="sgroup">
       <div class="slabel">Marketboard settings</div>
       <label class="chk"><input type="checkbox" id="hideNo" checked> Hide no-sales</label>
+      <label class="chk" title="Leave out materia whose listing sits far from its recent average, or that has no listing or no sales, both in the table and when working out what a scrip is worth"><input type="checkbox" id="hideOutlier" checked> Hide &#9888; outliers</label>
       <label class="chk" title="Shards, crystals and clusters are always costed. Tick this to list them in each recipe as well."><input type="checkbox" id="showCrystals"> Show crystals</label>
     </div>
     <div class="sgroup">
@@ -112,6 +113,7 @@ h2{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.16em;te
         <div data-spot="#ctbl th[data-k=value]" data-side="bottom" data-title="Revenue/craft">The scrips one collectable earns, times what a scrip is worth as materia on your world.</div>
         <div data-spot="#ctbl th[data-k=profit]" data-side="bottom" data-title="Profit/craft">Revenue less the materials: the column to sort by.</div>
         <div data-spot="#showCrystals" data-side="right" data-title="Show crystals">Shards, crystals and clusters are always in the cost. Tick this to list them in each recipe as well.</div>
+        <div data-spot="#hideOutlier" data-side="right" data-title="Hide ⚠ outliers">Ticked to start with: a materia whose price looks wrong is left out of the table and never sets what a scrip is worth.</div>
         <div data-spot="#crows tr:first-child" data-side="bottom" data-title="Open a row">Click a collectable for its recipe. Precrafts are bought NQ wherever they are listed or an NPC sells them, and only broken down when none are for sale.</div>
         <div data-spot="#mtbl thead, #mrows tr:nth-child(-n+3)" data-side="top" data-title="The materia">What each crafter materia sells for on your world. The one that sells best for its scrip cost sets what a scrip is worth.</div>
       </template>
@@ -165,7 +167,7 @@ const CHAOS_FALLBACK={39:"Omega",71:"Moogle",80:"Cerberus",83:"Louisoix",85:"Spr
 const fmt=n=>n==null||!isFinite(n)?"—":Math.round(n).toLocaleString("en-GB");
 const fmtK=n=>{if(n==null||!isFinite(n))return"—";if(Math.abs(n)>=1e6)return(n/1e6).toFixed(2)+"M";if(Math.abs(n)>=1e3)return(n/1e3).toFixed(1)+"k";return Math.round(n).toString();};
 
-let state={home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],tax:0.05,scrip:"all",cls:"all",showCrystals:false,grade:"all",query:"",hideNo:true,
+let state={home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],tax:0.05,scrip:"all",cls:"all",showCrystals:false,grade:"all",query:"",hideNo:true,hideOutlier:true,
   csort:"profit",cdir:-1,msort:"sell",mdir:-1,worlds:null,sell:null,chaos:null,
   gps:{purple:null,orange:null},collRows:null,matRows:null,expanded:new Set()};
 
@@ -239,12 +241,13 @@ function compute(){
   state.matRows=MATERIA.map(m=>{const res=state.sell[m.id];
     const sell=aggPrice(res,false,"world").price;const avg=aggAvg(res,false,"world");const vel=aggVel(res,false,"world");
     const net=sell!=null?sell*(1-state.tax):null;const sb=SCRIP_BUY[m.id];
-    return {...m,sell,avg,vel,net,scripType:sb?sb.type:null,scripCost:sb?sb.cost:null};});
+    const outlier=sell==null||avg==null||sell>avg*2.5||sell<avg*0.4;
+    return {...m,sell,avg,vel,net,outlier,scripType:sb?sb.type:null,scripCost:sb?sb.cost:null};});
   const byId={};state.matRows.forEach(r=>byId[r.id]=r);
   /* a scrip is worth whatever materia it buys sells for, per scrip of its cost */
   for(const key of ['purple','orange']){let best=null;
     for(const id in SCRIP_BUY){const sb=SCRIP_BUY[id];if(sb.type!==key)continue;const r=byId[id];
-      if(r&&r.net!=null){const g=r.net/sb.cost;if(best==null||g>best.g)best={g,mat:r,cost:sb.cost};}}
+      if(r&&r.net!=null&&!(state.hideOutlier&&r.outlier)){const g=r.net/sb.cost;if(best==null||g>best.g)best={g,mat:r,cost:sb.cost};}}
     state.gps[key]=best;}
   state.collRows=COLL.map(c=>{
     const kids=(c.tree.ings||[]).map(ing=>costNode(ing,c.id+">"+ing.id));
@@ -323,12 +326,12 @@ function renderColl(){if(!state.collRows)return;
 }
 
 function renderMateria(){if(!state.matRows)return;const q=state.query.trim().toLowerCase();
-  let rows=state.matRows.filter(m=>{if(state.grade!=="all"&&m.grade!==state.grade)return false;if(state.hideNo&&!(m.vel>0)&&!m.scripType)return false;if(q&&!m.type.toLowerCase().includes(q))return false;return true;});
+  let rows=state.matRows.filter(m=>{if(state.grade!=="all"&&m.grade!==state.grade)return false;if(state.hideNo&&!(m.vel>0)&&!m.scripType)return false;if(state.hideOutlier&&m.outlier)return false;if(q&&!m.type.toLowerCase().includes(q))return false;return true;});
   rows.sort((a,b)=>{const k=state.msort;let av=a[k],bv=b[k];if(k==="name")return a.name.localeCompare(b.name)*(state.mdir*-1);if(k==="grade"){av=a.gi;bv=b.gi;}av=(av==null||!isFinite(av))?-Infinity:av;bv=(bv==null||!isFinite(bv))?-Infinity:bv;return(av-bv)*state.mdir;});
   const tb=document.getElementById("mrows");tb.innerHTML="";
   for(const m of rows){const tr=document.createElement("tr");tr.className="row";
     const tag=m.scripType?`<span class="pill ${m.scripType}">${m.scripType==='purple'?'Purple':'Orange'}</span>`:'';
-    tr.innerHTML=`<td><div class="name"><span class="n"><button class="listbtn" data-listadd="${m.id}" title="Add to a saved list">📋</button><button class="xwbtn" data-xw="${m.id}" data-xwname="${xesc(m.name)}" title="Compare this item's price and stock on every world">\ud83c\udf10</button>${iconHTML(m.id)}${m.type} ${tag}</span></div></td>
+    tr.innerHTML=`<td><div class="name"><span class="n"><button class="listbtn" data-listadd="${m.id}" title="Add to a saved list">📋</button><button class="xwbtn" data-xw="${m.id}" data-xwname="${xesc(m.name)}" title="Compare this item's price and stock on every world">\ud83c\udf10</button>${iconHTML(m.id)}${m.type} ${tag}${m.outlier?`<span class="warn" title="No listing, no recent sales, or the listing sits far from the recent average: treat this price as unreliable.">⚠</span>`:""}</span></div></td>
       <td>${m.grade||'—'}</td><td>${fmt(m.sell)} <span class="q">NQ</span></td><td>${fmt(m.avg)}</td><td>${velCell(velAgg(m.vel))}</td>
       <td class="hide">${m.scripCost?`<span class="${m.scripType==='purple'?'ptext':'otext'}">${m.scripCost} ${m.scripType==='purple'?'P':'O'}</span>`:'—'}</td>`;
     tb.appendChild(tr);}
@@ -350,6 +353,7 @@ document.getElementById("tax").addEventListener("change",e=>{state.tax=parseFloa
 document.getElementById("grade").addEventListener("change",e=>{state.grade=e.target.value;renderMateria();});
 document.getElementById("search").addEventListener("input",e=>{state.query=e.target.value;renderMateria();});
 document.getElementById("hideNo").addEventListener("change",e=>{state.hideNo=e.target.checked;renderMateria();});
+document.getElementById("hideOutlier").addEventListener("change",e=>{state.hideOutlier=e.target.checked;if(state.matRows){compute();renderColl();renderMateria();}});
 document.getElementById("refresh").addEventListener("click",load);
 document.querySelectorAll("th[data-k]").forEach(th=>{if(th.style.cursor==="default")return;th.addEventListener("click",()=>{const k=th.dataset.k;if(state.csort===k)state.cdir*=-1;else{state.csort=k;state.cdir=-1;}
   document.querySelectorAll("th[data-k]").forEach(x=>{x.removeAttribute("data-sorted");const s=x.querySelector("span");if(s)s.textContent="";});th.setAttribute("data-sorted","");th.querySelector("span").textContent=state.cdir<0?"▾":"▴";renderColl();});});

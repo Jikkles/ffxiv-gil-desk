@@ -46,9 +46,6 @@
 .dense tbody td{padding:6px 11px!important}
 .dense tbody .name{gap:0}
 .dense .bar{display:none}
-.copy-btn{all:unset;cursor:pointer;font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--aether);
-    border:1px solid var(--line);border-radius:7px;padding:4px 10px;background:var(--panel);margin-left:8px}
-.copy-btn:hover{border-color:var(--aether)}
 .stale-warn{display:inline-block;color:var(--loss);font-size:13px;line-height:1;font-family:"JetBrains Mono",monospace;padding:2px 5px;margin-left:5px;border:1px solid var(--loss-line);border-radius:7px;background:var(--loss-soft);vertical-align:middle;cursor:help}
 .lvl-range{display:flex;align-items:center;gap:6px}
 .lvl-range input[type=range]{accent-color:var(--aether);width:90px}
@@ -116,12 +113,12 @@
     <div class="sgroup">
       <div class="slabel">Server</div>
       <div class="field sel"><label>Sell on</label><select id="home"></select></div>
-      <button class="btn wide" id="copyList" title="Copy visible rows">&#128203; Copy list</button>
       <button class="btn primary wide" id="refresh">&#8635; Refresh</button>
     </div>
     <div class="sgroup">
       <div class="slabel">Marketboard settings</div>
       <label class="chk"><input type="checkbox" id="showTribal"> Tribal currencies</label>
+      <label class="chk" title="Hide items with nothing sold in 30 days, no current listing, or a listing far from the 30-day average"><input type="checkbox" id="hideOutlier" checked> Hide &#9888; outliers</label>
       <label class="chk"><input type="checkbox" id="density"> Compact rows</label>
     </div>
     <div class="sgroup">
@@ -177,14 +174,14 @@
       <div class="hw-body">
         <div class="hw-sec"><h4>What it works out</h4><p>Pick a currency from the row of icons and it lists every marketable item that currency buys, with what each sells for on your world after tax. The ⭐ tile shows the best buy for every currency at once.</p></div>
         <div class="hw-sec"><h4>Reading the table</h4><p>The chip on the right of each item is what one costs in that currency. The <b>Best rate</b> card is the gil one unit of currency turns into: that is the item to spend on. <b>Value at</b> picks the sale price used: <b>Avg 30d</b> (the middle price of 30 days of real sales, steadier, the default), <b>Current lowest</b>, or <b>Conservative</b>, the lower of the two.</p></div>
-        <div class="hw-sec"><h4>Worth knowing</h4><p>A great rate on something that sells once a month is not much use, so <b>Min units/day</b> hides slow sellers; set it to <b>Any</b> to see a whole shop, which the potsherd currencies need. Tick <b>Tribal currencies</b> to add those to the icons. Every row names its vendor, and a few belong to NPCs no longer in the game.</p></div>
+        <div class="hw-sec"><h4>Worth knowing</h4><p>A great rate on something that sells once a month is not much use, so <b>Min units/day</b> hides slow sellers; set it to <b>Any</b> and untick <b>Hide ⚠ outliers</b> to see a whole shop, which the potsherd currencies need. Tick <b>Tribal currencies</b> to add those to the icons. Every row names its vendor, and a few belong to NPCs no longer in the game.</p></div>
       </div>
       <template class="guide">
         <div data-spot="#curbar" data-side="bottom" data-title="Pick a currency">Each icon is a currency. The ⭐ tile at the start shows the best buy for every currency at once.</div>
         <div data-spot="#kpiRate" data-side="bottom" data-title="Best rate">The gil one unit of currency turns into on the best item in view. That is the one to spend on.</div>
         <div data-spot="#rows .curcost" data-side="right" data-title="What it costs">The chip on the right of each item names the currency and what one costs in it. A split such as (500÷3) means the vendor sells a bundle.</div>
         <div data-spot="#basis" data-side="right" data-title="Value at">Which sale price the rate is worked out on: <b>Avg 30d</b> (the middle price of 30 days of sales), <b>Current lowest</b>, or <b>Conservative</b>, the lower of the two.</div>
-        <div data-spot="#minVel, #showTribal" data-side="right" data-title="Slow sellers and tribal currencies"><b>Min units/day</b> hides items that barely sell; set it to <b>Any</b> to see a whole shop. Tick <b>Tribal currencies</b> to add those to the icons.</div>
+        <div data-spot="#minVel, #showTribal, #hideOutlier" data-side="right" data-title="What gets shown"><b>Min units/day</b> hides items that barely sell; set it to <b>Any</b> to see a whole shop. Tick <b>Tribal currencies</b> to add those to the icons. <b>Hide ⚠ outliers</b>, ticked to start with, drops prices that look wrong.</div>
       </template>
     </details>
 
@@ -217,7 +214,7 @@ const fmtK=n=>{if(n==null||!isFinite(n))return"—";if(Math.abs(n)>=1e6)return(n
 const fmt2=n=>n==null||!isFinite(n)?"—":(n>=100?Math.round(n).toLocaleString("en-GB"):n.toFixed(n>=10?1:2));
 
 let state={home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],tax:0.05,cur:CD.currencies[0].id,basis:"avg",
-  minVel:0.5,query:"",showTribal:false,sortKey:"gilDay",sortDir:-1,worlds:null,mkt:null,hist:{},rows:null,gen:0};
+  minVel:0.5,query:"",showTribal:false,hideOutlier:true,sortKey:"gilDay",sortDir:-1,worlds:null,mkt:null,hist:{},rows:null,gen:0};
 
 function side(res,hq){return res?(hq?res.h:res.n):null;}
 function aggPrice(res,hq,scope){const q=side(res,hq);const m=q&&(scope==="world"?q.mw:q.md);return m&&m[0]!=null?m[0]:null;}
@@ -337,7 +334,10 @@ function priceRow(e){
   const net=basis!=null?basis*(1-state.tax):null;
   const perUnit=e.c/e.q;
   const gpc=net!=null?net/perUnit:null;
-  return {id:e.i,name:meta.n,shop:e.s,cost:e.c,qty:e.q,hq,unique:!!e.u,perUnit,trendT,upload:aggUpload(res),
+  /* the same test as the Dashboard: nothing sold, nothing listed, or a listing
+     far from what has actually sold, so the rate rests on no real price */
+  const outlier=avg==null||now==null||now>avg*2.5||now<avg*0.4;
+  return {outlier,id:e.i,name:meta.n,shop:e.s,cost:e.c,qty:e.q,hq,unique:!!e.u,perUnit,trendT,upload:aggUpload(res),
     now,avg,vel,velI,net,gpc,gilDay:net!=null?net*vel:null};
 }
 function compute(){
@@ -345,7 +345,7 @@ function compute(){
     state.rows=shownCurrencies().map(c=>{
       let best=null;
       for(const e of c.items){const r=priceRow(e);
-        if(r.gpc==null||r.vel<state.minVel)continue;
+        if(r.gpc==null||r.vel<state.minVel||(state.hideOutlier&&r.outlier))continue;
         if(!best||r.gpc>best.gpc)best=r;}
       return best?{...best,curName:c.name,curGroup:c.group,curId:c.id,curIc:c.ic}:
         {curName:c.name,curGroup:c.group,curId:c.id,curIc:c.ic,name:"—",gpc:null,vel:0,velI:null,net:null,gilDay:null,cost:null,qty:1,perUnit:null,now:null,avg:null,shop:"",trendT:null,upload:0};
@@ -358,7 +358,7 @@ function compute(){
 function visibleRows(){
   let r=state.rows||[];
   if(state.cur!=="__all"){
-    r=r.filter(x=>x.gpc!=null&&x.vel>=state.minVel);
+    r=r.filter(x=>x.gpc!=null&&x.vel>=state.minVel&&!(state.hideOutlier&&x.outlier));
     if(state.query){const q=state.query.toLowerCase();r=r.filter(x=>x.name.toLowerCase().includes(q)||(x.shop||"").toLowerCase().includes(q));}
   } else if(state.query){const q=state.query.toLowerCase();
     r=r.filter(x=>x.curName.toLowerCase().includes(q)||(x.name||"").toLowerCase().includes(q));}
@@ -415,7 +415,7 @@ function render(){
       :r.shop&&r.shop.includes(r.curName)?r.shop:[r.curName,r.shop].filter(Boolean).join(" &middot; ");
     const nameCell=r.id==null
       ? `<td><div class="name rich wide">${rowIcon(r.curIc)}<span class="nmeta"><span class="n">${r.curName}</span><span class="t">nothing meets the sales filter</span></span></div></td>`
-      : `<td><div class="name rich wide">${tools}${iconHTML(r.id)}<span class="nmeta"><span class="n"><a href="https://universalis.app/market/${r.id}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">${r.name}</a>${r.hq?'<span class="qtag hq">HQ</span>':''}${r.unique?'<span class="q">unique</span>':''}</span><span class="t shopname">${sub}</span></span>${costChip(r)}</div></td>`;
+      : `<td><div class="name rich wide">${tools}${iconHTML(r.id)}<span class="nmeta"><span class="n"><a href="https://universalis.app/market/${r.id}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">${r.name}</a>${r.hq?'<span class="qtag hq">HQ</span>':''}${r.unique?'<span class="q">unique</span>':''}${r.outlier?'<span class="warn" title="Nothing sold in 30 days, no current listing, or the listing sits far from the 30-day average: treat this rate as unreliable.">⚠</span>':''}</span><span class="t shopname">${sub}</span></span>${costChip(r)}</div></td>`;
     return `<tr class="row">${nameCell}`+
       `<td>${fmtK(r.now)}${agePill(r.upload)}</td>`+
       `<td>${fmtK(r.avg)}</td>`+
@@ -424,12 +424,12 @@ function render(){
       `<td>${fmtK(r.gilDay)}</td></tr>`;}).join("");
 
 
-  const top=rows.filter(r=>r.gpc!=null).sort((a,b)=>b.gpc-a.gpc)[0];
+  const top=rows.filter(r=>r.gpc!=null&&!r.outlier).sort((a,b)=>b.gpc-a.gpc)[0];
   document.getElementById("kpiRate").textContent=top?fmt2(top.gpc)+" g":"—";
   document.getElementById("kpiRateName").innerHTML=top
     ?(state.cur==="__all"?`${top.curName} &rarr; ${top.name}`:`per 1 &times; ${curById(state.cur).name} &middot; ${top.name}`)
     :"nothing meets the filters";
-  const fast=rows.filter(r=>r.gilDay!=null).sort((a,b)=>b.gilDay-a.gilDay)[0];
+  const fast=rows.filter(r=>r.gilDay!=null&&!r.outlier).sort((a,b)=>b.gilDay-a.gilDay)[0];
   document.getElementById("kpiDay").textContent=fast?fmtK(fast.gilDay):"—";
   document.getElementById("kpiDaySub").innerHTML=fast
     ?`${state.cur==="__all"?fast.curName+" &rarr; ":""}${fast.name} &middot; ${velNum(fast.vel)}/day`
@@ -437,7 +437,7 @@ function render(){
   document.getElementById("kpiCount").textContent=rows.length;
   document.getElementById("kpiCountSub").textContent=state.cur==="__all"
     ?"currencies with a live rate":`of ${(curById(state.cur)||{items:[]}).items.length} marketable items, after filters`;
-  if(!rows.length)setStatus("No rows match the current filters \u2014 try lowering <b>Min units/day</b>.");
+  if(!rows.length)setStatus("No rows match the current filters \u2014 try lowering <b>Min units/day</b> or unticking <b>Hide &#9888; outliers</b>.");
 }
 
 function updateScanTime(){const el=document.getElementById("lastScan");if(!el)return;
@@ -481,17 +481,8 @@ document.getElementById("showTribal").addEventListener("change",e=>{
   if(!state.showTribal&&state.cur!=="__all"){const c=curById(state.cur);
     if(c&&c.group===TRIBAL){state.cur=CD.currencies[0].id;saveCur();}}
   buildBar();if(state.mkt){compute();render();}});
+document.getElementById("hideOutlier").addEventListener("change",e=>{state.hideOutlier=e.target.checked;re();});
 document.getElementById("density").addEventListener("change",e=>{document.getElementById("tbl").classList.toggle("dense",e.target.checked);});
-document.getElementById("copyList").addEventListener("click",()=>{
-  const rows=visibleRows().filter(r=>r.gpc!=null);
-  if(!rows.length){alert("Nothing to copy.");return;}
-  const label=state.cur==="__all"?"BEST ITEM PER CURRENCY":curById(state.cur).name.toUpperCase();
-  const lines=rows.map(r=>state.cur==="__all"
-    ?`${r.curName} → ${r.name} — ${fmt2(r.perUnit)} per item, ${fmtK(r.gilDay)} gil/day (${velNum(r.vel)} units/day)`
-    :`${r.name} — ${fmt2(r.perUnit)} per item → ${fmtK(r.net)} net each, ${fmtK(r.gilDay)} gil/day (${velNum(r.vel)} units/day) [${r.shop}]`);
-  navigator.clipboard.writeText(label+"\n"+lines.join("\n")).then(()=>{
-    const b=document.getElementById("copyList");b.textContent="✓ Copied!";setTimeout(()=>b.textContent="📋 Copy list",2000);});
-});
 
 /* settings persistence + force-refresh */
 (function(){
