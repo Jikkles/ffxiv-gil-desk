@@ -26,7 +26,7 @@ window.Tour=(function(){
     {sec:"Side panel",title:"Filters",spot:"filters",focus:"side",side:"right",
       body:"Hide items that don’t sell or have suspect prices, measure profit against the cheapest listing or the 30-day average, set the market tax, and narrow the list to one category. Each tab remembers its own."},
     {sec:"Page info",title:"What this tab does",spot:"hero",side:"bottom",zoom:1.5,
-      body:"Every tab opens with a short summary of what it works out and where its numbers come from."},
+      body:"Every tab opens with a short summary of what it works out. For more, open <b>How this works</b> just under the cards: what the tab calculates, how to read its columns, and what to watch out for."},
     {sec:"Page info",title:"At a glance",spot:"kpis",side:"bottom",zoom:1.4,
       body:"The cards pick out the headlines: the best profit on a single item, the most gil a day everything in view could make, and how many items are profitable. They follow your filters."},
     {sec:"Item list",title:"The item list",spot:"table",side:"bottom",

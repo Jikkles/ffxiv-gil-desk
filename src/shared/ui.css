@@ -406,3 +406,22 @@ thead th[data-sorted]{box-shadow:inset 0 -2px 0 var(--c1)}
 :root[data-theme="light"] .pill.emote{color:#8a6414;border-color:#e0cfa8}
 :root[data-theme="light"] .pill.orange{color:#9c5716;border-color:#e6c3a0}
 :root[data-theme="light"] .pill.purple{color:#6d4bc7;border-color:#c9bdf0}
+
+/* ---------- "How this works": each tab's own explainer, under the headline cards ----------
+   Folded to one line by default; ui.js puts it straight after the hero and remembers
+   whether it was left open. */
+.howto{margin:0 0 14px;background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow-sm);overflow:hidden}
+.howto>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:10px 14px;user-select:none}
+.howto>summary::-webkit-details-marker{display:none}
+.howto>summary:hover{background:var(--panel2)}
+.howto>summary:focus-visible{outline:2px solid var(--aether);outline-offset:-2px}
+.howto .hw-ic{display:flex;color:var(--gil)}
+.howto .hw-ic svg{width:16px;height:16px}
+.howto .hw-title{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gil);white-space:nowrap}
+.howto .hw-hint{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.howto .hw-car{margin-left:auto;color:var(--faint);font-size:11px;transition:transform .15s}
+.howto[open] .hw-car{transform:rotate(90deg)}
+.howto .hw-body{border-top:1px solid var(--line);padding:14px 18px 16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px 30px}
+.howto .hw-sec h4{margin:0 0 6px;font-family:"JetBrains Mono",monospace;font-size:9.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--aether)}
+.howto .hw-sec p{margin:0;font-size:13px;line-height:1.6;color:var(--muted)}
+.howto .hw-sec b{color:var(--ink);font-weight:600}

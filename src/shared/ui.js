@@ -184,3 +184,18 @@ function iconHTML(itemId){
   const url="https://xivapi.com/i/"+folder+"/"+String(ic).padStart(6,"0")+".png";
   return '<span class="iconbox"><img loading="lazy" decoding="async" alt="" data-icon="'+ic+'" src="'+url+'" onerror="iconFallback(this)"></span>';
 }
+
+/* ---- "How this works" ----
+   A tab carries its explainer as <details class="howto" data-howto="key">. It is
+   moved to sit straight under the headline cards, whatever else the tab puts
+   there, and whether it was left open is remembered per tab (list tabs share one). */
+function mountHowTo(){
+  const box=document.querySelector("details.howto"),hero=document.querySelector(".hero");
+  if(!box)return;
+  if(hero&&hero.nextElementSibling!==box)hero.after(box);
+  const key="gildesk:howto:"+(box.dataset.howto||"tab");
+  try{if(localStorage.getItem(key)==="open")box.open=true;}catch(e){}
+  box.addEventListener("toggle",()=>{try{localStorage.setItem(key,box.open?"open":"closed");}catch(e){}});
+}
+if(document.readyState==="loading")addEventListener("DOMContentLoaded",mountHowTo);
+else mountHowTo();
