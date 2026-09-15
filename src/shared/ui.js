@@ -218,7 +218,10 @@ function mountHowTo(){
    bubble beside them. A step is <div data-spot="css selectors" data-title="…"
    data-side="right|left|bottom|top">body</div>; every visible match of the
    selectors is lit together (a control is lit with its field), and a step with
-   nothing on screen yet, rows before prices arrive say, is passed over. */
+   nothing on screen yet, rows before prices arrive say, is passed over. Steps are
+   numbered against all of them, so the total holds steady while a table loads,
+   except a step marked data-only, which only applies to some states of the page
+   (a list's empty message, or its rows): that one counts only while it is showing. */
 const Guide=(function(){
   let steps=[],at=0,root=null,spot,bub,sideWas=null,settle=0;
   const M=16,GAP=16;
@@ -237,7 +240,7 @@ const Guide=(function(){
     if(root)return;
     const h1=document.querySelector(".hero h1");
     const name=h1?h1.childNodes[0].textContent.trim():"This tab";
-    steps=[...tpl.content.querySelectorAll("[data-spot]")].map(d=>({sel:d.dataset.spot,title:d.dataset.title||"",side:d.dataset.side||"",body:d.innerHTML,sec:name}));
+    steps=[...tpl.content.querySelectorAll("[data-spot]")].map(d=>({sel:d.dataset.spot,title:d.dataset.title||"",side:d.dataset.side||"",only:d.hasAttribute("data-only"),body:d.innerHTML,sec:name}));
     if(!steps.length)return;
     /* anything in a folded sidebar needs the sidebar out while the guide runs */
     const de=document.documentElement;
@@ -285,14 +288,16 @@ const Guide=(function(){
     if(i>=steps.length){close();return;}
     if(i<0)return;
     at=i;
-    /* counted against every step, so the total holds steady while a table is still loading */
+    /* counted against every step bar data-only ones not showing (see above) */
     const s=steps[i],first=steps.findIndex(x=>targets(x.sel).length);
+    const counted=steps.map((x,j)=>j===i||!x.only||targets(x.sel).length>0);
+    const n=counted.slice(0,i+1).filter(Boolean).length,total=counted.filter(Boolean).length;
     bub.classList.remove("show");
     bub.querySelector(".guide-sec").textContent=s.sec+" guide";
-    bub.querySelector(".guide-n").textContent=(i+1)+" / "+steps.length;
+    bub.querySelector(".guide-n").textContent=n+" / "+total;
     bub.querySelector("h3").textContent=s.title;
     bub.querySelector("p").innerHTML=s.body;
-    bub.querySelector(".guide-prog i").style.width=Math.round((i+1)/steps.length*100)+"%";
+    bub.querySelector(".guide-prog i").style.width=Math.round(n/total*100)+"%";
     bub.querySelector(".guide-back").hidden=i<=first;
     bub.querySelector(".guide-next").textContent=i>=lastLive()?"Finish":"Next";
     const els=targets(s.sel);
