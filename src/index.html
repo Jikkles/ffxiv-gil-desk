@@ -98,20 +98,49 @@
   .tab[aria-selected="true"]{background:linear-gradient(180deg,#4de1c122,#4de1c10a);box-shadow:inset 0 -2px 0 var(--aether)}
   :root[data-theme="light"] .tab[aria-selected="true"]{background:linear-gradient(180deg,#0f9b841f,#0f9b8408)}
   /* ===== v25 first-visit home world picker ===== */
-  .homepick-back{position:fixed;inset:0;z-index:50;background:rgba(4,8,14,.62);backdrop-filter:blur(2px);
-    display:flex;align-items:center;justify-content:center;padding:16px}
-  .homepick-panel{width:min(420px,100%);background:var(--panel);border:1px solid var(--line);border-radius:16px;
-    padding:22px 22px 18px;box-shadow:0 24px 70px #00000090;font-family:"Inter",sans-serif}
+  /* the tab bar stays in view above a lit welcome page, rather than a dimmed
+     empty desk, so a first visit sees what the desk is before picking a world */
+  .homepick-back{position:fixed;inset:0;z-index:50;font-family:"Inter",sans-serif}
+  .homepick-back::before{content:"";position:absolute;left:0;right:0;top:0;height:var(--hp-top,66px);background:#04080e38}
+  :root[data-theme="light"] .homepick-back::before{background:#16202b14}
+  .homepick-stage{position:absolute;left:0;right:0;bottom:0;top:var(--hp-top,66px);overflow:auto;
+    background:radial-gradient(900px 480px at 50% -8%,#e8b3412a,transparent 70%),
+      radial-gradient(700px 520px at 12% 105%,#4de1c116,transparent 70%),
+      radial-gradient(700px 520px at 88% 105%,#e8b34112,transparent 70%),var(--bg);
+    display:flex;flex-direction:column;align-items:center;padding:clamp(28px,7vh,80px) 24px 48px}
+  :root[data-theme="light"] .homepick-stage{
+    background:radial-gradient(900px 480px at 50% -8%,#e8b34130,transparent 70%),
+      radial-gradient(700px 520px at 12% 105%,#0f9b841a,transparent 70%),var(--bg)}
+  .homepick-hero{text-align:center;margin-bottom:26px}
+  .homepick-coin{width:72px;height:72px;margin:0 auto 16px;border-radius:20px;display:grid;place-items:center;padding:10px;
+    background:linear-gradient(160deg,#e8b34130,#4de1c120);border:1px solid #e8b3414d;box-shadow:0 0 50px #e8b34130}
+  .homepick-coin svg{width:100%;height:100%;display:block}
+  .homepick-eyebrow{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--aether)}
+  .homepick-hero h1{margin:8px 0 10px;font-size:34px;line-height:1.1;color:var(--ink);font-weight:700}
+  .homepick-hero h1 b{color:var(--gil)}
+  .homepick-hero p{margin:0 auto;max-width:560px;font-size:15px;line-height:1.55;color:var(--muted)}
+  .homepick-panel{width:min(460px,100%);background:var(--panel);border:1px solid var(--line2);border-top:2px solid var(--gil);
+    border-radius:16px;padding:22px 22px 18px;box-shadow:0 24px 70px #0000006b}
   .homepick-panel h2{margin:0 0 8px;font-size:17px;color:var(--ink)}
   .homepick-panel p{margin:0 0 14px;font-size:13px;color:var(--muted);line-height:1.5}
   .homepick-panel select{width:100%;padding:9px 10px;border-radius:9px;border:1px solid var(--line2);
     background:var(--panel2);color:var(--ink);font-family:"Inter",sans-serif;font-size:14px;margin-bottom:16px}
   .homepick-actions{display:flex;justify-content:flex-end;gap:8px}
-  .homepick-actions button{all:unset;cursor:pointer;font-family:"Inter",sans-serif;font-size:13px;padding:9px 16px;border-radius:9px}
-  .homepick-skip{color:var(--muted);border:1px solid var(--line)}
-  .homepick-skip:hover{color:var(--ink);border-color:var(--line2)}
-  .homepick-go{color:#0b1017;background:var(--gil);font-weight:700}
-  .homepick-go:hover{filter:brightness(1.08)}
+  /* two classes deep, so all:unset does not wipe the border and fill below it */
+  .homepick-actions .homepick-btn{all:unset;cursor:pointer;font-family:"Inter",sans-serif;font-size:13px;padding:9px 16px;border-radius:9px}
+  .homepick-actions .homepick-skip{color:var(--muted);border:1px solid var(--line2)}
+  .homepick-actions .homepick-skip:hover{color:var(--ink);border-color:var(--muted)}
+  .homepick-actions .homepick-go{color:#0b1017;background:var(--gil);font-weight:700;padding:9px 20px}
+  :root[data-theme="light"] .homepick-actions .homepick-go{color:#fff}
+  .homepick-actions .homepick-go:hover{filter:brightness(1.08)}
+  .homepick-inside{width:min(1080px,100%);margin-top:44px}
+  .homepick-inside h3{margin:0 0 12px;text-align:center;font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:500;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+  .homepick-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}
+  .homepick-tile{background:color-mix(in srgb,var(--panel) 82%,transparent);border:1px solid var(--line);border-radius:12px;padding:13px 14px}
+  .homepick-tile .tt{display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:5px}
+  .homepick-tile .tabic{color:var(--aether)}
+  .homepick-tile .td{font-size:12.5px;line-height:1.45;color:var(--muted)}
 </style>
 <script>try{var __t=localStorage.getItem("gildesk:theme:v1");document.documentElement.setAttribute("data-theme",__t==="light"?"light":"dark");document.documentElement.setAttribute("data-side",localStorage.getItem("gildesk:sidebar:v1")==="collapsed"?"collapsed":"open");}catch(e){document.documentElement.setAttribute("data-theme","dark");}</script>
 </head>
@@ -424,6 +453,19 @@ const HOME_TOPO=[
   {region:"Oceania",dcs:{
     "Materia":["Bismarck","Ravana","Sephirot","Sophia","Zurvan"]}}
 ];
+/* the first-visit welcome page's tour of the tabs, one line each */
+const HOME_TILES=[
+  ["all","Dashboard","Profit on 9,400+ crafts, with the cheapest way to get every material."],
+  ["precraft","Precrafts","Intermediates to buy the mats for, craft once and sell HQ."],
+  ["currencies","Currencies","What your tomestones, seals and other currencies buy that sells best."],
+  ["materia","Scrips","Which collectable to turn in for scrips, spent on materia."],
+  ["duties","Duties","Drops worth running content for, with real drop rates."],
+  ["flips","Flips","Buy cheap on another world, sell on yours. No crafting."],
+  ["retainer","Retainers","What the 18-hour exploration ventures bring back worth selling."],
+  ["submersible","Submersibles","Which voyage your Free Company’s subs should sail."],
+  ["workshop","Workshop","What Free Company projects cost to build and sell for."],
+  ["vendors","Vendors","NPC stock that resells on the market board for more."]
+];
 function pickHomeWorld(){
   return new Promise(resolve=>{
     const SKEY="gildesk:all:settings", PICKED="gildesk:homePicked:v1";
@@ -435,7 +477,17 @@ function pickHomeWorld(){
     const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
     const back=document.createElement("div");
     back.className="homepick-back";
-    back.innerHTML=`<div class="homepick-panel" role="dialog" aria-modal="true" aria-label="Pick your home world">
+    const coin=document.querySelector(".brand .logo svg");
+    const tiles=HOME_TILES.map(([k,name,text])=>
+      `<div class="homepick-tile"><div class="tt">${tabIcon(k)}${esc(name)}</div><div class="td">${esc(text)}</div></div>`).join("");
+    back.innerHTML=`<div class="homepick-stage">
+    <div class="homepick-hero">
+      <div class="homepick-coin">${coin?coin.outerHTML:""}</div>
+      <div class="homepick-eyebrow">Final Fantasy XIV market desk</div>
+      <h1>Jikky&rsquo;s <b>Gil Factory</b></h1>
+      <p>Live market board prices for your world, turned into what is worth crafting, buying, flipping and farming, ranked by the gil it makes.</p>
+    </div>
+    <div class="homepick-panel" role="dialog" aria-modal="true" aria-label="Pick your home world">
       <h2>Which server do you play on?</h2>
       <p>This sets what "Sell on" defaults to everywhere on the desk, so prices already match your world. You can change it any time from any tab.</p>
       <select id="homepickSel">
@@ -445,11 +497,21 @@ function pickHomeWorld(){
           `</optgroup>`).join("")).join("")}
       </select>
       <div class="homepick-actions">
-        <button type="button" class="homepick-skip" id="homepickSkip">Skip</button>
-        <button type="button" class="homepick-go" id="homepickGo">Continue</button>
+        <button type="button" class="homepick-btn homepick-skip" id="homepickSkip">Skip</button>
+        <button type="button" class="homepick-btn homepick-go" id="homepickGo">Continue</button>
       </div>
+    </div>
+    <div class="homepick-inside">
+      <h3>What&rsquo;s on the desk</h3>
+      <div class="homepick-grid">${tiles}</div>
+    </div>
     </div>`;
+    /* the stage starts under the tab bar, which can wrap to a second row */
+    const bar=document.querySelector(".tabbar");
+    const fitTop=()=>{if(bar)back.style.setProperty("--hp-top",bar.offsetHeight+"px");};
+    fitTop();addEventListener("resize",fitTop);
     document.body.appendChild(back);
+    back.querySelector("#homepickGo").focus();
     const sel=back.querySelector("#homepickSel");
     sel.value="Spriggan";
     /* resolves true when a world was picked, which is what starts the tour */
