@@ -118,12 +118,12 @@ thead th span{display:inline-block;min-width:.8em}
         <th data-k="name" style="cursor:default">Item</th>
         <th data-k="node" title="Regular or timed, and when a timed node is next up">Node <span></span></th>
         <th data-k="perHr" title="Estimated items gathered in an hour, from Your gathering">Per hour <span></span></th>
-        <th data-k="gilHr" data-sorted title="Per hour × the price in Price, after tax">Gil/hour <span>&#9662;</span></th>
+        <th data-k="gilHr" title="Per hour × the price in Price, after tax">Gil/hour <span></span></th>
         <th data-k="now" title="Cheapest listing on your home world">Sell now <span></span></th>
         <th data-k="avg" title="Median sale price on your home world over 30 days, weighted by units">Avg 30d <span></span></th>
         <th data-k="trend" title="Which way the price is moving: the newer half of the sales history against the older half">Trend <span></span></th>
         <th data-k="vel" title="Units sold a day, which is not sales a day: a stack of 99 leaving in one transaction is 99 units">Units/day <span></span></th>
-        <th data-k="gilDay" title="Avg 30d after tax multiplied by units sold a day: how much gil this item moves on your world">Gil/day <span></span></th>
+        <th data-k="gilDay" data-sorted title="Avg 30d after tax multiplied by units sold a day: how much gil this item moves on your world">Gil/day <span>&#9662;</span></th>
       </tr></thead>
       <tbody id="rows"></tbody>
     </table></div>
@@ -146,7 +146,7 @@ const GATHER = /*@json data/gathering.json*/null;
 const IDS = GATHER.map(g => g.i);
 
 let state={home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],query:"",tax:0.05,basis:"now",cls:"all",nodeType:"all",minLvl:1,maxLvl:100,
-  nodesHr:60,swings:6,perSwing:2,showHidden:false,hideNo:true,hideOutlier:true,capDay:false,sortKey:"gilHr",sortDir:-1,mkt:null,hist:null,rows:null};
+  nodesHr:60,swings:6,perSwing:2,showHidden:false,hideNo:true,hideOutlier:true,capDay:false,sortKey:"gilDay",sortDir:-1,mkt:null,hist:null,rows:null};
 
 /*__SHARED_A__*/
 /*__SHARED_B__*/
