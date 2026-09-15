@@ -171,7 +171,7 @@ const DC_CSS=`
 .dcmenu .dchead .here{color:var(--aether);letter-spacing:.04em;text-transform:none}
 .dcmenu .dcall{all:unset;cursor:pointer;color:var(--gil);font-family:"JetBrains Mono",monospace;font-size:10px;
   letter-spacing:.06em;padding:1px 6px;border-radius:5px;border:1px solid transparent}
-.dcmenu .dcall:hover{border-color:var(--gil-line);background:var(--gil)0f}
+.dcmenu .dcall:hover{border-color:var(--gil-line);background:color-mix(in srgb,var(--gil) 6%,transparent)}
 .dcmenu .dcopt{display:flex;align-items:center;gap:9px;padding:5px 6px;border-radius:7px;cursor:pointer;
   font-family:"Inter",system-ui,sans-serif;font-size:13px;letter-spacing:0;text-transform:none;color:var(--ink)}
 .dcmenu .dcopt:hover{background:var(--panel2)}

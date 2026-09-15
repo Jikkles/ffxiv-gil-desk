@@ -81,15 +81,20 @@
 .curbtn{all:unset;position:relative;cursor:pointer;width:38px;height:38px;border-radius:9px;border:1px solid transparent;
     display:flex;align-items:center;justify-content:center;background:var(--panel2);transition:border-color .12s,background .12s;flex:none}
 .curbtn:hover{border-color:var(--line2);background:var(--raised)}
-.curbtn.sel{border-color:var(--aether);background:var(--accent-soft);box-shadow:0 0 0 1px var(--aether)55}
+.curbtn.sel{border-color:var(--aether);background:var(--accent-soft);box-shadow:0 0 0 1px color-mix(in srgb,var(--aether) 33%,transparent)}
 .curbtn img{width:30px;height:30px;image-rendering:auto;display:block}
 .curbtn .fb{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--muted);letter-spacing:.02em}
 .curbtn.star{font-size:17px;color:var(--gil);width:38px}
-.curbtn::after{content:attr(data-name);position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%);
+/* The label only exists while hovered: an invisible one still takes up room, and
+   the right-most icons' labels ran past the page edge and gave it a sideways
+   scrollbar. Near the right end of the bar it hangs leftwards from the icon
+   instead of centring on it (data-tip, set on hover below). */
+.curbtn:hover::after{content:attr(data-name);position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%);
     background:var(--panel2);border:1px solid var(--line2);color:var(--ink);font-family:"JetBrains Mono",monospace;font-size:11px;
-    padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .12s;z-index:40;
-    box-shadow:0 8px 24px #00000070}
-.curbtn:hover::after{opacity:1}
+    padding:5px 9px;border-radius:7px;white-space:nowrap;pointer-events:none;z-index:40;
+    box-shadow:0 8px 24px #00000070;animation:curtip .12s ease-out}
+.curbtn[data-tip="end"]:hover::after{left:auto;right:-1px;transform:none}
+@keyframes curtip{from{opacity:0}to{opacity:1}}
 .curdiv{width:1px;height:26px;background:var(--line);margin:0 6px;flex:none}
 .cursel{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--muted);margin:6px 4px 0}
 .ricon{width:19px;height:19px;flex:none;margin-right:7px;border-radius:3px;vertical-align:middle}
@@ -294,6 +299,11 @@ function buildBar(){
     state.cur=b.dataset.cur==="__all"?"__all":+b.dataset.cur;
     state.sortKey="gilDay";state.sortDir=-1;
     markSel();saveCur();if(state.mkt){compute();render();}});
+  /* a label centred on an icon near the right end would run off the page */
+  bar.addEventListener("mouseover",e=>{
+    const b=e.target.closest(".curbtn");if(!b)return;
+    const room=bar.getBoundingClientRect().right-b.getBoundingClientRect().right;
+    if(room<220)b.dataset.tip="end";else delete b.dataset.tip;});
 })();
 function markSel(){
   document.querySelectorAll(".curbtn").forEach(b=>

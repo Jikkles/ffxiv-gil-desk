@@ -79,7 +79,7 @@
 .empty .demo{display:inline-block;border:1px solid var(--line);background:var(--panel2);border-radius:7px;padding:1px 6px}
 .rmcol{width:34px;padding-left:0!important}
 .rmbtn{all:unset;cursor:pointer;color:var(--faint);font-size:12px;padding:3px 7px;border-radius:7px;border:1px solid transparent}
-.rmbtn:hover{color:var(--loss);border-color:var(--loss-line);background:var(--loss)14}
+.rmbtn:hover{color:var(--loss);border-color:var(--loss-line);background:color-mix(in srgb,var(--loss) 8%,transparent)}
 .shopgap{display:inline-block;width:23px;flex:0 0 auto}
 
 </style>
@@ -175,7 +175,7 @@
     <tbody id="rows"></tbody>
   </table></div>
 
-  <p class="foot">Sell now = cheapest current listing on your chosen world; ⚠ = far from the 30-day average, so the listing is likely noise. Avg 30d = quantity-weighted average of real sales over the past month (sale count shown). Units/day = how many <b>units</b> the market absorbs a day, so a stack of 99 counts as 99 rather than as one sale, and Gil/day is profit/unit × that — a ranking device rather than a promise. Mat cost defaults to <b>Precraft-optimised</b>: any intermediate cheaper to craft than to buy is costed as crafted, all the way down. Switch it to <b>Buy all mats</b> to price every direct material straight off the board at the cheapest <span class="dcname">Chaos</span> price instead. An item saved without a recipe is still priced, but shows no crafting cost. Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>.</p>
+  <p class="foot">Sell now = cheapest current listing on your chosen world; ⚠ = far from the 30-day average, so the listing is likely noise. Avg 30d = median price of real sales over the past month, weighted by units, so one sale at a joke price cannot drag it (sale count shown). Units/day = how many <b>units</b> the market absorbs a day, so a stack of 99 counts as 99 rather than as one sale, and Gil/day is profit/unit × that — a ranking device rather than a promise. Mat cost defaults to <b>Precraft-optimised</b>: any intermediate cheaper to craft than to buy is costed as crafted, all the way down. Switch it to <b>Buy all mats</b> to price every direct material straight off the board at the cheapest <span class="dcname">Chaos</span> price instead. An item saved without a recipe is still priced, but shows no crafting cost. Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>.</p>
   </main>
 </div>
 
@@ -360,7 +360,7 @@ function sellTimeHTML(s, wantHQ) {
     const isPeak = topHours.includes(h);
     const isOk = !isPeak && sorted.slice(3,8).map(x=>x.h).includes(h);
     const cls = isPeak ? 'peak' : isOk ? 'ok' : '';
-    const label = String(h).padStart(2,'0') + ':00 \u2014 ' + v + ' sale' + (v!==1?'s':'');
+    const label = String(h).padStart(2,'0') + ':00 \u2014 ' + v + ' unit' + (v!==1?'s':'') + ' sold';
     return '<div class="st-bar ' + cls + '" style="height:' + pct + '%" title="' + label + '"></div>';
   }).join('');
   const topLabel = topHours.map(h=>String(h).padStart(2,'0')+':00').join(', ');
@@ -509,7 +509,8 @@ function agePill(ms){
 function updateStrip(){
   if(!document.getElementById("kpiBest"))return;
   if(!state.rows)return;
-  const rows=state.rows.filter(r=>r.profit!=null&&r.profit>0);
+  /* ⚠ rows are left out, so one joke listing cannot be the best profit on the list */
+  const rows=state.rows.filter(r=>r.profit!=null&&r.profit>0&&!r.outlier);
   const best=[...rows].sort((a,b)=>b.profit-a.profit)[0];
   document.getElementById("kpiBest").textContent=best?fmt(best.profit)+" g":"—";
   document.getElementById("kpiBestName").textContent=best?best.name:"nothing profitable in view";

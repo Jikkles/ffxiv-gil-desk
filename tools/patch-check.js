@@ -7,23 +7,14 @@
      node tools/patch-check.js --force   say yes regardless
    Under GitHub Actions it also writes rebake=true|false, patch and days to $GITHUB_OUTPUT. */
 const fs = require("fs");
+const { latestGameData } = require("./lib/common");
 
 const WAIT_DAYS = 10;
 const STOP_DAYS = 38;
-const API = "https://api.github.com/repos/xivapi/ffxiv-datamining/commits?path=csv/en&per_page=1";
 
 (async () => {
-  const headers = { "User-Agent": "ffxiv-gil-desk-rebake", Accept: "application/vnd.github+json" };
-  if (process.env.GH_TOKEN) headers.Authorization = "Bearer " + process.env.GH_TOKEN;
-  const r = await fetch(API, { headers });
-  if (!r.ok) throw new Error("GitHub API " + r.status + " asking for the latest game data commit");
-  const [latest] = await r.json();
-  if (!latest) throw new Error("ffxiv-datamining has no commits under csv/en — has the folder moved?");
-
-  /* "7.56 (#117)" -> "7.56": that PR number would link to the wrong repo, and the name
-     ends up in a commit message and an issue, so it is kept to plain characters */
-  const patch = latest.commit.message.split("\n")[0].replace(/\s*\(#\d+\)/g, "").replace(/[^\w .-]/g, "").trim() || "new game data";
-  const when = new Date(latest.commit.committer.date);
+  /* "7.56 (#117)" -> "7.56": that PR number would link to the wrong repo */
+  const { patch, when } = await latestGameData();
   const days = Math.floor((Date.now() - when) / 86400000);
   const force = process.argv.includes("--force");
   const rebake = force || (days >= WAIT_DAYS && days <= STOP_DAYS);

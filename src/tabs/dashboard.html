@@ -66,7 +66,7 @@ tr.detail>td{background:var(--bg2);border-bottom:1px solid var(--line);padding:0
     <div class="sgroup">
       <div class="slabel">Marketboard settings</div>
       <label class="chk"><input type="checkbox" id="hideNo" checked> Hide no-sales</label>
-      <label class="chk"><input type="checkbox" id="hideOutlier"> Hide ⚠ outliers</label>
+      <label class="chk"><input type="checkbox" id="hideOutlier" checked> Hide ⚠ outliers</label>
       <label class="chk" title="Items with zero sales in the last 30 days are skipped on the next refresh, making it much faster. The list refreshes itself weekly — shift-click Refresh at any time to force a full rescan of everything."><input type="checkbox" id="skipDead" checked> Skip dead items</label>
     </div>
     <div class="sgroup">
@@ -95,7 +95,7 @@ tr.detail>td{background:var(--bg2);border-bottom:1px solid var(--line);padding:0
     <div class="kpis">
       <div class="kpi"><div class="ki">🪙</div><div class="kbody"><div class="k">Best profit / unit</div><div class="v gil" id="kpiBest">—</div><div class="s" id="kpiBestName">waiting for data…</div></div></div>
       <div class="kpi"><div class="ki">📅</div><div class="kbody"><div class="k">Daily profit ceiling</div><div class="v cy" id="kpiDaily">—</div><div class="s">visible items, 30-day <span class="homename">Spriggan</span> rate</div></div></div>
-      <div class="kpi"><div class="ki">🗃️</div><div class="kbody"><div class="k">Profitable / shown</div><div class="v" id="kpiCount">—</div><div class="s" id="kpiFresh">—</div></div></div>
+      <div class="kpi"><div class="ki">🗃️</div><div class="kbody"><div class="k" title="Rows marked ⚠ are not counted">Profitable / shown</div><div class="v" id="kpiCount">—</div><div class="s" id="kpiFresh">—</div></div></div>
     </div></div>
 
     
@@ -156,7 +156,7 @@ const ago=ms=>{if(!ms)return"no uploads";const s=(Date.now()-ms)/1000;if(s<3600)
 
 /* the desk opens here, so this tab scans only when Refresh is pressed (see autoLoad) */
 window.MANUAL_SCAN=true;
-let state={home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],skipDead:true,tax:0.05,group:"all",hideNo:true,hideOutlier:false,query:"",basis:"listing",matBasis:"opt",
+let state={home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],skipDead:true,tax:0.05,group:"all",hideNo:true,hideOutlier:true,query:"",basis:"listing",matBasis:"opt",
   sortKey:"profit",sortDir:-1,worlds:null,sell:null,hist:null,chaos:null,rows:null,expanded:new Set(),tree:new Set(),_best:{},_hops:{}};
 
 function side(res,hq){return res?(hq?res.h:res.n):null;}
@@ -328,7 +328,7 @@ function treeHTML(r){const rec=RECIPES[r.id];let body="";
 }
 
 function updateScanTime(){const el=document.getElementById("lastScan");if(!el)return;const now=new Date();el._scanTime=now;function tick(){if(!el._scanTime)return;const age=(Date.now()-el._scanTime)/1000;el.textContent=el._scanTime.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit",second:"2-digit"});el.style.color=age<1800?"var(--win)":"var(--loss)";}tick();if(el._ticker)clearInterval(el._ticker);el._ticker=setInterval(tick,30000);}
-function render(){if(!state.rows)return;let rows=visibleRows();const total=rows.length;const trunc=total>MAX_ROWS;if(trunc)rows=rows.slice(0,MAX_ROWS);
+function render(){if(!state.rows)return;const shown=visibleRows();let rows=shown;const total=rows.length;const trunc=total>MAX_ROWS;if(trunc)rows=rows.slice(0,MAX_ROWS);
   const maxP=Math.max(1,...rows.map(r=>r.profit||0));const tb=document.getElementById("rows");tb.innerHTML="";
   for(const r of rows){const open=state.expanded.has(r.id);
     const tr=document.createElement("tr");tr.className="row"+(open?" open":"");
@@ -349,7 +349,9 @@ function render(){if(!state.rows)return;let rows=visibleRows();const total=rows.
     if(open){const dr=document.createElement("tr");dr.className="detail";dr.dataset.id=r.id;const td=document.createElement("td");td.colSpan=9;td.innerHTML=treeHTML(r);
       dr.appendChild(td);tb.appendChild(dr);}}
   document.getElementById("tbl").hidden=false;
-  const prof=rows.filter(r=>r.profit!=null&&r.profit>0).sort((a,b)=>b.profit-a.profit);const best=prof[0];
+  /* the cards read every row that passes the filters, not just the first MAX_ROWS drawn,
+     and never a ⚠ row: one listing at a joke price would otherwise be the best profit */
+  const prof=shown.filter(r=>r.profit!=null&&r.profit>0&&!r.outlier).sort((a,b)=>b.profit-a.profit);const best=prof[0];
   document.getElementById("kpiBest").textContent=best?fmt(best.profit)+" g":"—";
   document.getElementById("kpiBestName").textContent=best?best.name:"nothing profitable in view";
   const ds=prof.reduce((s,r)=>s+(r.daily||0),0);document.getElementById("kpiDaily").textContent=ds?fmtK(ds)+" g":"—";

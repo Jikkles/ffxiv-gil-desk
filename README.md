@@ -56,7 +56,7 @@ the finished item on a cheaper world, spending scrips, or spending a currency at
 Four deliberate choices run through the whole thing:
 
 - **Sales history is the anchor, not listings.** A single inflated listing is not a market.
-  The `Avg 30d` column is the quantity-weighted average of *actual sales* over the past month,
+  The `Avg 30d` column is the median price of *actual sales* over the past month, weighted by units,
   and most tabs default to pricing against it rather than the current cheapest listing. Rows
   whose current listing sits far from that average get a ⚠ so you can spot noise.
 - **Velocity matters as much as margin.** A 500k margin on an item that sells twice a month is
@@ -483,7 +483,7 @@ stale or missing prices.
 
 ## Keeping it current
 
-Currency shops, vendor stock, submersible routes, workshop projects and duty drops are baked into
+Recipes, currency shops, vendor stock, submersible routes, workshop projects and duty drops are baked into
 the file, so a patch that adds new ones needs them pulled again. That happens on its own: a free GitHub Actions job checks
 every Monday, and from 10 to 38 days after a patch it rebakes, checks the result and pushes it. If a
 patch needs a human, it pushes nothing and opens an issue instead. By hand it is one command — see
@@ -493,12 +493,9 @@ patch needs a human, it pushes nothing and opens an issue instead. By hand it is
 node tools/rebake.js
 ```
 
-It downloads the latest public game data and crowd-sourced loot rates, rebuilds the five
+It downloads the latest public game data and crowd-sourced loot rates, rebuilds the seven
 datasets and writes them into `src/data/` and `index.html`. It needs only Node.js, and nothing it touches needs a
 key or an account.
-
-The Dashboard and Precrafts recipe lists are not covered yet: the script that built them was not
-kept, so they stay on patch 7.55 until it is rewritten.
 
 ## Architecture
 
@@ -556,9 +553,9 @@ duplicating some code — which is why the shared chunks exist.
 - Prices from a data centre in another region are informational: you cannot travel there.
 - Daily ceilings are rankings, not forecasts.
 - Nothing accounts for crafting stats, materia, food, or whether you can actually hit HQ.
-- The Currencies, Vendors, Submersibles, Workshop and Duties data are rebaked automatically after
-  each patch, but only from 10 days after it, so a brand-new shop or vendor can be missing until then.
-  The Dashboard and Precrafts recipe lists are still pinned to patch 7.55.
+- The Dashboard, Precrafts, Currencies, Vendors, Submersibles, Workshop and Duties data are rebaked
+  automatically after each patch, but only from 10 days after it, so a brand-new recipe, shop or vendor
+  can be missing until then.
 - Submersible and duty drop rates are crowd-sourced averages. They describe a lot of voyages and
   coffers, not your next one, and a rate on a thin sample (a few hundred coffers) can move a long way.
 - The cross-world panel reads the 50 cheapest listings per scope. That is across the scope, not
@@ -579,6 +576,41 @@ duplicating some code — which is why the shared chunks exist.
 
 ### 15 September 2026
 
+**Prices you can trust**
+- **Hide ⚠ outliers** now starts ticked on the Dashboard, Precrafts and Workshop. Unticked, the
+  Dashboard was topped by listings at 999,999,999 gil. Anyone who had the desk open before gets the
+  new default once; untick it again and it stays unticked.
+- The headline cards never count a ⚠ row, whether or not those rows are hidden, and they read every
+  row that passes the filters rather than only the 300 drawn. *Profitable / shown* read "300 / 7581"
+  when the first number was capped at 300. A saved list's cards skip ⚠ rows too.
+- **Avg 30d** and **Trend** use the median sale price, weighted by units, instead of the mean. One
+  "sale" at a joke price had pushed an item's 30-day average to 181M on three sales.
+- **Best time to sell** follows UK clocks through the year. It had been an hour out all winter, and
+  its bars now say units sold, which is what they count.
+- On Precrafts, a blank **Trend** says to tick *Deep 30d*, since that is what it needs, rather than
+  blaming thin history.
+
+**Scans**
+- A Dashboard scan no longer loses batches to Universalis' connection limit. It had opened about
+  fifteen requests at once, and three batches failed on a clean first scan. The whole desk now keeps
+  at most eight open, including a tab still scanning in the background.
+
+**Layout**
+- At 1600px wide every column fits again: long item names wrap onto a second line, and so do
+  headers like *Sell avg 30d*, rather than Units/day and Gil/day being cut off. Vendors' cells are a
+  touch narrower to fit its ten columns.
+- Currencies no longer scrolls sideways, and the right-most currency icons' labels open leftwards.
+- A few colours that browsers ignored now show: the orange partial-data warning, the glow on the
+  selected currency, and two hover backgrounds.
+
+**Recipes kept current**
+- The Dashboard and Precrafts recipe lists are rebuilt by `tools/build-crafts.js` and rebaked with the
+  rest after each patch; they had been pinned to 7.55. This first rebuild adds eight crafts to the
+  Dashboard (the Crumbling Aqueduct set, Garden Canal, and the three 7.55 intermediates) and six
+  Precrafts reagents, picks up four items the game renamed, and lists every job that can make a
+  precraft, so *Class* finds Bronze Ingot under Armorer as well as Blacksmith.
+
+**Tour, guides and trees**
 - **Guided tour.** Picking your world on a first visit starts a walkthrough of the desk, and the
   new **Tour** button in the top right replays it (see [Shared features](#shared-features)).
 - **How this works** on every tab: a folded panel under the headline cards explaining what the tab

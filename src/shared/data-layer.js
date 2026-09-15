@@ -1,18 +1,47 @@
 /* ===== v12 data layer: retry, concurrency, cache ===== */
-const NET={CONCURRENCY:5,BATCH_SIZE:100,TIMEOUT_MS:20000,RETRIES:2,BACKOFF_MS:1500,CACHE_TTL_MS:12*60*1000,WORLDS_TTL_MS:24*60*60*1000};
+const NET={CONCURRENCY:5,BATCH_SIZE:100,TIMEOUT_MS:20000,RETRIES:2,BACKOFF_MS:1500,MAX_OPEN:8,CACHE_TTL_MS:12*60*1000,WORLDS_TTL_MS:24*60*60*1000};
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+/* Every request on the desk waits its turn here. Each scan phase runs its own
+   five workers, and the Dashboard runs three phases at once, so it was opening
+   fifteen connections to Universalis - more than it lets one address hold. The
+   extra ones came back refused (without CORS headers, so the browser reports
+   them as blocked), their retries landed while the rest were still open, and
+   whole batches were lost. The slots live on the shell's window, so a tab still
+   scanning in the background and the tab you just opened share one limit
+   rather than having one each. A slot is a small object and a waiting request
+   polls for a free one, rather than one frame calling back into another; a
+   slot older than any request can live (a tab closed mid-scan never gives its
+   slots back) is treated as free. */
+const Gate=(function(){
+  let g=null;
+  try{g=window.top.__gildeskGate||(window.top.__gildeskGate={slots:[]});}catch(e){}
+  return g||{slots:[]};})();
+function gateTake(ms){
+  const now=Date.now(),stale=(ms||NET.TIMEOUT_MS)+5000;
+  for(let i=Gate.slots.length-1;i>=0;i--)if(now-Gate.slots[i].t>Gate.slots[i].life)Gate.slots.splice(i,1);
+  if(Gate.slots.length>=NET.MAX_OPEN)return null;
+  const slot={t:now,life:stale};Gate.slots.push(slot);return slot;}
+function gateGive(slot){const i=Gate.slots.indexOf(slot);if(i>=0)Gate.slots.splice(i,1);}
 async function tfetch(url,ms){let lastErr;
   for(let attempt=0;attempt<=NET.RETRIES;attempt++){
+    /* the timeout starts once the request is actually sent, not while it queues */
+    let slot;while(!(slot=gateTake(ms)))await sleep(40);
     const c=new AbortController();const t=setTimeout(()=>c.abort(),ms||NET.TIMEOUT_MS);
-    try{const res=await fetch(url,{headers:{Accept:"application/json"},signal:c.signal});clearTimeout(t);
+    try{const res=await fetch(url,{headers:{Accept:"application/json"},signal:c.signal});
       if(res.status===429||res.status>=500)throw new Error("HTTP "+res.status);
-      return res;
-    }catch(e){clearTimeout(t);lastErr=e;if(attempt<NET.RETRIES)await sleep(NET.BACKOFF_MS*(attempt+1));}}
+      /* the body still has to arrive, so the slot is held until it has */
+      const body=await res.arrayBuffer();
+      return new Response(body,{status:res.status,statusText:res.statusText,headers:res.headers});
+    }catch(e){lastErr=e;}
+    finally{clearTimeout(t);gateGive(slot);}
+    if(attempt<NET.RETRIES)await sleep(NET.BACKOFF_MS*(attempt+1));}
   throw lastErr;}
 /* v26: a history summary now carries units as well as sale counts, so anything
    written under the old version is a shape nothing here reads. The version
    bumps and the stale entries are swept rather than read back as no sales. */
-const CACHE_VER="v2";
+/* v3: the 30-day prices in a summary became medians rather than means, so
+   summaries cached as means are swept rather than mixed in with them. */
+const CACHE_VER="v3";
 const Cache={
   /* Set while a Refresh is in flight, so the button fetches instead of
      re-reading what is already on screen. See forceNextScan below. */
@@ -137,7 +166,29 @@ function compressAgg(r){let u=0;if(r.worldUploadTimes)for(const w of r.worldUplo
    so a busy item still arrives truncated; summarizeHist records how far the
    entries it did get reach back, and the rate is divided by that instead. */
 const HIST_ENTRIES=200,HIST_DAYS=30,HIST_SECS=HIST_DAYS*86400;
-/* summarize history to 30-day aggregates: h/n = qty-weighted by quality, a = any-quality, p = plain mean */
+/* The typical price of a set of sales: the median, weighted by units, so the
+   price half of the units sold at or under. It used to be the mean, and a mean
+   has no defence against a single sale at a joke price - one 180M "sale" of a
+   pair of cotton slops, two ordinary ones beside it, and the 30-day average read
+   181M and the row topped the board. A median shrugs that off, and still counts
+   a stack of 99 as 99 units of evidence rather than one. xs is [price,units]. */
+function medianPrice(xs){
+  if(!xs.length)return null;
+  xs.sort((a,b)=>a[0]-b[0]);
+  let total=0;for(const x of xs)total+=x[1];
+  let run=0;for(const x of xs){run+=x[1];if(run*2>=total)return x[0];}
+  return xs[xs.length-1][0];}
+/* The UK hour a sale landed in, for the best-time-to-sell chart: GMT through the
+   winter, BST (an hour on) from 01:00 UTC on the last Sunday in March until
+   01:00 UTC on the last Sunday in October. Worked out by rule rather than through
+   Intl, because this runs once for every sale of every item in a scan. */
+const _bst={};
+function bstOf(y){
+  if(!_bst[y]){const lastSun=m=>{const end=new Date(Date.UTC(y,m+1,0));return Date.UTC(y,m,end.getUTCDate()-end.getUTCDay(),1)/1000;};
+    _bst[y]=[lastSun(2),lastSun(9)];}
+  return _bst[y];}
+function ukHour(ts){const d=new Date(ts*1000),b=bstOf(d.getUTCFullYear());return(d.getUTCHours()+(ts>=b[0]&&ts<b[1]?1:0))%24;}
+/* summarize history to 30-day aggregates: h/n = unit-weighted median by quality, a = any quality, p = plain median per sale */
 function summarizeHist(it){const out={h:[null,0],n:[null,0],a:[null,0],p:[null,0],bh:{},bn:{},ch:0,cn:0,qh:0,qn:0,qa:0,days:HIST_DAYS,cap:false,
     r:{h:[null,0],n:[null,0],a:[null,0],p:[null,0]},o:{h:[null,0],n:[null,0],a:[null,0],p:[null,0]},win:0};
   if(!it||!it.entries||!it.entries.length)return out;
@@ -159,25 +210,25 @@ function summarizeHist(it){const out={h:[null,0],n:[null,0],a:[null,0],p:[null,0
   out.cap=it.entries.length>=HIST_ENTRIES;
   out.days=out.cap?Math.max(out.win/86400,0.5):HIST_DAYS;
   const split=now-out.win/2;
-  const w={r:{hs:0,hq:0,hn:0,ns:0,nq:0,nn:0,ps:0,pn:0},o:{hs:0,hq:0,hn:0,ns:0,nq:0,nn:0,ps:0,pn:0}};
-  let hs=0,hqq=0,hn=0,ns=0,nqq=0,nn=0,ps=0,pn=0;
+  /* each bucket keeps its sales as [price,units] for the median: HQ, NQ, and
+     one price per sale, for the whole window and for its newer and older halves */
+  const bucket=()=>({h:[],n:[],p:[],qh:0,qn:0});
+  const all=bucket(),w={r:bucket(),o:bucket()};
   for(const e of it.entries){let ts=e.timestamp;if(ts>1e12)ts/=1000;if(ts<cut)continue;
     const qq=e.quantity||1,pp=e.pricePerUnit;
-    const b=ts>=split?w.r:w.o;
-    if(pp>0){ps+=pp;pn++;b.ps+=pp;b.pn++;}
-    const ukHour=(new Date(ts*1000).getUTCHours()+1)%24;
-    if(e.hq){hs+=pp*qq;hqq+=qq;hn++;out.bh[ukHour]=(out.bh[ukHour]||0)+qq;out.ch++;b.hs+=pp*qq;b.hq+=qq;b.hn++;}
-    else{ns+=pp*qq;nqq+=qq;nn++;out.bn[ukHour]=(out.bn[ukHour]||0)+qq;out.cn++;b.ns+=pp*qq;b.nq+=qq;b.nn++;}}
-  out.qh=hqq;out.qn=nqq;out.qa=hqq+nqq;
-  if(hqq)out.h=[Math.round(hs/hqq),hn];
-  if(nqq)out.n=[Math.round(ns/nqq),nn];
-  const aq=hqq+nqq;if(aq)out.a=[Math.round((hs+ns)/aq),hn+nn];
-  if(pn)out.p=[ps/pn,pn];
-  for(const k of["r","o"]){const b=w[k],t=out[k];
-    if(b.hq)t.h=[Math.round(b.hs/b.hq),b.hn];
-    if(b.nq)t.n=[Math.round(b.ns/b.nq),b.nn];
-    const q=b.hq+b.nq;if(q)t.a=[Math.round((b.hs+b.ns)/q),b.hn+b.nn];
-    if(b.pn)t.p=[b.ps/b.pn,b.pn];}
+    const half=ts>=split?w.r:w.o,hr=ukHour(ts);
+    for(const b of[all,half]){
+      if(pp>0)b.p.push([pp,1]);
+      if(e.hq){b.h.push([pp,qq]);b.qh+=qq;}else{b.n.push([pp,qq]);b.qn+=qq;}}
+    if(e.hq){out.bh[hr]=(out.bh[hr]||0)+qq;out.ch++;}
+    else{out.bn[hr]=(out.bn[hr]||0)+qq;out.cn++;}}
+  const fill=(t,b)=>{
+    if(b.h.length)t.h=[Math.round(medianPrice(b.h.slice())),b.h.length];
+    if(b.n.length)t.n=[Math.round(medianPrice(b.n.slice())),b.n.length];
+    const any=b.h.concat(b.n);if(any.length)t.a=[Math.round(medianPrice(any)),any.length];
+    if(b.p.length)t.p=[medianPrice(b.p),b.p.length];};
+  out.qh=all.qh;out.qn=all.qn;out.qa=all.qh+all.qn;
+  fill(out,all);fill(out.r,w.r);fill(out.o,w.o);
   return out;}
 /* Trend: the newer half of the covered window against the older half. Both
    halves have to be measured the same way or the comparison invents movement
@@ -205,15 +256,17 @@ function trendCss(){if(_trCss)return;_trCss=true;
   (document.head||document.documentElement).appendChild(s);}
 /* half the covered window, as the span each side of the comparison */
 function trendWin(w){const h=w/2/3600;return h<48?Math.round(h)+"h":Math.round(h/24)+"d";}
-function trendChip(t){trendCss();
+/* `why` replaces the empty chip's tooltip when the reason is not thin history,
+   such as a tab that has not read the history at all */
+function trendChip(t,why){trendCss();
   const g=v=>Math.round(v).toLocaleString("en-GB");
-  if(!t)return'<span class="tr flat" title="Not enough sales history either side of the midpoint to compare">·</span>';
+  if(!t)return'<span class="tr flat" title="'+(why||"Not enough sales history either side of the midpoint to compare")+'">·</span>';
   /* A fall of 30% or more is a genuine dip rather than a slide, and reads
    green like the craft-tree price badges do at the same depth. */
   const p=t.pct,cls=Math.abs(p)<5?"flat":(p>0?"up":(p<=-30?"dip":"dn")),k=trendWin(t.win);
   const arrow=cls==="flat"?'→':(p>0?'▲':'▼');
   const txt=(p>0?"+":"")+(Math.abs(p)>=10?Math.round(p):p.toFixed(1))+"%";
-  return`<span class="tr ${cls}" title="Last ${k} averaged ${g(t.recent)} gil against ${g(t.prior)} over the ${k} before, on ${t.n} recent sale(s)">${arrow} ${txt}</span>`;}
+  return`<span class="tr ${cls}" title="Last ${k} sold at a median of ${g(t.recent)} gil against ${g(t.prior)} over the ${k} before, on ${t.n} recent sale(s)">${arrow} ${txt}</span>`;}
 /* Sales a day and units a day are not the same number, and on anything that
    moves in stacks they are two orders of magnitude apart: 99 caramel popcorn
    leaving in one transaction is a single sale and ninety-nine units. Counting
@@ -301,7 +354,7 @@ function catCss(){if(_catCss)return;_catCss=true;
   (document.head||document.documentElement).appendChild(s);}
 catCss();
 function showWarn(h){const b=document.getElementById("errbox");if(!b)return;
-  b.innerHTML=`<div class="err" style="border-color:var(--hop)55;color:var(--hop);background:var(--hop)1a">${h}</div>`;}
+  b.innerHTML=`<div class="err" style="border-color:color-mix(in srgb,var(--hop) 33%,transparent);color:var(--hop);background:color-mix(in srgb,var(--hop) 10%,transparent)">${h}</div>`;}
 function finishStatus(results){
   const failed=results.reduce((s,r)=>s+r.failed.length,0);
   const cached=results.some(r=>r.fromCache);

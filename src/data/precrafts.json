@@ -1313,6 +1313,7 @@
     "name": "Bronze Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 1,
     "cat": "Metal",
     "ings": [{"id":5106,"name":"Copper Ore","amount":2},{"id":5107,"name":"Tin Ore","amount":1}]
@@ -1321,6 +1322,7 @@
     "name": "Iron Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 16,
     "cat": "Metal",
     "ings": [{"id":5111,"name":"Iron Ore","amount":3}]
@@ -1329,6 +1331,7 @@
     "name": "Steel Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 26,
     "cat": "Metal",
     "ings": [{"id":5528,"name":"Bomb Ash","amount":1},{"id":5111,"name":"Iron Ore","amount":2}]
@@ -1337,6 +1340,7 @@
     "name": "Cobalt Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 42,
     "cat": "Metal",
     "ings": [{"id":5116,"name":"Cobalt Ore","amount":2},{"id":5111,"name":"Iron Ore","amount":1}]
@@ -1345,6 +1349,7 @@
     "name": "Darksteel Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 50,
     "cat": "Metal",
     "ings": [{"id":5061,"name":"Darksteel Nugget","amount":2},{"id":5530,"name":"Coke","amount":9}]
@@ -1353,6 +1358,7 @@
     "name": "Darksteel Nugget",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 50,
     "cat": "Metal",
     "ings": [{"id":5121,"name":"Darksteel Ore","amount":3}]
@@ -1385,6 +1391,7 @@
     "name": "Mythril Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM","GSM"],
     "lvl": 38,
     "cat": "Metal",
     "ings": [{"id":5114,"name":"Mythril Ore","amount":3}]
@@ -1541,6 +1548,7 @@
     "name": "Mythril Rings",
     "yields": 1,
     "job": "ARM",
+    "jobs": ["ARM","GSM"],
     "lvl": 37,
     "cat": "Metal",
     "ings": [{"id":5065,"name":"Mythril Ingot","amount":1}]
@@ -1557,6 +1565,7 @@
     "name": "Bronze Rivets",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 3,
     "cat": "Metal",
     "ings": [{"id":5056,"name":"Bronze Ingot","amount":1}]
@@ -1565,6 +1574,7 @@
     "name": "Iron Rivets",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 18,
     "cat": "Metal",
     "ings": [{"id":5057,"name":"Iron Ingot","amount":1}]
@@ -1573,6 +1583,7 @@
     "name": "Steel Rivets",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 29,
     "cat": "Metal",
     "ings": [{"id":5058,"name":"Steel Ingot","amount":1}]
@@ -1581,6 +1592,7 @@
     "name": "Cobalt Rivets",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 43,
     "cat": "Metal",
     "ings": [{"id":5059,"name":"Cobalt Ingot","amount":1}]
@@ -1589,6 +1601,7 @@
     "name": "Darksteel Rivets",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 50,
     "cat": "Metal",
     "ings": [{"id":5061,"name":"Darksteel Nugget","amount":1}]
@@ -1597,6 +1610,7 @@
     "name": "Mythril Rivets",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 39,
     "cat": "Metal",
     "ings": [{"id":5065,"name":"Mythril Ingot","amount":1}]
@@ -3480,6 +3494,7 @@
     "name": "Mythrite Nugget",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM","GSM"],
     "lvl": 51,
     "cat": "Metal",
     "ings": [{"id":12531,"name":"Mythrite Sand","amount":5},{"id":5114,"name":"Mythril Ore","amount":1}]
@@ -3488,6 +3503,7 @@
     "name": "Mythrite Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM","GSM"],
     "lvl": 52,
     "cat": "Metal",
     "ings": [{"id":12534,"name":"Mythrite Ore","amount":4},{"id":12518,"name":"Mythrite Nugget","amount":1}]
@@ -3536,6 +3552,7 @@
     "name": "Titanium Nugget",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 54,
     "cat": "Metal",
     "ings": [
@@ -3548,6 +3565,7 @@
     "name": "Titanium Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 56,
     "cat": "Metal",
     "ings": [{"id":12539,"name":"Cloud Mica","amount":4},{"id":12524,"name":"Titanium Nugget","amount":1}]
@@ -3556,6 +3574,7 @@
     "name": "Adamantite Nugget",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 58,
     "cat": "Metal",
     "ings": [{"id":12538,"name":"Adamantite Ore","amount":5},{"id":5121,"name":"Darksteel Ore","amount":1}]
@@ -3564,6 +3583,7 @@
     "name": "Adamantite Ingot",
     "yields": 3,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 60,
     "cat": "Metal",
     "ings": [
@@ -3577,6 +3597,7 @@
     "name": "Mythrite Rivets",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 51,
     "cat": "Metal",
     "ings": [{"id":12518,"name":"Mythrite Nugget","amount":1}]
@@ -3585,6 +3606,7 @@
     "name": "Titanium Rivets",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 54,
     "cat": "Metal",
     "ings": [{"id":12524,"name":"Titanium Nugget","amount":1}]
@@ -3593,6 +3615,7 @@
     "name": "Adamantite Rivets",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 58,
     "cat": "Metal",
     "ings": [{"id":12526,"name":"Adamantite Nugget","amount":1}]
@@ -4349,6 +4372,7 @@
     "name": "Garlond Steel",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 52,
     "cat": "Metal",
     "ings": [
@@ -4544,6 +4568,7 @@
     "name": "High Mythrite Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 60,
     "cat": "Metal",
     "ings": [
@@ -4718,6 +4743,7 @@
     "name": "High Mythrite Nugget",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 60,
     "cat": "Metal",
     "ings": [{"id":14955,"name":"Lumythrite Sand","amount":3}]
@@ -4742,6 +4768,7 @@
     "name": "Galvanized Garlond Steel",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 60,
     "cat": "Metal",
     "ings": [
@@ -4780,6 +4807,7 @@
     "name": "Heavy Metal Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 60,
     "cat": "Metal",
     "ings": [
@@ -4855,6 +4883,7 @@
     "name": "Near Eastern Antique Component",
     "yields": 1,
     "job": "CRP",
+    "jobs": ["CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL"],
     "lvl": 57,
     "cat": "Miscellany",
     "ings": [{"id":17723,"name":"Near Eastern Antique Component Materials","amount":1}]
@@ -4863,6 +4892,7 @@
     "name": "Coerthan Souvenir Component",
     "yields": 1,
     "job": "CRP",
+    "jobs": ["CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL"],
     "lvl": 58,
     "cat": "Miscellany",
     "ings": [{"id":17724,"name":"Coerthan Souvenir Component Materials","amount":1}]
@@ -4871,6 +4901,7 @@
     "name": "Maelstrom Materiel Component",
     "yields": 1,
     "job": "CRP",
+    "jobs": ["CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL"],
     "lvl": 59,
     "cat": "Miscellany",
     "ings": [{"id":17725,"name":"Maelstrom Materiel Component Materials","amount":1}]
@@ -4879,6 +4910,7 @@
     "name": "Cloud Mythril Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM","GSM"],
     "lvl": 60,
     "cat": "Metal",
     "ings": [
@@ -4909,6 +4941,7 @@
     "name": "Heartfelt Gift Component",
     "yields": 1,
     "job": "CRP",
+    "jobs": ["CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL"],
     "lvl": 60,
     "cat": "Miscellany",
     "ings": [{"id":17729,"name":"Heartfelt Gift Component Materials","amount":1}]
@@ -4917,6 +4950,7 @@
     "name": "Orphanage Donation Component",
     "yields": 1,
     "job": "CRP",
+    "jobs": ["CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL"],
     "lvl": 60,
     "cat": "Miscellany",
     "ings": [{"id":17730,"name":"Orphanage Donation Component Materials","amount":1}]
@@ -5256,6 +5290,7 @@
     "name": "High Steel Nugget",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 61,
     "cat": "Metal",
     "ings": [{"id":19950,"name":"Koppranickel Sand","amount":4},{"id":5111,"name":"Iron Ore","amount":1}]
@@ -5275,6 +5310,7 @@
     "name": "High Steel Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 62,
     "cat": "Metal",
     "ings": [
@@ -5294,6 +5330,7 @@
     "name": "Oroshigane Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 64,
     "cat": "Metal",
     "ings": [{"id":19953,"name":"Doman Iron Ore","amount":4},{"id":5111,"name":"Iron Ore","amount":1}]
@@ -5310,6 +5347,7 @@
     "name": "Tama-hagane Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 66,
     "cat": "Metal",
     "ings": [
@@ -5329,6 +5367,7 @@
     "name": "Molybdenum Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 68,
     "cat": "Metal",
     "ings": [{"id":19957,"name":"Molybdenum Ore","amount":4},{"id":5116,"name":"Cobalt Ore","amount":1}]
@@ -5349,6 +5388,7 @@
     "name": "Chromite Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 70,
     "cat": "Metal",
     "ings": [
@@ -5619,6 +5659,7 @@
     "name": "Gyr Abanian Souvenir Component",
     "yields": 1,
     "job": "CRP",
+    "jobs": ["CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL"],
     "lvl": 60,
     "cat": "Miscellany",
     "ings": [{"id":21096,"name":"Gyr Abanian Souvenir Component Materials","amount":1}]
@@ -5627,6 +5668,7 @@
     "name": "Far Eastern Antique Component",
     "yields": 1,
     "job": "CRP",
+    "jobs": ["CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL"],
     "lvl": 60,
     "cat": "Miscellany",
     "ings": [{"id":21097,"name":"Far Eastern Antique Component Materials","amount":1}]
@@ -5635,6 +5677,7 @@
     "name": "Gold Saucer Consolation Prize Component",
     "yields": 1,
     "job": "CRP",
+    "jobs": ["CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL"],
     "lvl": 61,
     "cat": "Miscellany",
     "ings": [{"id":21098,"name":"Gold Saucer Consolation Prize Component Materials","amount":1}]
@@ -5643,6 +5686,7 @@
     "name": "M Tribe Sundry Component",
     "yields": 1,
     "job": "CRP",
+    "jobs": ["CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL"],
     "lvl": 62,
     "cat": "Miscellany",
     "ings": [{"id":21099,"name":"M tribe Sundry Component Materials","amount":1}]
@@ -5651,6 +5695,7 @@
     "name": "Resistance Materiel Component",
     "yields": 1,
     "job": "CRP",
+    "jobs": ["CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL"],
     "lvl": 63,
     "cat": "Miscellany",
     "ings": [{"id":21100,"name":"Resistance Materiel Component Materials","amount":1}]
@@ -5778,6 +5823,7 @@
     "name": "Nightsteel Ingot",
     "yields": 2,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 70,
     "cat": "Metal",
     "ings": [
@@ -5844,6 +5890,7 @@
     "name": "Gyr Abanian Remedy Components",
     "yields": 1,
     "job": "CRP",
+    "jobs": ["CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL"],
     "lvl": 62,
     "cat": "Miscellany",
     "ings": [{"id":23158,"name":"Raw Medicinal Materials","amount":1}]
@@ -5852,6 +5899,7 @@
     "name": "Harpoon Components",
     "yields": 1,
     "job": "CRP",
+    "jobs": ["CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL"],
     "lvl": 62,
     "cat": "Miscellany",
     "ings": [{"id":23159,"name":"Raw Harpoon Materials","amount":1}]
@@ -5860,6 +5908,7 @@
     "name": "Cold-weather Gear Components",
     "yields": 1,
     "job": "CRP",
+    "jobs": ["CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL"],
     "lvl": 63,
     "cat": "Miscellany",
     "ings": [{"id":23160,"name":"Raw Cold-weather Gear Materials","amount":1}]
@@ -5868,6 +5917,7 @@
     "name": "Sui-no-Sato Special Components",
     "yields": 1,
     "job": "CRP",
+    "jobs": ["CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL"],
     "lvl": 63,
     "cat": "Miscellany",
     "ings": [{"id":23161,"name":"Raw Sui-no-Sato Special Materials","amount":1}]
@@ -5876,6 +5926,7 @@
     "name": "Cloud Pearl Components",
     "yields": 1,
     "job": "CRP",
+    "jobs": ["CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL"],
     "lvl": 64,
     "cat": "Miscellany",
     "ings": [{"id":23162,"name":"Raw Cloud Pearl Materials","amount":1}]
@@ -5921,6 +5972,7 @@
     "name": "Chigusa Ingot",
     "yields": 2,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 70,
     "cat": "Metal",
     "ings": [
@@ -6043,6 +6095,7 @@
     "name": "Ishgardian Culinary Materials",
     "yields": 1,
     "job": "CRP",
+    "jobs": ["CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL"],
     "lvl": 66,
     "cat": "Miscellany",
     "ings": [{"id":24577,"name":"Raw Ishgardian Materials","amount":1}]
@@ -6051,6 +6104,7 @@
     "name": "Juice Fermenting Supplies",
     "yields": 1,
     "job": "CRP",
+    "jobs": ["CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL"],
     "lvl": 66,
     "cat": "Miscellany",
     "ings": [{"id":24578,"name":"Raw Fermenting Supplies","amount":1}]
@@ -6059,6 +6113,7 @@
     "name": "Signature Buuz Cookware Materials",
     "yields": 1,
     "job": "CRP",
+    "jobs": ["CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL"],
     "lvl": 67,
     "cat": "Miscellany",
     "ings": [{"id":24579,"name":"Raw Steppe Cookware Materials","amount":1}]
@@ -6067,6 +6122,7 @@
     "name": "Decorative Tavern Furnishing Materials",
     "yields": 1,
     "job": "CRP",
+    "jobs": ["CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL"],
     "lvl": 67,
     "cat": "Miscellany",
     "ings": [{"id":24580,"name":"Raw Tavern Furnishing Materials","amount":1}]
@@ -6075,6 +6131,7 @@
     "name": "Arkhi Brewing Vat Materials",
     "yields": 1,
     "job": "CRP",
+    "jobs": ["CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL"],
     "lvl": 68,
     "cat": "Miscellany",
     "ings": [{"id":24581,"name":"Raw Brewing Vat Materials","amount":1}]
@@ -6083,6 +6140,7 @@
     "name": "Kamacite",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 60,
     "cat": "Metal",
     "ings": [
@@ -6103,6 +6161,7 @@
     "name": "Pure Titanium Plate",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 70,
     "cat": "Metal",
     "ings": [{"id":26531,"name":"Pure Titanium Ore","amount":3},{"id":5530,"name":"Coke","amount":9}]
@@ -6162,6 +6221,7 @@
     "name": "Deepgold Nugget",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 71,
     "cat": "Metal",
     "ings": [{"id":27696,"name":"Truegold Sand","amount":4},{"id":5106,"name":"Copper Ore","amount":1}]
@@ -6178,6 +6238,7 @@
     "name": "Deepgold Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 72,
     "cat": "Metal",
     "ings": [{"id":27697,"name":"Truegold Ore","amount":4},{"id":5106,"name":"Copper Ore","amount":1}]
@@ -6202,6 +6263,7 @@
     "name": "Bluespirit Tile",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 74,
     "cat": "Stone",
     "ings": [{"id":27698,"name":"Bluespirit Ore","amount":4},{"id":5232,"name":"Stiperstone","amount":1}]
@@ -6221,6 +6283,7 @@
     "name": "Titanbronze Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 76,
     "cat": "Metal",
     "ings": [{"id":27701,"name":"Titancopper Ore","amount":4},{"id":12537,"name":"Titanium Ore","amount":1}]
@@ -6229,6 +6292,7 @@
     "name": "Dwarven Mythril Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 78,
     "cat": "Metal",
     "ings": [{"id":27703,"name":"Dimythrite Ore","amount":4},{"id":12534,"name":"Mythrite Ore","amount":1}]
@@ -6248,6 +6312,7 @@
     "name": "Tungsten Steel Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 80,
     "cat": "Metal",
     "ings": [
@@ -6858,6 +6923,7 @@
     "name": "Cobalt Alloy Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 80,
     "cat": "Metal",
     "ings": [
@@ -7001,6 +7067,7 @@
     "name": "Duraluminum Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 80,
     "cat": "Metal",
     "ings": [{"id":32951,"name":"Dolomite","amount":4},{"id":32945,"name":"Aluminum Ore","amount":2}]
@@ -7209,6 +7276,7 @@
     "name": "High Durium Nugget",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 81,
     "cat": "Metal",
     "ings": [{"id":36162,"name":"High Durium Sand","amount":5},{"id":5113,"name":"Silver Ore","amount":1}]
@@ -7217,6 +7285,7 @@
     "name": "High Durium Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 82,
     "cat": "Metal",
     "ings": [{"id":36163,"name":"High Durium Ore","amount":5},{"id":5113,"name":"Silver Ore","amount":1}]
@@ -7225,6 +7294,7 @@
     "name": "Bismuth Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 84,
     "cat": "Metal",
     "ings": [{"id":36164,"name":"Bismuth Ore","amount":5},{"id":5107,"name":"Tin Ore","amount":1}]
@@ -7233,6 +7303,7 @@
     "name": "Manganese Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 86,
     "cat": "Metal",
     "ings": [{"id":36165,"name":"Manganese Ore","amount":5},{"id":19957,"name":"Molybdenum Ore","amount":1}]
@@ -7241,6 +7312,7 @@
     "name": "Chondrite Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 88,
     "cat": "Metal",
     "ings": [{"id":36166,"name":"Chondrite","amount":5},{"id":27703,"name":"Dimythrite Ore","amount":1}]
@@ -7249,6 +7321,7 @@
     "name": "Lunar Adamantite Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 90,
     "cat": "Metal",
     "ings": [
@@ -7715,6 +7788,7 @@
     "name": "Ilmenite Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 90,
     "cat": "Metal",
     "ings": [{"id":37820,"name":"Ilmenite","amount":5},{"id":37828,"name":"Vanadinite","amount":2}]
@@ -7823,6 +7897,7 @@
     "name": "Smaller Water Otter Fountain Lumber",
     "yields": 1,
     "job": "CRP",
+    "jobs": ["CRP","LTW","WVR"],
     "lvl": 90,
     "cat": "Miscellany",
     "ings": [
@@ -7836,6 +7911,7 @@
     "name": "Smaller Water Otter Fountain Hardware",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM","GSM"],
     "lvl": 90,
     "cat": "Miscellany",
     "ings": [
@@ -7848,6 +7924,7 @@
     "name": "Smaller Water Otter Fountain Resin",
     "yields": 1,
     "job": "ALC",
+    "jobs": ["ALC","CUL"],
     "lvl": 90,
     "cat": "Miscellany",
     "ings": [
@@ -7868,6 +7945,7 @@
     "name": "Softsilver Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 90,
     "cat": "Metal",
     "ings": [
@@ -8019,6 +8097,7 @@
     "name": "Mountain Chromite Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 91,
     "cat": "Metal",
     "ings": [
@@ -8030,6 +8109,7 @@
     "name": "Ruthenium Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 92,
     "cat": "Metal",
     "ings": [
@@ -8041,6 +8121,7 @@
     "name": "Cobalt Tungsten Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 94,
     "cat": "Metal",
     "ings": [
@@ -8052,6 +8133,7 @@
     "name": "Titanium Gold Nugget",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 96,
     "cat": "Metal",
     "ings": [
@@ -8063,6 +8145,7 @@
     "name": "Ra'Kaznar Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 98,
     "cat": "Metal",
     "ings": [
@@ -8355,6 +8438,7 @@
     "name": "Maraging Steel Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 100,
     "cat": "Metal",
     "ings": [
@@ -8507,6 +8591,7 @@
     "name": "Octahedrite Nugget",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 100,
     "cat": "Metal",
     "ings": [{"id":45969,"name":"Octahedrite","amount":4},{"id":45985,"name":"Shaaloani Coke","amount":2}]
@@ -8633,10 +8718,51 @@
       {"id":46246,"name":"Levinchrome Aethersand","amount":1}
     ]
   },
+  "46855": {
+    "name": "Synthetic Dark Matter Alpha",
+    "yields": 1,
+    "job": "BSM",
+    "jobs": ["BSM","ARM","GSM"],
+    "lvl": 100,
+    "cat": "Reagent",
+    "ings": [
+      {"id":45969,"name":"Octahedrite","amount":8},
+      {"id":45970,"name":"Raw Rhodochrosite","amount":4},
+      {"id":46246,"name":"Levinchrome Aethersand","amount":2}
+    ]
+  },
+  "46856": {
+    "name": "Synthetic Dark Matter Beta",
+    "yields": 1,
+    "job": "CRP",
+    "jobs": ["CRP","LTW","WVR"],
+    "lvl": 100,
+    "cat": "Reagent",
+    "ings": [
+      {"id":45968,"name":"Cordia Log","amount":4},
+      {"id":45972,"name":"Cochineal Pigment","amount":4},
+      {"id":45971,"name":"Shaaloani Coffee","amount":4},
+      {"id":46246,"name":"Levinchrome Aethersand","amount":2}
+    ]
+  },
+  "46857": {
+    "name": "Synthetic Dark Matter Gamma",
+    "yields": 1,
+    "job": "ALC",
+    "jobs": ["ALC","CUL"],
+    "lvl": 100,
+    "cat": "Reagent",
+    "ings": [
+      {"id":45973,"name":"Fulgurite","amount":4},
+      {"id":45971,"name":"Shaaloani Coffee","amount":4},
+      {"id":46246,"name":"Levinchrome Aethersand","amount":2}
+    ]
+  },
   "48236": {
     "name": "Cosmotized Cosmostuff",
     "yields": 1,
     "job": "CRP",
+    "jobs": ["CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -8645,6 +8771,7 @@
     "name": "Standard Alloy Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM","GSM"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -8653,6 +8780,7 @@
     "name": "Drone Plating",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM","GSM"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -8661,6 +8789,7 @@
     "name": "Heat-resistant Alloy Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM","GSM"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -8669,6 +8798,7 @@
     "name": "Lunar Alloy Bar",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM","GSM"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -8677,6 +8807,7 @@
     "name": "Standard Flexible Plating",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM","GSM"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -8685,6 +8816,7 @@
     "name": "Pressure-resistant Plate",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -8693,6 +8825,7 @@
     "name": "Iron Plating",
     "yields": 1,
     "job": "ARM",
+    "jobs": ["ARM","GSM"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -8845,6 +8978,7 @@
     "name": "Standard Indurate Rings",
     "yields": 1,
     "job": "ARM",
+    "jobs": ["ARM","GSM"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -9117,6 +9251,7 @@
     "name": "Reinforcement Supplies I",
     "yields": 1,
     "job": "CRP",
+    "jobs": ["CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -9125,6 +9260,7 @@
     "name": "Reinforcement Supplies II",
     "yields": 1,
     "job": "CRP",
+    "jobs": ["CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -9133,6 +9269,7 @@
     "name": "Reinforcement Supplies III",
     "yields": 1,
     "job": "CRP",
+    "jobs": ["CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -9141,6 +9278,7 @@
     "name": "Standard Silicate Alloy Nugget",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM","GSM"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -9149,6 +9287,7 @@
     "name": "Enrichment Thermoconductive Plate",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM","GSM"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -9157,6 +9296,7 @@
     "name": "Survey Lens Component",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM","GSM"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -9165,6 +9305,7 @@
     "name": "Standard Heavy Alloy Bar",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM","GSM"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -9173,6 +9314,7 @@
     "name": "Standard Keraunoconductor",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM","GSM"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -9181,6 +9323,7 @@
     "name": "Standard Multi-purpose Plating",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM","GSM"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -9189,6 +9332,7 @@
     "name": "Standard Extra-thick Plating",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM","GSM"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -9197,6 +9341,7 @@
     "name": "Insulated Survey Plating",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM","GSM"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -9205,6 +9350,7 @@
     "name": "High-durability Resin Fiber",
     "yields": 1,
     "job": "CRP",
+    "jobs": ["CRP","LTW","WVR"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -9213,6 +9359,7 @@
     "name": "Lightweight Resin Fiber",
     "yields": 1,
     "job": "CRP",
+    "jobs": ["CRP","LTW","WVR"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -9221,6 +9368,7 @@
     "name": "Survey Liquifood",
     "yields": 1,
     "job": "ALC",
+    "jobs": ["ALC","CUL"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -9229,6 +9377,7 @@
     "name": "Inorganic Grease",
     "yields": 1,
     "job": "ALC",
+    "jobs": ["ALC","CUL"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -9237,6 +9386,7 @@
     "name": "Worker's Skyr",
     "yields": 1,
     "job": "ALC",
+    "jobs": ["ALC","CUL"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -9376,6 +9526,7 @@
     "name": "Double Duraluminum Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM"],
     "lvl": 100,
     "cat": "Metal",
     "ings": [
@@ -9482,6 +9633,7 @@
     "name": "Oizys Essentials",
     "yields": 1,
     "job": "CRP",
+    "jobs": ["CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -9490,6 +9642,7 @@
     "name": "Oizys Curios",
     "yields": 1,
     "job": "CRP",
+    "jobs": ["CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -9498,6 +9651,7 @@
     "name": "Oizys Rarities",
     "yields": 1,
     "job": "CRP",
+    "jobs": ["CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -9506,6 +9660,7 @@
     "name": "Excavator's Multi-purpose Plating",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM","GSM"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -9514,6 +9669,7 @@
     "name": "Indicolite Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM","GSM"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -9522,6 +9678,7 @@
     "name": "Standard Anchor Steel Plate",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM","GSM"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -9530,6 +9687,7 @@
     "name": "Gravity Generator Expansion Component",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM","GSM"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -9538,6 +9696,7 @@
     "name": "Natural Oizys Fiber",
     "yields": 1,
     "job": "CRP",
+    "jobs": ["CRP","LTW","WVR"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -9546,6 +9705,7 @@
     "name": "Oizys Lime",
     "yields": 1,
     "job": "ALC",
+    "jobs": ["ALC","CUL"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -9630,6 +9790,46 @@
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
   },
+  "50055": {
+    "name": "Aspected Aether Agglomerate",
+    "yields": 1,
+    "job": "CRP",
+    "jobs": ["CRP","LTW","WVR"],
+    "lvl": 100,
+    "cat": "Reagent",
+    "ings": [
+      {"id":49207,"name":"Fulgurpine Log","amount":4},
+      {"id":49210,"name":"Carnauba Leaf","amount":4},
+      {"id":49211,"name":"Urqopacha Flax","amount":4},
+      {"id":46246,"name":"Levinchrome Aethersand","amount":2}
+    ]
+  },
+  "50056": {
+    "name": "Aspected Aetheroconductor",
+    "yields": 1,
+    "job": "BSM",
+    "jobs": ["BSM","ARM","GSM"],
+    "lvl": 100,
+    "cat": "Reagent",
+    "ings": [
+      {"id":49208,"name":"Dense Aluminum Ore","amount":8},
+      {"id":49209,"name":"Rose Garnet Ore","amount":4},
+      {"id":46246,"name":"Levinchrome Aethersand","amount":2}
+    ]
+  },
+  "50057": {
+    "name": "Aspected Aetherocatalyst",
+    "yields": 1,
+    "job": "ALC",
+    "jobs": ["ALC","CUL"],
+    "lvl": 100,
+    "cat": "Reagent",
+    "ings": [
+      {"id":49212,"name":"Windspath Water","amount":4},
+      {"id":49210,"name":"Carnauba Leaf","amount":4},
+      {"id":46246,"name":"Levinchrome Aethersand","amount":2}
+    ]
+  },
   "50971": {
     "name": "Ascendant Twine",
     "yields": 1,
@@ -9637,7 +9837,6 @@
     "jobs": ["CRP","LTW","WVR"],
     "lvl": 100,
     "cat": "Leather",
-    "patch": "7.55",
     "ings": [
       {"id":49207,"name":"Fulgurpine Log","amount":2},
       {"id":49210,"name":"Carnauba Leaf","amount":2},
@@ -9654,7 +9853,6 @@
     "jobs": ["BSM","ARM","GSM"],
     "lvl": 100,
     "cat": "Metal",
-    "patch": "7.55",
     "ings": [
       {"id":49208,"name":"Dense Aluminum Ore","amount":4},
       {"id":49209,"name":"Rose Garnet Ore","amount":2},
@@ -9669,7 +9867,6 @@
     "jobs": ["ALC","CUL"],
     "lvl": 100,
     "cat": "Reagent",
-    "patch": "7.55",
     "ings": [
       {"id":49212,"name":"Windspath Water","amount":2},
       {"id":49210,"name":"Carnauba Leaf","amount":2},
@@ -9682,7 +9879,6 @@
     "job": "GSM",
     "lvl": 100,
     "cat": "Outdoor Furnishing",
-    "patch": "7.55",
     "ings": [
       {"id":44013,"name":"Magnesia Whetstone","amount":3},
       {"id":7009,"name":"Cut Stone","amount":4},
@@ -9696,7 +9892,6 @@
     "job": "GSM",
     "lvl": 100,
     "cat": "Outdoor Furnishing",
-    "patch": "7.55",
     "ings": [
       {"id":52641,"name":"Crumbling Aqueduct Fragment","amount":2},
       {"id":52642,"name":"Crumbling Aqueduct Metal","amount":2},
@@ -9709,6 +9904,7 @@
     "name": "Standard Spectrum Dye",
     "yields": 1,
     "job": "CRP",
+    "jobs": ["CRP","BSM","ARM","GSM","LTW","WVR","ALC","CUL"],
     "lvl": 30,
     "cat": "Dye",
     "ings": [{"id":52712,"name":"All-purpose Pigment","amount":1}]
@@ -9717,6 +9913,7 @@
     "name": "Standard High-durability Plating",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM","GSM"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -9725,6 +9922,7 @@
     "name": "Survey Precision Lens",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM","GSM"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -9733,6 +9931,7 @@
     "name": "Standard Axe Head",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM","GSM"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -9741,6 +9940,7 @@
     "name": "Standard Treated Ruby Gold Ingot",
     "yields": 1,
     "job": "BSM",
+    "jobs": ["BSM","ARM","GSM"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -9749,6 +9949,7 @@
     "name": "Standard High-density Bonded Fabric",
     "yields": 1,
     "job": "LTW",
+    "jobs": ["LTW","WVR"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -9757,6 +9958,7 @@
     "name": "Standard Flareproof Cloth",
     "yields": 1,
     "job": "LTW",
+    "jobs": ["LTW","WVR"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -9765,6 +9967,7 @@
     "name": "Survey Nutrient Mixture",
     "yields": 1,
     "job": "ALC",
+    "jobs": ["ALC","CUL"],
     "lvl": 100,
     "cat": "Other",
     "ings": [{"id":48233,"name":"Cosmic Container","amount":1}]
@@ -9848,7 +10051,6 @@
     "jobs": ["CRP","LTW","WVR"],
     "lvl": 100,
     "cat": "Miscellany",
-    "patch": "7.55",
     "ings": [
       {"id":46856,"name":"Synthetic Dark Matter Beta","amount":1},
       {"id":50055,"name":"Aspected Aether Agglomerate","amount":1},
@@ -9862,7 +10064,6 @@
     "jobs": ["BSM","ARM","GSM"],
     "lvl": 100,
     "cat": "Miscellany",
-    "patch": "7.55",
     "ings": [
       {"id":46855,"name":"Synthetic Dark Matter Alpha","amount":1},
       {"id":50056,"name":"Aspected Aetheroconductor","amount":1},
@@ -9876,7 +10077,6 @@
     "jobs": ["ALC","CUL"],
     "lvl": 100,
     "cat": "Miscellany",
-    "patch": "7.55",
     "ings": [
       {"id":46857,"name":"Synthetic Dark Matter Gamma","amount":1},
       {"id":50057,"name":"Aspected Aetherocatalyst","amount":1},

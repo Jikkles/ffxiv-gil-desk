@@ -81,7 +81,7 @@
       <div class="slabel">Marketboard settings</div>
       <label class="chk"><input type="checkbox" id="deep"> Deep 30d</label>
       <label class="chk"><input type="checkbox" id="hideNo" checked> Hide no-sales</label>
-      <label class="chk"><input type="checkbox" id="hideOutlier"> Hide ⚠ outliers</label>
+      <label class="chk"><input type="checkbox" id="hideOutlier" checked> Hide ⚠ outliers</label>
       <label class="chk"><input type="checkbox" id="density"> Compact</label>
     </div>
     <div class="sgroup">
@@ -108,7 +108,7 @@
     <div class="kpis">
     <div class="kpi"><div class="ki">🪙</div><div class="kbody"><div class="k">Best profit / unit</div><div class="v gil" id="kpiBest">—</div><div class="s" id="kpiBestName">waiting…</div></div></div>
     <div class="kpi"><div class="ki">📈</div><div class="kbody"><div class="k">Daily profit ceiling</div><div class="v cy" id="kpiDaily">—</div><div class="s">visible items, at <span class="homename">Spriggan</span> velocity</div></div></div>
-    <div class="kpi"><div class="ki">🌍</div><div class="kbody"><div class="k">Profitable / shown</div><div class="v" id="kpiCount">—</div><div class="s" id="kpiFresh">—</div></div></div>
+    <div class="kpi"><div class="ki">🌍</div><div class="kbody"><div class="k" title="Rows marked ⚠ are not counted">Profitable / shown</div><div class="v" id="kpiCount">—</div><div class="s" id="kpiFresh">—</div></div></div>
   </div></div>
 
 
@@ -168,7 +168,7 @@ const fmt=n=>n==null||!isFinite(n)?"—":Math.round(n).toLocaleString("en-GB");
 const fmtK=n=>{if(n==null||!isFinite(n))return"—";if(Math.abs(n)>=1e6)return(n/1e6).toFixed(2)+"M";if(Math.abs(n)>=1e3)return(n/1e3).toFixed(1)+"k";return Math.round(n).toString();};
 const ago=ms=>{if(!ms)return"no uploads";const s=(Date.now()-ms)/1000;if(s<3600)return Math.round(s/60)+"m ago";if(s<86400)return Math.round(s/3600)+"h ago";return Math.round(s/86400)+"d ago";};
 
-let state={home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],tax:0.05,job:"all",query:"",sellQ:"hq",basis:"listing",deep:false,hideNo:true,hideOutlier:false,minLvl:1,maxLvl:100,
+let state={home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],tax:0.05,job:"all",query:"",sellQ:"hq",basis:"listing",deep:false,hideNo:true,hideOutlier:true,minLvl:1,maxLvl:100,
   sortKey:"profit",sortDir:-1,worlds:null,sell:null,chaos:null,hist:null,rows:null,expanded:new Set()};
 
 function side(res,hq){return res?(hq?res.h:res.n):null;}
@@ -300,7 +300,7 @@ function sellTimeHTML(s, wantHQ) {
     const isPeak = topHours.includes(h);
     const isOk = !isPeak && sorted.slice(3,8).map(x=>x.h).includes(h);
     const cls = isPeak ? 'peak' : isOk ? 'ok' : '';
-    const label = String(h).padStart(2,'0') + ':00 \u2014 ' + v + ' sale' + (v!==1?'s':'');
+    const label = String(h).padStart(2,'0') + ':00 \u2014 ' + v + ' unit' + (v!==1?'s':'') + ' sold';
     return '<div class="st-bar ' + cls + '" style="height:' + pct + '%" title="' + label + '"></div>';
   }).join('');
   const topLabel = topHours.map(h=>String(h).padStart(2,'0')+':00').join(', ');
@@ -321,7 +321,7 @@ function treeHTML(r){let body="";
       <span><span class="lab">Cost/unit</span><b>${fmt(r.cost)}</b></span>
       <span><span class="lab">Sell ${sq}·${state.home}</span><b>${r.sell==null?'—':fmt(r.sell)}</b></span>
       <span><span class="lab">Avg</span><b>${fmt(r.avg)}</b></span>
-      <span><span class="lab">Trend</span><b>${trendChip(r.trendT)}</b></span>
+      <span><span class="lab">Trend</span><b>${trendChip(r.trendT,state.deep?'':'Tick Deep 30d to read the trend: it compares the newer and older halves of a month of sales')}</b></span>
       <span><span class="lab">Profit/unit</span><b class="${r.profit==null?'':(r.profit>=0?'profit win':'profit loss')}">${r.profit==null?'—':fmt(r.profit)}</b></span>
       <span><span class="lab">Class / lvl</span><b>${jobLabel(r)} · ${r.lvl}</b></span>
     </div>
@@ -330,7 +330,7 @@ function treeHTML(r){let body="";
 }
 
 function updateScanTime(){const el=document.getElementById("lastScan");if(!el)return;const now=new Date();el._scanTime=now;function tick(){if(!el._scanTime)return;const age=(Date.now()-el._scanTime)/1000;el.textContent=el._scanTime.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit",second:"2-digit"});el.style.color=age<1800?"var(--win)":"var(--loss)";}tick();if(el._ticker)clearInterval(el._ticker);el._ticker=setInterval(tick,30000);}
-function render(){if(!state.rows)return;let rows=visibleRows();const total=rows.length;const trunc=total>MAX_ROWS;if(trunc)rows=rows.slice(0,MAX_ROWS);
+function render(){if(!state.rows)return;const shown=visibleRows();let rows=shown;const total=rows.length;const trunc=total>MAX_ROWS;if(trunc)rows=rows.slice(0,MAX_ROWS);
   const maxP=Math.max(1,...rows.map(r=>r.profit||0));const tb=document.getElementById("rows");tb.innerHTML="";
   for(const r of rows){const open=state.expanded.has(r.id);
     const tr=document.createElement("tr");tr.className="row"+(open?" open":"");
@@ -345,7 +345,7 @@ function render(){if(!state.rows)return;let rows=visibleRows();const total=rows.
         <span class="t">${jobLabel(r)} · ${r.cat} · lvl ${r.lvl}</span></div></td>
       <td>${fmt(r.sell)} <span class="q">${state.sellQ.toUpperCase()}</span>${warn}${agePill(r.upload)}</td>
       <td>${fmt(r.avg)}${r.avg!=null&&r.n30?` <span class="q">${r.n30}×</span>`:''}${r.avgFb?' <span class=\"q\" title=\"No sales of the requested quality in the last 30 days — average includes both NQ and HQ\">mixed</span>':''}</td>
-      <td>${trendChip(r.trendT)}</td>
+      <td>${trendChip(r.trendT,state.deep?'':'Tick Deep 30d to read the trend: it compares the newer and older halves of a month of sales')}</td>
       <td class="hide">${fmt(r.cost)}${yieldTag}</td>
       <td class="profit ${cls}">${r.profit==null?'—':fmt(r.profit)}</td>
       <td>${r.margin==null?'—':Math.round(r.margin*100)+'%'}</td>
@@ -356,7 +356,9 @@ function render(){if(!state.rows)return;let rows=visibleRows();const total=rows.
     tb.appendChild(tr);
     if(open){const dr=document.createElement("tr");dr.className="detail";const td=document.createElement("td");td.colSpan=9;td.innerHTML=treeHTML(r);dr.appendChild(td);tb.appendChild(dr);}}
   document.getElementById("tbl").hidden=false;
-  const prof=rows.filter(r=>r.profit!=null&&r.profit>0).sort((a,b)=>b.profit-a.profit);const best=prof[0];
+  /* the cards read every row that passes the filters, not just the first MAX_ROWS drawn,
+     and never a ⚠ row: one listing at a joke price would otherwise be the best profit */
+  const prof=shown.filter(r=>r.profit!=null&&r.profit>0&&!r.outlier).sort((a,b)=>b.profit-a.profit);const best=prof[0];
   document.getElementById("kpiBest").textContent=best?fmt(best.profit)+" g":"—";
   document.getElementById("kpiBestName").textContent=best?best.name:"nothing profitable in view";
   const ds=prof.reduce((s,r)=>s+(r.daily||0),0);document.getElementById("kpiDaily").textContent=ds?fmtK(ds)+" g":"—";

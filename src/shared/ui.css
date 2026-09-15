@@ -208,6 +208,14 @@ thead th:first-child::after,tbody td:first-child::after{content:"";position:abso
 .name{display:flex;flex-direction:column;align-items:flex-start;gap:2px;min-width:215px}
 .name.rich{flex-direction:row;align-items:center;gap:9px}
 .name > .n{display:flex;align-items:center;gap:7px;min-width:0;font-family:"Inter",sans-serif;font-size:13.5px;font-weight:500;color:var(--ink);white-space:nowrap}
+/* A long name may wrap onto a second line. A table only takes that up once it
+   is out of width, so on a wide screen nothing changes; on a narrower one the
+   name folds instead of pushing Units/day and Gil/day out of view. Each
+   button, icon and tag stays whole. */
+tbody td .name > .n,tbody td .nmeta > .n{white-space:normal}
+tbody td .name > .n > *,tbody td .nmeta > .n > *{white-space:nowrap}
+/* the same goes for a header: "Sell avg 30d" can take two lines before a column goes missing */
+thead th{white-space:normal}
 .name > .t{padding-left:39px;font-size:11px;color:var(--faint);font-family:"Inter",sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .iconbox{
   width:32px;height:32px;flex:none;border-radius:8px;background:var(--panel2);

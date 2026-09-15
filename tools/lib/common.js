@@ -67,4 +67,19 @@ function encodeIndex(m) {
   return [...m.keys()].sort((a, b) => a - b).map(id => { const s = (id - prev).toString(36) + " " + m.get(id); prev = id; return s; }).join("\n");
 }
 
-module.exports = { ROOT, CACHE, OUT, cached, need, readJSON, writeJSON, sheet, items, marketable, decodeIndex, encodeIndex };
+/* ---- the patch the game data is on ----
+   A patch shows up as a new commit to ffxiv-datamining's csv/en folder, titled with the
+   patch ("7.56 (#117)"). The title is kept to plain characters: it ends up in a commit
+   message, an issue and a badge on the page. */
+async function latestGameData() {
+  const headers = { "User-Agent": "ffxiv-gil-desk-rebake", Accept: "application/vnd.github+json" };
+  if (process.env.GH_TOKEN) headers.Authorization = "Bearer " + process.env.GH_TOKEN;
+  const r = await fetch("https://api.github.com/repos/xivapi/ffxiv-datamining/commits?path=csv/en&per_page=1", { headers });
+  if (!r.ok) throw new Error("GitHub API " + r.status + " asking for the latest game data commit");
+  const [latest] = await r.json();
+  if (!latest) throw new Error("ffxiv-datamining has no commits under csv/en — has the folder moved?");
+  const patch = latest.commit.message.split("\n")[0].replace(/\s*\(#\d+\)/g, "").replace(/[^\w .-]/g, "").trim() || "new game data";
+  return { patch, when: new Date(latest.commit.committer.date) };
+}
+
+module.exports = { ROOT, CACHE, OUT, cached, need, readJSON, writeJSON, sheet, items, marketable, decodeIndex, encodeIndex, latestGameData };

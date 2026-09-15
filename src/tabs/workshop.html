@@ -65,7 +65,7 @@ tr.detail>td{background:var(--bg2);border-bottom:1px solid var(--line);padding:0
     <div class="sgroup">
       <div class="slabel">Marketboard settings</div>
       <label class="chk" title="Hide projects nobody has bought on your world in the last 30 days"><input type="checkbox" id="hideNo" checked> Hide no-sales</label>
-      <label class="chk"><input type="checkbox" id="hideOutlier"> Hide &#9888; outliers</label>
+      <label class="chk"><input type="checkbox" id="hideOutlier" checked> Hide &#9888; outliers</label>
     </div>
     <div class="sgroup">
       <div class="slabel">Filters</div>
@@ -121,7 +121,7 @@ tr.detail>td{background:var(--bg2);border-bottom:1px solid var(--line);padding:0
         <thead><tr>
           <th data-k="name" style="cursor:default">Item</th>
           <th data-k="sell" title="Cheapest listing on your home world, with how long ago that world last reported">Sell now <span></span></th>
-          <th data-k="avg30" title="Quantity-weighted average of actual sales on your home world over 30 days">Avg 30d <span></span></th>
+          <th data-k="avg30" title="Median price of actual sales, weighted by units, on your home world over 30 days">Avg 30d <span></span></th>
           <th data-k="trend" title="Which way the price is moving: the newer half of the sales history against the older half">Trend <span></span></th>
           <th data-k="cost" class="hide">Mat cost <span></span><i id="costMode" style="display:block;font-style:normal;font-weight:400;font-size:9px;letter-spacing:.06em;color:var(--faint);text-transform:none">optimised</i></th>
           <th data-k="profit" data-sorted>Profit/unit <span>&#9662;</span></th>
@@ -163,7 +163,7 @@ const fmt = n => n == null || !isFinite(n) ? "—" : Math.round(n).toLocaleStrin
 const fmtK = n => { if (n == null || !isFinite(n)) return "—"; if (Math.abs(n) >= 1e6) return (n / 1e6).toFixed(2) + "M"; if (Math.abs(n) >= 1e3) return (n / 1e3).toFixed(1) + "k"; return Math.round(n).toString(); };
 const ago = ms => { if (!ms) return "no uploads"; const s = (Date.now() - ms) / 1000; if (s < 3600) return Math.round(s / 60) + "m ago"; if (s < 86400) return Math.round(s / 3600) + "h ago"; return Math.round(s / 86400) + "d ago"; };
 
-let state = {home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],tax:0.05,group:"all",hideNo:true,hideOutlier:false,query:"",basis:"avg30",matBasis:"opt",
+let state = {home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],tax:0.05,group:"all",hideNo:true,hideOutlier:true,query:"",basis:"avg30",matBasis:"opt",
   sortKey:"profit",sortDir:-1,worlds:null,sell:null,hist:null,chaos:null,rows:null,expanded:new Set(),tree:new Set(),_best:{},_hops:{}};
 
 function side(res,hq){return res?(hq?res.h:res.n):null;}

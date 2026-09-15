@@ -1,6 +1,70 @@
 {
   "finished": [
     {
+      "id": 52643,
+      "name": "Crumbling Aqueduct Resin",
+      "kind": "misc",
+      "group": "misc",
+      "q": "nq",
+      "note": "Miscellany"
+    },
+    {
+      "id": 52642,
+      "name": "Crumbling Aqueduct Metal",
+      "kind": "misc",
+      "group": "misc",
+      "q": "nq",
+      "note": "Miscellany"
+    },
+    {
+      "id": 52641,
+      "name": "Crumbling Aqueduct Fragment",
+      "kind": "misc",
+      "group": "misc",
+      "q": "nq",
+      "note": "Miscellany"
+    },
+    {
+      "id": 51272,
+      "name": "Crumbling Aqueduct",
+      "kind": "furniture",
+      "group": "furniture",
+      "q": "nq",
+      "note": "Outdoor Furnishing"
+    },
+    {
+      "id": 50973,
+      "name": "Majestic Polish",
+      "kind": "materials",
+      "group": "materials",
+      "q": "nq",
+      "note": "Reagent"
+    },
+    {
+      "id": 50972,
+      "name": "Ancestral Alloy Ingot",
+      "kind": "materials",
+      "group": "materials",
+      "q": "nq",
+      "note": "Metal"
+    },
+    {
+      "id": 50971,
+      "name": "Ascendant Twine",
+      "kind": "materials",
+      "group": "materials",
+      "q": "nq",
+      "note": "Leather"
+    },
+    {
+      "id": 51270,
+      "name": "Garden Canal",
+      "kind": "furniture",
+      "group": "furniture",
+      "q": "nq",
+      "note": "Outdoor Furnishing"
+    },
+    {
       "id": 52629,
       "name": "Stonewashed Baggy Twill Trousers",
       "kind": "gear",
@@ -25411,7 +25475,7 @@
     },
     {
       "id": 42453,
-      "name": "Ra'Kaznar Tonfas",
+      "name": "Ra'Kaznar Tonfa",
       "kind": "gear",
       "group": "gear",
       "q": "hq",
@@ -27217,7 +27281,7 @@
     },
     {
       "id": 41991,
-      "name": "Ruthenium Tonfas",
+      "name": "Ruthenium Tonfa",
       "kind": "gear",
       "group": "gear",
       "q": "hq",
@@ -44595,7 +44659,7 @@
     },
     {
       "id": 18387,
-      "name": "Tigerskin Gloves of Scouting",
+      "name": "Tigerskin Wristgloves of Scouting",
       "kind": "gear",
       "group": "gear",
       "q": "hq",
@@ -44635,7 +44699,7 @@
     },
     {
       "id": 18381,
-      "name": "Tigerskin Gloves of Aiming",
+      "name": "Tigerskin Wristgloves of Aiming",
       "kind": "gear",
       "group": "gear",
       "q": "hq",
@@ -60409,6 +60473,101 @@
     }
   ],
   "recipes": {
+    "52643": {
+      "name": "Crumbling Aqueduct Resin",
+      "yields": 1,
+      "ingredients": [
+        {"id":46857,"amount":1},
+        {"id":50057,"amount":1},
+        {"id":50973,"amount":1},
+        {"id":14,"amount":5},
+        {"id":19,"amount":5}
+      ]
+    },
+    "52642": {
+      "name": "Crumbling Aqueduct Metal",
+      "yields": 1,
+      "ingredients": [
+        {"id":46855,"amount":1},
+        {"id":50056,"amount":1},
+        {"id":50972,"amount":1},
+        {"id":16,"amount":5},
+        {"id":14,"amount":5}
+      ]
+    },
+    "52641": {
+      "name": "Crumbling Aqueduct Fragment",
+      "yields": 1,
+      "ingredients": [
+        {"id":46856,"amount":1},
+        {"id":50055,"amount":1},
+        {"id":50971,"amount":1},
+        {"id":18,"amount":5},
+        {"id":16,"amount":5}
+      ]
+    },
+    "51272": {
+      "name": "Crumbling Aqueduct",
+      "yields": 1,
+      "ingredients": [
+        {"id":52641,"amount":2},
+        {"id":52642,"amount":2},
+        {"id":52643,"amount":2},
+        {"id":7009,"amount":7},
+        {"id":44034,"amount":7},
+        {"id":16,"amount":3},
+        {"id":14,"amount":3}
+      ]
+    },
+    "50973": {
+      "name": "Majestic Polish",
+      "yields": 1,
+      "ingredients": [
+        {"id":49212,"amount":2},
+        {"id":49210,"amount":2},
+        {"id":44140,"amount":4},
+        {"id":14,"amount":3},
+        {"id":19,"amount":3}
+      ]
+    },
+    "50972": {
+      "name": "Ancestral Alloy Ingot",
+      "yields": 1,
+      "ingredients": [
+        {"id":49208,"amount":4},
+        {"id":49209,"amount":2},
+        {"id":44135,"amount":4},
+        {"id":44136,"amount":2},
+        {"id":16,"amount":3},
+        {"id":14,"amount":3}
+      ]
+    },
+    "50971": {
+      "name": "Ascendant Twine",
+      "yields": 1,
+      "ingredients": [
+        {"id":49207,"amount":2},
+        {"id":49210,"amount":2},
+        {"id":49211,"amount":2},
+        {"id":44137,"amount":2},
+        {"id":44139,"amount":2},
+        {"id":44138,"amount":2},
+        {"id":18,"amount":3},
+        {"id":16,"amount":3}
+      ]
+    },
+    "51270": {
+      "name": "Garden Canal",
+      "yields": 1,
+      "ingredients": [
+        {"id":44013,"amount":3},
+        {"id":7009,"amount":4},
+        {"id":7008,"amount":5},
+        {"id":7016,"amount":3},
+        {"id":10,"amount":8},
+        {"id":8,"amount":8}
+      ]
+    },
     "52629": {
       "name": "Stonewashed Baggy Twill Trousers",
       "yields": 1,
@@ -105806,7 +105965,7 @@
       ]
     },
     "42453": {
-      "name": "Ra'Kaznar Tonfas",
+      "name": "Ra'Kaznar Tonfa",
       "yields": 1,
       "ingredients": [
         {"id":44001,"amount":3},
@@ -108557,7 +108716,7 @@
       ]
     },
     "41991": {
-      "name": "Ruthenium Tonfas",
+      "name": "Ruthenium Tonfa",
       "yields": 1,
       "ingredients": [
         {"id":43998,"amount":2},
@@ -135280,7 +135439,7 @@
       ]
     },
     "18387": {
-      "name": "Tigerskin Gloves of Scouting",
+      "name": "Tigerskin Wristgloves of Scouting",
       "yields": 1,
       "ingredients": [
         {"id":19995,"amount":2},
@@ -135344,7 +135503,7 @@
       ]
     },
     "18381": {
-      "name": "Tigerskin Gloves of Aiming",
+      "name": "Tigerskin Wristgloves of Aiming",
       "yields": 1,
       "ingredients": [
         {"id":19995,"amount":2},
@@ -166781,6 +166940,18 @@
     "2520": "Bronze Pickaxe",
     "2417": "Bronze Head Knife",
     "2393": "Amateur's Chaser Hammer",
-    "1750": "Bronze War Axe"
+    "1750": "Bronze War Axe",
+    "46855": "Synthetic Dark Matter Alpha",
+    "46856": "Synthetic Dark Matter Beta",
+    "46857": "Synthetic Dark Matter Gamma",
+    "50055": "Aspected Aether Agglomerate",
+    "50056": "Aspected Aetheroconductor",
+    "50057": "Aspected Aetherocatalyst",
+    "50971": "Ascendant Twine",
+    "50972": "Ancestral Alloy Ingot",
+    "50973": "Majestic Polish",
+    "52641": "Crumbling Aqueduct Fragment",
+    "52642": "Crumbling Aqueduct Metal",
+    "52643": "Crumbling Aqueduct Resin"
   }
 }

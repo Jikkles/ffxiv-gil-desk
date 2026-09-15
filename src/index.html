@@ -489,8 +489,24 @@ function seedHomeWorld(){
     try{localStorage.setItem(key,JSON.stringify(s));}catch(e){}
   }
 }
+/* Hide ⚠ outliers now starts ticked, since the unticked board was topped by
+   listings at 999,999,999 gil. A tab saves every checkbox it has, so a desk
+   that had already been opened would keep the old unticked state for ever.
+   Once only, the saved choice is dropped and the new default takes over;
+   untick it again and that sticks. */
+function outliersHiddenByDefault(){
+  const DONE="gildesk:outlierDefault:v1";
+  try{if(localStorage.getItem(DONE))return;
+    for(const t of["all","precraft","workshop"]){
+      const key="gildesk:"+t+":settings";let s=null;
+      try{s=JSON.parse(localStorage.getItem(key)||"null");}catch(e){}
+      if(s&&typeof s==="object"&&"hideOutlier" in s){delete s.hideOutlier;localStorage.setItem(key,JSON.stringify(s));}
+    }
+    localStorage.setItem(DONE,"1");
+  }catch(e){}
+}
 /* a first visit that picks a world goes straight into the tour */
-pickHomeWorld().then(picked=>{seedHomeWorld();activate(keyFromHash()||"all");if(picked)Tour.start();});
+pickHomeWorld().then(picked=>{seedHomeWorld();outliersHiddenByDefault();activate(keyFromHash()||"all");if(picked)Tour.start();});
 </script>
 </body>
 </html>

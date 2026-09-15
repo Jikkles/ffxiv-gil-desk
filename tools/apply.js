@@ -1,6 +1,6 @@
 /* Writes the rebuilt data into src/data/, then rebuilds index.html:
    - the CD, VD, SUB, WS and DUTY datasets of the Currencies, Vendors, Submersibles, Workshop
-     and Duties tabs
+     and Duties tabs, and the DATA and PRE recipe catalogues of the Dashboard and Precrafts
    - ICON_INDEX and ITEM_INDEX: any item those tabs show that the desk has no icon or
      searchable name for yet is added (existing entries are left exactly as they are)
    - RECIPE_INDEX: rebuilt whole from Teamcraft's recipes, so new crafts get their
@@ -14,13 +14,17 @@ const { formatJSON, minifyJSON } = require("./lib/json-text");
 const I = items();
 const report = [];
 
-/* ---- the three tabs' data ---- */
+/* ---- each tab's data ---- */
 for (const [tab, name, file] of [["currencies", "CD", "CURRENCIES.json"], ["vendors", "VD", "VENDORS.json"],
-  ["submersibles", "SUB", "SUB.json"], ["workshop", "WS", "WS.json"], ["duties", "DUTY", "DUTY.json"]]) {
+  ["submersibles", "SUB", "SUB.json"], ["workshop", "WS", "WS.json"], ["duties", "DUTY", "DUTY.json"],
+  ["dashboard", "DATA", "DASHBOARD.json"], ["precrafts", "PRE", "PRECRAFTS.json"]]) {
   const data = `data/${tab}.json`;
   if (!readSrc(`tabs/${tab}.html`).includes(`const ${name} = /*@json ${data}*/null;`))
     throw new Error(`src/tabs/${tab}.html has no "const ${name} = /*@json ${data}*/null;" line to fill`);
-  const json = JSON.stringify(readJSON(need("out/" + file))).replace(/<\//g, "<\\/");
+  /* read as text, not parsed and re-written: the Dashboard catalogue's key order is part of the file */
+  const text = fs.readFileSync(need("out/" + file), "utf8");
+  JSON.parse(text);
+  const json = text.replace(/<\//g, "<\\/");
   const before = minifyJSON(readSrc(data)).length;
   writeSrc(data, formatJSON(json));
   report.push(`${tab.padEnd(12)} ${name.padEnd(5)} ${(before / 1024).toFixed(0)} KB -> ${(json.length / 1024).toFixed(0)} KB`);
@@ -29,6 +33,7 @@ for (const [tab, name, file] of [["currencies", "CD", "CURRENCIES.json"], ["vend
 /* ---- icons and search names for everything those tabs show ---- */
 const SUB = readJSON(need("out/SUB.json")), WS = readJSON(need("out/WS.json")), DUTY = readJSON(need("out/DUTY.json"));
 const CUR = readJSON(need("out/CURRENCIES.json")), VEN = readJSON(need("out/VENDORS.json"));
+const DASH = readJSON(need("out/DASHBOARD.json")), PRE = readJSON(need("out/PRECRAFTS.json"));
 const shown = new Set([
   ...Object.keys(CUR.items).map(Number),
   ...CUR.currencies.map(c => c.id),
@@ -37,6 +42,10 @@ const shown = new Set([
   ...Object.keys(WS.names).map(Number),
   ...DUTY.items.map(x => x.i),
   ...DUTY.items.flatMap(x => x.src.filter(s => s.curId).map(s => s.curId)),
+  ...DASH.finished.map(f => f.id),
+  ...Object.keys(DASH.names).map(Number),
+  ...Object.keys(PRE).map(Number),
+  ...Object.values(PRE).flatMap(p => p.ings.map(i => i.id)),
 ]);
 const icons = decodeIndex(readSrc("data/icon-index.txt")), names = decodeIndex(readSrc("data/item-index.txt"));
 const teamcraftIcons = readJSON(need("item-icons.json"));

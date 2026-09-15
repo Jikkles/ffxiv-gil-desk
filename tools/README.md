@@ -1,9 +1,9 @@
 # Rebaking the desk after a patch
 
-The **Currencies**, **Vendors**, **Submersibles**, **Workshop** and **Duties** tabs carry baked game
-data — currency shops, NPC gil shops, sectors and loot rates, workshop projects and recipes, duty
+The **Dashboard**, **Precrafts**, **Currencies**, **Vendors**, **Submersibles**, **Workshop** and **Duties** tabs carry baked game
+data — recipes, currency shops, NPC gil shops, sectors and loot rates, workshop projects and recipes, duty
 drops and exchanges — alongside the desk's item icon, search-name and Teamcraft recipe indexes. A
-patch that adds a shop, a sea, a workshop project, a deep dungeon or a field operation needs that
+patch that adds a recipe, a shop, a sea, a workshop project, a deep dungeon or a field operation needs that
 data pulled again. These scripts do it in one go.
 
 Everything they read is a public file on GitHub, plus a price check against Universalis: free,
@@ -40,10 +40,10 @@ emails you and one click on the Actions page turns it back on.
 node tools/rebake.js
 ```
 
-That downloads fresh data into `tools/.cache/` (about 80 MB, ignored by git), rebuilds all five
+That downloads fresh data into `tools/.cache/` (about 80 MB, ignored by git), rebuilds all seven
 datasets, writes them into `src/data/`, and rebuilds `index.html` from `src/`. Then:
 
-1. Open `index.html` and look at the five tabs.
+1. Open `index.html` and look at the seven tabs.
 2. Read what the rebake printed — anything marked **WARNING** or **note** needs a look (below).
 3. Run `node tools/check-bake.js`, then `git diff --stat`, commit and push.
 
@@ -58,7 +58,7 @@ over the first week or two. Rebaking again later simply picks up the better numb
 
 Each step can also be run on its own: `fetch-data.js` (add `--missing` to fetch only files not yet
 cached), `build-subs.js`, `build-workshop.js`, `build-currencies.js`, `build-vendors.js`, `build-duties.js`,
-then `apply.js` to write the results. Run `build-currencies.js` before `build-duties.js`, which reads its
+`build-crafts.js`, then `apply.js` to write the results. Run `build-currencies.js` before `build-duties.js`, which reads its
 potsherd exchanges.
 `check-bake.js` looks the result over before you commit. It is the same check the weekly job runs.
 
@@ -75,7 +75,8 @@ potsherd exchanges.
 | `build-currencies.js` | the game tables | `CURRENCIES` — each listed currency's marketable items, cost and shop |
 | `build-vendors.js` | the game tables | `VENDORS` — every marketable gil-shop item, its price, one NPC and map position |
 | `build-duties.js` | the above + `build-currencies.js`'s potsherd shops + Universalis EU/NA prices | `DUTY` — worthwhile drops with rates or exchange costs |
-| `apply.js` | the five outputs | writes `CD`, `VD`, `SUB`, `WS`, `DUTY` to `src/data/currencies.json`, `vendors.json`, `submersibles.json`, `workshop.json`, `duties.json`; adds any missing icons and search names; rebuilds `RECIPE_INDEX`; runs `build.js` |
+| `build-crafts.js` | Teamcraft `recipes` + the game tables + the catalogues already in `src/data/` | `DASHBOARD` — every marketable item a personal recipe makes, with its recipe; `PRECRAFTS` — every craftable item used as an ingredient. Keeps each row's order and the Dashboard's HQ/NQ choices, and tags items new to the game with the patch for the Precrafts *new* badge |
+| `apply.js` | the seven outputs | writes `CD`, `VD`, `SUB`, `WS`, `DUTY`, `DATA`, `PRE` to `src/data/currencies.json`, `vendors.json`, `submersibles.json`, `workshop.json`, `duties.json`, `dashboard.json`, `precrafts.json`; adds any missing icons and search names; rebuilds `RECIPE_INDEX`; runs `build.js` |
 
 `apply.js` only replaces those files in `src/data/`. Every other tab, and all the page code, is untouched.
 
@@ -111,8 +112,3 @@ Most patches need nothing but the command. Things that do need a small edit:
 Thresholds live in `MIN` in `build-duties.js`: the lower of the Europe and North America 30-day
 average an item needs to be listed (40k for dungeons and variant, 100k for deep dungeons, 50k for
 field operations).
-
-## Not covered here
-
-The Dashboard and Precrafts recipe catalogues were baked by an earlier one-off script that was not
-kept. They still work, but they are pinned to the patch they were built on (7.55).
