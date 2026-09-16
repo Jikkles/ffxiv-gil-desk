@@ -6,6 +6,9 @@ const SFMTK=n=>{if(n==null||!isFinite(n))return"—";if(Math.abs(n)>=1e6)return(
 /* v15: average-price badge — mirrors stockBadge() from shared v13.
    Tweak these two numbers to change sensitivity (0.20 = 20% either way). */
 const SHOP_DIP=0.25,SHOP_OVER=0.30;
+/* the most a line can ask for: well past any stack, and keeps the box four digits wide */
+const SHOP_MAXQTY=9999;
+const shopAttr=s=>String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;");
 function shopAvgBadge(unit,avg){
   if(unit==null||avg==null||!isFinite(unit)||!isFinite(avg)||avg<=0)return"";
   if(unit<=avg*(1-SHOP_DIP)){const u=Math.round((1-unit/avg)*100);
@@ -53,7 +56,8 @@ const Shop={
     Shop.toast(label?`Added ${added} mat${added!==1?"s":""} · ${label}`:`Added to shopping list`);
   },
 
-  act(a,key){
+  /* step: how far − and + move (shift-click moves 10) · qty: the amount typed into the box */
+  act(a,key,step,qty){
     const d=Shop.read();
     if(a==="toggleopen"){d.open=!d.open;return Shop.write(d);}
     if(a==="clear"){d.items=[];return Shop.write(d);}
@@ -61,8 +65,10 @@ const Shop={
     const it=d.items.find(x=>x.key===key);if(!it)return;
     if(a==="done")it.done=!it.done;
     else if(a==="del")d.items=d.items.filter(x=>x.key!==key);
-    else if(a==="inc")it.qty++;
-    else if(a==="dec"){it.qty--;if(it.qty<=0)d.items=d.items.filter(x=>x.key!==key);}
+    /* − stops at 1: removing a line is ✕'s job, not a slip of the − next to the box */
+    else if(a==="inc")it.qty=Math.min(SHOP_MAXQTY,it.qty+(step||1));
+    else if(a==="dec")it.qty=Math.max(1,it.qty-(step||1));
+    else if(a==="setqty")it.qty=qty;
     Shop.write(d);
   },
 
@@ -128,8 +134,9 @@ const Shop={
           const forTtl=(it.for&&it.for.length)?` title="For: ${it.for.join(", ").replace(/"/g,"&quot;")}"`:"";
           h+=`<div class="sp-row${it.done?" done":""}"${forTtl}>
             <button class="sp-chk" data-shopact="done" data-shopkey="${it.key}" title="${it.done?"Un-tick":"Tick off as bought"}">${it.done?"✓":""}</button>
-            <span class="sp-name"><span class="sp-qty">${it.qty}×</span>${it.name}<span class="qtag ${it.hq?"hq":""}">${it.hq?"HQ":"NQ"}</span>${it.npc?`<span class="sp-npc" title="${String(it.npc).replace(/"/g,"&quot;")}">${it.npc}</span>`:""}</span>
-            <span class="sp-step"><button data-shopact="dec" data-shopkey="${it.key}" title="−1">−</button><button data-shopact="inc" data-shopkey="${it.key}" title="+1">+</button></span>
+            <button class="xwbtn sm" data-xw="${it.id}" data-xwname="${shopAttr(it.name)}" data-xwhq="${it.hq?1:0}" title="Compare this item's price and stock on every world">🌐</button>
+            <span class="sp-step"><button data-shopact="dec" data-shopkey="${it.key}" title="−1 (shift-click: −10)"${it.qty<=1?" disabled":""}>−</button><input class="sp-qtyin" type="number" min="1" max="${SHOP_MAXQTY}" step="1" value="${it.qty}" data-shopqty="${it.key}" title="How many you need — type an exact amount"><button data-shopact="inc" data-shopkey="${it.key}" title="+1 (shift-click: +10)">+</button></span>
+            <span class="sp-name">${it.name}<span class="qtag ${it.hq?"hq":""}">${it.hq?"HQ":"NQ"}</span>${it.npc?`<span class="sp-npc" title="${String(it.npc).replace(/"/g,"&quot;")}">${it.npc}</span>`:""}</span>
             <span class="sp-unit">${it.unit!=null?SFMT(it.unit)+" ea":"—"}</span>
             <span class="sp-avg${shopAvgBadge(it.unit,it.avg)?" has-badge":""}">${it.npc?`<span class="sp-avgv dim" title="An NPC's price never changes">fixed</span>`:it.avg!=null?`<span class="sp-avgv" title="Recent average sale price across the DC at the time this was added">avg ${SFMT(it.avg)}</span>`:`<span class="sp-avgv dim">no avg</span>`}${shopAvgBadge(it.unit,it.avg)}</span>
             <span class="sp-line">${it.unit!=null?SFMT(it.unit*it.qty):"—"}</span>
@@ -182,7 +189,7 @@ const Shop={
     #shopPanel .sp-tag.npc{color:var(--aether,var(--aether));border-color:color-mix(in srgb,var(--aether) 40%,transparent)}
     #shopPanel .sp-npc{color:var(--faint,var(--faint));font-size:11px;overflow:hidden;text-overflow:ellipsis;cursor:help}
     #shopPanel .sp-tag.dim,#shopPanel .dim{color:var(--faint,var(--faint))}
-    #shopPanel .sp-row{display:grid;grid-template-columns:20px minmax(0,1fr) max-content max-content max-content max-content 22px;gap:9px;align-items:center;
+    #shopPanel .sp-row{display:grid;grid-template-columns:20px 19px max-content minmax(0,1fr) max-content max-content max-content 22px;gap:9px;align-items:center;
       padding:4px 14px;font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--ink,var(--ink))}
     #shopPanel .sp-row:hover{background:var(--panel2,var(--panel2))}
     #shopPanel .sp-row.done .sp-name,#shopPanel .sp-row.done .sp-unit,#shopPanel .sp-row.done .sp-line{text-decoration:line-through;color:var(--faint,var(--faint))}
@@ -190,11 +197,18 @@ const Shop={
     #shopPanel .sp-chk{all:unset;cursor:pointer;width:15px;height:15px;border-radius:5px;border:1px solid var(--line,var(--line));display:inline-flex;align-items:center;justify-content:center;font-size:10px;color:var(--win,var(--win))}
     #shopPanel .sp-chk:hover{border-color:var(--win,var(--win))}
     #shopPanel .sp-name{display:flex;align-items:center;gap:7px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-    #shopPanel .sp-qty{color:var(--gil,var(--gil))}
     #shopPanel .sp-name .qtag{font-size:9px;padding:0 5px;border-radius:99px;border:1px solid var(--line,var(--line));color:var(--muted,var(--muted))}
     #shopPanel .sp-name .qtag.hq{color:var(--gil,var(--gil));border-color:var(--gil-line)}
-    #shopPanel .sp-step button{all:unset;cursor:pointer;width:16px;height:16px;border-radius:5px;border:1px solid var(--line,var(--line));color:var(--muted,var(--muted));display:inline-flex;align-items:center;justify-content:center;font-size:11px;margin-left:3px}
+    #shopPanel .sp-row .xwbtn{margin-right:0}
+    #shopPanel .sp-step{display:inline-flex;align-items:center;gap:3px}
+    #shopPanel .sp-step button{all:unset;cursor:pointer;width:18px;height:18px;border-radius:5px;border:1px solid var(--line,var(--line));color:var(--muted,var(--muted));display:inline-flex;align-items:center;justify-content:center;font-size:12px}
     #shopPanel .sp-step button:hover{color:var(--ink,var(--ink));border-color:var(--line2)}
+    #shopPanel .sp-step button:disabled{cursor:default;opacity:.35;color:var(--muted,var(--muted));border-color:var(--line,var(--line))}
+    #shopPanel .sp-qtyin{box-sizing:border-box;width:46px;height:18px;padding:0 4px;margin:0;text-align:center;font:inherit;font-size:12px;
+      color:var(--gil,var(--gil));background:var(--panel2,var(--panel2));border:1px solid var(--line,var(--line));border-radius:5px;-moz-appearance:textfield;appearance:textfield}
+    #shopPanel .sp-qtyin::-webkit-inner-spin-button,#shopPanel .sp-qtyin::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+    #shopPanel .sp-qtyin:focus{outline:none;border-color:var(--gil,var(--gil))}
+    #shopPanel .sp-row.done .sp-qtyin{color:var(--faint,var(--faint))}
     #shopPanel .sp-unit{color:var(--muted,var(--muted))}
     #shopPanel .sp-avg{display:flex;align-items:center;justify-content:flex-end;gap:6px;white-space:nowrap;min-width:104px;font-size:11.5px}
     #shopPanel .sp-avgv{color:var(--faint,var(--faint));cursor:help}
@@ -205,7 +219,7 @@ const Shop={
     #shopPanel .sp-tally.good{color:var(--win,var(--win));border-color:var(--win-line)}
     #shopPanel .sp-tally.bad{color:var(--loss,var(--loss));border-color:var(--loss-line)}
     @media(max-width:720px){
-      #shopPanel .sp-row{grid-template-columns:20px minmax(0,1fr) max-content max-content max-content 22px;gap:7px}
+      #shopPanel .sp-row{grid-template-columns:20px 19px max-content minmax(0,1fr) max-content max-content 22px;gap:7px}
       #shopPanel .sp-avg{display:none}
       #shopPanel .sp-avg.has-badge{display:flex;min-width:0;grid-column:2/-1;justify-content:flex-start}
     }
@@ -224,13 +238,28 @@ const Shop={
 
     document.addEventListener("click",function(e){
       const act=e.target.closest("[data-shopact]");
-      if(act){e.preventDefault();e.stopPropagation();Shop.act(act.getAttribute("data-shopact"),act.getAttribute("data-shopkey"));return;}
+      if(act){e.preventDefault();e.stopPropagation();Shop.act(act.getAttribute("data-shopact"),act.getAttribute("data-shopkey"),e.shiftKey?10:1);return;}
       const bi=e.target.closest("[data-shopitem]");
       if(bi){e.preventDefault();e.stopPropagation();if(window.__shopAddItem)window.__shopAddItem(bi.getAttribute("data-shopitem"));return;}
       const bm=e.target.closest("[data-shopmat]");
       if(bm){e.preventDefault();e.stopPropagation();if(window.__shopAddMat)window.__shopAddMat(bm.getAttribute("data-shopmat"));return;}
     },true);
 
+    /* a typed amount lands on Enter or on leaving the box; anything that isn't a whole number
+       from 1 up puts the old amount back */
+    document.addEventListener("change",function(e){
+      const box=e.target&&e.target.closest&&e.target.closest("[data-shopqty]");
+      if(!box)return;
+      const v=Math.floor(+box.value);
+      if(!(v>=1))return Shop.render();
+      Shop.act("setqty",box.getAttribute("data-shopqty"),0,Math.min(SHOP_MAXQTY,v));
+    });
+    document.addEventListener("keydown",function(e){
+      const box=e.target&&e.target.closest&&e.target.closest("[data-shopqty]");
+      if(!box)return;
+      if(e.key==="Enter")box.blur();
+      else if(e.key==="Escape"){box.value=box.defaultValue;box.blur();}
+    });
     window.addEventListener("storage",e=>{if(e.key===SHOP_KEY)Shop.render();});
     Shop.render();
   }

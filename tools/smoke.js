@@ -85,6 +85,14 @@ async function stubNetwork(page) {
     r => r.abort("blockedbyclient"));
 }
 
+/* the page's clock stands still at NOW, so two runs put the same sales in the same windows */
+const pinClock = page => page.addInitScript(t => {
+  const F = t * 1000, OD = Date;
+  function D(...a) { return a.length ? new OD(...a) : new OD(F); }
+  D.prototype = OD.prototype; D.now = () => F; D.UTC = OD.UTC; D.parse = OD.parse;
+  window.Date = D;
+}, NOW);
+
 /* ---- one file, every tab ---- */
 async function run(browser, file) {
   const context = await browser.newContext({ viewport: { width: 1600, height: 1000 } });
@@ -92,12 +100,7 @@ async function run(browser, file) {
   const errors = [];
   page.on("pageerror", e => errors.push(String((e && e.message) || e)));
   page.on("console", m => { if (m.type() === "error" && !/net::ERR|Failed to load resource/.test(m.text())) errors.push(m.text()); });
-  await page.addInitScript(t => {
-    const F = t * 1000, OD = Date;
-    function D(...a) { return a.length ? new OD(...a) : new OD(F); }
-    D.prototype = OD.prototype; D.now = () => F; D.UTC = OD.UTC; D.parse = OD.parse;
-    window.Date = D;
-  }, NOW);
+  await pinClock(page);
   await stubNetwork(page);
 
   const url = pathToFileURL(file).href;
@@ -172,7 +175,10 @@ function diff(label, a, b) {
   return lines.length ? [`${label}:`, ...lines.slice(0, 8).map(l => "    " + l), ...(lines.length > 8 ? [`    … and ${lines.length - 8} more`] : [])] : [];
 }
 
-(async () => {
+/* one-off probes can borrow the pretend Universalis: const { stubNetwork, pinClock } = require("./smoke") */
+module.exports = { stubNetwork, pinClock, NOW };
+
+if (require.main === module) (async () => {
   const args = process.argv.slice(2);
   const opt = name => { const i = args.indexOf(name); return i < 0 ? null : (args[i + 1] && !args[i + 1].startsWith("--") ? args[i + 1] : true); };
   const file = path.resolve(typeof opt("--file") === "string" ? opt("--file") : path.join(ROOT, "index.html"));
