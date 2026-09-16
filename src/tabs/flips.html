@@ -200,7 +200,7 @@
       <th data-k="profit" data-sorted>Profit/flip <span>▾</span></th>
       <th data-k="margin">Margin <span></span></th>
       <th data-k="vel" title="Units sold a day, which is not sales a day: a stack of 99 leaving in one transaction is 99 units">Units/day <span></span></th>
-      <th data-k="gilDay" title="Net sale price times units sold a day: how much gil this item moves on your world, whatever your cut of it is">Gil/day <span></span></th>
+      <th data-k="daily" title="What you would earn a day: profit per flip multiplied by the units that sell a day. Gil/day on the tabs where nothing is bought with gil is the market's whole turnover, which is a different number.">Profit/day <span></span></th>
     </tr></thead>
     <tbody id="rows"></tbody>
   </table></div>
@@ -210,7 +210,7 @@
     Avg 30d = 30-day average sale price on your home world — more reliable than current listings for rare items.
     Profit = the lower of Sell avg and Sell now, × (1 − tax) − Buy: you have to undercut what your world already lists (Sell now is ignored when the cheapest listing anywhere is on your own world, since that is the one you buy). Margin = Profit ÷ that sell price.
     Units/day = how many units actually sell a day on your home world over 30 days — a stack of 99 counts as 99, not as one sale.
-    Gil/day = net sale price × units/day — how much gil the item moves on your world, which is the market’s pace rather than your cut of it.
+    Profit/day = profit per flip × units/day — your cut, and a ranking rather than a promise, since you will not capture every sale. The tabs where nothing is bought with gil show <b>Gil/day</b> instead, the market’s whole turnover, which is a different number.
     Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>, item icons via <a href="https://xivapi.com" target="_blank" rel="noopener">XIVAPI</a>.
   </p>
   </main>
@@ -336,7 +336,11 @@ function compute(){
     const net=sellBasis!=null?sellBasis*(1-state.tax):null;
     const profit=net!=null&&buyPrice!=null?net-buyPrice:null;
     const margin=profit!=null&&sellBasis?profit/sellBasis:null;
-    const gilDay=net!=null?net*vel:null;
+    /* profit a day, not turnover a day: a flip costs you the buy price, so the
+       number that ranks it has to have that taken off. Tabs where the item costs
+       no gil - a dungeon drop, a gathered node - keep Gil/day, where there is no
+       cost to subtract and the two would be the same number anyway. */
+    const daily=profit!=null?profit*vel:null;
     const upload=aggUpload(chaosData);
     /* the age that belongs next to Sell now is the home world’s own report,
        not the cheapest-on-Chaos one the buy price came from */
@@ -352,7 +356,7 @@ function compute(){
       id, name:item.name, cat:item.cat,
       buyPrice, buyWorld, buyWorldId, isHome,
       buyRef, buyOff,
-      sellAvg, sellNow, sellBasis, undercut, noHist, vel, velI:v30, profit, margin, gilDay, upload, uploadSell, outlier,
+      sellAvg, sellNow, sellBasis, undercut, noHist, vel, velI:v30, profit, margin, daily, upload, uploadSell, outlier,
       trendT:tr30, trend:tr30?tr30.pct:null
     });
   }
@@ -424,7 +428,7 @@ function render(){
       <td class="profit ${cls}">${r.profit!=null?fmtM(r.profit):"—"}</td>
       <td>${r.margin!=null?Math.round(r.margin*100)+"%":"—"}</td>
       <td>${velCell(r.velI)}</td>
-      <td>${fmtM(r.gilDay)}</td>`;
+      <td>${fmtM(r.daily)}</td>`;
     tb.appendChild(tr);
   }
 

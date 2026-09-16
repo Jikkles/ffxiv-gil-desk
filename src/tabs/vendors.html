@@ -21,10 +21,10 @@
 .empty .icon{font-size:28px;line-height:1;opacity:.65}
 .empty .headline{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);margin-top:12px}
 .empty .body{color:var(--muted);font-size:14px;max-width:56ch;margin:9px auto 0}
-/* ten columns: a little less room either side of each keeps Gil/day on screen at 1600px */
+/* ten columns: a little less room either side of each keeps Profit/day on screen at 1600px */
 #tbl thead th,#tbl tbody td{padding-left:8px;padding-right:8px}
 /* and Sell now may put its freshness tag on a second line, so a wide price elsewhere
-   (an 8,000,000 gil vendor cost, say) does not push Gil/day off again */
+   (an 8,000,000 gil vendor cost, say) does not push Profit/day off again */
 #tbl td.sellc{white-space:normal;line-height:1.7}
 #tbl td.sellc .nowrap,#tbl td.sellc .no-data{white-space:nowrap}
 .dense tbody td{padding:5px 11px!important}
@@ -123,7 +123,7 @@
       <div class="hw-body">
         <div class="hw-sec"><h4>What it works out</h4><p>Every marketable item an NPC sells for plain gil, priced against the market board on your world. The vendor&rsquo;s price never changes, so a good row is a run you can repeat rather than a one-off snipe.</p></div>
         <div class="hw-sec"><h4>Reading the table</h4><p><b>Bought from</b> is the NPC, zone and map spot; <b>+n more</b> means other vendors stock it too. <b>locked?</b> means a quest or achievement may gate the shop, and <b>seasonal</b> that it only opens during an event. <b>Sell price</b> on <b>Realistic</b> uses the lower of the cheapest listing and the 30-day average (the middle price of real sales), since you will have to undercut to sell.</p></div>
-        <div class="hw-sec"><h4>Worth knowing</h4><p>Only profitable items show by default, sorted by <b>Gil/day</b>, so steady sellers beat huge margins that never sell. Most vendor stock has barely sold, so ⚠ is common: <b>Hide ⚠ outliers</b> drops those rows, and <b>Show ALL vendor items</b> brings back the losers too.</p></div>
+        <div class="hw-sec"><h4>Worth knowing</h4><p>Only profitable items show by default, sorted by <b>Profit/day</b>, so steady sellers beat huge margins that never sell. Most vendor stock has barely sold, so ⚠ is common: <b>Hide ⚠ outliers</b> drops those rows, and <b>Show ALL vendor items</b> brings back the losers too.</p></div>
       </div>
       <template class="guide">
         <div data-spot="#tbl th[data-k=vendor]" data-side="bottom" data-title="Bought from">The NPC, zone and map spot. <b>+n more</b> means other vendors stock it; <b>locked?</b> means a quest or achievement may gate the shop, <b>seasonal</b> that it only opens during an event.</div>
@@ -148,7 +148,7 @@
       <th data-k="profit">Profit/unit <span></span></th>
       <th data-k="margin" class="hide">Margin <span></span></th>
       <th data-k="vel" title="Units sold a day, which is not sales a day: a stack of 99 leaving in one transaction is 99 units">Units/day <span></span></th>
-      <th data-k="gilDay" data-sorted title="Net sale price times units sold a day: how much gil this item moves on your world, whatever your cut of it is">Gil/day <span>▾</span></th>
+      <th data-k="daily" data-sorted title="What you would earn a day: profit per unit multiplied by the units that sell a day. Gil/day on the tabs where nothing is bought with gil is the market's whole turnover, which is a different number.">Profit/day <span>▾</span></th>
     </tr></thead>
     <tbody id="rows"></tbody>
   </table></div>
@@ -160,7 +160,7 @@
     <span class="warn">⚠</span> means the price is not backed by real sales &mdash; either nothing has sold in 30 days, or the listing sits far from the average that did.
     Most vendor stock is dead stock, so expect to see it a lot; the headline figures above ignore those rows entirely, and <i>Hide&nbsp;⚠&nbsp;outliers</i> drops them from the table.
     A <span class="seasonal">seasonal</span> tag means the shop only opens during an event.
-    <b>Profit/unit</b> = sell &times; (1 &minus; tax) &minus; vendor cost. <b>Gil/day</b> = net sale price &times; units sold per day &mdash; a stack of 99 counts as 99, not as one sale &mdash; so a 40M margin on something that sells twice a year sinks below a 5k margin on something that shifts 30 a day. That is the market&rsquo;s pace rather than your cut; for what you actually keep, read <b>Profit/unit</b> against it, or the <b>Best profit / day</b> card.
+    <b>Profit/unit</b> = sell &times; (1 &minus; tax) &minus; vendor cost. <b>Profit/day</b> = that &times; units sold per day &mdash; a stack of 99 counts as 99, not as one sale &mdash; so a 40M margin on something that sells twice a year sinks below a 5k margin on something that shifts 30 a day. It is your cut, the same figure as the <b>Best profit / day</b> card, and a ranking rather than a promise since you will not capture every sale. The tabs where nothing is bought with gil show <b>Gil/day</b> instead, the market&rsquo;s whole turnover.
     Locations come from the game's own shop data; many items are stocked by several NPCs, so <i>+n more</i> means you have closer options.
     Prices via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>, item icons via <a href="https://xivapi.com" target="_blank" rel="noopener">XIVAPI</a>, vendor data from the game files.
   </p>
@@ -207,7 +207,7 @@ const ago=ms=>{if(!ms)return"no uploads";const s=(Date.now()-ms)/1000;if(s<120)r
 let state={
   home:"Spriggan", dc:"Chaos", dcs:["Chaos"], tax:0.05, group:"all", query:"", basis:"safe",
   minVel:0, minProfit:1, showAll:false, hideOutlier:false,
-  sortKey:"gilDay", sortDir:-1, mkt:null, hist:{}, rows:null, gen:0
+  sortKey:"daily", sortDir:-1, mkt:null, hist:{}, rows:null, gen:0
 };
 
 /* NQ side only — gil shops sell NQ (the single HQ entry in the game's shop table is not marketable) */
@@ -243,11 +243,13 @@ function compute(){
     else sell=(m.min!=null&&m.avg!=null)?Math.min(m.min,m.avg):(m.avg!=null?m.avg:m.min);
     const profit=sell!=null?sell*(1-state.tax)-v.cost:null;
     const margin=profit!=null&&sell?profit/sell:null;
+    /* profit a day, not turnover a day: vendor stock costs you gil, so the
+       number that ranks it has to have that taken off. This is the same figure
+       the "Best profit / day" card has always used - the column used to show
+       turnover beside it, which is why the two disagreed. */
     const daily=profit!=null?profit*(m.vel||0):null;
-    const net=sell!=null?sell*(1-state.tax):null;
-    const gilDay=net!=null?net*(m.vel||0):null;
     const trendT=trend30(state.hist[v.id]);
-    rows.push({...v,min:m.min,avg:m.avg,vel:m.vel||0,velI:m.velI,fromHist:m.fromHist,upload:m.upload,sell,profit,margin,daily,gilDay,
+    rows.push({...v,min:m.min,avg:m.avg,vel:m.vel||0,velI:m.velI,fromHist:m.fromHist,upload:m.upload,sell,profit,margin,daily,
       trendT,trend:trendT?trendT.pct:null,outlier,noHist});
   }
   state.rows=rows;
@@ -338,7 +340,7 @@ function render(){
       <td class="profit ${cls}">${r.profit!=null?fmtM(r.profit):"—"}</td>
       <td class="hide">${r.margin!=null?Math.round(r.margin*100)+"%":"—"}</td>
       <td>${velCell(r.velI)}</td>
-      <td>${fmtM(r.gilDay)}</td>`;
+      <td>${fmtM(r.daily)}</td>`;
     tb.appendChild(tr);
   }
 
