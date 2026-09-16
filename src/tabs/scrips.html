@@ -265,10 +265,19 @@ function compute(){
     return {...m,sell,avg,vel,velI,trendT,trend:trendT?trendT.pct:null,net,outlier,
       scripType:sb?sb.type:null,scripCost:sb?sb.cost:null};});
   const byId={};state.matRows.forEach(r=>byId[r.id]=r);
-  /* a scrip is worth whatever materia it buys sells for, per scrip of its cost */
+  /* A scrip is worth whatever materia it buys sells for, per scrip of its cost.
+     r.avg!=null is the important guard: the materia that sets this has to have
+     actually sold in the last 30 days. An obsolete low grade nobody buys still
+     carries a listing, and at 25 scrips a single hopeful one at a few million
+     would otherwise set the headline and every collectable's revenue with it.
+     The row stays in the table - you want to see every option you can buy -
+     it just does not get to price a scrip. This is deliberately not tied to
+     Hide outliers: that tick is about a listing sitting far from what has sold,
+     which is a judgement call, whereas nothing having sold leaves no price to
+     judge against at all. */
   for(const key of ['purple','orange']){let best=null;
     for(const id in SCRIP_BUY){const sb=SCRIP_BUY[id];if(sb.type!==key)continue;const r=byId[id];
-      if(r&&r.net!=null&&!(state.hideOutlier&&r.outlier)){const g=r.net/sb.cost;if(best==null||g>best.g)best={g,mat:r,cost:sb.cost};}}
+      if(r&&r.net!=null&&r.avg!=null&&!(state.hideOutlier&&r.outlier)){const g=r.net/sb.cost;if(best==null||g>best.g)best={g,mat:r,cost:sb.cost};}}
     state.gps[key]=best;}
   state.collRows=COLL.map(c=>{
     const kids=(c.tree.ings||[]).map(ing=>costNode(ing,c.id+">"+ing.id));
@@ -337,9 +346,9 @@ function renderColl(){if(!state.collRows)return;
   document.getElementById("ctbl").hidden=false;
   const gp=state.gps.purple,go=state.gps.orange;
   document.getElementById("kP").textContent=gp?fmt(gp.g)+" g":"—";
-  document.getElementById("kPn").textContent=gp?("via "+gp.mat.type+" "+gp.mat.grade+" · "+gp.cost+"/materia"):"no materia listing";
+  document.getElementById("kPn").textContent=gp?("via "+gp.mat.type+" "+gp.mat.grade+" · "+gp.cost+"/materia"):"nothing sold to price it on";
   document.getElementById("kO").textContent=go?fmt(go.g)+" g":"—";
-  document.getElementById("kOn").textContent=go?("via "+go.mat.type+" "+go.mat.grade+" · "+go.cost+"/materia"):"no materia listing";
+  document.getElementById("kOn").textContent=go?("via "+go.mat.type+" "+go.mat.grade+" · "+go.cost+"/materia"):"nothing sold to price it on";
   const prof=rows.filter(r=>r.profit!=null).sort((a,b)=>b.profit-a.profit)[0];
   document.getElementById("kBest").textContent=prof?fmt(prof.profit)+" g":"—";
   document.getElementById("kBestN").textContent=prof?(prof.name+" · "+prof.cls+" lvl "+prof.lvl):"—";
