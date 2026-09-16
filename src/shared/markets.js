@@ -196,6 +196,10 @@ function setDcs(v){
   if(_dcRepaint)_dcRepaint();
   syncDcNames();
 }
+/* The last Buy from anyone picked, on any tab. Tabs without a picker have no
+   Buy from of their own, so the world-price panel there reads this one. */
+const BUY_FROM_KEY="gildesk:buyFrom:v1";
+function rememberBuyFrom(){try{localStorage.setItem(BUY_FROM_KEY,JSON.stringify(state.dcs));}catch(e){}}
 /* onChange fires only when the selection actually moved. */
 function initDcPicker(onChange){
   const btn=document.getElementById("dcBtn"),menu=document.getElementById("dcMenu"),hid=document.getElementById("dc");
@@ -235,6 +239,7 @@ function initDcPicker(onChange){
   function commit(before){
     ensureDcs();paint();
     if(hid){hid.value=state.dcs.join(",");hid.dispatchEvent(new Event("change",{bubbles:true}));}
+    if(before!==state.dcs.join(","))rememberBuyFrom();
     if(before!==state.dcs.join(",")&&onChange)onChange(state.dcs);
   }
   menu.addEventListener("change",e=>{

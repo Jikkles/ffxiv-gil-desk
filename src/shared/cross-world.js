@@ -75,34 +75,42 @@ const XW={
     return p&&typeof p==="object"?p:{};}catch(e){return{};}},
   savePrefs(p){try{localStorage.setItem(XW_KEY,JSON.stringify(Object.assign(XW.prefs(),p)));}catch(e){}},
 
-  /* Where the rest of the desk is pointed, when the page has a state to ask.
-     "Buy from" is a list of data centres: one means look at that one, every DC
-     of a region means look at the region, anything else is that exact list. */
+  /* Where the rest of the desk is pointed. "Buy from" is a list of data
+     centres: one means look at that one, every DC of a region means look at the
+     region, anything else is that exact list. A tab with its own Buy from picker
+     uses it; any other tab, and the search box, uses the last one set anywhere,
+     and failing that the Sell on world's data centre. */
+  hasPicker(){try{return!!document.getElementById("dc")&&typeof state!=="undefined"&&!!state;}catch(e){return false;}},
+  lastBuyFrom(){try{const a=JSON.parse(localStorage.getItem("gildesk:buyFrom:v1")||"null");
+    return Array.isArray(a)?a.filter(d=>typeof d==="string"&&d):[];}catch(e){return[];}},
   deskScope(){
     try{
-      if(typeof state==="undefined"||!state)return null;
-      const a=(state.dcs&&state.dcs.length)?state.dcs:null;
-      if(a){
-        if(a.length===1)return a[0];
-        if(typeof regionOfDc==="function"){
-          const rs=[];for(const d of a){const r=regionOfDc(d);if(r&&rs.indexOf(r)<0)rs.push(r);}
-          if(rs.length===1){
-            const all=(XW.dcs||[]).filter(d=>d.region===xregion(rs[0])).map(d=>d.name);
-            if(all.length&&all.every(d=>a.indexOf(d)>=0))return xregion(rs[0]);
-          }
-        }
-        return a.join("+");
+      const known=(XW.dcs||XW_DC_FALLBACK).map(d=>d.name);
+      if(XW.hasPicker()&&state.dcs&&state.dcs.length){
+        /* using the panel here counts as setting Buy from, for the tabs without one */
+        try{localStorage.setItem("gildesk:buyFrom:v1",JSON.stringify(state.dcs));}catch(e){}
+        return XW.scopeOf(state.dcs);
       }
-      /* the pre-multi-DC shape, in case a page is still on it */
-      if(typeof state.dc==="string"&&state.dc){
-        const first=state.dc.split(",")[0].trim();
-        if(first==="light")return"Light";
-        if(first==="both")return"Europe";
-        if(first==="chaos")return"Chaos";
-        return first||null;
-      }
+      const last=XW.lastBuyFrom().filter(d=>known.indexOf(d)>=0);
+      if(last.length)return XW.scopeOf(last);
+      const home=XW.homeWorld();
+      if(home&&typeof dcOfWorld==="function"){const d=dcOfWorld(home);if(d)return d;}
+      /* the tab shell has no dcOfWorld, but it has the baked world table */
+      if(home&&typeof HOME_TOPO!=="undefined")
+        for(const r of HOME_TOPO)for(const d in r.dcs)if(r.dcs[d].indexOf(home)>=0)return d;
     }catch(e){}
     return null;
+  },
+  /* a list of DCs as one scope: a whole region collapses to the region */
+  scopeOf(a){
+    if(a.length===1)return a[0];
+    const dcs=XW.dcs||XW_DC_FALLBACK,rs=[];
+    for(const n of a){const d=dcs.find(x=>x.name===n);if(d&&rs.indexOf(d.region)<0)rs.push(d.region);}
+    if(rs.length===1){
+      const all=dcs.filter(d=>d.region===rs[0]).map(d=>d.name);
+      if(all.length&&all.every(d=>a.indexOf(d)>=0))return rs[0];
+    }
+    return a.join("+");
   },
   /* the tab shell has no state of its own, so fall back to whatever world the
      dashboard was last set to sell on — that is the one "home" means here */
@@ -267,7 +275,7 @@ const XW={
     opts=opts||{};
     XW.item={id:id,name:opts.name||XW.nameOf(id)||("Item #"+id)};
     XW.quality=opts.hq===true?"hq":(opts.hq===false?"nq":(XW.prefs().quality||"any"));
-    XW.want=Math.max(1,+(opts.qty||XW.prefs().want||1)|0);
+    XW.want=1;   /* every open starts at one unit, on every tab */
     XW.data=null;XW.err=null;XW.open=new Set();
     await XW.loadDCs();
     /* a scope picked in the panel only sticks while Buy from is what it was then;
@@ -679,7 +687,6 @@ const XW={
       if(b){e.preventDefault();e.stopPropagation();
         XW.show(+b.getAttribute("data-xw"),{
           name:b.getAttribute("data-xwname")||null,
-          qty:b.getAttribute("data-xwqty")?+b.getAttribute("data-xwqty"):null,
           hq:b.hasAttribute("data-xwhq")?b.getAttribute("data-xwhq")==="1":null});
         return;}
     },true);
@@ -699,7 +706,7 @@ const XW={
         const raw=String(e.target.value).trim();
         if(raw===""||!(+raw>=1))return;
         const v=Math.max(1,Math.min(9999,Math.floor(+raw)));
-        XW.want=v;XW.savePrefs({want:v});
+        XW.want=v;
         /* only the numbers are redrawn, so the box and its caret stay put */
         XW.paintBody();}
     });
