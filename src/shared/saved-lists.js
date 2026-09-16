@@ -81,7 +81,11 @@ const Lists={
   /* ---- clear / undo ---- */
   readUndo(){try{const u=JSON.parse(localStorage.getItem(LIST_UNDO_KEY)||"null");
     if(u&&typeof u==="object")return u;}catch(e){}return{};},
-  writeUndo(u){try{localStorage.setItem(LIST_UNDO_KEY,JSON.stringify(u));}catch(e){}},
+  /* the undo snapshot is the user's own data, so it goes through storeSet like
+     the list itself: a full store drops the cached prices to make room rather
+     than losing it. It still reports failure, because clear() has to know
+     whether it can honestly promise an undo. */
+  writeUndo(u){return storeSet(LIST_UNDO_KEY,JSON.stringify(u));},
   /* null when there is nothing to put back */
   undoInfo(n){const s=Lists.readUndo()[n];
     return(s&&Array.isArray(s.items)&&s.items.length)?{count:s.items.length,t:s.t||0}:null;},
@@ -89,9 +93,13 @@ const Lists={
     const d=Lists.read();
     if(!d.items[n].length)return;
     const count=d.items[n].length;
-    const u=Lists.readUndo();u[n]={items:d.items[n],t:Date.now()};Lists.writeUndo(u);
+    const u=Lists.readUndo();u[n]={items:d.items[n],t:Date.now()};
+    /* if the snapshot could not be saved there is no Undo button to point at,
+       so say that rather than promising one that is not there */
+    const kept=Lists.writeUndo(u);
     d.items[n]=[];
-    if(Lists.write(d))Lists.toast("Cleared "+count+" item"+(count!==1?"s":"")+" · Undo sits next to Clear list");},
+    if(Lists.write(d))Lists.toast("Cleared "+count+" item"+(count!==1?"s":"")+
+      (kept?" · Undo sits next to Clear list":" · browser storage is full, so this one cannot be undone"));},
   undo(n){
     const u=Lists.readUndo(),snap=u[n];
     if(!snap||!snap.items||!snap.items.length)return false;

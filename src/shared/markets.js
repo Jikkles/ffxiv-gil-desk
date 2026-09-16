@@ -149,8 +149,9 @@ async function fetchMarket(ids,onProgress){
     done[i]=per;report();}}
   await Promise.all(Array.from({length:Math.min(2,dcs.length)},worker));
   const live=res.filter(Boolean);
-  if(!live.length)return{out:{},failed:[],fromCache:false};
-  return live.reduce((x,y)=>({out:mergeMarkets(x.out,y.out),failed:x.failed.concat(y.failed),fromCache:!!(x.fromCache&&y.fromCache)}));}
+  if(!live.length)return{out:{},failed:[],fromCache:false,total:0};
+  return live.reduce((x,y)=>({out:mergeMarkets(x.out,y.out),failed:x.failed.concat(y.failed),
+    fromCache:!!(x.fromCache&&y.fromCache),total:(x.total||0)+(y.total||0)}));}
 
 /* ---- the "Mats from" data-centre picker ---- */
 const DC_CSS=`

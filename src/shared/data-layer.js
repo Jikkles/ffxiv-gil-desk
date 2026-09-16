@@ -188,7 +188,7 @@ async function runBatches(ids,fn,onProgress){
     try{Object.assign(out,await fn(batch));}catch(e){failed.push({ids:batch,error:e.message||String(e)});}
     done++;run.done=done;Busy.paint();if(onProgress)onProgress(done,batches.length);}}
   await Promise.all(Array.from({length:Math.min(NET.CONCURRENCY,batches.length)},worker));
-  return{out,failed};}
+  return{out,failed,total:batches.length};}
 /* compress aggregated results to only the fields the desk reads (keeps cache small) */
 function packQ(q){if(!q)return null;const o={};
   const mw=q.minListing&&q.minListing.world,md=q.minListing&&q.minListing.dc;
@@ -449,8 +449,25 @@ function catCss(){if(_catCss)return;_catCss=true;
 catCss();
 function showWarn(h){const b=document.getElementById("errbox");if(!b)return;
   b.innerHTML=`<div class="err" style="border-color:color-mix(in srgb,var(--hop) 33%,transparent);color:var(--hop);background:color-mix(in srgb,var(--hop) 10%,transparent)">${h}</div>`;}
+/* the same box, left red: nothing came back, rather than some of it */
+function showFail(h){const b=document.getElementById("errbox");if(!b)return;
+  b.innerHTML=`<div class="err">${h}</div>`;}
+/* A batch that fails is caught by runBatches rather than thrown, so a scan that
+   lost every single batch still ends here rather than at the tab's showErr, and
+   this used to call that "Partial data &mdash; some prices may be missing" over a
+   table with nothing in it at all. The worst case read as the mildest. What
+   separates them is not the count but whether anything came back: a scan that
+   got rows and lost some batches is partial, one that got nothing is Universalis
+   being down or rate-limiting, and says so. The count now names its denominator
+   too, since "38 batches failed" means nothing without how many there were. */
 function finishStatus(results){
   const failed=results.reduce((s,r)=>s+r.failed.length,0);
-  const cached=results.some(r=>r.fromCache);
-  if(failed)showWarn(`<b>Partial data:</b> ${failed} batch(es) failed &mdash; some prices may be missing. Refresh to retry.`);
-  else if(cached)setStatus(`Loaded from cache (&le;${Math.round(NET.CACHE_TTL_MS/60000)} min old) &middot; Refresh pulls fresh prices`);}
+  if(!failed){
+    if(results.some(r=>r.fromCache))
+      setStatus(`Loaded from cache (&le;${Math.round(NET.CACHE_TTL_MS/60000)} min old) &middot; Refresh pulls fresh prices`);
+    return;}
+  const total=results.reduce((s,r)=>s+(r.total||0),0);
+  const got=results.some(r=>r.out&&Object.keys(r.out).length);
+  if(!got)showFail(`<b>No prices came back.</b> Every request to Universalis failed &mdash; it may be down or rate-limiting. `+
+    `Wait a moment and press Refresh, or check <a href="https://universalis.app" target="_blank" rel="noopener" style="color:inherit">universalis.app</a>.`);
+  else showWarn(`<b>Partial data:</b> ${failed} of ${total} batch(es) failed &mdash; some prices are missing. Refresh to retry.`);}

@@ -156,12 +156,6 @@ function iconMap(){
   }catch(e){}
   return __ICONS;
 }
-function iconUrl(itemId){
-  const ic=iconMap()[itemId];
-  if(ic==null)return null;
-  const folder=String(Math.floor(ic/1000)*1000).padStart(6,"0");
-  return "https://xivapi.com/i/"+folder+"/"+String(ic).padStart(6,"0")+".png";
-}
 /* The classic CDN is a static file and fast, but it is missing a handful of
    the newest icons; beta renders them from the game files. Fall back once,
    then to a glyph, so a dead image never leaves a hole in the row. */
