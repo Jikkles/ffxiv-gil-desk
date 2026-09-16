@@ -50,6 +50,7 @@ const XW={
   data:null,        /* the parsed Universalis payload for item+scope */
   err:null,
   busy:false,
+  homeSold:null,    /* recent sales on the home world alone: null while loading, false if it failed */
   open:new Set(),   /* worlds whose raw listings are expanded */
   index:null,       /* [[id,name],…] — only the tab shell carries one */
 
@@ -276,7 +277,7 @@ const XW={
     XW.item={id:id,name:opts.name||XW.nameOf(id)||("Item #"+id)};
     XW.quality=opts.hq===true?"hq":(opts.hq===false?"nq":(XW.prefs().quality||"any"));
     XW.want=1;   /* every open starts at one unit, on every tab */
-    XW.data=null;XW.err=null;XW.open=new Set();
+    XW.data=null;XW.err=null;XW.homeSold=null;XW.open=new Set();
     await XW.loadDCs();
     /* a scope picked in the panel only sticks while Buy from is what it was then;
        change Buy from and the panel follows it again */
@@ -290,7 +291,8 @@ const XW={
   async reload(force){
     if(!XW.item)return;
     XW.busy=true;XW.err=null;XW.paint();
-    const id=XW.item.id,scope=XW.scope;
+    const id=XW.item.id,scope=XW.scope,home=XW.homeWorld();
+    if(home)XW.reloadHome(id,home,force);
     try{
       if(force)for(const part of XW.parts(scope)){
         try{if(typeof Cache!=="undefined"&&Cache&&Cache.key)localStorage.removeItem(Cache.key(`xw:${part}:${id}`));}catch(e){}
@@ -303,6 +305,18 @@ const XW={
       if(!XW.item||XW.item.id!==id||XW.scope!==scope)return;
       XW.err=e&&e.message?e.message:String(e);
     }finally{XW.busy=false;XW.paint();}
+  },
+  /* the home world on its own: the scope's last eight sales are spread over
+     every world, so they cannot be filtered down to it */
+  async reloadHome(id,home,force){
+    if(force){
+      try{if(typeof Cache!=="undefined"&&Cache&&Cache.key)localStorage.removeItem(Cache.key(`xw:${home}:${id}`));}catch(e){}
+      try{sessionStorage.removeItem(XW_KEY+":"+`xw:${home}:${id}`);}catch(e){}}
+    let out;
+    try{out=(await XW.fetchItem(id,home)).recent||[];}catch(e){out=false;}
+    if(!XW.item||XW.item.id!==id)return;
+    XW.homeSold=out;
+    if(XW.data)XW.paintBody();
   },
   close(){XW.item=null;XW.data=null;XW.err=null;
     const m=document.getElementById("xwModal");if(m)m.remove();},
@@ -441,10 +455,18 @@ const XW={
       }
     }
 
-    const recent=(d.recent&&d.recent.length)
-      ?`<div class="xw-recent"><span class="xw-rh">Recently sold</span>${d.recent.map(h=>
-          `<span class="xw-rp" title="${xesc(h.w||"")} · ${xago(h.t)}">${xfmt(h.p)}<i>×${xfmt(h.q)}</i></span>`).join("")}</div>`
+    const pills=(a,w)=>a.map(h=>
+      `<span class="xw-rp" title="${xesc(h.w||w||"")} · ${xago(h.t)}">${xfmt(h.p)}<i>×${xfmt(h.q)}</i></span>`).join("");
+    let recent=(d.recent&&d.recent.length)
+      ?`<div class="xw-recent"><span class="xw-rh">Recently sold</span>${pills(d.recent)}</div>`
       :"";
+    if(home){
+      const hs=XW.homeSold;
+      const inner=hs==null?`<span class="xw-dim">loading…</span>`
+        :hs===false?`<span class="xw-dim">couldn't load</span>`
+        :hs.length?pills(hs,home):`<span class="xw-dim">no recent sales</span>`;
+      recent+=`<div class="xw-recent"><span class="xw-rh">Sold on ${xesc(home)}</span>${inner}</div>`;
+    }
 
     return `${head}
       <div class="xw-tw"><table class="xw-t">
@@ -644,6 +666,7 @@ const XW={
     #xwModal .xw-lu{margin-left:auto}
     #xwModal .xw-recent{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:9px 16px;border-top:1px solid var(--line,var(--line));
       font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--muted,var(--muted))}
+    #xwModal .xw-recent+.xw-recent{border-top:0;padding-top:0}
     #xwModal .xw-rh{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint,var(--faint))}
     #xwModal .xw-rp{border:1px solid var(--line,var(--line));border-radius:99px;padding:1px 8px;cursor:help}
     #xwModal .xw-rp i{color:var(--faint,var(--faint));font-style:normal;font-size:10px;margin-left:3px}
