@@ -36,7 +36,7 @@ tbody td:nth-child(3){max-width:150px;overflow:hidden;text-overflow:ellipsis}
     <div class="sgroup">
       <div class="slabel">Server</div>
       <div class="field sel">
-      <label>Sell on</label>
+      <label for="home">Sell on</label>
       <select id="home"></select>
     </div>
       <button class="btn primary wide" id="refresh">&#8635; Refresh</button>
@@ -44,8 +44,8 @@ tbody td:nth-child(3){max-width:150px;overflow:hidden;text-overflow:ellipsis}
     <div class="sgroup">
       <div class="slabel">Marketboard settings</div>
       <label class="chk" title="Only drops with no other source in the game"><input type="checkbox" id="exclOnly"> Venture-exclusive only</label>
-      <label class="chk" title="Hide drops with no recorded sales in the last 30 days"><input type="checkbox" id="soldOnly"> Only what is actually selling</label>
-      <label class="chk" title="Hide drops nothing has sold of in 30 days, or whose listing sits far from what has actually sold"><input type="checkbox" id="hideOutlier"> Hide &#9888; outliers</label>
+      <label class="chk" title="Hide drops with no recorded sales across your data centre in the last 30 days"><input type="checkbox" id="soldOnly"> Hide no-sales</label>
+      <label class="chk" title="Hide rows whose listing sits far from what has actually sold"><input type="checkbox" id="hideOutlier" checked> Hide &#9888; outliers</label>
     </div>
     <div class="sgroup">
       <div class="slabel">Filters</div>
@@ -60,11 +60,11 @@ tbody td:nth-child(3){max-width:150px;overflow:hidden;text-overflow:ellipsis}
       </select>
     </div>
       <div class="field sel">
-      <label>Tax</label>
+      <label for="tax">Tax</label>
       <select id="tax">
         <option value="0.05" selected>5%</option>
         <option value="0.03">3%</option>
-        <option value="0.02">2%</option>
+        <option value="0">0%</option>
       </select>
     </div>
     </div>
@@ -93,7 +93,7 @@ tbody td:nth-child(3){max-width:150px;overflow:hidden;text-overflow:ellipsis}
       <template class="guide">
         <div data-spot="#vfilter" data-side="right" data-title="Venture">Look at one venture: Field for combat retainers, Highland for miners, Woodland for botanists, Waterside for fishers.</div>
         <div data-spot="#tbl th[data-k=tier]" data-side="bottom" data-title="Tier(s)">Which venture tiers bring it back, and how often at the best of them. A higher tier needs a higher-level retainer.</div>
-        <div data-spot="#exclOnly, #soldOnly, #hideOutlier" data-side="right" data-title="Filters"><b>Venture-exclusive only</b> keeps drops with no other source in the game; <b>Only what is actually selling</b> drops anything unsold for 30 days; <b>Hide ⚠ outliers</b> also drops listings far from real sales.</div>
+        <div data-spot="#exclOnly, #soldOnly, #hideOutlier" data-side="right" data-title="Filters"><b>Venture-exclusive only</b> keeps drops with no other source in the game; <b>Hide no-sales</b> drops anything unsold for 30 days; <b>Hide ⚠ outliers</b> drops listings far from real sales.</div>
         <div data-spot="#kpis" data-side="bottom" data-title="The cards">The four ventures, ranked by their most valuable drop.</div>
       </template>
     </details>
@@ -120,7 +120,7 @@ tbody td:nth-child(3){max-width:150px;overflow:hidden;text-overflow:ellipsis}
       Sell now = cheapest listing on <span class="homename">Spriggan</span>.
       Avg 30d, Trend, Units/day and Gil/day are measured across <span id="scopeName">Chaos</span> &mdash; these items sell a handful of times a month on any one world, which is too thin to read a direction from, so the wider market is the honest signal.
       Gil/day = Avg 30d &times; (1 &minus; tax) &times; Units/day.
-      Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>.
+      Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>, item icons via <a href="https://xivapi.com" target="_blank" rel="noopener">XIVAPI</a>.
     </p>
   </main>
 </div>
@@ -129,7 +129,7 @@ const ICON_INDEX = /*__ICON_INDEX__*/;
 /*__UI_JS__*/
 
 let state={home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],query:"",tax:0.05,sortKey:"daily",sortDir:-1,mkt:null,hist:null,rows:null,scopeDc:"Chaos",
-  venture:"all",exclOnly:false,soldOnly:false,hideOutlier:false,summary:""};
+  venture:"all",exclOnly:false,soldOnly:false,hideOutlier:true,summary:""};
 
 /* What the four 18-hour exploration ventures drop that is worth anything.
    x = nothing else in the game produces it. o = it drops here but can be had
@@ -206,7 +206,7 @@ function priceRow(e){
   const basis=avg!=null?avg:(dcNow!=null?dcNow:now);
   const net=basis!=null?basis*(1-state.tax):null;
   /* the Duties test: nothing sold, or a listing far from what has sold */
-  const outlier=avg==null||(now!=null&&(now>avg*2.5||now<avg*0.4));
+  const outlier=isOutlier(now,avg,{listingOptional:true,unsoldCounts:false});
   return{outlier,id:e.i,name:e.n,venture:e.v,vl:e.vl||[e.v],tier:e.t,cat:e.c,excl:!!e.x,other:e.o||null,chance:e.p!=null?e.p:null,
     now,avg,vel,velI:vi,trend,daily:(net!=null&&vel)?net*vel:null};
 }
@@ -279,7 +279,7 @@ function render(){
         `<button class="listbtn" data-listadd="${r.id}" title="Add to a saved list">📋</button>`+
         `<button class="xwbtn" data-xw="${r.id}" data-xwname="${xesc(r.name)}" title="Compare this item's price and stock on every world">🌐</button>`+
         `${iconHTML(r.id)}<a href="https://universalis.app/market/${r.id}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">${r.name}</a>`+
-        `<span class="pill ${catSlug(r.cat)}" title="${r.cat}">${catLabel(r.cat)}</span>${r.outlier?`<span class="warn" title="${r.avg==null?"Nothing has sold across "+state.scopeDc+" in 30 days, so there is no real price behind this row":"The listing on your world sits far from what has actually sold"}">⚠</span>`:""}</span>`+
+        `<span class="pill ${catSlug(r.cat)}" title="${r.cat}">${catLabel(r.cat)}</span>${r.outlier?`<span class="warn" title="${outlierWhy(r.now,r.avg,state.scopeDc)}">⚠</span>`:""}</span>`+
         `<span class="t" title="${r.excl?"Nothing else in the game produces this":r.other?"Also obtainable from "+r.other:"A newer drop: no other source turned up in the desk's own data, but nobody has checked the rest of the game by hand"}">`+
           `${r.excl?(r.vl.length>1?"Only from these ventures":"Only from this venture"):r.other?"Also from "+r.other:"Other sources not checked"}</span></div></td>`+
       `<td title="${r.vl.join(", ")}">${r.venture}</td>`+
@@ -287,7 +287,7 @@ function render(){
       `<td>${fmt(r.now)}</td>`+
       `<td>${fmt(r.avg)}</td>`+
       `<td>${trendChip(r.trend)}</td>`+
-      `<td>${r.vel?velCell(r.velI):"—"}</td>`+
+      `<td>${velCell(r.velI)}</td>`+
       `<td>${fmt(r.daily)}</td>`+
     `</tr>`).join("");
   renderKpis();
@@ -346,7 +346,12 @@ document.querySelectorAll("thead th[data-k]").forEach(th=>{
   document.addEventListener("click",e=>{if(e.shiftKey&&e.target&&e.target.id==="refresh"){Cache.clear();setStatus("Cache cleared · pulling fresh prices…");}},true);
   try{const s=JSON.parse(localStorage.getItem(SKEY)||"{}");
     for(const[id,v]of Object.entries(s)){const el=document.getElementById(id);if(!el)continue;
-      if(el.type==="checkbox")el.checked=!!v;else el.value=v;
+      if(el.type==="checkbox")el.checked=!!v;
+      /* a saved value whose option has since been dropped - the old 2% tax, which
+         is not a rate the game charges - would otherwise blank the select and read
+         back as 0, so an unknown value is discarded and the default stands */
+      else if(el.tagName!=="SELECT"||Array.prototype.some.call(el.options,o=>o.value===String(v)))el.value=v;
+      else continue;
       if(id==="home"){state.home=el.value;syncHomeNames();continue;}
       el.dispatchEvent(new Event("change"));}
   }catch(e){}

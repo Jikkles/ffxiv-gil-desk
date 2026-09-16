@@ -56,7 +56,6 @@
 .buy-world.home{color:var(--aether)}
 .row{cursor:default;border-bottom:1px solid var(--line)}
 .row:hover td{background:var(--row-hover)}
-.no-data{color:var(--faint);font-size:13px;font-family:"JetBrains Mono",monospace}
 .tag-home{font-size:10px;font-family:"JetBrains Mono",monospace;color:var(--aether);background:var(--accent-soft);border:1px solid var(--aether-line);padding:1px 5px;border-radius:4px;margin-left:4px}
 .minprice-note{font-size:11px;color:var(--faint);font-family:"JetBrains Mono",monospace}
 </style>
@@ -75,7 +74,7 @@
     <div class="sgroup">
       <div class="slabel">Server</div>
       <div class="field sel">
-      <label>Sell on</label>
+      <label for="home">Sell on</label>
       <select id="home"></select>
     </div>
       <div class="field dcwrap">
@@ -136,11 +135,11 @@
       </select>
     </div>
       <div class="field sel">
-      <label>Tax</label>
+      <label for="tax">Tax</label>
       <select id="tax">
         <option value="0.05" selected>5%</option>
         <option value="0.03">3%</option>
-        <option value="0.02">2%</option>
+        <option value="0">0%</option>
       </select>
     </div>
     </div>
@@ -188,7 +187,7 @@
       <th data-k="name" style="cursor:default">Item</th>
       <th data-k="buyPrice">Buy (cheapest) <span></span></th>
       <th data-k="sellNow" title="Cheapest listing on your home world, with how long ago that world last reported to Universalis">Sell now <span></span></th>
-      <th data-k="sellAvg">Sell avg 30d <span></span></th>
+      <th data-k="sellAvg" title="Median price of actual sales on your home world over 30 days, weighted by units, so one sale at a joke price cannot drag it">Avg 30d <span></span></th>
       <th data-k="trend" title="Which way the price is moving: the newer half of the sales history against the older half">Trend <span></span></th>
       <th data-k="profit" data-sorted>Profit/flip <span>▾</span></th>
       <th data-k="margin">Margin <span></span></th>
@@ -200,11 +199,11 @@
 
   <p class="foot">
     Buy = cheapest NQ listing anywhere on <span class="dcname">Chaos</span> (world shown in orange = hop required, teal = already on your world).
-    Sell avg 30d = 30-day average sale price on your home world — more reliable than current listings for rare items.
+    Avg 30d = 30-day average sale price on your home world — more reliable than current listings for rare items.
     Profit = the lower of Sell avg and Sell now, × (1 − tax) − Buy: you have to undercut what your world already lists (Sell now is ignored when the cheapest listing anywhere is on your own world, since that is the one you buy). Margin = Profit ÷ that sell price.
     Units/day = how many units actually sell a day on your home world over 30 days — a stack of 99 counts as 99, not as one sale.
     Gil/day = net sale price × units/day — how much gil the item moves on your world, which is the market’s pace rather than your cut of it.
-    Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>.
+    Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>, item icons via <a href="https://xivapi.com" target="_blank" rel="noopener">XIVAPI</a>.
   </p>
   </main>
 </div>
@@ -495,7 +494,12 @@ function agePill(ms){
   function saveSettings(){try{localStorage.setItem(SKEY,JSON.stringify(collect()));}catch(e){}}
   function restoreSettings(){try{const s=JSON.parse(localStorage.getItem(SKEY)||"{}");
     for(const[id,v]of Object.entries(s)){const el=document.getElementById(id);if(!el)continue;
-      if(el.type==="checkbox")el.checked=!!v;else el.value=v;
+      if(el.type==="checkbox")el.checked=!!v;
+      /* a saved value whose option has since been dropped - the old 2% tax, which
+         is not a rate the game charges - would otherwise blank the select and read
+         back as 0, so an unknown value is discarded and the default stands */
+      else if(el.tagName!=="SELECT"||Array.prototype.some.call(el.options,o=>o.value===String(v)))el.value=v;
+      else continue;
       if(id==="home"){state.home=el.value;syncHomeNames();continue;}
       if(id==="dc"){setDcs(el.value);continue;}
       el.dispatchEvent(new Event("change"));}

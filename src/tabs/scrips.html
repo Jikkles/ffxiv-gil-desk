@@ -68,7 +68,7 @@ h2{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.16em;te
     </div>
     <div class="sgroup">
       <div class="slabel">Marketboard settings</div>
-      <label class="chk"><input type="checkbox" id="hideNo" checked> Hide no-sales</label>
+      <label class="chk" title="Hide materia with no sales on your world in the last 30 days"><input type="checkbox" id="hideNo" checked> Hide no-sales</label>
       <label class="chk" title="Leave out materia whose listing sits far from its recent average, or that has no listing or no sales, both in the table and when working out what a scrip is worth"><input type="checkbox" id="hideOutlier" checked> Hide &#9888; outliers</label>
       <label class="chk" title="Shards, crystals and clusters are always costed. Tick this to list them in each recipe as well."><input type="checkbox" id="showCrystals"> Show crystals</label>
     </div>
@@ -76,7 +76,7 @@ h2{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.16em;te
       <div class="slabel">Filters</div>
       <div class="field sel"><label for="scrip">Show</label><select id="scrip"><option value="all">Both scrips</option><option value="purple">Purple</option><option value="orange">Orange</option></select></div>
       <div class="field sel"><label for="cls">Class</label><select id="cls"><option value="all">All crafters</option><option>CRP</option><option>BSM</option><option>ARM</option><option>GSM</option><option>LTW</option><option>WVR</option><option>ALC</option><option>CUL</option></select></div>
-      <div class="field sel"><label for="tax">Tax</label><select id="tax"><option value="0.05">5%</option><option value="0.03">3%</option><option value="0">0%</option></select></div>
+      <div class="field sel"><label for="tax">Tax</label><select id="tax"><option value="0.05" selected>5%</option><option value="0.03">3%</option><option value="0">0%</option></select></div>
     </div>
     <div class="sgroup">
       <div class="scancard"><span class="dot"></span>Last scan<br><b id="lastScan"></b></div>
@@ -148,7 +148,7 @@ h2{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.16em;te
     <tbody id="mrows"></tbody>
   </table></div>
 
-  <p class="foot">Scrip yields and materia costs are read from the game's own collectable and scrip shop tables, at top collectability, and rebaked after each patch. "gil/scrip" uses whichever crafter materia that scrip buys sells for the most per scrip on <span class="homename">Spriggan</span>, net of tax. Material cost, shards and crystals included, buys each precraft NQ at the cheapest <span class="dcname">Chaos</span> price where it is listed, and only expands/crafts a precraft when it has no listings; raw mats NQ. Anything an NPC sells for gil all year is bought from the NPC when that is cheaper than the board, or the board has none. Only crafting (Craftsman&rsquo;s) materia are shown; materia sells NQ. Lower-level Purple gives fewer scrips but often cheaper mats — sort by profit to see which actually wins. Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>.</p>
+  <p class="foot">Scrip yields and materia costs are read from the game's own collectable and scrip shop tables, at top collectability, and rebaked after each patch. "gil/scrip" uses whichever crafter materia that scrip buys sells for the most per scrip on <span class="homename">Spriggan</span>, net of tax. Material cost, shards and crystals included, buys each precraft NQ at the cheapest <span class="dcname">Chaos</span> price where it is listed, and only expands/crafts a precraft when it has no listings; raw mats NQ. Anything an NPC sells for gil all year is bought from the NPC when that is cheaper than the board, or the board has none. Only crafting (Craftsman&rsquo;s) materia are shown; materia sells NQ. Lower-level Purple gives fewer scrips but often cheaper mats — sort by profit to see which actually wins. Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>, item icons via <a href="https://xivapi.com" target="_blank" rel="noopener">XIVAPI</a>.</p>
   </main>
 </div>
 
@@ -241,7 +241,7 @@ function compute(){
   state.matRows=MATERIA.map(m=>{const res=state.sell[m.id];
     const sell=aggPrice(res,false,"world").price;const avg=aggAvg(res,false,"world");const vel=aggVel(res,false,"world");
     const net=sell!=null?sell*(1-state.tax):null;const sb=SCRIP_BUY[m.id];
-    const outlier=sell==null||avg==null||sell>avg*2.5||sell<avg*0.4;
+    const outlier=isOutlier(sell,avg,{unsoldCounts:false});
     return {...m,sell,avg,vel,net,outlier,scripType:sb?sb.type:null,scripCost:sb?sb.cost:null};});
   const byId={};state.matRows.forEach(r=>byId[r.id]=r);
   /* a scrip is worth whatever materia it buys sells for, per scrip of its cost */
@@ -331,7 +331,7 @@ function renderMateria(){if(!state.matRows)return;const q=state.query.trim().toL
   const tb=document.getElementById("mrows");tb.innerHTML="";
   for(const m of rows){const tr=document.createElement("tr");tr.className="row";
     const tag=m.scripType?`<span class="pill ${m.scripType}">${m.scripType==='purple'?'Purple':'Orange'}</span>`:'';
-    tr.innerHTML=`<td><div class="name"><span class="n"><button class="listbtn" data-listadd="${m.id}" title="Add to a saved list">📋</button><button class="xwbtn" data-xw="${m.id}" data-xwname="${xesc(m.name)}" title="Compare this item's price and stock on every world">\ud83c\udf10</button>${iconHTML(m.id)}${m.type} ${tag}${m.outlier?`<span class="warn" title="No listing, no recent sales, or the listing sits far from the recent average: treat this price as unreliable.">⚠</span>`:""}</span></div></td>
+    tr.innerHTML=`<td><div class="name"><span class="n"><button class="listbtn" data-listadd="${m.id}" title="Add to a saved list">📋</button><button class="xwbtn" data-xw="${m.id}" data-xwname="${xesc(m.name)}" title="Compare this item's price and stock on every world">\ud83c\udf10</button>${iconHTML(m.id)}${m.type} ${tag}${m.outlier?`<span class="warn" title="${outlierWhy(m.sell,m.avg,null)}">⚠</span>`:""}</span></div></td>
       <td>${m.grade||'—'}</td><td>${fmt(m.sell)} <span class="q">NQ</span></td><td>${fmt(m.avg)}</td><td>${velCell(velAgg(m.vel))}</td>
       <td class="hide">${m.scripCost?`<span class="${m.scripType==='purple'?'ptext':'otext'}">${m.scripCost} ${m.scripType==='purple'?'P':'O'}</span>`:'—'}</td>`;
     tb.appendChild(tr);}
@@ -370,7 +370,12 @@ document.getElementById("status").innerHTML='Click <b>Refresh</b> to load live p
   function saveSettings(){try{localStorage.setItem(SKEY,JSON.stringify(collect()));}catch(e){}}
   function restoreSettings(){try{const s=JSON.parse(localStorage.getItem(SKEY)||"{}");
     for(const[id,v]of Object.entries(s)){const el=document.getElementById(id);if(!el)continue;
-      if(el.type==="checkbox")el.checked=!!v;else el.value=v;
+      if(el.type==="checkbox")el.checked=!!v;
+      /* a saved value whose option has since been dropped - the old 2% tax, which
+         is not a rate the game charges - would otherwise blank the select and read
+         back as 0, so an unknown value is discarded and the default stands */
+      else if(el.tagName!=="SELECT"||Array.prototype.some.call(el.options,o=>o.value===String(v)))el.value=v;
+      else continue;
       if(id==="home"){state.home=el.value;syncHomeNames();continue;}
       if(id==="dc"){setDcs(el.value);continue;}
       el.dispatchEvent(new Event("change"));}

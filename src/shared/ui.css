@@ -280,6 +280,10 @@ tr.row.open .caret{transform:rotate(90deg);border-left-color:var(--aether)}
 :root[data-theme="light"] .seasonal{color:#7a3a8c;border-color:#dcc2e6}
 
 .q{font-size:9px;color:var(--faint);font-family:"JetBrains Mono",monospace}
+/* a measured nothing - no listing, no sales - rather than a number the desk is
+   still waiting for. Every tab had grown its own copy of this; a tab that wants
+   it denser still overrides the size after UI_CSS. */
+.no-data{color:var(--faint);font-size:13px;font-family:"JetBrains Mono",monospace}
 .profit{font-weight:500} .profit.win{color:var(--win)} .profit.loss{color:var(--loss)}
 .muted{color:var(--muted)} .src-ok{color:var(--win)} .src-hop{color:var(--hop)}
 .warn{display:inline-block;cursor:help;color:var(--warn);font-size:13px;line-height:1;padding:1px 5px;margin-left:4px;border:1px solid #6b4c2e;border-radius:6px;background:#f0a86822;vertical-align:middle}

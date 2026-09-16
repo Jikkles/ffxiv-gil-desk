@@ -65,14 +65,14 @@ tr.detail>td{background:var(--bg2);border-bottom:1px solid var(--line);padding:0
     <div class="sgroup">
       <div class="slabel">Marketboard settings</div>
       <label class="chk" title="Hide projects nobody has bought on your world in the last 30 days"><input type="checkbox" id="hideNo" checked> Hide no-sales</label>
-      <label class="chk"><input type="checkbox" id="hideOutlier" checked> Hide &#9888; outliers</label>
+      <label class="chk" title="Hide rows whose price is not backed by real sales: no listing on your world, or a listing far from what has actually sold"><input type="checkbox" id="hideOutlier" checked> Hide &#9888; outliers</label>
       <label class="chk" title="Shards, crystals and clusters are always costed. Tick this to list them under each recipe as well."><input type="checkbox" id="showCrystals"> Show crystals</label>
     </div>
     <div class="sgroup">
       <div class="slabel">Filters</div>
       <div class="field sel"><label for="basis">Profit vs</label><select id="basis"><option value="avg30" selected>30-day avg</option><option value="listing">Current low</option></select></div>
       <div class="field sel" title="Precraft-optimised crafts any turn-in that is cheaper to make than to buy, all the way down. Buy turn-ins prices every turn-in item straight off the board."><label for="matbasis">Mat cost</label><select id="matbasis"><option value="opt" selected>Precraft-optimised</option><option value="buyall">Buy turn-ins</option></select></div>
-      <div class="field sel"><label for="tax">Tax</label><select id="tax"><option value="0.05">5%</option><option value="0.03">3%</option><option value="0">0%</option></select></div>
+      <div class="field sel"><label for="tax">Tax</label><select id="tax"><option value="0.05" selected>5%</option><option value="0.03">3%</option><option value="0">0%</option></select></div>
     </div>
     <div class="sgroup">
       <div class="slabel">Categories</div>
@@ -129,7 +129,7 @@ tr.detail>td{background:var(--bg2);border-bottom:1px solid var(--line);padding:0
           <th data-k="profit" data-sorted>Profit/unit <span>&#9662;</span></th>
           <th data-k="margin">Margin <span></span></th>
           <th data-k="vel" title="Units sold a day on your home world over 30 days">Units/day <span></span></th>
-          <th data-k="daily" title="Profit per project multiplied by units sold a day">Gil/day <span></span></th>
+          <th data-k="daily" title="What you would earn a day: profit per project multiplied by the units that sell a day. Gil/day on the other tabs is the market's whole turnover, which is a different number.">Profit/day <span></span></th>
         </tr></thead>
         <tbody id="rows"></tbody>
       </table>
@@ -137,7 +137,7 @@ tr.detail>td{background:var(--bg2);border-bottom:1px solid var(--line);padding:0
 
     <p class="foot">Projects are read from the game&rsquo;s own <b>CompanyCraftSequence</b>, <b>CompanyCraftPart</b>, <b>CompanyCraftProcess</b> and <b>CompanyCraftSupplyItem</b> tables, so every phase, set size and set count is exactly what the workshop asks for. Recipes under each turn-in come from Teamcraft&rsquo;s public data. Mat cost counts every turn-in across every phase; under <b>Precraft-optimised</b> a turn-in that is cheaper to craft than to buy is costed as crafted, recursively, including its crystals. Turn-ins accept either quality, so each is priced at whichever of NQ and HQ is cheaper, and a turn-in or material an NPC sells for gil all year is bought from the NPC when that beats the board.
       A project also needs its <b>draft</b> (bought with company credits) and a workshop, and several members can hand in at once &mdash; none of that costs gil, so none of it is counted here. Finished projects only ever sell NQ.
-      Gil/day = profit per project &times; the units that sell a day on <span class="homename">Spriggan</span> over 30 days &mdash; a ranking, not a promise: these are slow, lumpy markets. Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>.</p>
+      Profit/day = profit per project &times; the units that sell a day on <span class="homename">Spriggan</span> over 30 days &mdash; your cut, and a ranking rather than a promise: these are slow, lumpy markets. The tabs that only resell show <b>Gil/day</b>, the market's whole turnover, which is a different number. Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>, item icons via <a href="https://xivapi.com" target="_blank" rel="noopener">XIVAPI</a>.</p>
   </main>
 </div>
 
@@ -259,8 +259,7 @@ function compute(){state._best={};state._hops={};const rows=[];
     const v30=vel30(state.hist[id],false);const vel=v30.perDay;
     const basis=state.basis==="avg30"?(a.avg!=null?a.avg:listing):(listing!=null?listing:a.avg);
     /* a project nobody has bought in a month has no price, only an asking price */
-    const unsold=a.avg==null;
-    const outlier=unsold||listing==null||listing>a.avg*2.5||listing<a.avg*0.4;
+    const outlier=isOutlier(listing,a.avg,{unsoldCounts:false});
     const t=turnIns(p);
     let buyAll=0,buyMissing=false,optCost=0,optMissing=false,fresh=aggUpload(state.sell[id]),buyHop=0,optHop=0,kinds=0;
     for(const[mid,q]of Object.entries(t)){kinds++;
@@ -274,7 +273,7 @@ function compute(){state._best={};state._hops={};const rows=[];
     const margin=(profit!=null&&basis)?profit/basis:null;
     const daily=(profit!=null)?profit*vel:null;
     const g=groupOf(p);
-    rows.push({id,name:p.n,unsold,p,group:g,kind:KIND[g],note:`${p.type} · ${p.phases.length} phase${p.phases.length===1?"":"s"} · ${kinds} turn-in${kinds===1?"":"s"}`,
+    rows.push({id,name:p.n,p,group:g,kind:KIND[g],note:`${p.type} · ${p.phases.length} phase${p.phases.length===1?"":"s"} · ${kinds} turn-in${kinds===1?"":"s"}`,
       sell:listing,avg30:a.avg,n30:a.n,trendT:tr30,trend:tr30?tr30.pct:null,outlier,cost,costBuyAll:buyMissing?null:buyAll,costOpt:optMissing?null:optCost,
       profit,margin,vel,velI:v30,daily,hop:opt?optHop:buyHop,upload:fresh});}
   state.rows=rows;state.rowById={};for(const r of rows)state.rowById[r.id]=r;}
@@ -335,7 +334,7 @@ function render(){if(!state.rows)return;const rows=visibleRows();const total=row
   for(const r of rows){const open=state.expanded.has(r.id);
     const tr=document.createElement("tr");tr.className="row"+(open?" open":"");
     const cls=r.profit==null?"":(r.profit>=0?"win":"loss");
-    const warn=r.outlier?` <span class="warn" title="${r.unsold?"Nothing has sold on "+state.home+" in 30 days, so this is an asking price, not a market.":"No current listing, or the listing sits far from the 30-day average."} Treat this row’s pricing as unreliable.">⚠</span>`:"";
+    const warn=r.outlier?` <span class="warn" title="${outlierWhy(r.sell,r.avg30,null)}">⚠</span>`:"";
     tr.innerHTML=`<td><div class="name rich"><span class="rowtools"><button class="shopbtn" data-shopitem="${r.id}" title="Add every turn-in to the shopping list">🛒</button><button class="listbtn" data-listadd="${r.id}" title="Add to a saved list">📋</button><button class="xwbtn" data-xw="${r.id}" data-xwname="${xesc(r.name)}" title="Compare this item's price and stock on every world">🌐</button></span><span class="caret"></span>${iconHTML(r.id)}<span class="nmeta"><span class="n">${r.name} <span class="pill ${r.kind[1]}">${r.kind[0]}</span></span><span class="t">${r.note}</span></span></div></td>
       <td>${fmt(r.sell)}${warn}${agePill(r.upload)}</td>
       <td>${fmt(r.avg30)}${r.avg30!=null?` <span class="q">${r.n30}×</span>`:''}</td>
@@ -401,7 +400,12 @@ document.querySelectorAll("thead th[data-k]").forEach(th=>{if(th.style.cursor===
   document.addEventListener("change",()=>{try{localStorage.setItem(SKEY,JSON.stringify(collect()));}catch(e){}});
   try{const s=JSON.parse(localStorage.getItem(SKEY)||"{}");
     for(const[id,v]of Object.entries(s)){const el=document.getElementById(id);if(!el)continue;
-      if(el.type==="checkbox")el.checked=!!v;else el.value=v;
+      if(el.type==="checkbox")el.checked=!!v;
+      /* a saved value whose option has since been dropped - the old 2% tax, which
+         is not a rate the game charges - would otherwise blank the select and read
+         back as 0, so an unknown value is discarded and the default stands */
+      else if(el.tagName!=="SELECT"||Array.prototype.some.call(el.options,o=>o.value===String(v)))el.value=v;
+      else continue;
       if(id==="home"){state.home=el.value;syncHomeNames();continue;}
       if(id==="dc"){setDcs(el.value);continue;}
       el.dispatchEvent(new Event("change"));}

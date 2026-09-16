@@ -296,6 +296,37 @@ function trendCss(){if(_trCss)return;_trCss=true;
   s.textContent=".tr{font-family:'JetBrains Mono',monospace;font-size:13px;white-space:nowrap}"+
     ".tr.up{color:var(--win,var(--win))}.tr.dn{color:var(--loss,var(--loss))}.tr.dip{color:var(--win,var(--win))}.tr.flat{color:var(--faint,var(--faint))}";
   (document.head||document.documentElement).appendChild(s);}
+/* ⚠ on a row means its price is not backed by what has actually sold. Every tab
+   had grown its own copy of the same 2.5x / 0.4x band, and three different rules
+   about what else counted, so the same glyph meant three different things
+   depending on which tab you were reading. One rule now, with two flags for the
+   two places a tab honestly differs:
+
+   listingOptional - the tab ranks on data-centre sales rather than on the
+     cheapest listing, so a rare drop nobody has listed on your world still has a
+     real price behind it and is not suspect.
+   unsoldCounts - false when the tab carries its own no-sales filter. Letting ⚠
+     hide unsold rows as well would make that tick a dead control: untick "Hide
+     no-sales" and the rows would stay hidden anyway, because Hide ⚠ outliers was
+     quietly removing the same ones.
+
+   Flips keeps its own test - a buy price above what the item really resells for -
+   because there the two prices compared are not a listing and its own average. */
+const OUTLIER_HIGH=2.5,OUTLIER_LOW=0.4;
+function isOutlier(now,avg,opts){
+  const o=opts||{};
+  if(avg==null)return o.unsoldCounts!==false;
+  if(now==null)return !o.listingOptional;
+  return now>avg*OUTLIER_HIGH||now<avg*OUTLIER_LOW;}
+/* The chip's tooltip, so the reason shown always matches the test that fired.
+   `where` names the market the sales were read from, when it is not your world.
+   It comes back safe to drop straight into a title="" attribute, since `where`
+   is a data centre name off the topology rather than anything the desk typed. */
+function outlierWhy(now,avg,where){
+  const q=s=>s.replace(/"/g,"&quot;");
+  if(avg==null)return q("Nothing has sold"+(where?" across "+where:"")+" in 30 days, so there is no real price behind this row");
+  if(now==null)return"Nothing is listed on your world, so there is no live price to check against what has sold";
+  return"The cheapest listing sits far from what has actually sold";}
 /* half the covered window, as the span each side of the comparison */
 function trendWin(w){const h=w/2/3600;return h<48?Math.round(h)+"h":Math.round(h/24)+"d";}
 /* `why` replaces the empty chip's tooltip when the reason is not thin history,
@@ -344,8 +375,12 @@ function velTitle(v){
   return t;}
 /* Units a day, with the stack they move in, because the two together are the
    whole story and either one alone misleads. */
+/* Nothing sold is a measurement, not a gap, so it reads as a dimmed 0 rather
+   than the em dash the desk uses for a number it never got. Tabs used to say
+   this three different ways - a bare 0, an em dash, a dimmed 0 - so the same
+   empty market looked like three different answers depending on the tab. */
 function velCell(v){
-  if(!v||!(v.perDay>0))return"0";
+  if(!v||!(v.perDay>0))return'<span class="no-data" title="Nothing sold in the last 30 days">0</span>';
   const stack=(!v.agg&&v.stack>=1.5)?' <span class="q">×'+Math.round(v.stack)+'</span>':"";
   return'<span title="'+velTitle(v).replace(/"/g,"&quot;")+'">'+velNum(v.perDay)+'</span>'+stack;}
 /* One general vocabulary for the little category tag, shared by every tab. The

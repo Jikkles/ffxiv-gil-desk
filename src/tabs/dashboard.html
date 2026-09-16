@@ -76,8 +76,8 @@ tr.detail>td{background:var(--bg2);border-bottom:1px solid var(--line);padding:0
     </div>
     <div class="sgroup">
       <div class="slabel">Marketboard settings</div>
-      <label class="chk"><input type="checkbox" id="hideNo" checked> Hide no-sales</label>
-      <label class="chk"><input type="checkbox" id="hideOutlier" checked> Hide ⚠ outliers</label>
+      <label class="chk" title="Hide items with no sales on your world in the last 30 days"><input type="checkbox" id="hideNo" checked> Hide no-sales</label>
+      <label class="chk" title="Hide rows whose price is not backed by real sales: no listing on your world, or a listing far from what has actually sold"><input type="checkbox" id="hideOutlier" checked> Hide &#9888; outliers</label>
       <label class="chk" title="Shards, crystals and clusters are always costed. Tick this to list them in each recipe as well."><input type="checkbox" id="showCrystals"> Show crystals</label>
       <label class="chk" title="Items with zero sales in the last 30 days are skipped on later refreshes, making them much faster. Each one is checked again a week after it was last found dead, and every world keeps its own list — shift-click Refresh at any time to force a full rescan of everything."><input type="checkbox" id="skipDead" checked> Skip dead items</label>
     </div>
@@ -85,7 +85,7 @@ tr.detail>td{background:var(--bg2);border-bottom:1px solid var(--line);padding:0
       <div class="slabel">Filters</div>
       <div class="field sel"><label for="basis">Profit vs</label><select id="basis"><option value="listing">Current low</option><option value="avg30">30-day avg</option></select></div>
       <div class="field sel" title="Precraft-optimised assumes you craft any intermediate that is cheaper to make than to buy — which is what you actually do. Buy-all prices every direct material off the board instead."><label for="matbasis">Mat cost</label><select id="matbasis"><option value="opt" selected>Precraft-optimised</option><option value="buyall">Buy all mats</option></select></div>
-      <div class="field sel"><label for="tax">Tax</label><select id="tax"><option value="0.05">5%</option><option value="0.03">3%</option><option value="0">0%</option></select></div>
+      <div class="field sel"><label for="tax">Tax</label><select id="tax"><option value="0.05" selected>5%</option><option value="0.03">3%</option><option value="0">0%</option></select></div>
       <div class="field sel" title="Per item sells each craft at the quality it usually trades at. HQ or NQ sells everything at that quality instead; an item no recipe can make HQ always sells NQ."><label for="sq">Sell</label><select id="sq"><option value="auto">Per item</option><option value="hq">HQ</option><option value="nq">NQ</option></select></div>
     </div>
     <div class="sgroup">
@@ -125,7 +125,7 @@ tr.detail>td{background:var(--bg2);border-bottom:1px solid var(--line);padding:0
       <div class="hw-body">
         <div class="hw-sec"><h4>What it works out</h4><p>Profit on 9,400+ things you can craft, precrafts included: what each sells for on your world, less tax, less what its materials cost across the data centres in <b>Mats from</b>. That is thousands of prices, so this tab only scans when you press <b>Refresh</b>. Pick your <b>Class</b> and a level range to see only what you can make, and tick <b>Precrafts only</b> for intermediates, the crafts that go into other recipes.</p></div>
         <div class="hw-sec"><h4>Reading the table</h4><p><b>Mat cost</b> assumes you craft any intermediate that is cheaper to make than to buy (<b>Precraft-optimised</b>); switch to <b>Buy all mats</b> to price everything off the board. Open a row for the whole recipe, buy or craft at every step, and the world to buy each material on. A material an NPC sells for less than the board asks, or that has no listing, is bought from the NPC: the tree says <b>NPC</b> and the zone, and hovering names the vendor. Shards and crystals are costed but left out of each recipe to keep it short; tick <b>Show crystals</b> to list them. <b>Sell</b> prices each item at the quality it usually trades at; plenty of intermediates only really sell NQ, so switch it to <b>NQ</b> to find that market. An open recipe also shows the <b>best time to sell</b>: the hours of the day its sales land in.</p></div>
-        <div class="hw-sec"><h4>Getting the most from it</h4><p>Tick <b>Hide no-sales</b> and sort by <b>Profit/unit</b> or <b>Gil/day</b>. Gil/day is how much gil an item moves on your world, not what you will pocket. <b>Hide ⚠ outliers</b> starts ticked, so prices far from real sales stay out of the way. <b>Skip dead items</b> leaves out anything unsold for 30 days and checks each one again a week later, for each world on its own; shift-click Refresh to check them all now. <b>Tour</b>, top right, walks through this page.</p></div>
+        <div class="hw-sec"><h4>Getting the most from it</h4><p>Tick <b>Hide no-sales</b> and sort by <b>Profit/unit</b> or <b>Profit/day</b>. Profit/day is your cut &mdash; profit per unit times how fast the item sells &mdash; so it ranks a small margin that shifts constantly above a big one that never moves. It is not the same number as <b>Gil/day</b> on the tabs that only resell, which is the market's whole turnover. <b>Hide ⚠ outliers</b> starts ticked, so prices far from real sales stay out of the way. <b>Skip dead items</b> leaves out anything unsold for 30 days and checks each one again a week later, for each world on its own; shift-click Refresh to check them all now. <b>Tour</b>, top right, walks through this page.</p></div>
       </div>
     </details>
 
@@ -140,20 +140,20 @@ tr.detail>td{background:var(--bg2);border-bottom:1px solid var(--line);padding:0
       <table id="tbl" hidden>
         <thead><tr>
           <th data-k="name" style="cursor:default">Item</th>
-          <th data-k="sell">Sell now <span></span></th>
-          <th data-k="avg30">Avg 30d <span></span></th>
+          <th data-k="sell" title="Cheapest listing on your home world, with how long ago that world last reported to Universalis">Sell now <span></span></th>
+          <th data-k="avg30" title="Median price of actual sales on your home world over 30 days, weighted by units, so one sale at a joke price cannot drag it">Avg 30d <span></span></th>
           <th data-k="trend" title="Which way the price is moving: the newer half of the sales history against the older half">Trend <span></span></th>
           <th data-k="cost" class="hide">Mat cost <span></span><i id="costMode" style="display:block;font-style:normal;font-weight:400;font-size:9px;letter-spacing:.06em;color:var(--faint);text-transform:none">optimised</i></th>
           <th data-k="profit" data-sorted>Profit/unit <span>▾</span></th>
           <th data-k="margin">Margin <span></span></th>
           <th data-k="vel" title="Units sold a day, which is not sales a day: a stack of 99 leaving in one transaction is 99 units">Units/day <span></span></th>
-          <th data-k="daily">Gil/day <span></span></th>
+          <th data-k="daily" title="What you would earn a day: profit per unit multiplied by the units that sell a day. Gil/day on the other tabs is the market's whole turnover, which is a different number.">Profit/day <span></span></th>
         </tr></thead>
         <tbody id="rows"></tbody>
       </table>
     </div>
 
-    <p class="foot">Gil/day = profit/unit × the <b>units</b> that sell a day on <span class="homename">Spriggan</span> over 30 days — a stack of 99 is 99 units and one sale, which is why Units/day and the sale count beside Avg 30d are different numbers. You capture a slice of that, so it's a ranking not a promise. Sell now = cheapest current <span class="homename">Spriggan</span> listing (⚠ = far from the 30-day average, likely noise). Mat cost defaults to <b>Precraft-optimised</b>: every intermediate that is cheaper to craft than to buy is costed as crafted, all the way down the tree. Switch it to <b>Buy all mats</b> to price every direct material straight off the board instead, with <b>craftable intermediates priced HQ</b> and raw mats NQ. Either way, a material an NPC sells for gil all year is costed at the NPC's price wherever that beats the board, or the board has none (NPC stock is NQ). In the tree, each craftable node shows HQ <b>buy</b> vs <b>craft</b>-it-yourself, and the <b>Precraft-optimised</b> total is what you'd pay crafting the cheaper intermediates. Item icons and data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a> and <a href="https://xivapi.com" target="_blank" rel="noopener">XIVAPI</a>.</p>
+    <p class="foot">Profit/day = profit/unit × the <b>units</b> that sell a day on <span class="homename">Spriggan</span> over 30 days — a stack of 99 is 99 units and one sale, which is why Units/day and the sale count beside Avg 30d are different numbers. You capture a slice of that, so it's a ranking not a promise. Sell now = cheapest current <span class="homename">Spriggan</span> listing (⚠ = far from the 30-day average, likely noise). Mat cost defaults to <b>Precraft-optimised</b>: every intermediate that is cheaper to craft than to buy is costed as crafted, all the way down the tree. Switch it to <b>Buy all mats</b> to price every direct material straight off the board instead, with <b>craftable intermediates priced HQ</b> and raw mats NQ. Either way, a material an NPC sells for gil all year is costed at the NPC's price wherever that beats the board, or the board has none (NPC stock is NQ). In the tree, each craftable node shows HQ <b>buy</b> vs <b>craft</b>-it-yourself, and the <b>Precraft-optimised</b> total is what you'd pay crafting the cheaper intermediates. Item icons and data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a> and <a href="https://xivapi.com" target="_blank" rel="noopener">XIVAPI</a>.</p>
   </main>
 </div>
 
@@ -296,7 +296,7 @@ function compute(){state._best={};state._hops={};const rows=[];
     /* units a day, not sales a day: one sale of a stack of 99 is 99 units */
     const v30=vel30(state.hist[fid],wantHQ);const vel=v30.perDay;
     const basis=state.basis==="avg30"?(a.avg!=null?a.avg:listing):(listing!=null?listing:a.avg);
-    const outlier=a.avg!=null&&(listing==null||listing>a.avg*2.5||listing<a.avg*0.4);
+    const outlier=isOutlier(listing,a.avg,{unsoldCounts:false});
     let buyAll=0,buyMissing=false,fresh=aggUpload(state.sell[fid]),buyHop=0;
     for(const ing of r.ingredients){const b=buyOf(ing.id);if(b.price==null)buyMissing=true;else{buyAll+=b.price*ing.amount;if(b.hop)buyHop++;}fresh=Math.max(fresh,aggUpload(state.chaos[ing.id]));}
     const buyAllUnit=buyAll/r.yields;
@@ -390,7 +390,7 @@ function render(){if(!state.rows)return;const shown=visibleRows();let rows=shown
     const tr=document.createElement("tr");tr.className="row"+(open?" open":"");
     const cls=r.profit==null?"":(r.profit>=0?"win":"loss");const barW=r.profit>0?Math.round(r.profit/maxP*100):0;
     const yieldTag=r.yields>1?` <span class="q">×${r.yields}</span>`:"";
-    const warn=r.outlier?` <span class="warn" title="Price outlier — either no current listing (an Avg 30d built on 1–2 sales is often manipulated) or the listing sits far from the 30-day average. Treat this row’s pricing as unreliable.">⚠</span>`:"";
+    const warn=r.outlier?` <span class="warn" title="${outlierWhy(r.sell,r.avg30,null)}">⚠</span>`:"";
     tr.innerHTML=`<td><div class="name rich"><span class="rowtools"><button class="shopbtn" data-shopitem="${r.id}" title="Add all materials to shopping list">🛒</button><button class="listbtn" data-listadd="${r.id}" title="Add to a saved list">📋</button><button class="xwbtn" data-xw="${r.id}" data-xwname="${xesc(r.name)}" title="Compare this item's price and stock on every world">\ud83c\udf10</button>${teamcraftHTML(r.id)}</span><span class="caret"></span>${iconHTML(r.id)}<span class="nmeta"><span class="n">${r.name} <span class="pill ${r.kind}">${r.kind}</span>${r.patch?'<span class="patch-badge">new '+r.patch+'</span>':''}</span><span class="t">${r.note} · ${jobLabel(r)} · lvl ${r.lvl}</span></span></div></td>
       <td>${fmt(r.sell)} <span class="q">${r.q}</span>${warn}${agePill(r.upload)}</td>
       <td>${fmt(r.avg30)}${r.avg30!=null?` <span class="q">${r.n30}×</span>`:''}${r.avgFb?' <span class=\"q\" title=\"No sales of the requested quality in the last 30 days — average includes both NQ and HQ\">mixed</span>':''}</td>
@@ -485,7 +485,12 @@ document.getElementById("status").innerHTML="";syncStartScan();
   function saveSettings(){try{localStorage.setItem(SKEY,JSON.stringify(collect()));}catch(e){}}
   function restoreSettings(){try{const s=JSON.parse(localStorage.getItem(SKEY)||"{}");
     for(const[id,v]of Object.entries(s)){const el=document.getElementById(id);if(!el)continue;
-      if(el.type==="checkbox")el.checked=!!v;else el.value=v;
+      if(el.type==="checkbox")el.checked=!!v;
+      /* a saved value whose option has since been dropped - the old 2% tax, which
+         is not a rate the game charges - would otherwise blank the select and read
+         back as 0, so an unknown value is discarded and the default stands */
+      else if(el.tagName!=="SELECT"||Array.prototype.some.call(el.options,o=>o.value===String(v)))el.value=v;
+      else continue;
       if(id==="home"){state.home=el.value;syncHomeNames();continue;}
       if(id==="dc"){setDcs(el.value);continue;}
       el.dispatchEvent(new Event("change"));}

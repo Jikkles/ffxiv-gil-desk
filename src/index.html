@@ -565,15 +565,21 @@ function seedHomeWorld(){
    that had already been opened would keep the old unticked state for ever.
    Once only, the saved choice is dropped and the new default takes over;
    untick it again and that sticks. */
+/* v2 adds Duties and Retainers, which kept an unticked default nobody had chosen
+   deliberately, and drops Duties' old "hideWarn" key now that the tick is called
+   hideOutlier there like everywhere else. Each version runs once; untick it
+   again afterwards and that sticks. */
 function outliersHiddenByDefault(){
-  const DONE="gildesk:outlierDefault:v1";
-  try{if(localStorage.getItem(DONE))return;
-    for(const t of["all","workshop"]){
-      const key="gildesk:"+t+":settings";let s=null;
-      try{s=JSON.parse(localStorage.getItem(key)||"null");}catch(e){}
-      if(s&&typeof s==="object"&&"hideOutlier" in s){delete s.hideOutlier;localStorage.setItem(key,JSON.stringify(s));}
-    }
-    localStorage.setItem(DONE,"1");
+  const V1="gildesk:outlierDefault:v1",V2="gildesk:outlierDefault:v2";
+  const clear=(tabs,keys)=>{for(const t of tabs){
+    const key="gildesk:"+t+":settings";let s=null;
+    try{s=JSON.parse(localStorage.getItem(key)||"null");}catch(e){}
+    if(!s||typeof s!=="object")continue;
+    let hit=false;for(const k of keys)if(k in s){delete s[k];hit=true;}
+    if(hit)localStorage.setItem(key,JSON.stringify(s));}};
+  try{
+    if(!localStorage.getItem(V1)){clear(["all","workshop"],["hideOutlier"]);localStorage.setItem(V1,"1");}
+    if(!localStorage.getItem(V2)){clear(["duties","retainer"],["hideOutlier","hideWarn"]);localStorage.setItem(V2,"1");}
   }catch(e){}
 }
 /* a first visit that picks a world goes straight into the tour */

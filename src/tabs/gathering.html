@@ -69,7 +69,7 @@ thead th span{display:inline-block;min-width:.8em}
       <div class="slabel">Filters</div>
       <div class="field sel" title="The price the hourly earnings are worked out at"><label for="basis">Price</label><select id="basis"><option value="now">Sell now</option><option value="avg">30-day avg</option></select></div>
       <div class="field sel"><label for="nodeType">Nodes</label><select id="nodeType"><option value="all">Regular and timed</option><option value="regular">Regular only</option><option value="timed">Timed only</option><option value="up">Timed, up now</option></select></div>
-      <div class="field sel"><label for="tax">Tax</label><select id="tax"><option value="0.05">5%</option><option value="0.03">3%</option><option value="0">0%</option></select></div>
+      <div class="field sel"><label for="tax">Tax</label><select id="tax"><option value="0.05" selected>5%</option><option value="0.03">3%</option><option value="0">0%</option></select></div>
       <div class="field"><label for="minLvl">Min lvl</label><input type="number" id="minLvl" value="1" min="1" max="100"></div>
       <div class="field"><label for="maxLvl">Max lvl</label><input type="number" id="maxLvl" value="100" min="1" max="100"></div>
     </div>
@@ -135,7 +135,7 @@ thead th span{display:inline-block;min-width:.8em}
     <p class="foot">
       Node and fishing spot data from <a href="https://github.com/ffxiv-teamcraft/ffxiv-teamcraft" target="_blank" rel="noopener">Teamcraft</a>: what each node gives, its level, where it is and when a timed node spawns. Fish hours, weather and big fish from the <a href="https://ff14fish.carbuncleplushy.com" target="_blank" rel="noopener">Carbuncle Plushy fish tracker</a>, with each zone&rsquo;s weather odds to forecast the next window. An item from several nodes is ranked on its best one: a regular node first, then the timed node that spawns most often.
       Per hour is an estimate from <b>Your gathering</b>: nodes an hour × swings a node × items a swing for a regular node; for a timed node, swings × items a swing for each spawn window in a real hour (a node spawning twice an Eorzean day is up about 1.7 times an hour). Gil/hour = Per hour × the chosen price × (1 &minus; tax). Both are left blank for fish, whose bite rates are unknown; with <b>Cap at a day&rsquo;s sales</b>, Per hour is held to Units/day first.
-      Sell now = cheapest NQ listing on <span class="homename">Spriggan</span>. Avg 30d, Trend and Units/day are 30 days of sales there, and Gil/day = Avg 30d × (1 &minus; tax) × Units/day, as on every tab. Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>.
+      Sell now = cheapest NQ listing on <span class="homename">Spriggan</span>. Avg 30d, Trend and Units/day are 30 days of sales there, and Gil/day = Avg 30d × (1 &minus; tax) × Units/day &mdash; how much gil the item moves on your world, not your cut of it. The crafting tabs show <b>Profit/day</b> instead, which is your cut. Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>, item icons via <a href="https://xivapi.com" target="_blank" rel="noopener">XIVAPI</a>.
     </p>
   </main>
 </div>
@@ -286,7 +286,7 @@ function priceRow(g){
   const capped=ph!=null&&state.capDay&&vi.perDay!=null&&ph>vi.perDay;
   if(capped)ph=vi.perDay;
   const net=price!=null?price*(1-state.tax):null;
-  const outlier=a.avg!=null&&(now==null||now>a.avg*2.5||now<a.avg*0.4);
+  const outlier=isOutlier(now,a.avg,{unsoldCounts:false});
   return{g,id:g.i,name:g.nm,node,cls:node.c,lvl:node.lv,now,avg:a.avg,n30:a.n,trend:tr,vel:vi.perDay,velI:vi,
     perHr:ph,capped,gilHr:net!=null&&ph!=null?net*ph:null,gilDay:(a.avg!=null&&vi.perDay)?a.avg*(1-state.tax)*vi.perDay:null,
     outlier,upload:aggUpload(res)};
@@ -322,7 +322,7 @@ function render(){
     const n=r.node,kind=n.k||"regular";
     const others=r.g.nodes.slice(1);
     const title=r.g.nodes.map(x=>`${CLASS_NAME[x.c]} · ${whereText(x)}${x.k?" · "+etHours(x):""}${x.h?" · hidden item":""}${x.c==="FSH"&&fishNotes(x)?" · "+fishNotes(x):""}`).join("\n");
-    const warn=r.outlier?` <span class="warn" title="No current listing, or the listing sits far from the 30-day average — treat this price as unreliable.">⚠</span>`:"";
+    const warn=r.outlier?` <span class="warn" title="${outlierWhy(r.now,r.avg,null)}">⚠</span>`:"";
     const folk=n.fl?` <span class="q" title="Needs a Folklore book before it will bite">folklore</span>`:"";
     const hidden=n.h?` <span class="q" title="A hidden item: it only turns up on some visits, and may need a Folklore book or enough Perception, so Per hour overstates it">hidden</span>`:"";
     return `<tr class="row" style="cursor:default">`+
@@ -433,7 +433,12 @@ document.querySelectorAll("thead th[data-k]").forEach(th=>{
   document.addEventListener("change",()=>{try{localStorage.setItem(SKEY,JSON.stringify(collect()));}catch(e){}});
   try{const s=JSON.parse(localStorage.getItem(SKEY)||"{}");
     for(const[id,v]of Object.entries(s)){const el=document.getElementById(id);if(!el)continue;
-      if(el.type==="checkbox")el.checked=!!v;else el.value=v;
+      if(el.type==="checkbox")el.checked=!!v;
+      /* a saved value whose option has since been dropped - the old 2% tax, which
+         is not a rate the game charges - would otherwise blank the select and read
+         back as 0, so an unknown value is discarded and the default stands */
+      else if(el.tagName!=="SELECT"||Array.prototype.some.call(el.options,o=>o.value===String(v)))el.value=v;
+      else continue;
       if(id==="home"){state.home=el.value;syncHomeNames();continue;}
       if(id==="dc"){continue;}
       el.dispatchEvent(new Event("change"));}

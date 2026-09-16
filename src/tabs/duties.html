@@ -73,13 +73,13 @@ thead th span{display:inline-block;min-width:.8em}
     </div>
     <div class="sgroup">
       <div class="slabel">Server</div>
-      <div class="field sel"><label>Sell on</label><select id="home"></select></div>
+      <div class="field sel"><label for="home">Sell on</label><select id="home"></select></div>
       <button class="btn primary wide" id="refresh">&#8635; Refresh</button>
     </div>
     <div class="sgroup">
       <div class="slabel">Marketboard settings</div>
-      <label class="chk" title="Hide drops with no recorded sales across your data centre in the last 30 days"><input type="checkbox" id="soldOnly" checked> Only what is actually selling</label>
-      <label class="chk" title="Hide rows whose listing sits far from what has actually sold"><input type="checkbox" id="hideWarn"> Hide &#9888; outliers</label>
+      <label class="chk" title="Hide drops with no recorded sales across your data centre in the last 30 days"><input type="checkbox" id="soldOnly" checked> Hide no-sales</label>
+      <label class="chk" title="Hide rows whose listing sits far from what has actually sold"><input type="checkbox" id="hideOutlier" checked> Hide &#9888; outliers</label>
     </div>
     <div class="sgroup">
       <div class="slabel">View</div>
@@ -102,7 +102,7 @@ thead th span{display:inline-block;min-width:.8em}
         <option value="1000000">1M+</option>
         <option value="5000000">5M+</option>
       </select></div>
-      <div class="field sel"><label for="tax">Tax</label><select id="tax"><option value="0.05" selected>5%</option><option value="0.03">3%</option><option value="0.02">2%</option></select></div>
+      <div class="field sel"><label for="tax">Tax</label><select id="tax"><option value="0.05" selected>5%</option><option value="0.03">3%</option><option value="0">0%</option></select></div>
     </div>
     <div class="sgroup">
       <div class="slabel">Content</div>
@@ -139,7 +139,7 @@ thead th span{display:inline-block;min-width:.8em}
         <div data-spot="#tbl th[data-k=ev]" data-side="bottom" data-title="Expected">What one run, coffer or sack is worth from this item: chance × average price after tax. For an exchange, gil per unit of currency.</div>
         <div data-spot="#mtbl th[data-k=ev]" data-side="bottom" data-title="Per coffer">What one dug-up coffer or portal chest is worth: every sellable drop's chance × its average price after tax, added up. Compare it with the map's own <b>Avg 30d</b> to decide whether to open a map or sell it.</div>
         <div data-spot="#mrows tr.row:first-child" data-side="bottom" data-title="Open a map">Click a map or portal for its whole loot table, likeliest earners first.</div>
-        <div data-spot="#soldOnly, #hideWarn" data-side="right" data-title="What gets hidden"><b>Only what is actually selling</b> hides drops with no sales across your data centre; <b>Hide ⚠ outliers</b> drops prices that sit far from real sales.</div>
+        <div data-spot="#soldOnly, #hideOutlier" data-side="right" data-title="What gets hidden"><b>Hide no-sales</b> drops anything with no recorded sales across your data centre; <b>Hide ⚠ outliers</b> drops rows whose listing sits far from what has actually sold.</div>
       </template>
     </details>
 
@@ -180,7 +180,7 @@ thead th span{display:inline-block;min-width:.8em}
       <b>Where the rates come from.</b> Drop chances are read from <a href="https://github.com/Infiziert90/FFXIVGachaSpreadsheet" target="_blank" rel="noopener">Infi&rsquo;s crowd-sourced loot records</a> (updated <span id="lootDate">recently</span>), summed across every patch each coffer has been recorded in: deep dungeon sacks, Eureka lockboxes and bunny coffers, Bozja lockboxes, Occult Crescent treasure, pot and bunny coffers, dungeon chests, dug-up treasure map coffers and portal dungeon chests. Which maps dig in which zone comes from the game&rsquo;s own treasure spot tables; coffers are recorded by zone, so maps that share zones share one loot table. A portal chest chance is per chest opened. A dungeon&rsquo;s chance is <b>per run</b> &mdash; every chest in the duty added together &mdash; and is the chance the item appears, not that you win it: in a party it still goes to a loot roll. A deep dungeon or field coffer chance is per coffer or sack. <b>Exchanges</b> show the currency they cost instead, read from the game&rsquo;s own shop tables, and their Expected figure is gil per unit of currency. A handful of notorious-monster FATE drops, Cassie Earring and Blitzring among them, have no recorded rate at all and say so.
       Only drops that sell for real money are listed &mdash; roughly 40k and up from dungeons, variant exchanges and field operations, 100k and up from deep dungeons, whose sacks are otherwise mostly glamour weapons &mdash; so the everyday materia and potions are left off. An item with several sources shows the likeliest one, and the rest on hover.
       Sell now = cheapest listing on <span class="homename">Spriggan</span>. Avg 30d, Trend, Units/day and Gil/day are measured across <span id="scopeName">Chaos</span>, because a rare drop sells a handful of times a month on any one world. Gil/day = Avg 30d &times; (1 &minus; tax) &times; Units/day.
-      Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>.
+      Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>, item icons via <a href="https://xivapi.com" target="_blank" rel="noopener">XIVAPI</a>.
     </p>
   </main>
 </div>
@@ -212,7 +212,7 @@ const GROUPS = [
 const SLUG = {}; for (const x of GROUPS) SLUG[x.g] = x.slug;
 
 let state={home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],query:"",tax:0.05,sortKey:"gilDay",sortDir:-1,mkt:null,hist:null,rows:null,scopeDc:"Chaos",
-  group:"all",how:"all",soldOnly:true,hideWarn:false,minPrice:100000,summary:"",view:"drops",msortKey:"ev",msortDir:-1,mopen:new Set()};
+  group:"all",how:"all",soldOnly:true,hideOutlier:true,minPrice:100000,summary:"",view:"drops",msortKey:"ev",msortDir:-1,mopen:new Set()};
 
 /*__SHARED_A__*/
 /*__SHARED_B__*/
@@ -280,7 +280,7 @@ function priceRow(it){
   const vi=vel30(h);const trend=trend30(h);
   const net=avg!=null?avg*(1-state.tax):null;
   const unsold=avg==null;
-  const warn=unsold||(now!=null&&(now>avg*2.5||now<avg*0.4));
+  const warn=isOutlier(now,avg,{listingOptional:true,unsoldCounts:false});
   return{it,id:it.i,name:it.n,cat:it.c,now,avg,net,vel:vi.perDay,velI:vi,trend,gilDay:(net!=null&&vi.perDay)?net*vi.perDay:null,
     unsold,warn,upload:aggUpload(res)};
 }
@@ -292,7 +292,7 @@ function visibleRows(){
   for(const base of state.rows||[]){
     const list=sourcesFor(base.it);if(!list.length)continue;
     if(state.soldOnly&&base.unsold)continue;
-    if(state.hideWarn&&base.warn)continue;
+    if(state.hideOutlier&&base.warn)continue;
     if(state.minPrice&&!((base.avg??0)>=state.minPrice))continue;
     const lead=leadOf(list);
     if(q&&!(base.name.toLowerCase().includes(q)||list.some(s=>(s.p+" "+s.f+" "+s.g+" "+(s.cur||"")).toLowerCase().includes(q))))continue;
@@ -386,7 +386,7 @@ function renderMaps(){
       `<td>${r.id?fmtK(r.now)+agePill(r.upload):"—"}</td>`+
       `<td>${r.id?fmtK(r.avg):"—"}</td>`+
       `<td>${r.id?trendChip(r.trend):"—"}</td>`+
-      `<td>${r.vel?velCell(r.velI):"—"}</td>`+
+      `<td>${velCell(r.velI)}</td>`+
       `<td>${fmtK(r.gilDay)}</td></tr>`+
       (open?`<tr class="detail"><td colspan="9">${lootHTML(r)}</td></tr>`:"");}).join("");
   renderKpis();
@@ -405,7 +405,7 @@ function render(){
   const tbl=document.getElementById("tbl");
   tbl.hidden=!rows.length;
   document.getElementById("rows").innerHTML=rows.map(r=>{
-    const warn=r.warn?`<span class="warn" title="${r.unsold?"Nothing has sold across "+state.scopeDc+" in 30 days, so there is no real price behind this row":"The cheapest listing sits far from what has actually sold"}">⚠</span>`:"";
+    const warn=r.warn?`<span class="warn" title="${outlierWhy(r.now,r.avg,state.scopeDc)}">⚠</span>`:"";
     const more=r.list.length>1?`<span class="more">+${r.list.length-1} more</span>`:"";
     return `<tr class="row" style="cursor:default">`+
       `<td><div class="name rich"><span class="rowtools"><button class="listbtn" data-listadd="${r.id}" title="Add to a saved list">📋</button><button class="xwbtn" data-xw="${r.id}" data-xwname="${xesc(r.name)}" title="Compare this item's price and stock on every world">🌐</button></span>`+
@@ -418,7 +418,7 @@ function render(){
       `<td>${fmtK(r.now)}${agePill(r.upload)}</td>`+
       `<td>${fmtK(r.avg)}</td>`+
       `<td>${trendChip(r.trend)}</td>`+
-      `<td>${r.vel?velCell(r.velI):"—"}</td>`+
+      `<td>${velCell(r.velI)}</td>`+
       `<td>${fmtK(r.gilDay)}</td></tr>`;}).join("");
   renderKpis();
   setStatus(rows.length?state.summary+` · ${rows.length} shown`:"Nothing matches these filters — try a lower <b>Min Avg 30d</b>, or untick <b>Only what is actually selling</b>.");
@@ -492,7 +492,7 @@ document.getElementById("mrows").addEventListener("click",e=>{
   const k=tr.dataset.mkey;if(state.mopen.has(k))state.mopen.delete(k);else state.mopen.add(k);rerender();});
 document.getElementById("minPrice").addEventListener("change",e=>{state.minPrice=+e.target.value;rerender();});
 document.getElementById("soldOnly").addEventListener("change",e=>{state.soldOnly=e.target.checked;rerender();});
-document.getElementById("hideWarn").addEventListener("change",e=>{state.hideWarn=e.target.checked;rerender();});
+document.getElementById("hideOutlier").addEventListener("change",e=>{state.hideOutlier=e.target.checked;rerender();});
 document.getElementById("tax").addEventListener("change",e=>{state.tax=+e.target.value;if(state.rows){compute();render();}});
 document.getElementById("refresh").addEventListener("click",load);
 document.querySelectorAll("thead th[data-k]").forEach(th=>{
@@ -516,7 +516,12 @@ document.querySelectorAll("thead th[data-k]").forEach(th=>{
   document.addEventListener("change",()=>{try{localStorage.setItem(SKEY,JSON.stringify(collect()));}catch(e){}});
   try{const s=JSON.parse(localStorage.getItem(SKEY)||"{}");
     for(const[id,v]of Object.entries(s)){const el=document.getElementById(id);if(!el)continue;
-      if(el.type==="checkbox")el.checked=!!v;else el.value=v;
+      if(el.type==="checkbox")el.checked=!!v;
+      /* a saved value whose option has since been dropped - the old 2% tax, which
+         is not a rate the game charges - would otherwise blank the select and read
+         back as 0, so an unknown value is discarded and the default stands */
+      else if(el.tagName!=="SELECT"||Array.prototype.some.call(el.options,o=>o.value===String(v)))el.value=v;
+      else continue;
       if(id==="home"){state.home=el.value;syncHomeNames();continue;}
       el.dispatchEvent(new Event("change"));}
   }catch(e){}

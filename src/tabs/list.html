@@ -114,7 +114,7 @@
       <div class="slabel">Filters</div>
       <div class="field sel"><label for="basis">Profit vs</label><select id="basis"><option value="listing">Current low</option><option value="avg30">30-day avg</option></select></div>
       <div class="field sel" title="Precraft-optimised assumes you craft any intermediate that is cheaper to make than to buy. Buy-all prices every direct material off the board instead."><label for="matbasis">Mat cost</label><select id="matbasis"><option value="opt" selected>Precraft-optimised</option><option value="buyall">Buy all mats</option></select></div>
-      <div class="field sel"><label for="tax">Tax</label><select id="tax"><option value="0.05">5%</option><option value="0.03">3%</option><option value="0">0%</option></select></div>
+      <div class="field sel"><label for="tax">Tax</label><select id="tax"><option value="0.05" selected>5%</option><option value="0.03">3%</option><option value="0">0%</option></select></div>
     </div>
     <div class="sgroup">
       <div class="scancard"><span class="dot"></span>Last scan<br><b id="lastScan"></b></div>
@@ -165,20 +165,20 @@
   <div class="tablewrap"><table id="tbl" hidden>
     <thead><tr>
       <th data-k="name" style="cursor:default">Item</th>
-      <th data-k="sell">Sell now <span></span></th>
-      <th data-k="avg30">Avg 30d <span></span></th>
+      <th data-k="sell" title="Cheapest listing on your home world, with how long ago that world last reported to Universalis">Sell now <span></span></th>
+      <th data-k="avg30" title="Median price of actual sales on your home world over 30 days, weighted by units, so one sale at a joke price cannot drag it">Avg 30d <span></span></th>
       <th data-k="trend" title="Which way the price is moving: the newer half of the sales history against the older half">Trend <span></span></th>
       <th data-k="cost" class="hide">Mat cost <span></span><i id="costMode" style="display:block;font-style:normal;font-weight:400;font-size:9px;letter-spacing:.06em;color:var(--faint);text-transform:none">optimised</i></th>
       <th data-k="profit" data-sorted>Profit/unit <span>▾</span></th>
       <th data-k="margin">Margin <span></span></th>
       <th data-k="vel" title="Units sold a day, which is not sales a day: a stack of 99 leaving in one transaction is 99 units">Units/day <span></span></th>
-      <th data-k="daily">Gil/day <span></span></th>
+      <th data-k="daily" title="What you would earn a day: profit per unit multiplied by the units that sell a day. Gil/day on the other tabs is the market's whole turnover, which is a different number.">Profit/day <span></span></th>
       <th style="cursor:default"></th>
     </tr></thead>
     <tbody id="rows"></tbody>
   </table></div>
 
-  <p class="foot">Sell now = cheapest current listing on your chosen world; ⚠ = far from the 30-day average, so the listing is likely noise. Avg 30d = median price of real sales over the past month, weighted by units, so one sale at a joke price cannot drag it (sale count shown). Units/day = how many <b>units</b> the market absorbs a day, so a stack of 99 counts as 99 rather than as one sale, and Gil/day is profit/unit × that — a ranking device rather than a promise. Mat cost defaults to <b>Precraft-optimised</b>: any intermediate cheaper to craft than to buy is costed as crafted, all the way down. Switch it to <b>Buy all mats</b> to price every direct material straight off the board at the cheapest <span class="dcname">Chaos</span> price instead. An item saved without a recipe is still priced, but shows no crafting cost. Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>.</p>
+  <p class="foot">Sell now = cheapest current listing on your chosen world; ⚠ = far from the 30-day average, so the listing is likely noise. Avg 30d = median price of real sales over the past month, weighted by units, so one sale at a joke price cannot drag it (sale count shown). Units/day = how many <b>units</b> the market absorbs a day, so a stack of 99 counts as 99 rather than as one sale, and Profit/day is profit/unit × that — your cut, and a ranking device rather than a promise. The tabs that only resell show <b>Gil/day</b> instead, which is the market's whole turnover and a different number. Mat cost defaults to <b>Precraft-optimised</b>: any intermediate cheaper to craft than to buy is costed as crafted, all the way down. Switch it to <b>Buy all mats</b> to price every direct material straight off the board at the cheapest <span class="dcname">Chaos</span> price instead. An item saved without a recipe is still priced, but shows no crafting cost. Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>, item icons via <a href="https://xivapi.com" target="_blank" rel="noopener">XIVAPI</a>.</p>
   </main>
 </div>
 
@@ -293,7 +293,7 @@ function compute(){state._best={};state._hops={};const rows=[];
     /* units a day, not sales a day: one sale of a stack of 99 is 99 units */
     const v30=vel30(state.hist[fid],wantHQ);const vel=v30.perDay;
     const basis=state.basis==="avg30"?(a.avg!=null?a.avg:listing):(listing!=null?listing:a.avg);
-    const outlier=a.avg!=null&&(listing==null||listing>a.avg*2.5||listing<a.avg*0.4);
+    const outlier=isOutlier(listing,a.avg);
     let buyAll=0,buyMissing=false,fresh=aggUpload(state.sell[fid]),buyHop=0;
     if(r)for(const ing of r.ingredients){const b=buyOf(ing.id);if(b.price==null)buyMissing=true;else{buyAll+=b.price*ing.amount;if(b.hop)buyHop++;}fresh=Math.max(fresh,aggUpload(state.chaos[ing.id]));}
     const yields=r?r.yields:1;
@@ -403,7 +403,7 @@ function render(){if(!state.rows)return;const rows=sortRows();
     const cls=r.profit==null?"":(r.profit>=0?"win":"loss");
     const barW=r.profit>0?Math.round(r.profit/maxP*100):0;
     const src=r.missing?`<span class="muted">missing</span>`:r.hop===0?`<span class="src-ok">${state.home} ✓</span>`:`<span class="src-hop">hop ×${r.hop}</span>`;
-    const warn=r.outlier?` <span class="warn" title="Price outlier — either no current listing (an Avg 30d built on 1–2 sales is often manipulated) or the listing sits far from the 30-day average. Treat this row’s pricing as unreliable.">⚠</span>`:"";
+    const warn=r.outlier?` <span class="warn" title="${outlierWhy(r.sell,r.avg30,null)}">⚠</span>`:"";
     const staleWarn=(r.upload&&(Date.now()-r.upload)>172800000)?'<span class="stale-warn" title="No upload in 48h+ — data may be outdated">⏰</span>':"";
     tr.innerHTML=`<td><div class="name"><span class="n">${r.craftable?`<button class="shopbtn" data-shopitem="${r.id}" title="Add all materials to shopping list">🛒</button>`:'<span class="shopgap"></span>'}<button class="xwbtn" data-xw="${r.id}" data-xwname="${xesc(r.name)}" title="Compare this item's price and stock on every world">\ud83c\udf10</button>${teamcraftHTML(r.id)}<span class="caret${r.craftable?"":" none"}"></span>${iconHTML(r.id)}${r.name} <span class="pill ${listTag(r.kind)}">${listTag(r.kind)}</span></span>
         <span class="t">${r.note}</span></div>${staleWarn}</td>
@@ -531,7 +531,12 @@ function updateStrip(){
   function saveSettings(){try{localStorage.setItem(SKEY,JSON.stringify(collect()));}catch(e){}}
   function restoreSettings(){try{const s=JSON.parse(localStorage.getItem(SKEY)||"{}");
     for(const[id,v]of Object.entries(s)){const el=document.getElementById(id);if(!el)continue;
-      if(el.type==="checkbox")el.checked=!!v;else el.value=v;
+      if(el.type==="checkbox")el.checked=!!v;
+      /* a saved value whose option has since been dropped - the old 2% tax, which
+         is not a rate the game charges - would otherwise blank the select and read
+         back as 0, so an unknown value is discarded and the default stands */
+      else if(el.tagName!=="SELECT"||Array.prototype.some.call(el.options,o=>o.value===String(v)))el.value=v;
+      else continue;
       if(id==="home"){state.home=el.value;syncHomeNames();continue;}
       if(id==="dc"){setDcs(el.value);continue;}
       el.dispatchEvent(new Event("change"));}

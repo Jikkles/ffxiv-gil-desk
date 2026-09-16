@@ -15,7 +15,8 @@
 .gate{font-family:"JetBrains Mono",monospace;font-size:9px;color:var(--hop);border:1px solid var(--gil-line);background:var(--hop-soft);border-radius:5px;padding:1px 5px;margin-left:5px;cursor:help;white-space:nowrap}
 .seasonal{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.04em;color:#c97edb;border:1px solid #472f52;background:var(--accent-soft);border-radius:5px;padding:2px 6px;margin-left:5px;cursor:help;white-space:nowrap;flex:none}
 .gilv{color:var(--gil)}
-.no-data{color:var(--faint);font-size:12px;font-family:"JetBrains Mono",monospace}
+/* denser than the shared rule, for this table */
+.no-data{font-size:12px}
 .empty{margin:26px 0 0;border:1px dashed var(--line);border-radius:14px;background:var(--panel);padding:36px 28px;text-align:center;box-shadow:var(--shadow)}
 .empty .icon{font-size:28px;line-height:1;opacity:.65}
 .empty .headline{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);margin-top:12px}
@@ -44,14 +45,14 @@
     <div class="sgroup">
       <div class="slabel">Server</div>
       <div class="field sel">
-      <label>Sell on</label>
+      <label for="home">Sell on</label>
       <select id="home"></select>
     </div>
       <button class="btn primary wide" id="refresh">↻ Refresh</button>
     </div>
     <div class="sgroup">
       <div class="slabel">Marketboard settings</div>
-      <label class="chk"><input type="checkbox" id="hideOutlier"> Hide ⚠ outliers</label>
+      <label class="chk" title="Hide rows whose price is not backed by real sales: no listing on your world, or a listing far from what has actually sold. Most vendor stock has barely sold, so this hides a lot of it."><input type="checkbox" id="hideOutlier"> Hide &#9888; outliers</label>
       <label class="chk showall"><input type="checkbox" id="showAll"> Show ALL vendor items</label>
       <label class="chk"><input type="checkbox" id="density"> Compact rows</label>
     </div>
@@ -90,8 +91,8 @@
       </select>
     </div>
       <div class="field sel">
-      <label>Tax</label>
-      <select id="tax"><option value="0.05" selected>5%</option><option value="0.03">3%</option><option value="0.02">2%</option></select>
+      <label for="tax">Tax</label>
+      <select id="tax"><option value="0.05" selected>5%</option><option value="0.03">3%</option><option value="0">0%</option></select>
     </div>
     </div>
     <div class="sgroup">
@@ -142,7 +143,7 @@
       <th data-k="vendor" class="hide" style="cursor:default">Bought from</th>
       <th data-k="cost">Vendor cost <span></span></th>
       <th data-k="min" title="Cheapest current listing on your world, with how long ago that world last reported to Universalis">Sell now <span></span></th>
-      <th data-k="avg" class="hide">Sell avg 30d <span></span></th>
+      <th data-k="avg" class="hide" title="Median price of actual sales on your home world over 30 days, weighted by units, so one sale at a joke price cannot drag it">Avg 30d <span></span></th>
       <th data-k="trend" title="Which way the price is moving: the newer half of the sales history against the older half">Trend <span></span></th>
       <th data-k="profit">Profit/unit <span></span></th>
       <th data-k="margin" class="hide">Margin <span></span></th>
@@ -161,7 +162,7 @@
     A <span class="seasonal">seasonal</span> tag means the shop only opens during an event.
     <b>Profit/unit</b> = sell &times; (1 &minus; tax) &minus; vendor cost. <b>Gil/day</b> = net sale price &times; units sold per day &mdash; a stack of 99 counts as 99, not as one sale &mdash; so a 40M margin on something that sells twice a year sinks below a 5k margin on something that shifts 30 a day. That is the market&rsquo;s pace rather than your cut; for what you actually keep, read <b>Profit/unit</b> against it, or the <b>Best profit / day</b> card.
     Locations come from the game's own shop data; many items are stocked by several NPCs, so <i>+n more</i> means you have closer options.
-    Prices via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>, vendor data from the game files.
+    Prices via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>, item icons via <a href="https://xivapi.com" target="_blank" rel="noopener">XIVAPI</a>, vendor data from the game files.
   </p>
   </main>
 </div>
@@ -240,7 +241,7 @@ function compute(){
        or the listing sits miles from the average it does have. Same 2.5x/0.4x test the
        rest of the desk uses, widened to cover the no-history case. */
     const noHist=m.avg==null;
-    const outlier=noHist||m.min==null||m.min>m.avg*2.5||m.min<m.avg*0.4;
+    const outlier=isOutlier(m.min,m.avg);
     let sell=null;
     if(state.basis==="low")sell=m.min!=null?m.min:m.avg;
     else if(state.basis==="avg")sell=m.avg!=null?m.avg:m.min;
@@ -315,10 +316,13 @@ function render(){
   for(const r of rows){
     const tr=document.createElement("tr");
     const cls=r.profit==null?"na":(r.profit>0?"win":"loss");
+    /* the shared reason, plus the two this tab can be more specific about: a
+       30-day history that is still loading reads the same as one that came back
+       empty, and saying so is worth the extra branch */
     const warn=r.outlier?`<span class="warn" title="${r.noHist
       ?(r.fromHist?"Nothing has sold on this server in 30 days — this is one person's asking price, not proof anyone will pay it."
         :"Nothing has sold on this server in the last few days, and its 30-day history is still loading — treat this asking price with suspicion.")
-      :"The cheapest listing sits far from the 30-day average — an odd listing, not a real price."} Treat this row's profit as unreliable.">⚠</span>`:"";
+      :outlierWhy(r.min,r.avg)+"."} Treat this row's profit as unreliable.">⚠</span>`:"";
     /* the column says Sell now, so it shows the listing rather than whichever
        basis the sidebar picked to work the profit out from */
     /* the space lets the freshness tag drop under the price when the table is short of room */
@@ -338,7 +342,7 @@ function render(){
       <td>${trendChip(r.trendT)}</td>
       <td class="profit ${cls}">${r.profit!=null?fmtM(r.profit):"—"}</td>
       <td class="hide">${r.margin!=null?Math.round(r.margin*100)+"%":"—"}</td>
-      <td>${r.vel>0?velCell(r.velI):'<span class="no-data">0</span>'}</td>
+      <td>${velCell(r.velI)}</td>
       <td>${fmtM(r.gilDay)}</td>`;
     tb.appendChild(tr);
   }
@@ -478,7 +482,12 @@ document.querySelectorAll("thead th[data-k]").forEach(th=>{
   function save(){try{localStorage.setItem(SKEY,JSON.stringify(collect()));}catch(e){}}
   function restore(){try{const s=JSON.parse(localStorage.getItem(SKEY)||"{}");
     for(const[id,v]of Object.entries(s)){const el=document.getElementById(id);if(!el)continue;
-      if(el.type==="checkbox")el.checked=!!v;else el.value=v;
+      if(el.type==="checkbox")el.checked=!!v;
+      /* a saved value whose option has since been dropped - the old 2% tax, which
+         is not a rate the game charges - would otherwise blank the select and read
+         back as 0, so an unknown value is discarded and the default stands */
+      else if(el.tagName!=="SELECT"||Array.prototype.some.call(el.options,o=>o.value===String(v)))el.value=v;
+      else continue;
       if(id==="home"){state.home=el.value;syncHomeNames();continue;}
       el.dispatchEvent(new Event("change"));}
   }catch(e){}}
