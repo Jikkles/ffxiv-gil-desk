@@ -43,7 +43,7 @@ const xago=ms=>{if(!ms)return"never";const s=(Date.now()-ms)/1000;
 const XW={
   /* ---- state ---- */
   item:null,        /* {id,name} */
-  scope:null,       /* "Chaos" | "Light" | "Europe" | … */
+  scope:null,       /* "Chaos" | "Europe" | "Chaos+Light+Materia" (several DCs, read one by one) */
   quality:"any",    /* any | nq | hq */
   want:1,
   dcs:null,         /* [{name,region}] once /data-centers has answered */
@@ -76,8 +76,8 @@ const XW={
   savePrefs(p){try{localStorage.setItem(XW_KEY,JSON.stringify(Object.assign(XW.prefs(),p)));}catch(e){}},
 
   /* Where the rest of the desk is pointed, when the page has a state to ask.
-     "Mats from" is a list of data centres: one means look at that one, several
-     inside a single region mean look at the region. */
+     "Buy from" is a list of data centres: one means look at that one, every DC
+     of a region means look at the region, anything else is that exact list. */
   deskScope(){
     try{
       if(typeof state==="undefined"||!state)return null;
@@ -86,9 +86,12 @@ const XW={
         if(a.length===1)return a[0];
         if(typeof regionOfDc==="function"){
           const rs=[];for(const d of a){const r=regionOfDc(d);if(r&&rs.indexOf(r)<0)rs.push(r);}
-          if(rs.length===1)return rs[0];
+          if(rs.length===1){
+            const all=(XW.dcs||[]).filter(d=>d.region===xregion(rs[0])).map(d=>d.name);
+            if(all.length&&all.every(d=>a.indexOf(d)>=0))return xregion(rs[0]);
+          }
         }
-        return a[0];
+        return a.join("+");
       }
       /* the pre-multi-DC shape, in case a page is still on it */
       if(typeof state.dc==="string"&&state.dc){
@@ -138,19 +141,28 @@ const XW={
     XW.cacheSet("xw:dcs",XW.dcs);
     return XW.dcs;
   },
-  /* every scope the picker offers: each region, then the DCs inside it */
+  /* a scope as the parts Universalis is asked for, and as words */
+  parts(scope){return String(scope||"").split("+").filter(Boolean);},
+  scopeLabel(scope){return XW.parts(scope==null?XW.scope:scope).join(" + ");},
+  /* every scope the picker offers: the desk's own Buy from list when it spans
+     several DCs, then each region and the DCs inside it */
   scopeOptions(){
     const dcs=(XW.dcs||XW_DC_FALLBACK).filter(d=>d&&xLiveDc(d.name,d.region)),seen=[],out=[];
+    const desk=XW.deskScope();
+    if(desk&&XW.parts(desk).length>1)
+      out.push({v:desk,label:XW.scopeLabel(desk),group:"Your Buy from"});
     for(const d of dcs)if(d.region&&seen.indexOf(d.region)<0)seen.push(d.region);
     for(const rg of seen){
       out.push({v:rg,label:rg+" (all DCs)",group:rg});
       for(const d of dcs)if(d.region===rg)out.push({v:d.name,label:d.name,group:rg});
     }
-    if(!out.length)for(const d of XW_DC_FALLBACK)out.push({v:d.name,label:d.name,group:"Europe"});
+    if(out.length<2)for(const d of XW_DC_FALLBACK)out.push({v:d.name,label:d.name,group:"Europe"});
     return out;
   },
 
   async fetchItem(id,scope){
+    const parts=XW.parts(scope);
+    if(parts.length>1)return XW.merge(await Promise.all(parts.map(p=>XW.fetchItem(id,p))));
     const ck=`xw:${scope}:${id}`;
     const hit=XW.cacheGet(ck,XW_TTL);
     if(hit)return hit;
@@ -183,6 +195,23 @@ const XW={
         w:h.worldName||null,t:(h.timestamp||0)*1000}))};
     XW.cacheSet(ck,packed);
     return packed;
+  },
+
+  /* several DCs read one by one, folded into the shape a single scope answers with */
+  merge(list){
+    const vel=list.reduce((s,d)=>s+(d.vel||0),0);
+    const wavg=k=>{let w=0,t=0;
+      for(const d of list)if(d[k]!=null){const v=d.vel||0;w+=v;t+=d[k]*v;}
+      if(w>0)return t/w;
+      const a=list.filter(d=>d[k]!=null);
+      return a.length?a.reduce((s,d)=>s+d[k],0)/a.length:null;};
+    return{
+      listings:[].concat(...list.map(d=>d.listings)),
+      avg:wavg("avg"),avgNQ:wavg("avgNQ"),avgHQ:wavg("avgHQ"),
+      vel:list.some(d=>d.vel!=null)?vel:null,
+      upload:Math.max(0,...list.map(d=>d.upload||0)),
+      capped:list.some(d=>d.capped),
+      recent:[].concat(...list.map(d=>d.recent||[])).sort((a,b)=>b.t-a.t).slice(0,8)};
   },
 
   /* ---- pure maths, so the rendering stays dumb ---- */
@@ -241,7 +270,11 @@ const XW={
     XW.want=Math.max(1,+(opts.qty||XW.prefs().want||1)|0);
     XW.data=null;XW.err=null;XW.open=new Set();
     await XW.loadDCs();
-    XW.scope=opts.scope||XW.prefs().scope||XW.deskScope()||"Chaos";
+    /* a scope picked in the panel only sticks while Buy from is what it was then;
+       change Buy from and the panel follows it again */
+    const p=XW.prefs(),desk=XW.deskScope();
+    const kept=p.scope&&(p.desk||null)===(desk||null)?p.scope:null;
+    XW.scope=opts.scope||kept||desk||"Chaos";
     if(!XW.scopeOptions().some(o=>o.v===XW.scope))XW.scope=XW.scopeOptions()[0].v;
     XW.paint();
     XW.reload();
@@ -251,8 +284,9 @@ const XW={
     XW.busy=true;XW.err=null;XW.paint();
     const id=XW.item.id,scope=XW.scope;
     try{
-      if(force){try{if(typeof Cache!=="undefined"&&Cache&&Cache.key)localStorage.removeItem(Cache.key(`xw:${scope}:${id}`));}catch(e){}
-        try{sessionStorage.removeItem(XW_KEY+":"+`xw:${scope}:${id}`);}catch(e){}}
+      if(force)for(const part of XW.parts(scope)){
+        try{if(typeof Cache!=="undefined"&&Cache&&Cache.key)localStorage.removeItem(Cache.key(`xw:${part}:${id}`));}catch(e){}
+        try{sessionStorage.removeItem(XW_KEY+":"+`xw:${part}:${id}`);}catch(e){}}
       const d=await XW.fetchItem(id,scope);
       /* a slow answer for an item the user has already navigated away from is dropped */
       if(!XW.item||XW.item.id!==id||XW.scope!==scope)return;
@@ -315,7 +349,7 @@ const XW={
   bodyInner(){
     if(XW.err)return`<div class="xw-msg bad">Couldn't load prices — ${xesc(XW.err)}<br>
       <span class="xw-dim">Universalis may be busy; try again in a moment.</span></div>`;
-    if(!XW.data)return`<div class="xw-msg">Reading every world on ${xesc(XW.scope)}…</div>`;
+    if(!XW.data)return`<div class="xw-msg">Reading every world on ${xesc(XW.scopeLabel())}…</div>`;
     return XW.bodyHTML();
   },
   /* the numbers under the bar, redrawn without touching the bar itself: the
@@ -330,7 +364,7 @@ const XW={
   bodyHTML(){
     const d=XW.data,want=Math.max(1,XW.want|0),home=XW.homeWorld();
     const vis=XW.visible();
-    if(!vis.length)return`<div class="xw-msg">No ${XW.quality==="any"?"":XW.quality.toUpperCase()+" "}listings on ${xesc(XW.scope)} right now.
+    if(!vis.length)return`<div class="xw-msg">No ${XW.quality==="any"?"":XW.quality.toUpperCase()+" "}listings on ${xesc(XW.scopeLabel())} right now.
       ${XW.quality!=="any"?'<br><span class="xw-dim">Try “Any” — the other quality may still be stocked.</span>':""}</div>`;
 
     const rows=XW.perWorld();
@@ -342,7 +376,7 @@ const XW={
     /* the headline: what filling the order actually takes */
     let plead;
     if(plan.short){
-      plead=`<b class="warn">Only ${xfmt(plan.filled)} listed</b> across ${xesc(XW.scope)} — ${xfmt(plan.short)} short of ${xfmt(want)}.
+      plead=`<b class="warn">Only ${xfmt(plan.filled)} listed</b> across ${xesc(XW.scopeLabel())} — ${xfmt(plan.short)} short of ${xfmt(want)}.
         ${d.capped?`<span class="xw-dim">(listing wall capped at ${XW_LISTINGS} — there may be more)</span>`:""}`;
     }else if(plan.worlds.length===1){
       plead=`All ${xfmt(want)} from <b>${xesc(plan.worlds[0].world)}</b> for <b class="gil">${xfmt(plan.cost)}</b> gil
@@ -363,7 +397,7 @@ const XW={
 
     const head=`<div class="xw-lead">${plead}${single_line}
       <div class="xw-stats">
-        <span title="Every listing on ${xesc(XW.scope)} that matches the quality filter">${xfmt(totalUnits)} units listed · ${xfmt(vis.length)} listing${vis.length!==1?"s":""} · ${rows.length} world${rows.length!==1?"s":""}</span>
+        <span title="Every listing on ${xesc(XW.scopeLabel())} that matches the quality filter">${xfmt(totalUnits)} units listed · ${xfmt(vis.length)} listing${vis.length!==1?"s":""} · ${rows.length} world${rows.length!==1?"s":""}</span>
         ${avg!=null?`<span title="Universalis average sale price on this scope">avg sale ${xfmt(avg)}</span>`:""}
         ${d.vel!=null?`<span title="Units sold a day across this scope, over Universalis' rolling week — a stack of 99 counts as 99, not as one sale">${d.vel>=10?xfmt(Math.round(d.vel)):d.vel.toFixed(1)}/day sold</span>`:""}
         <span title="Most recent price upload on this scope">updated ${xago(d.upload)}</span>
@@ -654,7 +688,7 @@ const XW={
       /* left empty or at nothing, the box shows the amount the numbers are using */
       if(e.target&&e.target.id==="xwWant"&&!(+e.target.value>=1)){e.target.value=XW.want;return;}
       if(e.target&&e.target.id==="xwScope"){
-        XW.scope=e.target.value;XW.savePrefs({scope:XW.scope});
+        XW.scope=e.target.value;XW.savePrefs({scope:XW.scope,desk:XW.deskScope()});
         XW.data=null;XW.open=new Set();XW.reload();}
     });
     document.addEventListener("input",function(e){
