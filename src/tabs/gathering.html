@@ -162,7 +162,7 @@ let state={home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],query:"",tax:0.05,
 /*__SHARED_XW__*/
 
 function side(res,hq){return res?(hq?res.h:res.n):null;}
-function aggPrice(res,hq,scope){const q=side(res,hq);const m=q&&(scope==="world"?q.mw:q.md);return m&&m[0]!=null?m[0]:null;}
+function aggPrice(res,hq,scope){const q=side(res,hq);const m=q&&(scope==="world"?q.mw:q.md);return m&&m[0]!=null?{price:m[0],worldId:m[1]!=null?m[1]:null}:{price:null,worldId:null};}
 function aggUpload(res){return(res&&res.u)||0;}
 const fmt=n=>n==null||!isFinite(n)?"—":Math.round(n).toLocaleString("en-GB");
 const fmtK=n=>{if(n==null||!isFinite(n))return"—";const a=Math.abs(n);if(a>=1e6)return(n/1e6).toFixed(2)+"M";if(a>=1e3)return(n/1e3).toFixed(1)+"k";return Math.round(n).toString();};
@@ -195,7 +195,7 @@ async function fetchHist(scope,ids,onProgress){
 async function fetchWorlds(){
   const hit=Cache.get("worlds",NET.WORLDS_TTL_MS);if(hit)return hit;
   try{const r=await tfetch("https://universalis.app/api/v2/worlds");const a=await r.json();
-    const m={};for(const w of a)m[w.id]=w.name;Cache.set("worlds",m);return m;}catch(e){return{};}}
+    const m={};for(const w of a)m[w.id]=w.name;Cache.set("worlds",m,NET.WORLDS_TTL_MS);return m;}catch(e){return{};}}
 
 /* ===== Eorzean time =====
    An Eorzean day is 70 real minutes: one Eorzean minute is 175/60 real seconds. */
@@ -278,8 +278,8 @@ function whereText(node){return `${node.t} · lvl ${node.lv} · ${node.z}${node.
 function priceRow(g){
   const node=g.nodes[0];
   const res=state.mkt?state.mkt[g.i]:null,h=state.hist?state.hist[g.i]:null;
-  const now=aggPrice(res,false,"world")??aggPrice(res,true,"world");
-  const a=h?avg30(h,false):{avg:null,n:0};
+  const now=aggPrice(res,false,"world").price??aggPrice(res,true,"world").price;
+  const a=histAvg(h,false);
   const vi=vel30(h,false),tr=trend30(h,false);
   const price=state.basis==="avg"?(a.avg??now):(now??a.avg);
   let ph=perHour(node);
@@ -292,9 +292,6 @@ function priceRow(g){
     outlier,upload:aggUpload(res)};
 }
 function compute(){state.rows=GATHER.map(priceRow);}
-function avg30(s,wantHQ){if(!s)return{avg:null,n:0};const pick=wantHQ?s.h:s.n;
-  if(pick&&pick[0]!=null)return{avg:pick[0],n:pick[1]};
-  if(s.a&&s.a[0]!=null)return{avg:s.a[0],n:s.a[1]};return{avg:null,n:0};}
 
 function visibleRows(){
   const q=state.query.toLowerCase();

@@ -221,7 +221,7 @@ let state={home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],query:"",tax:0.05,
 /*__SHARED_XW__*/
 
 function side(res,hq){return res?(hq?res.h:res.n):null;}
-function aggPrice(res,hq,scope){const q=side(res,hq);const m=q&&(scope==="world"?q.mw:q.md);return m&&m[0]!=null?m[0]:null;}
+function aggPrice(res,hq,scope){const q=side(res,hq);const m=q&&(scope==="world"?q.mw:q.md);return m&&m[0]!=null?{price:m[0],worldId:m[1]!=null?m[1]:null}:{price:null,worldId:null};}
 function aggUpload(res){return(res&&res.u)||0;}
 const fmt=n=>n==null||!isFinite(n)?"—":Math.round(n).toLocaleString("en-GB");
 const fmtK=n=>{if(n==null||!isFinite(n))return"—";const a=Math.abs(n);if(a>=1e6)return(n/1e6).toFixed(2)+"M";if(a>=1e3)return(n/1e3).toFixed(1)+"k";return Math.round(n).toString();};
@@ -254,7 +254,7 @@ async function fetchHist(scope,ids,onProgress){
 async function fetchWorlds(){
   const hit=Cache.get("worlds",NET.WORLDS_TTL_MS);if(hit)return hit;
   try{const r=await tfetch("https://universalis.app/api/v2/worlds");const a=await r.json();
-    const m={};for(const w of a)m[w.id]=w.name;Cache.set("worlds",m);return m;}catch(e){return{};}}
+    const m={};for(const w of a)m[w.id]=w.name;Cache.set("worlds",m,NET.WORLDS_TTL_MS);return m;}catch(e){return{};}}
 
 /* the source a row leads with: inside a content filter, that content's
    likeliest source; otherwise the likeliest anywhere. Drops beat exchanges
@@ -274,7 +274,7 @@ function leadOf(list){
 }
 function priceRow(it){
   const res=state.mkt?state.mkt[it.i]:null;
-  const now=aggPrice(res,false,"world")??aggPrice(res,true,"world");
+  const now=aggPrice(res,false,"world").price??aggPrice(res,true,"world").price;
   const h=state.hist?state.hist[it.i]:null;
   const avg=h&&h.a&&h.a[0]!=null?h.a[0]:null;
   const vi=vel30(h);const trend=trend30(h);
@@ -343,7 +343,7 @@ function mapRows(){
     else for(const id of m.maps){
       const res=state.mkt?state.mkt[id]:null,h=state.hist?state.hist[id]:null;
       const avg=h&&h.a&&h.a[0]!=null?h.a[0]:null,vi=vel30(h);
-      const now=aggPrice(res,false,"world")??aggPrice(res,true,"world");
+      const now=aggPrice(res,false,"world").price??aggPrice(res,true,"world").price;
       out.push({m,val,key:"map|"+id,id,name:mapName(id),group:"Treasure maps",where,whereSub,now,avg,trend:trend30(h),vel:vi.perDay,velI:vi,
         gilDay:(avg!=null&&vi.perDay)?avg*(1-state.tax)*vi.perDay:null,upload:aggUpload(res),shared:m.maps.length>1});
     }
@@ -460,7 +460,10 @@ async function load(){
     await refreshTopology();buildHomeSelect(document.getElementById("home"),state.home);
     const worlds=await fetchWorlds();
     for(const[id,nm]of Object.entries(worlds))if(nm===state.home)state.homeId=+id;
-    state.scopeDc=dcOfWorld(state.home)||state.dc;
+    /* the home world's own data centre - the sales below are what sells where you
+       sell, not where you buy. state.dc is a comma-joined list these days, so it
+       cannot stand in as a scope on its own: the fallback takes one name. */
+    state.scopeDc=dcOfWorld(state.home)||(state.dcs&&state.dcs[0])||dcNames()[0];
     document.getElementById("scopeName").textContent=state.scopeDc;
     const sell=await fetchAgg(state.home,IDS,(d,t)=>setStatus(`Pricing ${IDS.length} drops and maps on ${state.home}… ${d}/${t} batches`));
     state.mkt=sell.out;

@@ -66,8 +66,10 @@ const XW={
     try{const raw=sessionStorage.getItem(XW_KEY+":"+k);if(!raw)return null;
       const o=JSON.parse(raw);return Date.now()-o.t>ttl?null:o.d;}catch(e){return null;}
   },
-  cacheSet(k,d){
-    try{if(typeof Cache!=="undefined"&&Cache&&Cache.set)return Cache.set(k,d);}catch(e){}
+  /* ttl is passed on to the shared cache, which sweeps on how long an entry was
+     meant to live; the data-centre table is a day, a price is five minutes */
+  cacheSet(k,d,ttl){
+    try{if(typeof Cache!=="undefined"&&Cache&&Cache.set)return Cache.set(k,d,ttl);}catch(e){}
     try{sessionStorage.setItem(XW_KEY+":"+k,JSON.stringify({t:Date.now(),d:d}));}catch(e){}
   },
 
@@ -147,7 +149,7 @@ const XW={
         .filter(d=>xLiveDc(d.name,d.region));
       XW.dcs=out.length?out:XW_DC_FALLBACK;
     }catch(e){XW.dcs=XW_DC_FALLBACK;}
-    XW.cacheSet("xw:dcs",XW.dcs);
+    XW.cacheSet("xw:dcs",XW.dcs,XW_DC_TTL);
     return XW.dcs;
   },
   /* a scope as the parts Universalis is asked for, and as words */
@@ -202,7 +204,7 @@ const XW={
       capped:(it.listings||[]).length>=XW_LISTINGS,
       recent:(it.recentHistory||[]).slice(0,8).map(h=>({p:h.pricePerUnit,q:h.quantity,hq:!!h.hq,
         w:h.worldName||null,t:(h.timestamp||0)*1000}))};
-    XW.cacheSet(ck,packed);
+    XW.cacheSet(ck,packed,XW_TTL);
     return packed;
   },
 

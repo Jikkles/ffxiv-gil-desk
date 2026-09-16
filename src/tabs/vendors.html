@@ -203,11 +203,6 @@ const fmtM=n=>{if(n==null||!isFinite(n))return"—";const a=Math.abs(n);
   if(a>=1e9)return(n/1e9).toFixed(2)+"B";if(a>=1e6)return(n/1e6).toFixed(2)+"M";if(a>=1e4)return(n/1e3).toFixed(1)+"k";return Math.round(n).toLocaleString("en-GB");};
 const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const ago=ms=>{if(!ms)return"no uploads";const s=(Date.now()-ms)/1000;if(s<120)return"just now";if(s<3600)return Math.round(s/60)+"m ago";if(s<86400)return Math.round(s/3600)+"h ago";return Math.round(s/86400)+"d ago";};
-function agePill(ms){if(!ms)return'<span class="age-pill age-stale">no data</span>';
-  const h=(Date.now()-ms)/3600000;
-  if(h<1)return'<span class="age-pill age-fresh">&lt;1h</span>';
-  if(h<6)return`<span class="age-pill age-ok">${Math.round(h)}h</span>`;
-  return`<span class="age-pill age-stale">${h<24?Math.round(h)+'h':Math.round(h/24)+'d'}</span>`;}
 
 let state={
   home:"Spriggan", dc:"Chaos", dcs:["Chaos"], tax:0.05, group:"all", query:"", basis:"safe",
@@ -473,7 +468,7 @@ document.querySelectorAll("thead th[data-k]").forEach(th=>{
 });
 
 
-/* ---- settings persistence + shift-click force refresh ---- */
+/* ---- settings persistence ---- */
 (function(){
   const SKEY="gildesk:vendors:settings";
   function collect(){const s={};document.querySelectorAll("select[id],input[id]").forEach(el=>{
@@ -492,7 +487,6 @@ document.querySelectorAll("thead th[data-k]").forEach(th=>{
       el.dispatchEvent(new Event("change"));}
   }catch(e){}}
   document.addEventListener("change",save);
-  document.addEventListener("click",e=>{if(e.shiftKey&&e.target&&e.target.id==="refresh"){Cache.clear();setStatus("Cache cleared · pulling fresh prices…");}},true);
   restore();
 })();
 

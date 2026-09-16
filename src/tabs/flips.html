@@ -251,7 +251,7 @@ async function fetchHist(scope,ids,onProgress){
 async function fetchWorlds(){
   const hit=Cache.get("worlds",NET.WORLDS_TTL_MS);if(hit)return hit;
   try{const r=await tfetch("https://universalis.app/api/v2/worlds");const a=await r.json();
-    const m={};for(const w of a)m[w.id]=w.name;Cache.set("worlds",m);return m;
+    const m={};for(const w of a)m[w.id]=w.name;Cache.set("worlds",m,NET.WORLDS_TTL_MS);return m;
   }catch(e){return{...CHAOS_FALLBACK};}}
 
 const CHAOS_FALLBACK={39:"Omega",71:"Moogle",80:"Cerberus",83:"Louisoix",85:"Spriggan",97:"Ragnarok",400:"Sagittarius",401:"Phantom"};
@@ -286,7 +286,6 @@ function aggPrice(res,hq,scope){const q=side(res,hq);const m=q&&(scope==="world"
 function aggAvg(res,hq,scope){const q=side(res,hq);const a=q?(scope==="world"?q.aw:q.ad):null;return a!=null?a:null;}
 function aggUpload(res){return(res&&res.u)||0;}
 function wname(id){return(state.worlds&&state.worlds[id])||ALL_WORLDS_FALLBACK[id]||(id?("world "+id):"—");}
-function avg30(s){return s&&s.p&&s.p[0]!=null?{avg:s.p[0],n:s.p[1]}:{avg:null,n:0};}
 
 function compute(){
   const rows=[];
@@ -312,8 +311,12 @@ function compute(){
     const buyRef=aggAvg(chaosData,false,"dc");
     const buyOff=(buyPrice!=null&&buyRef)?(buyPrice-buyRef)/buyRef:null;
 
-    // Sell: 30d avg on home world (most realistic for rare items)
-    const h=avg30(histData);const tr30=trend30(histData);
+    /* Sell: 30 days of sales on the home world, read on the quality the row is
+       actually traded at. Flips buys NQ and sells NQ, so the basis is NQ, and
+       it is the unit-weighted median every other tab uses - this tab used to
+       take one median across both qualities counting each sale once, which on
+       the handful of stackable flips (the dyes) is not the price a unit fetches. */
+    const h=histAvg(histData,false);const tr30=trend30(histData,false);
     const sellAvg=h.avg;
     /* units a day, not sales a day: one sale of a stack of 99 is 99 units */
     const v30=vel30(histData);const vel=v30.perDay;
@@ -508,16 +511,9 @@ document.getElementById("density").addEventListener("change",e=>{
 
 
 
-function agePill(ms){
-  if(!ms)return'<span class="age-pill age-stale">no data</span>';
-  const h=(Date.now()-ms)/3600000;
-  if(h<1)return'<span class="age-pill age-fresh">&lt;1h</span>';
-  if(h<6)return`<span class="age-pill age-ok">${Math.round(h)}h</span>`;
-  return`<span class="age-pill age-stale">${h<24?Math.round(h)+'h':Math.round(h/24)+'d'}</span>`;
-}
 
 
-/* ===== v12: settings persistence + force-refresh ===== */
+/* ===== v12: settings persistence ===== */
 (function(){
   const SKEY="gildesk:flips:settings";
   function collect(){const s={};document.querySelectorAll("select[id],input[id]").forEach(el=>{
@@ -537,7 +533,6 @@ function agePill(ms){
       el.dispatchEvent(new Event("change"));}
   }catch(e){}}
   document.addEventListener("change",()=>saveSettings());
-  document.addEventListener("click",e=>{if(e.shiftKey&&e.target&&e.target.id==="refresh"){Cache.clear();setStatus("Cache cleared \u00b7 pulling fresh prices\u2026");}},true);
   restoreSettings();syncDcNames();syncHomeNames();
 })();
 

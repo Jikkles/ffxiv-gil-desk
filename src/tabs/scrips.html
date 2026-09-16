@@ -141,14 +141,15 @@ h2{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.16em;te
       <th data-mk="name" style="cursor:default">Materia</th>
       <th data-mk="grade">Grade <span></span></th>
       <th data-mk="sell" data-msorted>Sell · <i class="homename" style="font-style:normal">Spriggan</i> <span>▾</span></th>
-      <th data-mk="avg">Avg <span></span></th>
+      <th data-mk="avg" title="The median price a unit actually sold at on your world over the last 30 days">Avg 30d <span></span></th>
+      <th data-mk="trend" title="The newer half of the covered window against the older half, on what has actually sold">Trend <span></span></th>
       <th data-mk="vel" title="Units sold a day, which is not sales a day: a stack of 99 leaving in one transaction is 99 units">Units/day <span></span></th>
       <th data-mk="scrip" class="hide">Scrip buy <span></span></th>
     </tr></thead>
     <tbody id="mrows"></tbody>
   </table></div>
 
-  <p class="foot">Scrip yields and materia costs are read from the game's own collectable and scrip shop tables, at top collectability, and rebaked after each patch. "gil/scrip" uses whichever crafter materia that scrip buys sells for the most per scrip on <span class="homename">Spriggan</span>, net of tax. Material cost, shards and crystals included, buys each precraft NQ at the cheapest <span class="dcname">Chaos</span> price where it is listed, and only expands/crafts a precraft when it has no listings; raw mats NQ. Anything an NPC sells for gil all year is bought from the NPC when that is cheaper than the board, or the board has none. Only crafting (Craftsman&rsquo;s) materia are shown; materia sells NQ. Lower-level Purple gives fewer scrips but often cheaper mats — sort by profit to see which actually wins. Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>, item icons via <a href="https://xivapi.com" target="_blank" rel="noopener">XIVAPI</a>.</p>
+  <p class="foot">Scrip yields and materia costs are read from the game's own collectable and scrip shop tables, at top collectability, and rebaked after each patch. "gil/scrip" uses whichever crafter materia that scrip buys sells for the most per scrip on <span class="homename">Spriggan</span>, net of tax. Material cost, shards and crystals included, buys each precraft NQ at the cheapest <span class="dcname">Chaos</span> price where it is listed, and only expands/crafts a precraft when it has no listings; raw mats NQ. Anything an NPC sells for gil all year is bought from the NPC when that is cheaper than the board, or the board has none. Only crafting (Craftsman&rsquo;s) materia are shown; materia sells NQ. <b>Avg 30d</b>, <b>Trend</b> and <b>Units/day</b> are 30 days of sales on <span class="homename">Spriggan</span>, read the same way as every other tab: the median a unit actually sold at, which one joke sale cannot drag the way an average can. Lower-level Purple gives fewer scrips but often cheaper mats — sort by profit to see which actually wins. Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>, item icons via <a href="https://xivapi.com" target="_blank" rel="noopener">XIVAPI</a>.</p>
   </main>
 </div>
 
@@ -168,7 +169,7 @@ const fmt=n=>n==null||!isFinite(n)?"—":Math.round(n).toLocaleString("en-GB");
 const fmtK=n=>{if(n==null||!isFinite(n))return"—";if(Math.abs(n)>=1e6)return(n/1e6).toFixed(2)+"M";if(Math.abs(n)>=1e3)return(n/1e3).toFixed(1)+"k";return Math.round(n).toString();};
 
 let state={home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],tax:0.05,scrip:"all",cls:"all",showCrystals:false,grade:"all",query:"",hideNo:true,hideOutlier:true,
-  csort:"profit",cdir:-1,msort:"sell",mdir:-1,worlds:null,sell:null,chaos:null,
+  csort:"profit",cdir:-1,msort:"sell",mdir:-1,worlds:null,sell:null,hist:null,chaos:null,
   gps:{purple:null,orange:null},collRows:null,matRows:null,expanded:new Set()};
 
 function side(res,hq){return res?(hq?res.h:res.n):null;}
@@ -180,7 +181,6 @@ function rawNQ(id){return aggPrice(state.chaos[id],false,"dc");}
 /* bought NQ, at the cheaper of the board and an NPC shop (see npcBuy) */
 function buyNQ(id){const m=rawNQ(id);
   return npcBuy({price:m.price,worldId:m.worldId,world:m.price!=null?wname(m.worldId):null,hop:(m.worldId!=null&&m.worldId!==state.homeId),hq:false},id);}
-function preHQ(id){return aggPrice(state.chaos[id],true,"dc");}
 
 /*__SHARED_A__*/
 /*__SHARED_B__*/
@@ -198,10 +198,20 @@ async function fetchAgg(scope,ids,onProgress){
     const j=await r.json();const m={};for(const row of(j.results||[]))m[row.itemId]=compressAgg(row);return m;},onProgress);
   if(!res.failed.length)Cache.set(ck,res.out);
   return res;}
+async function fetchHist(scope,ids,onProgress){
+  const ck=`hist:${scope}:${hashIds(ids)}`;const hit=Cache.get(ck,NET.CACHE_TTL_MS);
+  if(hit){if(onProgress)onProgress(1,1);return{out:hit,failed:[],fromCache:true};}
+  const res=await runBatches(ids,async b=>{
+    const r=await tfetch(`https://universalis.app/api/v2/history/${scope}/${b.join(",")}?entriesToReturn=${HIST_ENTRIES}&entriesWithin=${HIST_SECS}&statsWithin=${HIST_SECS*1000}`);
+    if(!r.ok)throw new Error("HTTP "+r.status+" · history");
+    const j=await r.json();const src=j.items||(j.itemID?{[j.itemID]:j}:{});
+    const m={};for(const k in src)m[k]=summarizeHist(src[k]);return m;},onProgress);
+  if(!res.failed.length)Cache.set(ck,res.out);
+  return res;}
 async function fetchWorlds(){
   const hit=Cache.get("worlds",NET.WORLDS_TTL_MS);if(hit)return hit;
   try{const r=await tfetch("https://universalis.app/api/v2/worlds");const a=await r.json();
-    const m={};for(const w of a)m[w.id]=w.name;Cache.set("worlds",m);return m;
+    const m={};for(const w of a)m[w.id]=w.name;Cache.set("worlds",m,NET.WORLDS_TTL_MS);return m;
   }catch(e){return{...CHAOS_FALLBACK};}}
 
 async function load(){const btn=document.getElementById("refresh");btn.disabled=true;clearErr();
@@ -210,12 +220,13 @@ async function load(){const btn=document.getElementById("refresh");btn.disabled=
     state.worlds=await fetchWorlds();
     for(const[id,nmw]of Object.entries(state.worlds))if(nmw===state.home)state.homeId=+id;
     const prog=l=>(d,t)=>setStatus(`${l}\u2026 ${d}/${t} batches`);
-    const[sell,chaos]=await Promise.all([
+    const[sell,hist,chaos]=await Promise.all([
       fetchAgg(state.home,MATERIA_IDS,prog("Pricing materia on "+state.home)),
+      fetchHist(state.home,MATERIA_IDS,prog("Reading 30-day history")),
       fetchMarket(COLL_PRICE_IDS,prog("Pricing recipe trees ("+dcLabel()+")"))]);
-    state.sell=sell.out;state.chaos=chaos.out;
+    state.sell=sell.out;state.hist=hist.out;state.chaos=chaos.out;
     compute();renderColl();renderMateria();updateScanTime();
-    finishStatus([sell,chaos]);
+    finishStatus([sell,hist,chaos]);
   }catch(e){showErr(e);}finally{btn.disabled=false;}}
 
 // recursive cost of a recipe node: leaf = buy NQ; craftable = cheaper of buy-HQ vs craft-from-children
@@ -239,10 +250,20 @@ function walkCost(node,fn){fn(node);if(node.showKids)node.children.forEach(k=>wa
 function updateScanTime(){const el=document.getElementById("lastScan");if(!el)return;const now=new Date();el._scanTime=now;function tick(){if(!el._scanTime)return;const age=(Date.now()-el._scanTime)/1000;el.textContent=el._scanTime.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit",second:"2-digit"});el.style.color=age<1800?"var(--win)":"var(--loss)";}tick();if(el._ticker)clearInterval(el._ticker);el._ticker=setInterval(tick,30000);}
 function compute(){
   state.matRows=MATERIA.map(m=>{const res=state.sell[m.id];
-    const sell=aggPrice(res,false,"world").price;const avg=aggAvg(res,false,"world");const vel=aggVel(res,false,"world");
+    const sell=aggPrice(res,false,"world").price;
+    /* 30 days of this world's sales, the same basis every other tab reads: a
+       unit-weighted median rather than Universalis' own rolling mean, which one
+       joke listing sold at a joke price drags a long way, and materia is exactly
+       the busy market that happens on. The aggregate's short rolling figures only
+       stand in for an item whose history failed to load. */
+    const h=state.hist?state.hist[m.id]:null;
+    const avg=h?histAvg(h,false).avg:aggAvg(res,false,"world");
+    const velI=h?vel30(h,false):velAgg(aggVel(res,false,"world")),vel=velI.perDay;
+    const trendT=h?trend30(h,false):null;
     const net=sell!=null?sell*(1-state.tax):null;const sb=SCRIP_BUY[m.id];
     const outlier=isOutlier(sell,avg,{unsoldCounts:false});
-    return {...m,sell,avg,vel,net,outlier,scripType:sb?sb.type:null,scripCost:sb?sb.cost:null};});
+    return {...m,sell,avg,vel,velI,trendT,trend:trendT?trendT.pct:null,net,outlier,
+      scripType:sb?sb.type:null,scripCost:sb?sb.cost:null};});
   const byId={};state.matRows.forEach(r=>byId[r.id]=r);
   /* a scrip is worth whatever materia it buys sells for, per scrip of its cost */
   for(const key of ['purple','orange']){let best=null;
@@ -332,7 +353,7 @@ function renderMateria(){if(!state.matRows)return;const q=state.query.trim().toL
   for(const m of rows){const tr=document.createElement("tr");tr.className="row";
     const tag=m.scripType?`<span class="pill ${m.scripType}">${m.scripType==='purple'?'Purple':'Orange'}</span>`:'';
     tr.innerHTML=`<td><div class="name"><span class="n"><button class="listbtn" data-listadd="${m.id}" title="Add to a saved list">📋</button><button class="xwbtn" data-xw="${m.id}" data-xwname="${xesc(m.name)}" title="Compare this item's price and stock on every world">\ud83c\udf10</button>${iconHTML(m.id)}${m.type} ${tag}${m.outlier?`<span class="warn" title="${outlierWhy(m.sell,m.avg,null)}">⚠</span>`:""}</span></div></td>
-      <td>${m.grade||'—'}</td><td>${fmt(m.sell)} <span class="q">NQ</span></td><td>${fmt(m.avg)}</td><td>${velCell(velAgg(m.vel))}</td>
+      <td>${m.grade||'—'}</td><td>${fmt(m.sell)} <span class="q">NQ</span></td><td>${fmt(m.avg)}</td><td>${trendChip(m.trendT)}</td><td>${velCell(m.velI)}</td>
       <td class="hide">${m.scripCost?`<span class="${m.scripType==='purple'?'ptext':'otext'}">${m.scripCost} ${m.scripType==='purple'?'P':'O'}</span>`:'—'}</td>`;
     tb.appendChild(tr);}
   document.getElementById("mtbl").hidden=false;
@@ -361,7 +382,7 @@ document.querySelectorAll("th[data-mk]").forEach(th=>{if(th.style.cursor==="defa
   document.querySelectorAll("th[data-mk]").forEach(x=>{x.removeAttribute("data-msorted");const s=x.querySelector("span");if(s)s.textContent="";});th.setAttribute("data-msorted","");th.querySelector("span").textContent=state.mdir<0?"▾":"▴";renderMateria();});});
 document.getElementById("status").innerHTML='Click <b>Refresh</b> to load live prices…';
 
-/* ===== v12: settings persistence + force-refresh ===== */
+/* ===== v12: settings persistence ===== */
 (function(){
   const SKEY="gildesk:materia:settings";
   function collect(){const s={};document.querySelectorAll("select[id],input[id]").forEach(el=>{
@@ -381,7 +402,6 @@ document.getElementById("status").innerHTML='Click <b>Refresh</b> to load live p
       el.dispatchEvent(new Event("change"));}
   }catch(e){}}
   document.addEventListener("change",()=>saveSettings());
-  document.addEventListener("click",e=>{if(e.shiftKey&&e.target&&e.target.id==="refresh"){Cache.clear();setStatus("Cache cleared \u00b7 pulling fresh prices\u2026");}},true);
   restoreSettings();syncDcNames();syncHomeNames();
 })();
 

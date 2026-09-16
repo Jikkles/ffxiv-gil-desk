@@ -218,11 +218,6 @@ function side(res,hq){return res?(hq?res.h:res.n):null;}
 function aggPrice(res,hq,scope){const q=side(res,hq);const m=q&&(scope==="world"?q.mw:q.md);return m&&m[0]!=null?{price:m[0],worldId:m[1]!=null?m[1]:null}:{price:null,worldId:null};}
 function aggUpload(res){return(res&&res.u)||0;}
 function wname(id){return(state.worlds&&state.worlds[id])||CHAOS_FALLBACK[id]||LIGHT_FALLBACK[id]||(id?("world "+id):"—");}
-function avg30(s,wantHQ){if(!s)return{avg:null,n:0,fb:false};
-  const pick=wantHQ?s.h:s.n;
-  if(pick&&pick[0]!=null)return{avg:pick[0],n:pick[1],fb:false};
-  if(s.a&&s.a[0]!=null)return{avg:s.a[0],n:s.a[1],fb:true};
-  return{avg:null,n:0,fb:false};}
 
 // ---- buy / craft costs (memoised per refresh) ----
 /* the cheaper of the board and an NPC shop (see npcBuy) */
@@ -266,7 +261,7 @@ async function fetchHist(scope,ids,onProgress){
 async function fetchWorlds(){
   const hit=Cache.get("worlds",NET.WORLDS_TTL_MS);if(hit)return hit;
   try{const r=await tfetch("https://universalis.app/api/v2/worlds");const a=await r.json();
-    const m={};for(const w of a)m[w.id]=w.name;Cache.set("worlds",m);return m;
+    const m={};for(const w of a)m[w.id]=w.name;Cache.set("worlds",m,NET.WORLDS_TTL_MS);return m;
   }catch(e){return{...CHAOS_FALLBACK};}}
 
 async function load(){if(!FINISHED.length)return renderEmpty();
@@ -289,7 +284,7 @@ function compute(){state._best={};state._hops={};const rows=[];
   const opt=state.matBasis!=="buyall";
   for(const f of FINISHED){const fid=f.id,wantHQ=f.q==="hq",r=RECIPES[fid];
     const listing=aggPrice(state.sell[fid],wantHQ,"world").price;
-    const a=avg30(state.hist[fid],wantHQ);const tr30=trend30(state.hist[fid],wantHQ);
+    const a=histAvg(state.hist[fid],wantHQ);const tr30=trend30(state.hist[fid],wantHQ);
     /* units a day, not sales a day: one sale of a stack of 99 is 99 units */
     const v30=vel30(state.hist[fid],wantHQ);const vel=v30.perDay;
     const basis=state.basis==="avg30"?(a.avg!=null?a.avg:listing):(listing!=null?listing:a.avg);
@@ -499,13 +494,6 @@ document.getElementById("showCrystals").addEventListener("change",e=>{state.show
 document.getElementById("hideOutlier").addEventListener("change",e=>{state.hideOutlier=e.target.checked;if(state.rows)render();});
 
 
-function agePill(ms){
-  if(!ms)return'<span class="age-pill age-stale">no data</span>';
-  const h=(Date.now()-ms)/3600000;
-  if(h<1)return'<span class="age-pill age-fresh">&lt;1h</span>';
-  if(h<6)return`<span class="age-pill age-ok">${Math.round(h)}h</span>`;
-  return`<span class="age-pill age-stale">${h<24?Math.round(h)+'h':Math.round(h/24)+'d'}</span>`;
-}
 
 function updateStrip(){
   if(!document.getElementById("kpiBest"))return;
@@ -522,7 +510,7 @@ function updateStrip(){
   document.getElementById("kpiMarginName").textContent=bestMargin?bestMargin.name:"—";
 }
 
-/* ===== v12: settings persistence + force-refresh ===== */
+/* ===== v12: settings persistence ===== */
 (function(){
   const SKEY="gildesk:list__LIST_N__:settings";
   function collect(){const s={};document.querySelectorAll("select[id],input[id]").forEach(el=>{
@@ -542,7 +530,6 @@ function updateStrip(){
       el.dispatchEvent(new Event("change"));}
   }catch(e){}}
   document.addEventListener("change",()=>saveSettings());
-  document.addEventListener("click",e=>{if(e.shiftKey&&e.target&&e.target.id==="refresh"){Cache.clear();setStatus("Cache cleared \u00b7 pulling fresh prices\u2026");}},true);
   restoreSettings();syncDcNames();syncHomeNames();
   {const m=document.getElementById("costMode");if(m)m.textContent=state.matBasis==="buyall"?"buy-all":"optimised";}
 })();

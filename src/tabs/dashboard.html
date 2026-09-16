@@ -183,11 +183,6 @@ function side(res,hq){return res?(hq?res.h:res.n):null;}
 function aggPrice(res,hq,scope){const q=side(res,hq);const m=q&&(scope==="world"?q.mw:q.md);return m&&m[0]!=null?{price:m[0],worldId:m[1]!=null?m[1]:null}:{price:null,worldId:null};}
 function aggUpload(res){return(res&&res.u)||0;}
 function wname(id){return(state.worlds&&state.worlds[id])||CHAOS_FALLBACK[id]||LIGHT_FALLBACK[id]||(id?("world "+id):"—");}
-function avg30(s,wantHQ){if(!s)return{avg:null,n:0,fb:false};
-  const pick=wantHQ?s.h:s.n;
-  if(pick&&pick[0]!=null)return{avg:pick[0],n:pick[1],fb:false};
-  if(s.a&&s.a[0]!=null)return{avg:s.a[0],n:s.a[1],fb:true};
-  return{avg:null,n:0,fb:false};}
 
 /* the cheaper of the board and an NPC shop (see npcBuy) */
 function buyOf(id){const hq=!!RECIPES[id];const m=aggPrice(state.chaos[id],hq,"dc");return npcBuy({price:m.price,worldId:m.worldId,world:m.price!=null?wname(m.worldId):null,hop:(m.worldId!=null&&m.worldId!==state.homeId),hq},id);}
@@ -229,7 +224,7 @@ async function fetchHist(scope,ids,onProgress){
 async function fetchWorlds(){
   const hit=Cache.get("worlds",NET.WORLDS_TTL_MS);if(hit)return hit;
   try{const r=await tfetch("https://universalis.app/api/v2/worlds");const a=await r.json();
-    const m={};for(const w of a)m[w.id]=w.name;Cache.set("worlds",m);return m;
+    const m={};for(const w of a)m[w.id]=w.name;Cache.set("worlds",m,NET.WORLDS_TTL_MS);return m;
   }catch(e){return{...CHAOS_FALLBACK};}}
 
 /* ===== dead-item pruning =====
@@ -292,7 +287,7 @@ function compute(){state._best={};state._hops={};const rows=[];
   const opt=state.matBasis!=="buyall";
   for(const f of FINISHED){const fid=f.id,wantHQ=sellsHQ(f),r=RECIPES[fid];
     const listing=aggPrice(state.sell[fid],wantHQ,"world").price;
-    const a=avg30(state.hist[fid],wantHQ);const tr30=trend30(state.hist[fid],wantHQ);
+    const a=histAvg(state.hist[fid],wantHQ);const tr30=trend30(state.hist[fid],wantHQ);
     /* units a day, not sales a day: one sale of a stack of 99 is 99 units */
     const v30=vel30(state.hist[fid],wantHQ);const vel=v30.perDay;
     const basis=state.basis==="avg30"?(a.avg!=null?a.avg:listing):(listing!=null?listing:a.avg);

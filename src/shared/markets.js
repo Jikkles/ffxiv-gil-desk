@@ -75,7 +75,7 @@ async function refreshTopology(){
     const dcs=await dr.json(),worlds=await wr.json();
     if(!Array.isArray(dcs)||!Array.isArray(worlds)||!dcs.length)return WORLD_TOPO;
     const byId={};for(const w of worlds)byId[w.id]=w.name;
-    Cache.set("worlds",byId);   /* fetchWorlds() wants exactly this, so save it a round trip */
+    Cache.set("worlds",byId,NET.WORLDS_TTL_MS);   /* fetchWorlds() wants exactly this, so save it a round trip */
     const order=LIVE_REGIONS,out=[],seen={};
     for(const d of dcs){
       if(!d||!d.name||!Array.isArray(d.worlds))continue;
@@ -90,7 +90,7 @@ async function refreshTopology(){
     if(!out.length)return WORLD_TOPO;
     out.sort((a,b)=>{const ia=order.indexOf(a.region),ib=order.indexOf(b.region);
       return(ia<0?99:ia)-(ib<0?99:ib)||a.region.localeCompare(b.region);});
-    WORLD_TOPO=out;Cache.set("topology2",out);
+    WORLD_TOPO=out;Cache.set("topology2",out,NET.WORLDS_TTL_MS);
   }catch(e){}
   return WORLD_TOPO;
 }

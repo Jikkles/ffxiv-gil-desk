@@ -216,7 +216,7 @@ let state={home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],tax:0.05,cur:CD.cu
   minVel:0.5,query:"",showTribal:false,hideOutlier:true,sortKey:"gilDay",sortDir:-1,worlds:null,mkt:null,hist:{},rows:null,gen:0};
 
 function side(res,hq){return res?(hq?res.h:res.n):null;}
-function aggPrice(res,hq,scope){const q=side(res,hq);const m=q&&(scope==="world"?q.mw:q.md);return m&&m[0]!=null?m[0]:null;}
+function aggPrice(res,hq,scope){const q=side(res,hq);const m=q&&(scope==="world"?q.mw:q.md);return m&&m[0]!=null?{price:m[0],worldId:m[1]!=null?m[1]:null}:{price:null,worldId:null};}
 function aggAvg(res,hq,scope){const q=side(res,hq);const a=q?(scope==="world"?q.aw:q.ad):null;return a!=null?a:null;}
 function aggVel(res,hq,scope){const q=side(res,hq);const d=q?(scope==="world"?q.vw:q.vd):null;return d!=null?d:0;}
 function aggUpload(res){return(res&&res.u)||0;}
@@ -254,7 +254,7 @@ async function fetchHist(scope,ids,onProgress){
 async function fetchWorlds(){
   const hit=Cache.get("worlds",NET.WORLDS_TTL_MS);if(hit)return hit;
   try{const r=await tfetch("https://universalis.app/api/v2/worlds");const a=await r.json();
-    const m={};for(const w of a)m[w.id]=w.name;Cache.set("worlds",m);return m;}catch(e){return{...CHAOS_FALLBACK};}}
+    const m={};for(const w of a)m[w.id]=w.name;Cache.set("worlds",m,NET.WORLDS_TTL_MS);return m;}catch(e){return{...CHAOS_FALLBACK};}}
 
 /* ---- currency picker: icon grid ---- */
 function iconUrls(ic){const folder=String(Math.floor(ic/1000)*1000).padStart(6,"0");
@@ -319,7 +319,7 @@ function priceRow(e){
   const meta=IT[e.i]||{n:"#"+e.i};
   const hq=!!e.hq&&!!meta.hq;
   const res=state.mkt?state.mkt[e.i]:null;
-  const now=aggPrice(res,hq,"world");
+  const now=aggPrice(res,hq,"world").price;
   /* 30 days of this world's sales, the median and the pace; the aggregate's own
      short rolling figures only stand in for an item whose history failed to load */
   const h=state.hist[e.i];
@@ -489,7 +489,6 @@ document.getElementById("density").addEventListener("change",e=>{document.getEle
   function collect(){const s={};document.querySelectorAll("select[id],input[id]").forEach(el=>{
     if(el.id==="search")return;s[el.id]=el.type==="checkbox"?el.checked:el.value;});return s;}
   document.addEventListener("change",()=>{try{localStorage.setItem(SKEY,JSON.stringify(collect()));}catch(e){}});
-  document.addEventListener("click",e=>{if(e.shiftKey&&e.target&&e.target.id==="refresh"){Cache.clear();setStatus("Cache cleared \u00b7 pulling fresh prices\u2026");}},true);
   try{const s=JSON.parse(localStorage.getItem(SKEY)||"{}");
     for(const[id,v]of Object.entries(s)){const el=document.getElementById(id);if(!el)continue;
       if(el.type==="checkbox")el.checked=!!v;

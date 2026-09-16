@@ -153,7 +153,7 @@ const VENTURES=[
 /*__SHARED_XW__*/
 
 function side(res,hq){return res?(hq?res.h:res.n):null;}
-function aggPrice(res,hq,scope){const q=side(res,hq);const m=q&&(scope==="world"?q.mw:q.md);return m&&m[0]!=null?m[0]:null;}
+function aggPrice(res,hq,scope){const q=side(res,hq);const m=q&&(scope==="world"?q.mw:q.md);return m&&m[0]!=null?{price:m[0],worldId:m[1]!=null?m[1]:null}:{price:null,worldId:null};}
 function aggAvg(res,hq,scope){const q=side(res,hq);const a=q?(scope==="world"?q.aw:q.ad):null;return a!=null?a:null;}
 const fmt=n=>n==null||!isFinite(n)?"—":Math.round(n).toLocaleString("en-GB");
 
@@ -184,7 +184,7 @@ async function fetchHist(scope,ids,onProgress){
 async function fetchWorlds(){
   const hit=Cache.get("worlds",NET.WORLDS_TTL_MS);if(hit)return hit;
   try{const r=await tfetch("https://universalis.app/api/v2/worlds");const a=await r.json();
-    const m={};for(const w of a)m[w.id]=w.name;Cache.set("worlds",m);return m;}catch(e){return{39:"Omega",71:"Moogle",80:"Cerberus",83:"Louisoix",85:"Spriggan",97:"Ragnarok",400:"Sagittarius",401:"Phantom"};}}
+    const m={};for(const w of a)m[w.id]=w.name;Cache.set("worlds",m,NET.WORLDS_TTL_MS);return m;}catch(e){return{39:"Omega",71:"Moogle",80:"Cerberus",83:"Louisoix",85:"Spriggan",97:"Ragnarok",400:"Sagittarius",401:"Phantom"};}}
 
 /* One venture-exclusive item. Sell now stays on the home world - that is where
    the listing would go - but everything that describes how the market behaves is
@@ -192,7 +192,7 @@ async function fetchWorlds(){
    month and a 30-day window that thin cannot carry a trend or a velocity. */
 function priceRow(e){
   const res=state.mkt?state.mkt[e.i]:null;
-  const now=aggPrice(res,false,"world");
+  const now=aggPrice(res,false,"world").price;
   /* the 30-day median across the data centre, from the history read below; the
      aggregate's short rolling mean stands in only if that history did not load */
   const h=state.hist?state.hist[e.i]:null;
@@ -202,7 +202,7 @@ function priceRow(e){
      run of zeros. */
   const vi=vel30(state.hist?state.hist[e.i]:null,false);const vel=vi.perDay;
   const trend=trend30(state.hist?state.hist[e.i]:null,false);
-  const dcNow=aggPrice(res,false,"dc");
+  const dcNow=aggPrice(res,false,"dc").price;
   const basis=avg!=null?avg:(dcNow!=null?dcNow:now);
   const net=basis!=null?basis*(1-state.tax):null;
   /* the Duties test: nothing sold, or a listing far from what has sold */
@@ -302,7 +302,10 @@ async function load(){
     await refreshTopology();buildHomeSelect(document.getElementById("home"),state.home);
     state.worlds=await fetchWorlds();
     for(const[id,nm]of Object.entries(state.worlds))if(nm===state.home)state.homeId=+id;
-    state.scopeDc=dcOfWorld(state.home)||state.dc;
+    /* the home world's own data centre - the sales below are what sells where you
+       sell, not where you buy. state.dc is a comma-joined list these days, so it
+       cannot stand in as a scope on its own: the fallback takes one name. */
+    state.scopeDc=dcOfWorld(state.home)||(state.dcs&&state.dcs[0])||dcNames()[0];
     document.getElementById("scopeName").textContent=state.scopeDc;
     const sell=await fetchAgg(state.home,VIDS,(d,t)=>setStatus(`Pricing ${VIDS.length} venture rewards on ${state.home}… ${d}/${t} batches`));
     state.mkt=sell.out;
@@ -343,7 +346,6 @@ document.querySelectorAll("thead th[data-k]").forEach(th=>{
   function collect(){const s={};document.querySelectorAll("select[id],input[id]").forEach(el=>{
     if(el.id==="search"||el.type==="button")return;s[el.id]=el.type==="checkbox"?el.checked:el.value;});return s;}
   document.addEventListener("change",()=>{try{localStorage.setItem(SKEY,JSON.stringify(collect()));}catch(e){}});
-  document.addEventListener("click",e=>{if(e.shiftKey&&e.target&&e.target.id==="refresh"){Cache.clear();setStatus("Cache cleared · pulling fresh prices…");}},true);
   try{const s=JSON.parse(localStorage.getItem(SKEY)||"{}");
     for(const[id,v]of Object.entries(s)){const el=document.getElementById(id);if(!el)continue;
       if(el.type==="checkbox")el.checked=!!v;

@@ -172,10 +172,6 @@ function side(res,hq){return res?(hq?res.h:res.n):null;}
 function aggPrice(res,hq,scope){const q=side(res,hq);const m=q&&(scope==="world"?q.mw:q.md);return m&&m[0]!=null?{price:m[0],worldId:m[1]!=null?m[1]:null}:{price:null,worldId:null};}
 function aggUpload(res){return(res&&res.u)||0;}
 function wname(id){return(state.worlds&&state.worlds[id])||CHAOS_FALLBACK[id]||(id?("world "+id):"—");}
-function avg30(s){if(!s)return{avg:null,n:0};
-  if(s.n&&s.n[0]!=null)return{avg:s.n[0],n:s.n[1]};
-  if(s.a&&s.a[0]!=null)return{avg:s.a[0],n:s.a[1]};
-  return{avg:null,n:0};}
 
 /*__SHARED_A__*/
 /*__SHARED_B__*/
@@ -205,7 +201,7 @@ async function fetchHist(scope,ids,onProgress){
 async function fetchWorlds(){
   const hit=Cache.get("worlds",NET.WORLDS_TTL_MS);if(hit)return hit;
   try{const r=await tfetch("https://universalis.app/api/v2/worlds");const a=await r.json();
-    const m={};for(const w of a)m[w.id]=w.name;Cache.set("worlds",m);return m;
+    const m={};for(const w of a)m[w.id]=w.name;Cache.set("worlds",m,NET.WORLDS_TTL_MS);return m;
   }catch(e){return{...CHAOS_FALLBACK};}}
 
 /* ---- costing ----
@@ -255,7 +251,7 @@ function compute(){state._best={};state._hops={};const rows=[];
   const opt=state.matBasis!=="buyall";
   for(const p of PROJ){const id=p.i;
     const listing=aggPrice(state.sell[id],false,"world").price;
-    const a=avg30(state.hist[id]);const tr30=trend30(state.hist[id],false);
+    const a=histAvg(state.hist[id],false);const tr30=trend30(state.hist[id],false);
     const v30=vel30(state.hist[id],false);const vel=v30.perDay;
     const basis=state.basis==="avg30"?(a.avg!=null?a.avg:listing):(listing!=null?listing:a.avg);
     /* a project nobody has bought in a month has no price, only an asking price */

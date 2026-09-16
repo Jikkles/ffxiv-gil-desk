@@ -53,8 +53,10 @@ const Cache={
     try{const raw=localStorage.getItem(this.key(k));if(!raw)return null;
     const{t,d}=JSON.parse(raw);if(Date.now()-t>ttl){localStorage.removeItem(this.key(k));return null;}return d;}catch(e){return null;}},
   /* A full store first loses the expired prices, then every cached price: a cache
-     is only ever a shortcut, and a price it cannot keep is fetched again next time. */
-  set(k,d){const v=JSON.stringify({t:Date.now(),d});
+     is only ever a shortcut, and a price it cannot keep is fetched again next time.
+     ttl is how long this entry is meant to live, written into the entry so evict
+     below can honour it. Left out, it is the twelve minutes a price gets. */
+  set(k,d,ttl){const v=JSON.stringify({t:Date.now(),l:ttl||NET.CACHE_TTL_MS,d});
     try{localStorage.setItem(this.key(k),v);return;}catch(e){}
     this.evict();try{localStorage.setItem(this.key(k),v);return;}catch(e){}
     this.clear();try{localStorage.setItem(this.key(k),v);}catch(e){}},
@@ -62,12 +64,17 @@ const Cache={
      reorder its keys as they go, and walking them by index while deleting left
      some entries behind. */
   keys(){const out=[];try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k)out.push(k);}}catch(e){}return out;},
-  /* Drops the expired entries. The time is read off the front of each entry rather
-     than parsing the whole thing, so this is cheap enough to run as every tab opens. */
+  /* Drops the expired entries. The time and the lifetime are read off the front of
+     each entry rather than parsing the whole thing, so this is cheap enough to run
+     as every tab opens. Each entry is measured against its own lifetime: this used
+     to hold every key to the twelve minutes a price gets, which quietly threw away
+     the world topology and the world-name table a quarter of an hour after they
+     were fetched, though both are asked to live a day. An entry written before the
+     lifetime was recorded has none, and falls back to those twelve minutes. */
   evict(){const now=Date.now(),pre=`gildesk:${CACHE_VER}:`;
     try{for(const k of this.keys()){if(!k.startsWith(pre))continue;
-      const m=/^\{"t":(\d+)/.exec(localStorage.getItem(k)||"");
-      if(!m||now-+m[1]>NET.CACHE_TTL_MS)localStorage.removeItem(k);}}catch(e){}},
+      const m=/^\{"t":(\d+)(?:,"l":(\d+))?/.exec(localStorage.getItem(k)||"");
+      if(!m||now-+m[1]>(m[2]?+m[2]:NET.CACHE_TTL_MS))localStorage.removeItem(k);}}catch(e){}},
   clear(){const pre=`gildesk:${CACHE_VER}:`;
     try{for(const k of this.keys())if(k.startsWith(pre))localStorage.removeItem(k);}catch(e){}},
   /* Whatever an earlier CACHE_VER left behind, dropped without parsing it. The
@@ -91,9 +98,12 @@ function storeSet(key,value){
   try{Cache.clear();localStorage.setItem(key,value);return true;}catch(e){}
   return false;}
 /* Refresh means refresh. Prices are cached for twelve minutes, so a click
-   inside that window handed back exactly what was already on screen - and
-   the status line told you to shift-click for a fresh pull, which nothing
-   in the desk ever implemented. The click is caught on the way down, before
+   inside that window handed back exactly what was already on screen, and a
+   plain Refresh was the one thing that could not get you a fresh price. Every
+   tab now forces one, which left the shift-click copies with nothing to add
+   beyond emptying every other tab's cache too, so they went; the Dashboard
+   keeps its own, because there shift means something else - rescan the items
+   Skip dead items leaves out. The click is caught on the way down, before
    the tab’s own handler runs, and the cache is told to miss until that scan
    is done. Every tab’s load() disables the button while it works, so that is
    what marks the end; the timeout is only there for a tab that never does. */
@@ -305,10 +315,17 @@ function trendCss(){if(_trCss)return;_trCss=true;
    listingOptional - the tab ranks on data-centre sales rather than on the
      cheapest listing, so a rare drop nobody has listed on your world still has a
      real price behind it and is not suspect.
-   unsoldCounts - false when the tab carries its own no-sales filter. Letting ⚠
-     hide unsold rows as well would make that tick a dead control: untick "Hide
-     no-sales" and the rows would stay hidden anyway, because Hide ⚠ outliers was
-     quietly removing the same ones.
+   unsoldCounts - false for either of two reasons. The tab carries its own
+     no-sales filter, and letting ⚠ hide unsold rows as well would make that tick
+     a dead control: untick "Hide no-sales" and the rows would stay hidden anyway,
+     because Hide ⚠ outliers was quietly removing the same ones. Or the tab is
+     built on rows that rarely sell at all - Duties and Retainers, where a drop
+     going a month without a sale on the whole data centre is ordinary. There the
+     row already reads empty across Avg 30d, Expected and Gil/day, so ⚠ tells you
+     nothing you cannot see, and since Hide ⚠ outliers is ticked to begin with it
+     would quietly hide the rare drops those tabs exist to list. Submersibles
+     deliberately does not set this: its own tick says it leaves unsold loot out
+     of route values, so there the flag has to fire.
 
    Flips keeps its own test - a buy price above what the item really resells for -
    because there the two prices compared are not a listing and its own average. */
