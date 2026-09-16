@@ -134,11 +134,11 @@ thead th span{display:inline-block;min-width:.8em}
       <template class="guide">
         <div data-spot="#view" data-side="right" data-title="Drops or maps"><b>Drops</b> lists items worth money and where they come from. <b>Maps &amp; portals</b> lists every treasure map and portal dungeon with what one coffer or chest is worth.</div>
         <div data-spot="#catNav" data-side="right" data-title="Content">Narrow the list to one kind of content: dungeons, deep dungeons, variant, Eureka, Bozja, Occult Crescent, treasure map coffers or map portals.</div>
-        <div data-spot="#how" data-side="right" data-title="Obtained by">Drops, currency exchanges, or both. Only shown on the Drops view.</div>
-        <div data-spot="#tbl th[data-k=pct]" data-side="bottom" data-title="Chance">Per run for a dungeon (every chest added together, and you still roll for it), per chest opened in a map portal, otherwise per coffer or sack. An exchange shows what it costs instead.</div>
-        <div data-spot="#tbl th[data-k=ev]" data-side="bottom" data-title="Expected">What one run, coffer or sack is worth from this item: chance × average price after tax. For an exchange, gil per unit of currency.</div>
-        <div data-spot="#mtbl th[data-k=ev]" data-side="bottom" data-title="Per coffer">What one dug-up coffer or portal chest is worth: every sellable drop's chance × its average price after tax, added up. Compare it with the map's own <b>Avg 30d</b> to decide whether to open a map or sell it.</div>
-        <div data-spot="#mrows tr.row:first-child" data-side="bottom" data-title="Open a map">Click a map or portal for its whole loot table, likeliest earners first.</div>
+        <div data-only data-spot="#how" data-side="right" data-title="Obtained by">Drops, currency exchanges, or both. Only shown on the Drops view.</div>
+        <div data-only data-spot="#tbl th[data-k=pct]" data-side="bottom" data-title="Chance">Per run for a dungeon (every chest added together, and you still roll for it), per chest opened in a map portal, otherwise per coffer or sack. An exchange shows what it costs instead.</div>
+        <div data-only data-spot="#tbl th[data-k=ev]" data-side="bottom" data-title="Expected">What one run, coffer or sack is worth from this item: chance × average price after tax. For an exchange, gil per unit of currency.</div>
+        <div data-only data-spot="#mtbl th[data-k=ev]" data-side="bottom" data-title="Per coffer">What one dug-up coffer or portal chest is worth: every sellable drop's chance × its average price after tax, added up. Compare it with the map's own <b>Avg 30d</b> to decide whether to open a map or sell it.</div>
+        <div data-only data-spot="#mrows tr.row:first-child" data-side="bottom" data-title="Open a map">Click a map or portal for its whole loot table, likeliest earners first.</div>
         <div data-spot="#soldOnly, #hideOutlier" data-side="right" data-title="What gets hidden"><b>Hide no-sales</b> drops anything with no recorded sales across your data centre; <b>Hide ⚠ outliers</b> drops rows whose listing sits far from what has actually sold.</div>
       </template>
     </details>

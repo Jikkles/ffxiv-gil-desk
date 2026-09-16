@@ -122,8 +122,8 @@ tr.detail>td{position:static!important}
         <div data-spot="#rank, #pHull, #pStern, #pBow, #pBridge, #statline" data-side="right" data-title="Your build">Set your rank and the four parts (<b>S+</b> is a modified Shark). The line underneath is what that build scores for surveillance, retrieval, speed, range and favor.</div>
         <div data-spot="#subs, #cadence" data-side="right" data-title="Fleet and schedule">How many subs sail and how often you send them back out. <b>Profit/day</b> is worked out on this schedule.</div>
         <div data-spot="#views" data-side="bottom" data-title="Routes or Loot"><b>Routes</b> ranks every voyage worth sailing; <b>Loot</b> lists every item a voyage can bring back.</div>
-        <div data-spot="#thr th[data-k=day]" data-side="bottom" data-title="Profit/day">What the whole fleet nets a day on your schedule, after repairs. A route longer than your resend gap only earns on the days it is back.</div>
-        <div data-spot="#rows tr:first-child" data-side="bottom" data-title="Open a route">Click a route for what each sector brings back and whether your build meets its surveillance, retrieval and favor breakpoints.</div>
+        <div data-only data-spot="#thr th[data-k=day]" data-side="bottom" data-title="Profit/day">What the whole fleet nets a day on your schedule, after repairs. A route longer than your resend gap only earns on the days it is back.</div>
+        <div data-only data-spot="#rows tr.row[data-id]:first-child" data-side="bottom" data-title="Open a route">Click a route for what each sector brings back and whether your build meets its surveillance, retrieval and favor breakpoints.</div>
         <div data-spot="#fitOnly, #useMarket, #hideOutlier" data-side="right" data-title="Filters"><b>Only routes this build maxes</b> hides routes your build falls short on. Untick <b>Count market-board loot</b> to value a route on NPC salvage alone. <b>Hide ⚠ outliers</b>, ticked to start with, leaves loot nobody has bought lately out of route values.</div>
       </template>
     </details>
