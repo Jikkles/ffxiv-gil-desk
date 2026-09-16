@@ -57,6 +57,14 @@
 .row{cursor:default;border-bottom:1px solid var(--line)}
 .row:hover td{background:var(--row-hover)}
 .tag-home{font-size:10px;font-family:"JetBrains Mono",monospace;color:var(--aether);background:var(--accent-soft);border:1px solid var(--aether-line);padding:1px 5px;border-radius:4px;margin-left:4px}
+/* How the cheapest listing sits against what the item really sells for on the
+   data centre it is listed on. Down is GOOD here, which is the opposite of the
+   Trend column beside it, so it deliberately does not reuse the .tr colours -
+   a green ▼ on this chip means a bargain, not a falling market. */
+.buyoff{font-family:"JetBrains Mono",monospace;font-size:11px;white-space:nowrap;
+  border-radius:5px;padding:1px 5px;margin-left:5px;cursor:help;border:1px solid;vertical-align:middle}
+.buyoff.cheap{color:var(--win);border-color:var(--win-line);background:var(--win-soft)}
+.buyoff.dear{color:var(--loss);border-color:var(--loss-line);background:var(--loss-soft)}
 .minprice-note{font-size:11px;color:var(--faint);font-family:"JetBrains Mono",monospace}
 </style>
 <script>try{var __t=localStorage.getItem("gildesk:theme:v1");document.documentElement.setAttribute("data-theme",__t==="light"?"light":"dark");}catch(e){document.documentElement.setAttribute("data-theme","dark");}</script>
@@ -173,7 +181,7 @@
       </div>
       <template class="guide">
         <div data-spot="#dcBtn" data-side="right" data-title="Buy from">The data centres searched for the cheapest listing. More of them finds more deals, but the scan takes longer.</div>
-        <div data-spot="#tbl th[data-k=buyPrice]" data-side="bottom" data-title="Buy (cheapest)">The lowest listing and the world it is on: <b>orange</b> means you will have to travel, <b>teal</b> that it is on your own world.</div>
+        <div data-spot="#tbl th[data-k=buyPrice]" data-side="bottom" data-title="Buy (cheapest)">The lowest listing and the world it is on: <b>orange</b> means you will have to travel, <b>teal</b> that it is on your own world. A green <b>▼ −26%</b> beside the price means the listing sits that far under what the item really sells for where it is listed &mdash; someone pricing to move, rather than the going rate. A red <b>▲</b> is the reverse. Careful: down is good news here, the opposite of the <b>Trend</b> column.</div>
         <div data-spot="#tbl th[data-k=profit]" data-side="bottom" data-title="Profit/flip">The 30-day average sale on your world, or the cheapest listing there if that is lower, after tax, less the buy price. <b>caps</b> beside <b>Sell now</b> marks a row held to that listing; ⚠ one with no sales on your world in 30 days.</div>
         <div data-spot="#grp, #minProfit, #minAvg, #hideHome, #hideOutlier" data-side="right" data-title="Filters">Pick a category, cut out small flips, and tick <b>Hide same-world deals</b> to see only the ones worth a hop. <b>Hide ⚠ outliers</b> keeps out flips nobody has bought on your world lately. Rolls, facewear and dyes rarely clear the 1M / 2M defaults, so lower <b>Min profit</b> and <b>Min avg price</b> for those.</div>
       </template>
@@ -185,7 +193,7 @@
   <div class="tablewrap"><table id="tbl" hidden>
     <thead><tr>
       <th data-k="name" style="cursor:default">Item</th>
-      <th data-k="buyPrice">Buy (cheapest) <span></span></th>
+      <th data-k="buyPrice" title="The lowest NQ listing across the data centres in Buy from, and the world it sits on. A ▼ −26% chip means that listing sits 26% under what the item really sells for on the data centre it is on, so someone is pricing to move; ▲ means the opposite, an asking price above the going rate. Nothing shows within 10% either way, which is just the going rate.">Buy (cheapest) <span></span></th>
       <th data-k="sellNow" title="Cheapest listing on your home world, with how long ago that world last reported to Universalis">Sell now <span></span></th>
       <th data-k="sellAvg" title="Median price of actual sales on your home world over 30 days, weighted by units, so one sale at a joke price cannot drag it">Avg 30d <span></span></th>
       <th data-k="trend" title="Which way the price is moving: the newer half of the sales history against the older half">Trend <span></span></th>
@@ -198,7 +206,7 @@
   </table></div>
 
   <p class="foot">
-    Buy = cheapest NQ listing anywhere on <span class="dcname">Chaos</span> (world shown in orange = hop required, teal = already on your world).
+    Buy = cheapest NQ listing anywhere on <span class="dcname">Chaos</span> (world shown in orange = hop required, teal = already on your world). The chip beside it compares that one listing with what the item actually sells for on the same data centre: green <b>▼</b> is under the going rate, red <b>▲</b> over it, and nothing at all within 10% either way. It reads the opposite way round to <b>Trend</b> &mdash; a falling buy price is good news, a falling sell price is not.
     Avg 30d = 30-day average sale price on your home world — more reliable than current listings for rare items.
     Profit = the lower of Sell avg and Sell now, × (1 − tax) − Buy: you have to undercut what your world already lists (Sell now is ignored when the cheapest listing anywhere is on your own world, since that is the one you buy). Margin = Profit ÷ that sell price.
     Units/day = how many units actually sell a day on your home world over 30 days — a stack of 99 counts as 99, not as one sale.
@@ -251,6 +259,18 @@ const LIGHT_FALLBACK={36:"Lich",33:"Twintania",56:"Phoenix",66:"Odin",67:"Shiva"
 const ALL_WORLDS_FALLBACK={...CHAOS_FALLBACK,...LIGHT_FALLBACK};
 const fmt=n=>n==null||!isFinite(n)?"—":Math.round(n).toLocaleString("en-GB");
 const fmtM=n=>{if(n==null||!isFinite(n))return"—";if(Math.abs(n)>=1e6)return(n/1e6).toFixed(2)+"M";if(Math.abs(n)>=1e3)return(n/1e3).toFixed(1)+"k";return Math.round(n).toString();};
+/* Within a tenth either way the listing is simply the going rate, and a chip on
+   every row would say nothing, so only a notable gap earns one. */
+const BUY_OFF_MIN=0.10;
+function buyOffChip(off,ref){
+  if(off==null||!isFinite(off)||Math.abs(off)<BUY_OFF_MIN)return"";
+  if(!ref||!isFinite(ref))return"";   /* no sales to compare against, so nothing honest to say */
+  const cheap=off<0,pct=Math.round(Math.abs(off)*100);
+  const sells=Math.round(ref).toLocaleString("en-GB");
+  const why=cheap
+    ?`Listed ${pct}% under the ${sells} gil this item actually sells for on that data centre, so someone is pricing to move`
+    :`Listed ${pct}% over the ${sells} gil this item actually sells for on that data centre, so it is an asking price rather than the going rate`;
+  return ` <span class="buyoff ${cheap?"cheap":"dear"}" title="${why}">${cheap?"▼":"▲"} ${cheap?"−":"+"}${pct}%</span>`;}
 const ago=ms=>{if(!ms)return"no uploads";const s=(Date.now()-ms)/1000;if(s<120)return"just now";if(s<3600)return Math.round(s/60)+"m ago";if(s<86400)return Math.round(s/3600)+"h ago";return Math.round(s/86400)+"d ago";};
 
 let state = {
@@ -263,6 +283,7 @@ let state = {
 
 function side(res,hq){return res?(hq?res.h:res.n):null;}
 function aggPrice(res,hq,scope){const q=side(res,hq);const m=q&&(scope==="world"?q.mw:q.md);return m&&m[0]!=null?{price:m[0],worldId:m[1]!=null?m[1]:null}:{price:null,worldId:null};}
+function aggAvg(res,hq,scope){const q=side(res,hq);const a=q?(scope==="world"?q.aw:q.ad):null;return a!=null?a:null;}
 function aggUpload(res){return(res&&res.u)||0;}
 function wname(id){return(state.worlds&&state.worlds[id])||ALL_WORLDS_FALLBACK[id]||(id?("world "+id):"—");}
 function avg30(s){return s&&s.p&&s.p[0]!=null?{avg:s.p[0],n:s.p[1]}:{avg:null,n:0};}
@@ -280,6 +301,16 @@ function compute(){
     const buyPrice=buy.price,buyWorldId=buy.worldId;
     const buyWorld=buyPrice!=null?wname(buyWorldId):null;
     const isHome=buyWorldId!=null&&buyWorldId===state.homeId;
+
+    /* How good this particular listing is, as opposed to how good the flip is:
+       the cheapest listing set against what the item actually sells for on the
+       data centre that listing sits on. mergeMarkets keeps the whole record of
+       whichever data centre won on price, so the average here belongs to the
+       same market as the price beside it rather than to your home world. A
+       listing well under it is someone pricing to move; well over it is a
+       hopeful asking price, which is worth seeing before you fly out. */
+    const buyRef=aggAvg(chaosData,false,"dc");
+    const buyOff=(buyPrice!=null&&buyRef)?(buyPrice-buyRef)/buyRef:null;
 
     // Sell: 30d avg on home world (most realistic for rare items)
     const h=avg30(histData);const tr30=trend30(histData);
@@ -317,6 +348,7 @@ function compute(){
     rows.push({
       id, name:item.name, cat:item.cat,
       buyPrice, buyWorld, buyWorldId, isHome,
+      buyRef, buyOff,
       sellAvg, sellNow, sellBasis, undercut, noHist, vel, velI:v30, profit, margin, gilDay, upload, uploadSell, outlier,
       trendT:tr30, trend:tr30?tr30.pct:null
     });
@@ -382,7 +414,7 @@ function render(){
     tr.innerHTML=`
       <td><div class="name"><span class="n"><button class="shopbtn" data-shopitem="${r.id}" title="Add this item to shopping list">🛒</button><button class="listbtn" data-listadd="${r.id}" title="Add to a saved list">📋</button><button class="xwbtn" data-xw="${r.id}" data-xwname="${xesc(r.name)}" title="Compare this item's price and stock on every world">\ud83c\udf10</button>${iconHTML(r.id)}${r.name}<span class="pill ${catCls}">${CAT_SHORT[r.cat]||r.cat}</span></span></div>
           <div class="sub">Buy data: ${ago(r.upload)}</div></td>
-      <td>${r.buyPrice!=null?fmt(r.buyPrice):'<span class="no-data">—</span>'} ${worldTag}${warnTag}</td>
+      <td>${r.buyPrice!=null?fmt(r.buyPrice):'<span class="no-data">—</span>'}${buyOffChip(r.buyOff,r.buyRef)} ${worldTag}${warnTag}</td>
       <td>${sellNowTag}</td>
       <td>${sellAvgTag}</td>
       <td>${trendChip(r.trendT)}</td>
