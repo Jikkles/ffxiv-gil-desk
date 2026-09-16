@@ -162,7 +162,8 @@ const ICON_INDEX = /*__ICON_INDEX__*/;
 const RECIPE_INDEX = /*__RECIPE_INDEX__*/;
 /*__UI_JS__*/
 
-const DATA = /*@json data/dashboard.json*/null;
+/* build.js packs the catalogue small and unpacks it right here, into the same object dashboard.json describes */
+const DATA = /*@pack data/dashboard.json*/null;
 
 const FINISHED = DATA.finished;
 const RECIPES = DATA.recipes;

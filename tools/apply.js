@@ -22,8 +22,9 @@ for (const [tab, name, file, dataName] of [["currencies", "CD", "CURRENCIES.json
   ["dashboard", "DATA", "DASHBOARD.json"],
   ["scrips", "T4", "SCRIPS.json"], ["flips", "FLIP_ITEMS", "FLIPS.json"], ["gathering", "GATHER", "GATHERING.json"], ["retainer", "VITEMS", "RETAINERS.json", "retainers"]]) {
   const data = `data/${dataName || tab}.json`;
-  if (!readSrc(`tabs/${tab}.html`).includes(`const ${name} = /*@json ${data}*/null;`))
-    throw new Error(`src/tabs/${tab}.html has no "const ${name} = /*@json ${data}*/null;" line to fill`);
+  const html = readSrc(`tabs/${tab}.html`);
+  if (![`json`, `pack`].some(kind => html.includes(`const ${name} = /*@${kind} ${data}*/null;`)))
+    throw new Error(`src/tabs/${tab}.html has no "const ${name} = /*@json ${data}*/null;" (or /*@pack …*/) line to fill`);
   /* read as text, not parsed and re-written: the Dashboard catalogue's key order is part of the file */
   const text = fs.readFileSync(need("out/" + file), "utf8");
   JSON.parse(text);

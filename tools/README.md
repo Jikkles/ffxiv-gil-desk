@@ -20,8 +20,9 @@ this on its own. It is free for a public repo and needs no key or account.
   ffxiv-datamining's `csv/en`, titled with the patch).
 - **From 10 to 38 days after a patch** it rebakes each week. The wait lets players' loot records
   build up, and the repeats pick up better rates as they fill in. Outside that window it does nothing.
-- **A clean rebake is pushed to main.** Clean means no WARNING or note, and `check-bake.js` passes:
-  every script still parses, and no dataset shrank by more than a quarter. The one note it lets
+- **A clean rebake is pushed to main.** Clean means no WARNING or note, `check-bake.js` passes
+  (every script still parses, and no dataset shrank by more than a quarter), and `smoke.js` passes
+  (every tab opens in a headless browser and draws its table, against made-up prices). The one note it lets
   through is sectors still waiting on SubmarineTracker's breakpoints, which sorts itself out (see below). If nothing changed, nothing
   is committed.
 - **Anything else pushes nothing** and opens an issue labelled `rebake` with the log, which GitHub
@@ -62,7 +63,8 @@ cached), `build-subs.js`, `build-workshop.js`, `build-currencies.js`, `build-ven
 `build-crafts.js`, `build-scrips.js`, `build-gathering.js`, `build-flips.js`, `build-retainers.js`, then `apply.js` to write the results. Run
 `build-currencies.js` before `build-duties.js` and `build-scrips.js`, which read its shops, and `build-retainers.js` last,
 since it reads the other outputs to say where else a venture drop comes from.
-`check-bake.js` looks the result over before you commit. It is the same check the weekly job runs.
+`check-bake.js` looks the result over before you commit, and `smoke.js` opens every tab in a headless
+browser (it needs Playwright; see the top of the script). They are the same checks the weekly job runs.
 
 ## What each step reads
 

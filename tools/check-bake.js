@@ -27,7 +27,8 @@ function documents(text) {
 }
 const dataset = (docs, tab, name) => {
   const m = new RegExp("^const " + name + " = ([^\\r\\n]*);", "m").exec(docs[tab] || "");
-  try { return m ? JSON.parse(m[1]) : null; }
+  /* the Dashboard's is packed, with its unpacker in front, so run it rather than parse it */
+  try { return m ? (/^[[{]/.test(m[1]) ? JSON.parse(m[1]) : vm.runInNewContext(m[1])) : null; }
   catch (e) { return null; }   // reported below as "none left"
 };
 function counts(docs) {

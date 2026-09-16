@@ -62,6 +62,19 @@ jobs:
         if: steps.due.outputs.rebake == 'true'
         run: node tools/check-bake.js 2>&1 | tee -a rebake.log; exit ${PIPESTATUS[0]}
 
+      # outside the repo, which has no package.json on purpose
+      - name: Install Playwright
+        if: steps.due.outputs.rebake == 'true'
+        run: |
+          npm install --prefix "$RUNNER_TEMP/pw" --no-save --no-package-lock playwright@1
+          "$RUNNER_TEMP/pw/node_modules/.bin/playwright" install --with-deps chromium
+
+      - name: Every tab still draws its table
+        if: steps.due.outputs.rebake == 'true'
+        env:
+          PLAYWRIGHT: ${{ runner.temp }}/pw/node_modules/playwright
+        run: node tools/smoke.js 2>&1 | tee -a rebake.log; exit ${PIPESTATUS[0]}
+
       - name: Commit and push
         if: steps.due.outputs.rebake == 'true'
         env:

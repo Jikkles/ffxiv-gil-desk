@@ -577,7 +577,7 @@ key or an account.
 
 ## Architecture
 
-The whole desk ships as one ~5.4MB `index.html`, so it opens straight from disk. That file is
+The whole desk ships as one ~4MB `index.html`, so it opens straight from disk. That file is
 **built**, not edited: the source lives in `src/`, and one command puts it back together.
 
 ```
@@ -595,9 +595,20 @@ node tools/build.js --check   # does index.html match src/?
 | `data/*-index.txt` | The item name, icon and recipe indexes |
 
 Two markers join them: `/*@string path*/""` drops a file in as a string (a tab, shared code, an
-index), and `/*@json path*/null` drops a dataset in. Commit `src/` and the rebuilt `index.html`
+index), and `/*@json path*/null` drops a dataset in. `/*@pack path*/null` does the same for the
+Dashboard's recipe catalogue, but packed into flat lists with a small unpacker in front
+(`tools/lib/dashboard-pack.js`); it was two thirds of the file. The tab gets the same object either
+way, and if a rebake ever gives it data the packer can't reproduce exactly, the build says so and
+puts it in unpacked. Commit `src/` and the rebuilt `index.html`
 together. To have git refuse a commit where they disagree, run this once per clone:
 `git config core.hooksPath .githooks`.
+
+To see a change working, `node tools/smoke.js` opens the desk in a headless browser against
+made-up Universalis prices and checks that every tab draws its table without a script error;
+`node tools/smoke.js --diff` also compares every table with the last commit's, which is how to
+prove a refactor changed nothing. It needs Playwright, which this repo deliberately doesn't
+install; the top of the script says how to point it at a copy. GitHub runs it after every push
+and before the weekly rebake pushes anything.
 
 Inside the built file:
 
@@ -651,6 +662,14 @@ duplicating some code — which is why the shared chunks exist.
   — an unflagged item can still turn out to be event-only.
 
 ## Changelog
+
+### 16 September 2026
+
+**A lighter desk**
+- The desk file is down from 6.9 MB to 4 MB, so it downloads and opens faster. The Dashboard's
+  recipe list is stored packed and unpacked as the tab opens; nothing you see has changed.
+- Every change, and every weekly rebake, is now checked in a real browser before it goes live, so a
+  tab that stops drawing its table is caught before anyone opens it.
 
 ### 15 September 2026
 

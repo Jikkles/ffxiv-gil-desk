@@ -7,9 +7,12 @@
 //   /*@string path*/""   the file as a JS string literal: shared code, tab documents, indexes.
 //                        Markers inside that file are filled first.
 //   /*@json path*/null   a data file squeezed back to one line: the datasets inside a tab
+//   /*@pack path*/null   the same, packed small with its unpacker in front (the Dashboard
+//                        catalogue; see tools/lib/dashboard-pack.js)
 const fs = require("fs");
 const path = require("path");
 const { minifyJSON } = require("./lib/json-text");
+const { packText } = require("./lib/dashboard-pack");
 
 const ROOT = path.resolve(__dirname, "..");
 const SRC = path.join(ROOT, "src");
@@ -23,10 +26,15 @@ const writeSrc = (rel, text) => fs.writeFileSync(path.join(SRC, rel), text);
 const jsString = s => JSON.stringify(s).replace(/</g, "\\u003c");
 
 function fill(text) {
-  return text.replace(/\/\*@(string|json) ([\w./-]+)\*\/(""|null)/g, (marker, kind, rel) => {
+  return text.replace(/\/\*@(string|json|pack) ([\w./-]+)\*\/(""|null)/g, (marker, kind, rel) => {
     if (kind === "string") return jsString(fill(readSrc(rel)));
-    try { return minifyJSON(readSrc(rel)); }
+    let json;
+    try { json = minifyJSON(readSrc(rel)); }
     catch (e) { throw new Error(`src/${rel} is not valid JSON: ${e.message}`); }
+    if (kind === "json") return json;
+    const out = packText(readSrc(rel), json);
+    if (!out.packed) console.log(`WARNING: src/${rel} went in unpacked (${out.why}). The desk works, but index.html is bigger; update tools/lib/dashboard-pack.js.`);
+    return out.expr;
   });
 }
 

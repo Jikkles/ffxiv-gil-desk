@@ -1,0 +1,35 @@
+# Opens the desk in a headless browser after every push and checks each tab still draws its table
+# (tools/smoke.js). Free on a public repo; Universalis is faked, so it asks nothing of anyone's server.
+# A failure shows as a red cross on the commit, and GitHub emails you about it.
+name: Smoke test
+
+on:
+  push:
+    branches: [main]
+    paths: ["index.html", "src/**", "tools/**", ".github/workflows/smoke.yml"]
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
+      # outside the repo, which has no package.json on purpose
+      - name: Install Playwright
+        run: |
+          npm install --prefix "$RUNNER_TEMP/pw" --no-save --no-package-lock playwright@1
+          "$RUNNER_TEMP/pw/node_modules/.bin/playwright" install --with-deps chromium
+
+      - name: index.html is what src/ builds
+        run: node tools/build.js --check
+
+      - name: Every tab draws its table
+        env:
+          PLAYWRIGHT: ${{ runner.temp }}/pw/node_modules/playwright
+        run: node tools/smoke.js
