@@ -2,6 +2,18 @@
 
 What changed on [Jikky's Gil Factory](README.md), newest first.
 
+## 17 September 2026
+
+**New Undercuts tab**
+- A new tab after Vendors, set apart on the bar, that checks your own retainers' listings. Add their
+  names, press **Check for Undercuts**, and it reads every listing on your **Sell on** world and
+  shows which of yours someone has undercut, by how much, and how many listings sit below you.
+  See [Undercuts](README.md#undercuts).
+- The search box now knows every marketable item, about 1,850 more than before, mostly older gear,
+  and all of them have icons.
+- The tab bar tightens a little further before it drops its icons, so it still fits on one row
+  with the extra tab (with icons at 1920 pixels wide, as before).
+
 ## 16 September 2026
 
 **Shopping list**

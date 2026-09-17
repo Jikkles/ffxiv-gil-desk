@@ -34,7 +34,8 @@ lists live in that browser, so the hosted desk and a local copy keep their own.
 Each tab scans as soon as you open it, so a tab is never a blank table waiting for a click —
 except the **Dashboard**. The desk opens on it, and its scan is thousands of lookups, so until it
 has prices it shows one big **Load live prices** button rather than rate-limiting whichever tab
-you actually came for. Come back to a tab and it only rescans if its cached prices have gone cold
+you actually came for. **Undercuts** does the same with **Check for Undercuts**, since it reads a
+whole world's market board. Come back to a tab and it only rescans if its cached prices have gone cold
 (12 minutes), so flipping between tabs costs nothing; **Refresh** in the sidebar skips that cache
 and pulls fresh prices every time, with an *Updating…* label and a progress bar along the top
 while it works.
@@ -90,6 +91,7 @@ Four deliberate choices run through the whole thing:
 | **Submersibles** | Which voyage route earns the most for your sub build and resend schedule |
 | **Workshop** | All 162 Free Company workshop projects, costed phase by phase against their sale price |
 | **Vendors** | Every gil-priced NPC item, and what it resells for on your server |
+| **Undercuts** | Which of your own retainers' listings someone has undercut, and by how much |
 | **Lists** | Up to five lists you fill yourself, renameable, kept in your browser |
 
 The tabs share one set of columns, in the same order everywhere: **Item**, **Sell now**,
@@ -364,6 +366,29 @@ the other NPCs that stock it. Two tags flag stock you may not be able to buy
 today: `locked?` where a quest or achievement gates the shop, and `seasonal` where the shop only
 opens during an event (46 items, mostly Starlight, Valentione's and Heavensturn furnishings).
 
+### Undercuts
+
+Checks your own retainers' listings. Add their names in the sidebar (paste several at once with
+commas between them), press **Check for Undercuts**, and the tab reads every listing on your
+**Sell on** world, all 16,845 marketable items in about ten seconds, and keeps the ones your
+retainers put up. Like the Dashboard, it waits for that button rather than scanning as you open it.
+The names are kept in your browser and shared by every world.
+
+The columns read Item, Retainer, Your price, Undercut, Sell now, Avg 30d, Trend, Units/day and
+Gil/day. Identical stacks from one retainer at one price fold into one line (`×99 · 7 stacks`).
+**Undercut** is how far below you the cheapest rival listing of the same item and quality sits, and
+how many listings are cheaper than yours; **Cheapest** means nobody is, and names the next rival
+price. Your own retainers never count as undercutting each other. **Sell now** is the cheapest
+listing of that quality on your world, yours included, with the age of that data. The cards count
+the undercut lines, name the biggest gap, say which retainers turned up (a name with no listings
+gets a dashed outline, which usually means a typo), and give the age of the stalest data.
+
+Two limits come from Universalis itself. Listings carry the retainer's name but not the character's,
+so your character name finds nothing. And the data is only as fresh as the last time a player with an
+uploader opened that item on the board: busy items are usually minutes old, quiet ones can be days
+old. The age pill on **Sell now** says which is which. To stay under Universalis' rate limit, the
+scan asks for 20 batches a second at most, and only for the fields it needs.
+
 ### Lists
 
 Up to five lists you fill yourself. The 📋 button on any row of any tab, and on any material inside
@@ -618,7 +643,8 @@ Inside the built file:
 - A thin shell holds the tab bar and one `<iframe>` per tab.
 - `BLOBS` maps each tab key to a complete, standalone HTML document.
 - On first visit to a tab, its document is injected via `srcdoc`. Every tab scans on first open
-  except the Dashboard, which waits for its **Load live prices** button.
+  except the Dashboard, which waits for its **Load live prices** button, and Undercuts, which waits
+  for **Check for Undercuts**.
 - Five shared code chunks are spliced into each document at render time via placeholder
   comments: `SHARED_A` (fetch/retry/cache layer), `SHARED_B` (world topology, the data-centre
   picker and the multi-DC market helpers), `SHARED_SHOP` (the shopping list), `SHARED_LIST`

@@ -17,7 +17,7 @@ const path = require("path");
 const { pathToFileURL } = require("url");
 
 const ROOT = path.resolve(__dirname, "..");
-const TABS = ["all", "gathering", "flips", "materia", "currencies", "vendors", "retainer", "submersible", "workshop", "duties", "list1"];
+const TABS = ["all", "gathering", "flips", "materia", "currencies", "vendors", "retainer", "submersible", "workshop", "duties", "undercuts", "list1"];
 const NAMES = { all: "Dashboard", materia: "Scrips", retainer: "Retainers", submersible: "Submersibles", list1: "List 1" };
 const nameOf = k => NAMES[k] || k[0].toUpperCase() + k.slice(1);
 const ROWS_COMPARED = 40;
@@ -59,6 +59,17 @@ function histFor(id) {
     entries.push({ timestamp: NOW - i * 3600 * 20, pricePerUnit: Math.round(b * (1 + ((i * 7) % 11) / 100)), quantity: 1 + (i % 5), hq: i % 4 === 0 });
   return { itemID: id, entries };
 }
+/* the Undercuts tab reads every listing on the world; these are the items it is told exist,
+   and the retainer names it is given, one of which never turns up */
+const MARKETABLE = Array.from({ length: 300 }, (_, i) => 5050 + i);
+const RETAINERS = ["Smoketest", "Smokealt", "Nobody"];
+function listingsFor(id) {
+  const b = basePrice(id), l = [];
+  for (let i = 0; i < 6; i++) l.push({ pricePerUnit: Math.round(b * (1 + i / 100)), quantity: 1 + i, hq: i % 2 === 1, retainerName: "Rival" + i });
+  if (id % 3 === 0) l.push({ pricePerUnit: Math.round(b * (id % 2 ? 0.99 : 1.03)), quantity: 20, hq: false, retainerName: "Smoketest" });
+  if (id % 5 === 0) for (let k = 0; k < 2; k++) l.push({ pricePerUnit: Math.round(b * 1.02), quantity: 99, hq: true, retainerName: "smokealt" });
+  return { itemID: id, lastUploadTime: NOW * 1000 - (id % 48) * 3600e3, listings: l };
+}
 const idsFrom = s => s.split(",").map(Number).filter(Boolean);
 const BLANK_PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==", "base64");
 
@@ -72,8 +83,11 @@ async function stubNetwork(page) {
     if (m) return json({ results: idsFrom(m[1]).map(aggFor) });
     m = /^\/api\/v2\/history\/[^/]+\/(.+)$/.exec(p);
     if (m) return json({ items: Object.fromEntries(idsFrom(m[1]).map(id => [id, histFor(id)])) });
+    if (p.endsWith("/marketable")) return json(MARKETABLE);
     m = /^\/api\/v2\/[^/]+\/(\d+)$/.exec(p);
     if (m) return json({ itemID: +m[1], listings: [], recentHistory: [], averagePrice: 100, lastUploadTime: NOW * 1000 });
+    m = /^\/api\/v2\/[^/]+\/(\d+(?:,\d+)+)$/.exec(p);
+    if (m) return json({ items: Object.fromEntries(idsFrom(m[1]).map(id => [id, listingsFor(id)])) });
     return json({});
   });
   for (const pat of ["**://*.xivapi.com/**", "**://xivapi.com/**"])
@@ -105,7 +119,10 @@ async function run(browser, file) {
 
   const url = pathToFileURL(file).href;
   await page.goto(url, { waitUntil: "domcontentloaded" });
-  await page.evaluate(() => { try { localStorage.setItem("gildesk:homePicked:v1", "1"); } catch (e) { /* the picker will show */ } });
+  await page.evaluate(names => {
+    try { localStorage.setItem("gildesk:homePicked:v1", "1"); localStorage.setItem("gildesk:retainers:v1", JSON.stringify(names)); }
+    catch (e) { /* the picker will show */ }
+  }, RETAINERS);
   await page.reload({ waitUntil: "domcontentloaded" });
   const started = await page.waitForFunction(() => typeof window.activate === "function", null, { timeout: 60000 }).then(() => true, () => false);
   if (!started) {
@@ -129,7 +146,8 @@ async function run(browser, file) {
       out[key] = { headers: [], rows: [], errbox: "", count: 0, problems: ["the tab never opened", ...errors.slice(tabErrors).map(e => "script error: " + e.slice(0, 200))] };
       continue;
     }
-    if (key === "all") await page.evaluate(f => document.querySelector(f).contentDocument.getElementById("refresh").click(), frame);
+    /* these two wait for a button rather than scanning as they open */
+    if (key === "all" || key === "undercuts") await page.evaluate(f => document.querySelector(f).contentDocument.getElementById("refresh").click(), frame);
     const settled = await page.waitForFunction(({ f, list }) => {
       const d = document.querySelector(f).contentDocument, b = d.getElementById("refresh");
       if (!b || b.disabled) return false;

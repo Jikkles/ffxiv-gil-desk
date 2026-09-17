@@ -3,13 +3,14 @@
      Submersibles, Workshop, Duties + Maps, Scrips, Flips, Retainers and Gathering tabs, and the DATA recipe
      catalogue of the Dashboard
    - NPC_PRICES, the NPC price index the shell hands to every crafting tab
-   - ICON_INDEX and ITEM_INDEX: any item those tabs show that the desk has no icon or
-     searchable name for yet is added (existing entries are left exactly as they are)
+   - ICON_INDEX and ITEM_INDEX: any item those tabs show, and any marketable item at all (the
+     Undercuts tab can meet any of them on a retainer), that the desk has no icon or searchable
+     name for yet is added (existing entries are left exactly as they are)
    - RECIPE_INDEX: rebuilt whole from Teamcraft's recipes, so new crafts get their
      simulator link
    Nothing else in src/ is touched. */
 const fs = require("fs");
-const { OUT, need, readJSON, items, decodeIndex, encodeIndex } = require("./lib/common");
+const { OUT, need, readJSON, items, marketable, decodeIndex, encodeIndex } = require("./lib/common");
 const { INDEX, readSrc, writeSrc, build } = require("./build");
 const { formatJSON, minifyJSON } = require("./lib/json-text");
 
@@ -69,6 +70,7 @@ const shown = new Set([
   ...FLIPS.map(f => f.id),
   ...RET.map(r => r.i),
   ...GATHER.map(g => g.i),
+  ...Object.keys(I).map(Number).filter(id => marketable(I, id)),
 ]);
 const icons = decodeIndex(readSrc("data/icon-index.txt")), names = decodeIndex(readSrc("data/item-index.txt"));
 const teamcraftIcons = readJSON(need("item-icons.json"));

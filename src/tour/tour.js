@@ -60,7 +60,7 @@ window.Tour=(function(){
     {sec:"Row buttons",title:"Open in Teamcraft",spot:"b-tc",focus:"rowhead",state:{tree:1,shop:1},side:"bottom",zoom:2.3,
       body:"Opens this exact recipe in the Teamcraft craft simulator, so you can check a rotation before you commit. Only items you craft have one."},
     {sec:"Tabs",title:"The other tabs",spot:"tabs",state:{tabs:1},side:"bottom",
-      body:"Each tab is its own way of making gil, laid out like this one: gathering, currencies, scrips, duties and treasure maps, flips, retainers, submersibles, the workshop and vendors. Pick any of them from the bar."},
+      body:"Each tab is its own way of making gil, laid out like this one: gathering, currencies, scrips, duties and treasure maps, flips, retainers, submersibles, the workshop and vendors, plus <b>Undercuts</b>, which checks your own retainers' listings. Pick any of them from the bar."},
     {sec:"Tabs",title:"Search, and this tour",spot:"tabright",side:"bottom",zoom:1.8,next:"Finish",
       body:"Search for any item by name from any tab (press <b>/</b> to jump in). <b>Tour</b> brings this walkthrough back whenever you want it."}
   ];
@@ -70,6 +70,7 @@ window.Tour=(function(){
     duties:"Valuable drops, maps and portals",flips:"Buy low on one world, sell on another",
     retainer:"What ventures bring back",submersible:"Best voyage for your sub build",
     workshop:"FC projects, costed phase by phase",vendors:"NPC items that resell for more",
+    undercuts:"Your listings someone has beaten",
     list:"Your own lists of items"};
 
   const M=20,GAP=18;

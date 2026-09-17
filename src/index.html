@@ -70,7 +70,10 @@
   .tabbar.fit3 .tabsep{margin:0 2px}
   .tabbar.fit4 .tab{padding:8px 7px;gap:6px;font-size:13px}
   .tabbar.fit4 .tabsep{margin:0 1px}
-  .tabbar.fit5 .tabic{display:none}
+  .tabbar.fit5 .tab{padding:8px 5px;gap:5px}
+  .tabbar.fit5 .tabadd{padding:9px 10px}
+  .tabbar.fit5 .tabadd .tal{display:none}
+  .tabbar.fit6 .tabic{display:none}
   .themebtn{
     all:unset;cursor:pointer;display:flex;align-items:center;gap:7px;padding:9px 14px;border-radius:10px;
     border:1px solid var(--line);background:var(--panel);color:var(--muted);font-family:"JetBrains Mono",monospace;font-size:12px;
@@ -166,7 +169,9 @@
   <button class="tab" data-tab="workshop" aria-selected="false">Workshop</button>
   <button class="tab" data-tab="vendors" aria-selected="false">Vendors</button>
   <span class="tabsep"></span>
-  <button class="tabadd" id="addList" title="Create another list (up to five)">＋ List</button>
+  <button class="tab" data-tab="undercuts" aria-selected="false">Undercuts</button>
+  <span class="tabsep"></span>
+  <button class="tabadd" id="addList" title="Create another list (up to five)">＋<span class="tal"> List</span></button>
   </nav>
   <div class="tabright">
     <div class="tabsearch" id="tabSearch"></div>
@@ -185,6 +190,7 @@
   <iframe data-frame="submersible"></iframe>
   <iframe data-frame="workshop"></iframe>
   <iframe data-frame="duties"></iframe>
+  <iframe data-frame="undercuts"></iframe>
 </div>
 <script>
 const SHARED_A = /*@string shared/data-layer.js*/"";
@@ -215,7 +221,8 @@ const BLOBS = {
   "retainer": /*@string tabs/retainer.html*/"",
   "submersible": /*@string tabs/submersibles.html*/"",
   "workshop": /*@string tabs/workshop.html*/"",
-  "duties": /*@string tabs/duties.html*/""
+  "duties": /*@string tabs/duties.html*/"",
+  "undercuts": /*@string tabs/undercuts.html*/""
 };
 /* every list tab is this one page, rendered for its own slot */
 /* every item the desk knows a name for, as "base36 id-delta name" — feeds the search box */
@@ -229,6 +236,8 @@ function htmlFor(key){
     .replace("/*__UI_JS__*/",()=>UI_JS)
     .replace("/*__ICON_INDEX__*/",()=>JSON.stringify(ICON_INDEX))
     .replace("/*__RECIPE_INDEX__*/",()=>JSON.stringify(RECIPE_INDEX))
+    /* only Undercuts asks for the name index: a retainer can be selling anything */
+    .replace("/*__ITEM_INDEX__*/",()=>JSON.stringify(ITEM_INDEX))
     .replace("/*__SHARED_A__*/",()=>SHARED_A)
     .replace("/*__SHARED_B__*/",()=>SHARED_B)
     .replace("/*__SHARED_SHOP__*/",()=>SHARED_SHOP)
@@ -263,6 +272,8 @@ const TAB_ICONS={
   workshop:'<path d="M12.3 4.3a3.3 3.3 0 0 0-4.4 3.9L4 12l2 2 3.8-3.9a3.3 3.3 0 0 0 3.9-4.4l-2 2-1.8-.4-.4-1.8z"/>',
   /* duties: a duty-roulette style shield */
   duties:'<path d="M10 3.5l6 2.5v4c0 4-2.6 6.3-6 7-3.4-.7-6-3-6-7v-4z"/><path d="M7.5 10l1.8 1.8L13 8.2"/>',
+  /* undercuts: a price tag with a downward arrow */
+  undercuts:'<path d="M3.5 4v5.2l6.8 6.8 5.7-5.7-6.8-6.8H4z"/><circle cx="6.8" cy="7" r="1"/><path d="M16.5 12.5v4.5M14.8 15.3l1.7 1.7 1.7-1.7"/>',
   /* saved lists: ticked rows */
   list:'<path d="M7.5 5.5h9M7.5 10h9M7.5 14.5h9"/><path d="M3.5 5.5l1 1 1.5-2M3.5 10l1 1 1.5-2M3.5 14.5l1 1 1.5-2"/>'
 };
@@ -282,7 +293,8 @@ document.querySelectorAll(".tab[data-tab]").forEach(b=>{
    the desk on a tab, a bookmark comes back to it, and Back steps through the tabs
    you visited. The internal keys are older than the tab names, hence the map. */
 const TAB_SLUGS={all:"dashboard",gathering:"gathering",currencies:"currencies",materia:"scrips",duties:"duties",
-  flips:"flips",retainer:"retainers",submersible:"submersibles",workshop:"workshop",vendors:"vendors"};
+  flips:"flips",retainer:"retainers",submersible:"submersibles",workshop:"workshop",vendors:"vendors",
+  undercuts:"undercuts"};
 /* addresses of tabs that have since been folded into another one */
 const OLD_SLUGS={precrafts:"all"};
 function slugOf(key){return TAB_SLUGS[key]||key;}
@@ -380,7 +392,7 @@ function syncListTabs(){
    every tab shares the first tab's row. The icons are the last thing to go, and
    only if that alone saves the row: when even that is not enough the tabs keep
    their icons and wrap, inside their own column. */
-const FIT_STEPS=5;
+const FIT_STEPS=6;
 function fitBar(){
   const bar=document.querySelector(".tabbar"),tabs=bar.querySelector(".tabs");
   const kids=[...tabs.children].filter(k=>!k.hidden&&k.offsetParent!==null);
@@ -473,7 +485,8 @@ const HOME_TILES=[
   ["retainer","Retainers","What the 18-hour exploration ventures bring back worth selling."],
   ["submersible","Submersibles","Which voyage your Free Company’s subs should sail."],
   ["workshop","Workshop","What Free Company projects cost to build and sell for."],
-  ["vendors","Vendors","NPC stock that resells on the market board for more."]
+  ["vendors","Vendors","NPC stock that resells on the market board for more."],
+  ["undercuts","Undercuts","Which of your retainers’ listings someone has undercut, and by how much."]
 ];
 function pickHomeWorld(){
   return new Promise(resolve=>{
@@ -544,7 +557,7 @@ function pickHomeWorld(){
    left the other tabs selling on Spriggan. A tab that has never had a world set
    follows the Dashboard's world and data centres; a tab that has keeps its own.
    Runs before any tab loads, so each one's restoreSettings() picks it up. */
-const TAB_SETTINGS=["gathering","currencies","materia","duties","flips","retainer","submersible","workshop","vendors",
+const TAB_SETTINGS=["gathering","currencies","materia","duties","flips","retainer","submersible","workshop","vendors","undercuts",
   "list1","list2","list3","list4","list5"];
 function seedHomeWorld(){
   let src=null;try{src=JSON.parse(localStorage.getItem("gildesk:all:settings")||"null");}catch(e){}

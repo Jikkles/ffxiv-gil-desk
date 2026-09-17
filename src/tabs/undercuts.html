@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Undercuts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/*__UI_CSS__*/
+/* ---- undercuts only ---- */
+thead th span{display:inline-block;min-width:.8em}
+/* the retainer list: one chip a name, added from the box above it */
+.rtform{display:flex;gap:6px;margin-bottom:8px}
+.rtform .field{flex:1;margin-bottom:0}
+.rtform .btn{padding:6px 11px;font-size:12px}
+.rtlist{display:flex;flex-wrap:wrap;gap:6px}
+.rtchip{display:inline-flex;align-items:center;gap:6px;padding:3px 5px 3px 10px;border-radius:99px;border:1px solid var(--line);
+  background:var(--panel);font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--ink)}
+.rtchip.missing{color:var(--muted);border-style:dashed;border-color:var(--hop)}
+.rtchip button{all:unset;cursor:pointer;width:17px;height:17px;border-radius:99px;display:inline-grid;place-items:center;color:var(--faint);font-size:10px}
+.rtchip button:hover{color:var(--loss);background:var(--loss-soft)}
+.rthint{font-size:11.5px;line-height:1.45;color:var(--faint);margin-top:8px}
+.rtempty{font-size:12px;color:var(--muted)}
+/* the start button: the tab waits for it, as the Dashboard waits for Load live prices */
+.startscan{display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;
+  margin:18px 0 8px;padding:44px 20px;border:1px dashed var(--line2);border-radius:14px;background:var(--panel)}
+.startscan[hidden]{display:none}
+.startscan .btn.primary{font-size:17px;font-weight:700;padding:16px 38px;border-radius:12px}
+.startscan .btn.primary:disabled{opacity:.5;cursor:not-allowed}
+.startscan-sub{font-size:13px;color:var(--muted);max-width:560px;line-height:1.5}
+.startscan-sub b{color:var(--ink);font-weight:600}
+/* the verdict on a line */
+.uc{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:11.5px;padding:2px 8px;border-radius:99px;border:1px solid;white-space:nowrap}
+.uc.bad{color:var(--loss);border-color:var(--loss-line);background:var(--loss-soft)}
+.uc.good{color:var(--win);border-color:var(--win-line);background:var(--win-soft)}
+.uc.dim{color:var(--muted);border-color:var(--line)}
+.hqtag{font-family:"JetBrains Mono",monospace;font-size:9px;padding:0 5px;border-radius:99px;border:1px solid var(--gil-line);color:var(--gil);margin-left:6px}
+tr.under td:first-child{box-shadow:inset 3px 0 0 var(--loss)}
+.kpi .v.bad{color:var(--loss)} .kpi .v.good{color:var(--win)}
+</style>
+<script>try{var __t=localStorage.getItem("gildesk:theme:v1");document.documentElement.setAttribute("data-theme",__t==="light"?"light":"dark");}catch(e){document.documentElement.setAttribute("data-theme","dark");}</script>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="sgroup">
+      <div class="slabel">Filter items</div>
+      <div class="field">
+      <label>&#128269;</label>
+      <input id="search" placeholder="search name…" autocomplete="off">
+    </div>
+    </div>
+    <div class="sgroup" id="retGroup">
+      <div class="slabel">Your retainers</div>
+      <form class="rtform" id="retForm" autocomplete="off">
+        <div class="field"><input id="retIn" placeholder="retainer name…" maxlength="200" spellcheck="false"></div>
+        <button class="btn" type="submit">Add</button>
+      </form>
+      <div class="rtlist" id="retList"></div>
+      <div class="rthint">Exactly as it shows in game. Paste several at once with commas between them.</div>
+    </div>
+    <div class="sgroup">
+      <div class="slabel">Server</div>
+      <div class="field sel">
+      <label for="home">Sell on</label>
+      <select id="home"></select>
+    </div>
+      <button class="btn primary wide" id="refresh">&#8635; Refresh</button>
+    </div>
+    <div class="sgroup">
+      <div class="slabel">Filters</div>
+      <label class="chk" title="Only the listings someone else has beaten"><input type="checkbox" id="onlyUnder"> Undercut only</label>
+      <div class="field sel">
+      <label for="retFilter">Retainer</label>
+      <select id="retFilter"><option value="all">All retainers</option></select>
+    </div>
+      <div class="field sel">
+      <label for="tax">Tax</label>
+      <select id="tax">
+        <option value="0.05" selected>5%</option>
+        <option value="0.03">3%</option>
+        <option value="0">0%</option>
+      </select>
+    </div>
+    </div>
+    <div class="sgroup">
+      <div class="scancard"><span class="dot"></span>Last scan<br><b id="lastScan"></b></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="hero">
+      <div class="hicon">&#127991;&#65039;</div>
+      <div>
+        <h1><b>Undercuts</b></h1>
+        <p class="sub">Every listing your retainers have up on <span class="homename">Spriggan</span>, found by reading the whole market board, with the ones someone has <b>undercut</b> first: by how much, and how many listings now sit below yours.</p>
+      </div>
+      <div class="kpis" id="kpis"></div>
+    </div>
+
+    <details class="howto" data-howto="undercuts">
+      <summary><span class="hw-ic"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="M7.8 7.9a2.3 2.3 0 0 1 4.4.9c0 1.6-2.2 1.9-2.2 3.2M10 14.4v.1"/></svg></span><span class="hw-title">How this works</span><span class="hw-hint">which of your listings someone has beaten</span><span class="hw-car">▸</span></summary>
+      <div class="hw-body">
+        <div class="hw-sec"><h4>What it works out</h4><p>Add your retainers' names and press <b>Check for Undercuts</b> (or Refresh), and the tab reads every listing on your <b>Sell on</b> world, about seventeen thousand items, and picks out the ones your retainers put up. A listing is <b>undercut</b> when someone else is selling the same item, at the same quality, for less.</p></div>
+        <div class="hw-sec"><h4>Reading the table</h4><p><b>Your price</b> is the price per unit your retainer is asking, with the stack size; identical stacks are folded into one line. <b>Undercut</b> says how far the cheapest rival is below you and how many listings are cheaper, or <b>Cheapest</b> when nobody is. <b>Sell now</b> is the cheapest listing of that quality on your world, yours included, with how old that data is. Your own retainers never count as undercutting each other.</p></div>
+        <div class="hw-sec"><h4>Worth knowing</h4><p>The market board data comes from players whose plugins upload what they see, so a listing is only as fresh as the last time someone looked at that item. Busy items are usually minutes old; quiet ones can be days old, and the age on <b>Sell now</b> says which is which. The game doesn't share who owns a listing, only the retainer's name, so your character name won't find anything. A retainer with a dashed outline has no listings on this world, or its name is spelt differently.</p></div>
+      </div>
+      <template class="guide">
+        <div data-spot="#retGroup" data-side="right" data-title="Your retainers">Type a retainer's name and press Add, or paste all of them with commas between. ✕ removes one.</div>
+        <div data-spot="#home" data-side="right" data-title="Sell on">The world your retainers sell on. The whole board there is read each time you check, so the tab waits for <b>Check for Undercuts</b> or Refresh rather than scanning as you open it.</div>
+        <div data-spot="#tbl th[data-k=gap]" data-side="bottom" data-title="Undercut">How far below you the cheapest rival is, and how many listings beat you, or Cheapest when nobody does.</div>
+        <div data-spot="#tbl th[data-k=now]" data-side="bottom" data-title="Sell now">The cheapest listing on your world, yours included, and how old that data is.</div>
+        <div data-spot="#onlyUnder, #retFilter" data-side="right" data-title="Filters">Show only the listings that need relisting, or one retainer at a time.</div>
+        <div data-spot="#kpis" data-side="bottom" data-title="The cards">How many lines are undercut, the biggest gap, which retainers turned up, and how old the stalest data is.</div>
+      </template>
+    </details>
+
+    <div class="status" id="status"></div>
+    <div class="startscan" id="startScan">
+      <button class="btn primary" id="startScanGo" type="button">↻ Check for Undercuts</button>
+      <div class="startscan-sub" id="startScanSub"></div>
+    </div>
+    <div id="errbox"></div>
+
+    <div class="tablewrap"><table id="tbl" hidden>
+      <thead><tr>
+        <th data-k="name">Item <span></span></th>
+        <th data-k="ret">Retainer <span></span></th>
+        <th data-k="price" title="What your retainer asks for one unit, with the stack size">Your price <span></span></th>
+        <th data-k="gap" data-sorted title="How far below you the cheapest rival listing of the same quality is, and how many listings are cheaper than yours">Undercut <span>&#9662;</span></th>
+        <th data-k="now" title="Cheapest listing of this quality on your world, yours included, and how old the data is">Sell now <span></span></th>
+        <th data-k="avg" title="Average sale price on your world over 30 days">Avg 30d <span></span></th>
+        <th data-k="trend" title="Which way the price is moving: the newer half of the sales history against the older half">Trend <span></span></th>
+        <th data-k="vel" title="Units sold a day on your world, over 30 days of history">Units/day <span></span></th>
+        <th data-k="daily" title="Avg 30d after tax multiplied by units sold a day">Gil/day <span></span></th>
+      </tr></thead>
+      <tbody id="rows"></tbody>
+    </table></div>
+
+    <p class="foot">
+      Undercut = a listing from anyone but your own retainers, of the same item and quality, priced below yours.
+      Sell now = cheapest listing of that quality on <span class="homename">Spriggan</span>, with the age of that data.
+      Avg 30d, Trend, Units/day and Gil/day are measured on <span class="homename">Spriggan</span>.
+      Gil/day = Avg 30d &times; (1 &minus; tax) &times; Units/day.
+      Data via <a href="https://universalis.app" target="_blank" rel="noopener">Universalis</a>, item icons via <a href="https://xivapi.com" target="_blank" rel="noopener">XIVAPI</a>.
+    </p>
+  </main>
+</div>
+<script>
+const ICON_INDEX = /*__ICON_INDEX__*/;
+/* every item the desk knows a name for, as "base36 id-delta name": a retainer can be selling anything */
+const ITEM_INDEX = /*__ITEM_INDEX__*/;
+/*__UI_JS__*/
+
+/* reading a whole world's board is a few hundred requests, so this tab waits to be asked (see autoLoad) */
+window.MANUAL_SCAN=true;
+
+let state={home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],query:"",tax:0.05,sortKey:"gap",sortDir:-1,
+  retainers:[],onlyUnder:false,retFilter:"all",scan:null,scanWorld:null,partial:false,hist:null,rows:null};
+
+const NAMES=(function(){const m={};let id=0;
+  for(const line of ITEM_INDEX.split("\n")){const sp=line.indexOf(" ");if(sp<0)continue;
+    id+=parseInt(line.slice(0,sp),36);m[id]=line.slice(sp+1);}
+  return m;})();
+const nameOf=id=>NAMES[id]||("Item #"+id);
+
+/*__SHARED_A__*/
+/*__SHARED_B__*/
+/*__SHARED_SHOP__*/
+/*__SHARED_LIST__*/
+/*__SHARED_XW__*/
+
+const fmt=n=>n==null||!isFinite(n)?"—":Math.round(n).toLocaleString("en-GB");
+const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function ageText(ms){if(!ms)return"no uploads";const h=(Date.now()-ms)/3600000;
+  return h<1?Math.max(1,Math.round(h*60))+"m":h<48?Math.round(h)+"h":Math.round(h/24)+"d";}
+
+function setStatus(h){document.getElementById("status").innerHTML=h;}
+function clearErr(){const b=document.getElementById("errbox");if(b)b.innerHTML="";}
+function showErr(e){const t=document.getElementById("tbl");if(t)t.hidden=true;setStatus("Couldn't reach the market board.");
+  const b=document.getElementById("errbox");if(b)b.innerHTML=`<div class="err"><b>The market board didn't load.</b> ${esc(e.message||e)}. Universalis may be down or rate-limiting for a moment: wait a minute and press Refresh, or check <a href="https://universalis.app" target="_blank" rel="noopener" style="color:#ffd7db">universalis.app</a>.</div>`;}
+
+/* ---- the retainer list: the same names on every world, kept for the whole desk ---- */
+const RET_KEY="gildesk:retainers:v1";
+function readRetainers(){try{const a=JSON.parse(localStorage.getItem(RET_KEY)||"[]");
+  return Array.isArray(a)?a.filter(x=>typeof x==="string"&&x.trim()).map(x=>x.trim()):[];}catch(e){return[];}}
+function saveRetainers(){try{localStorage.setItem(RET_KEY,JSON.stringify(state.retainers));}catch(e){}}
+const retKey=s=>String(s).trim().toLowerCase();
+function mineSet(){return new Set(state.retainers.map(retKey));}
+function paintRetainers(){
+  const seen=state.rows?new Set(state.rows.map(r=>retKey(r.ret))):null;
+  document.getElementById("retList").innerHTML=state.retainers.length
+    ?state.retainers.map((n,i)=>{const miss=seen&&!state.partial&&state.scanWorld===state.home&&!seen.has(retKey(n));
+      return`<span class="rtchip${miss?" missing":""}" title="${miss?"No listings found on "+esc(state.home)+" — check the spelling, or this retainer has nothing up":esc(n)}">${esc(n)}<button type="button" data-rtdel="${i}" title="Remove ${esc(n)}">✕</button></span>`;}).join("")
+    :`<span class="rtempty">None yet.</span>`;
+  const sel=document.getElementById("retFilter"),keep=state.retFilter;
+  sel.innerHTML=`<option value="all">All retainers</option>`+state.retainers.map(n=>`<option value="${esc(retKey(n))}">${esc(n)}</option>`).join("");
+  sel.value=keep;if(sel.value!==keep){sel.value="all";state.retFilter="all";}
+}
+function addRetainers(text){
+  const have=mineSet(),added=[];
+  for(const part of String(text).split(/[,;\n]+/)){const n=part.trim().replace(/\s+/g," ");
+    if(!n||have.has(retKey(n)))continue;have.add(retKey(n));added.push(n);}
+  if(!added.length)return false;
+  state.retainers=state.retainers.concat(added);saveRetainers();paintRetainers();
+  return true;
+}
+
+/* ---- reading the whole board ---- */
+/* the ids Universalis can price, a day at a time; if that fails, every id the desk has a name for */
+async function fetchMarketable(){
+  const hit=Cache.get("marketable",NET.WORLDS_TTL_MS);if(hit)return hit;
+  try{const r=await tfetch("https://universalis.app/api/v2/marketable");
+    if(!r.ok)throw new Error("HTTP "+r.status);
+    const ids=(await r.json()).map(Number).filter(Boolean);
+    if(ids.length){Cache.set("marketable",ids,NET.WORLDS_TTL_MS);return ids;}
+  }catch(e){}
+  return Object.keys(NAMES).map(Number);
+}
+/* Only these fields come back, which is what makes reading every item on a world quick:
+   the full answer for a hundred items at once is heavy enough for Universalis to time out on.
+   A one-item batch comes back without the "items" wrapper, so its fields go unprefixed. */
+const LIST_FIELDS=["itemID","lastUploadTime","listings.retainerName","listings.pricePerUnit","listings.quantity","listings.hq"];
+/* Universalis takes about 25 requests a second from one address. The desk's usual five at a
+   time outrun that on a board this size, and the refused ones come back without CORS headers,
+   so each batch here waits for its own slot, 20 a second at most. */
+const SCAN_GAP_MS=50;
+let _paceAt=0;
+function pace(){const now=Date.now(),at=Math.max(now,_paceAt);_paceAt=at+SCAN_GAP_MS;return at>now?sleep(at-now):null;}
+function strHash(s){let h=0;for(let i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;return h.toString(36);}
+/* An item is kept only when one of the named retainers has a listing on it, and then with
+   every listing of it, as [price, quantity, hq, retainer name], so the rivals can be counted.
+   Keeping the names means taking a retainer off the list needs no new scan. */
+async function scanBoard(world,names,onProgress){
+  const want=new Set(names.map(retKey));
+  const ck=`undercut:${world}:${strHash([...want].sort().join("|"))}`;
+  const hit=Cache.get(ck,NET.CACHE_TTL_MS);
+  if(hit){if(onProgress)onProgress(1,1);return{out:hit,failed:[],fromCache:true};}
+  const ids=await fetchMarketable();
+  const res=await runBatches(ids,async b=>{
+    await pace();
+    const one=b.length===1,fields=LIST_FIELDS.map(f=>one?f:"items."+f).join(",");
+    const r=await tfetch(`https://universalis.app/api/v2/${encodeURIComponent(world)}/${b.join(",")}?entries=0&fields=${fields}`);
+    if(!r.ok)throw new Error("HTTP "+r.status+" · "+world);
+    const j=await r.json(),src=one?(j&&j.itemID?{[j.itemID]:j}:{}):(j.items||{});
+    const m={};
+    for(const k in src){const it=src[k],ls=(it&&it.listings)||[];
+      if(!ls.some(l=>want.has(retKey(l.retainerName||""))))continue;
+      m[it.itemID||k]={u:it.lastUploadTime||0,l:ls.map(l=>[l.pricePerUnit,l.quantity,l.hq?1:0,l.retainerName||""])};}
+    return m;},onProgress);
+  if(!res.failed.length)Cache.set(ck,res.out);
+  return res;
+}
+async function fetchHist(scope,ids,onProgress){
+  const ck=`hist:${scope}:${hashIds(ids)}`;const hit=Cache.get(ck,NET.CACHE_TTL_MS);
+  if(hit){if(onProgress)onProgress(1,1);return{out:hit,failed:[],fromCache:true};}
+  const res=await runBatches(ids,async b=>{
+    const r=await tfetch(`https://universalis.app/api/v2/history/${encodeURIComponent(scope)}/${b.join(",")}?entriesToReturn=${HIST_ENTRIES}&entriesWithin=${HIST_SECS}&statsWithin=${HIST_SECS*1000}`);
+    if(!r.ok)throw new Error("HTTP "+r.status+" · history");
+    const j=await r.json();const src=j.items||(j.itemID?{[j.itemID]:j}:{});
+    const m={};for(const k in src)m[k]=summarizeHist(src[k]);return m;},onProgress);
+  if(!res.failed.length)Cache.set(ck,res.out);
+  return res;}
+
+/* ---- one line per retainer, item, quality and price ---- */
+function compute(){
+  const mine=mineSet(),rows=[];
+  for(const [id,it] of Object.entries(state.scan||{})){
+    const lines=new Map();
+    for(const l of it.l){const who=retKey(l[3]);if(!mine.has(who))continue;
+      const k=who+"|"+l[2]+"|"+l[0];
+      const g=lines.get(k)||{ret:l[3],hq:!!l[2],price:l[0],stacks:0,qty:0,sizes:new Set()};
+      g.stacks++;g.qty+=l[1];g.sizes.add(l[1]);lines.set(k,g);}
+    for(const g of lines.values()){
+      const same=it.l.filter(x=>!!x[2]===g.hq);
+      const rivals=same.filter(x=>!mine.has(retKey(x[3]))).map(x=>x[0]);
+      const cheaper=rivals.filter(p=>p<g.price);
+      const low=rivals.length?Math.min(...rivals):null;
+      const now=same.length?Math.min(...same.map(x=>x[0])):null;
+      const h=state.hist?state.hist[id]:null;
+      const avg=h?histAvg(h,g.hq).avg:null;
+      const velI=vel30(h,g.hq),trend=trend30(h,g.hq);
+      const gap=cheaper.length?g.price-low:null;
+      rows.push({id:+id,name:nameOf(+id),ret:g.ret,hq:g.hq,price:g.price,stacks:g.stacks,qty:g.qty,even:g.sizes.size===1,
+        under:cheaper.length,low,gap,gapPct:gap!=null?gap/g.price:null,rivals:rivals.length,
+        now,up:it.u,avg,velI,vel:velI.perDay,trend,
+        daily:avg!=null&&velI.perDay?avg*(1-state.tax)*velI.perDay:null,
+        outlier:now!=null&&avg!=null&&isOutlier(now,avg,{})});
+    }
+  }
+  state.rows=rows;
+}
+
+function visibleRows(){
+  let r=state.rows||[];
+  if(state.onlyUnder)r=r.filter(x=>x.under);
+  if(state.retFilter!=="all")r=r.filter(x=>retKey(x.ret)===state.retFilter);
+  if(state.query){const q=state.query.toLowerCase();r=r.filter(x=>x.name.toLowerCase().includes(q)||x.ret.toLowerCase().includes(q));}
+  const k=state.sortKey,d=state.sortDir;
+  /* undercut lines by how far under, then the cheapest, then the ones with nobody else selling */
+  const gapRank=x=>x.under?2+x.gapPct:(x.rivals?1:0);
+  const val=x=>k==="gap"?gapRank(x):k==="trend"?(x.trend?x.trend.pct:null):x[k];
+  return r.slice().sort((a,b)=>{
+    if(k==="name"||k==="ret")return d*a[k].localeCompare(b[k])||a.name.localeCompare(b.name);
+    const av=val(a),bv=val(b);
+    if(av==null&&bv==null)return a.name.localeCompare(b.name);if(av==null)return 1;if(bv==null)return -1;
+    return d*(av-bv)||a.name.localeCompare(b.name);});
+}
+/* ×99, or ×99 · 7 stacks, or 180 in 3 stacks when the stacks differ */
+function stackText(r){
+  if(r.stacks===1)return"&times;"+fmt(r.qty);
+  return r.even?`&times;${fmt(r.qty/r.stacks)} &middot; ${r.stacks} stacks`:`${fmt(r.qty)} in ${r.stacks} stacks`;
+}
+function verdict(r){
+  if(r.under){const pct=r.gapPct*100;
+    return`<span class="uc bad" title="The cheapest rival asks ${fmt(r.low)}, ${fmt(r.gap)} gil under you">&minus;${fmt(r.gap)} (${pct<0.1?"&lt;0.1":pct<10?pct.toFixed(1):Math.round(pct)}%)</span> `+
+      `<span class="q">${r.under} cheaper</span>`;}
+  if(r.rivals)return`<span class="uc good">Cheapest</span> <span class="q" title="The next rival listing">next ${fmt(r.low)}</span>`;
+  return`<span class="uc dim" title="No one else is selling this at this quality">Only seller</span>`;
+}
+function renderKpis(){
+  const rows=state.rows||[],under=rows.filter(r=>r.under);
+  const worst=under.slice().sort((a,b)=>b.gapPct-a.gapPct)[0];
+  const seen=new Set(rows.map(r=>retKey(r.ret)));
+  const missing=state.retainers.filter(n=>!seen.has(retKey(n)));
+  const oldest=rows.filter(r=>r.up).sort((a,b)=>a.up-b.up)[0];
+  const card=(ic,k,v,cls,s,tip)=>`<div class="kpi" title="${esc(tip||"")}"><div class="ki">${ic}</div><div class="kbody"><div class="k">${k}</div><div class="v ${cls}">${v}</div><div class="s">${s}</div></div></div>`;
+  document.getElementById("kpis").innerHTML=
+    card("&#128308;","Undercut",under.length,under.length?"bad":"good",`of ${rows.length} listing line${rows.length===1?"":"s"}`)+
+    card("&#128201;","Biggest gap",worst?Math.round(worst.gapPct*100)+"%":"—",worst?"bad":"",worst?`${esc(worst.name)} · ${esc(worst.ret)}`:"nobody is under you",
+      worst?`${worst.name} on ${worst.ret}: ${fmt(worst.price)} against ${fmt(worst.low)}`:"")+
+    card("&#129523;","Retainers found",`${state.retainers.length-missing.length}/${state.retainers.length}`,missing.length?"":"cy",
+      missing.length?(state.partial?"part of the board didn't load":"not seen: "+esc(missing.join(", "))):"all have listings up",
+      missing.length?(state.partial?"Some of the market board didn't load, so a retainer may just be in the part that is missing. Refresh to try again.":"No listings on "+state.home+" under these names"):"")+
+    card("&#9203;","Oldest data",oldest?ageText(oldest.up):"—","gil",oldest?esc(oldest.name):"",
+      "The listing data is only as fresh as the last time a player with an uploader looked at the item");
+}
+function render(){
+  const rows=visibleRows();
+  const tbl=document.getElementById("tbl");
+  tbl.hidden=!rows.length;
+  document.getElementById("rows").innerHTML=rows.map(r=>
+    `<tr class="row${r.under?" under":""}">`+
+      `<td><div class="name"><span class="n">`+
+        `<button class="listbtn" data-listadd="${r.id}" title="Add to a saved list">📋</button>`+
+        `<button class="xwbtn" data-xw="${r.id}" data-xwname="${xesc(r.name)}" data-xwhq="${r.hq?1:0}" title="Compare this item's price and stock on every world">🌐</button>`+
+        `${iconHTML(r.id)}<a href="https://universalis.app/market/${r.id}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">${esc(r.name)}</a>`+
+        `${r.hq?'<span class="hqtag">HQ</span>':""}</span></div></td>`+
+      `<td>${esc(r.ret)}</td>`+
+      `<td>${fmt(r.price)} <span class="q">${stackText(r)}</span></td>`+
+      `<td>${verdict(r)}</td>`+
+      `<td>${fmt(r.now)}${agePill(r.up)}${r.outlier?`<span class="warn" title="${outlierWhy(r.now,r.avg)}">⚠</span>`:""}</td>`+
+      `<td>${fmt(r.avg)}</td>`+
+      `<td>${trendChip(r.trend)}</td>`+
+      `<td>${velCell(r.velI)}</td>`+
+      `<td>${fmt(r.daily)}</td>`+
+    `</tr>`).join("");
+  renderKpis();paintRetainers();
+  const all=state.rows||[],under=all.filter(r=>r.under).length,where=esc(state.scanWorld||state.home);
+  const empty=!all.length?(state.partial?`No listings from your retainers in the part of <b>${where}</b>'s board that loaded.`
+      :`No listings from ${esc(state.retainers.join(", "))} on <b>${where}</b>. Check the names match the game exactly, and the Sell on world is where they sell.`)
+    :"Nothing matches these filters.";
+  setStatus(rows.length?`Found <b>${all.length}</b> listing line${all.length===1?"":"s"} from your retainers on <b>${where}</b>`+
+    (under?`, <b>${under}</b> of them undercut.`:", and nobody is under any of them."):empty);
+}
+/* Until a scan has run, the table's place holds the start button; with no names yet, it says to add some */
+function syncStart(){
+  const box=document.getElementById("startScan"),go=document.getElementById("startScanGo");
+  const n=state.retainers.length,busy=document.getElementById("refresh").disabled;
+  box.hidden=!!state.rows||busy;
+  go.disabled=!n||busy;
+  document.getElementById("startScanSub").innerHTML=n
+    ?`Reads every listing on <b class="homename">${esc(state.home)}</b> and finds the ones from <b>${esc(state.retainers.join(", "))}</b>. Takes about ten seconds.`
+    :`Add your retainers' names in the sidebar first, exactly as they show in game.`;
+}
+/* the names changed: rescan if this visit has already scanned, otherwise just say what the button will do */
+function namesChanged(){
+  if(!state.retainers.length){state.rows=null;state.scan=null;document.getElementById("tbl").hidden=true;
+    document.getElementById("kpis").innerHTML="";setStatus("");clearErr();paintRetainers();syncStart();return;}
+  if(scanning())load();else{paintRetainers();syncStart();}
+}
+/* a scan has run on this visit, or is running now: either way the new names or world need one */
+function scanning(){return !!state.scan||document.getElementById("refresh").disabled;}
+
+function updateScanTime(){const el=document.getElementById("lastScan");if(!el)return;const now=new Date();el._scanTime=now;function tick(){if(!el._scanTime)return;const age=(Date.now()-el._scanTime)/1000;el.textContent=el._scanTime.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit",second:"2-digit"});el.style.color=age<1800?"var(--win)":"var(--loss)";}tick();if(el._ticker)clearInterval(el._ticker);el._ticker=setInterval(tick,30000);}
+/* a name or world changed while a scan ran: that scan is for the old ones, so one more follows it */
+let _again=false;
+async function load(){
+  const btn=document.getElementById("refresh");
+  if(btn.disabled){_again=true;return;}
+  _again=false;
+  if(!state.retainers.length){syncStart();setStatus("Add your retainers' names in the sidebar first.");return;}
+  btn.disabled=true;syncStart();clearErr();
+  try{
+    setStatus("Fetching world list…");
+    await refreshTopology();buildHomeSelect(document.getElementById("home"),state.home);
+    const world=state.home,names=state.retainers.slice();
+    const scan=await scanBoard(world,names,(d,t)=>setStatus(`Reading every listing on ${esc(world)}… ${d}/${t} batches`));
+    /* nothing came back at all: that is Universalis, not the names, so offer the button again */
+    if(scan.failed.length&&scan.failed.length>=scan.total){
+      state.scan=null;state.rows=null;state.partial=false;
+      document.getElementById("tbl").hidden=true;document.getElementById("kpis").innerHTML="";paintRetainers();
+      setStatus("");finishStatus([scan]);return;}
+    state.scan=scan.out;state.scanWorld=world;state.hist=null;state.partial=scan.failed.length>0;
+    compute();
+    const ids=[...new Set(state.rows.map(r=>r.id))];
+    let hist={failed:[]};
+    if(ids.length){
+      hist=await fetchHist(world,ids,(d,t)=>setStatus(`Reading ${esc(world)} sales history… ${d}/${t} batches`));
+      state.hist=hist.out;compute();}
+    render();updateScanTime();
+    /* "loaded from cache" is about the board scan; the history is often cached when the scan is not */
+    finishStatus([scan,{...hist,fromCache:false}]);
+  }catch(e){showErr(e);}finally{btn.disabled=false;syncStart();if(_again)setTimeout(load,0);}
+}
+
+state.retainers=readRetainers();
+paintRetainers();
+buildHomeSelect(document.getElementById("home"),state.home);
+document.getElementById("home").addEventListener("change",e=>{homeChanged(e.target.value);if(scanning())load();else syncStart();});
+document.getElementById("startScanGo").addEventListener("click",()=>document.getElementById("refresh").click());
+document.getElementById("search").addEventListener("input",e=>{state.query=e.target.value;if(state.rows)render();});
+document.getElementById("onlyUnder").addEventListener("change",e=>{state.onlyUnder=e.target.checked;if(state.rows)render();});
+document.getElementById("retFilter").addEventListener("change",e=>{state.retFilter=e.target.value;if(state.rows)render();});
+document.getElementById("tax").addEventListener("change",e=>{state.tax=+e.target.value;if(state.rows){compute();render();}});
+document.getElementById("refresh").addEventListener("click",load);
+document.getElementById("retForm").addEventListener("submit",e=>{
+  e.preventDefault();const box=document.getElementById("retIn");
+  if(addRetainers(box.value)){box.value="";namesChanged();}
+  else box.select();
+});
+document.getElementById("retList").addEventListener("click",e=>{
+  const b=e.target.closest("[data-rtdel]");if(!b)return;
+  state.retainers.splice(+b.dataset.rtdel,1);saveRetainers();
+  /* every listing on a scanned item was kept, so a retainer coming off the list needs no new scan */
+  if(state.retainers.length&&state.scan){compute();render();}else namesChanged();
+});
+/* the names are shared with any other copy of the desk open in this browser */
+addEventListener("storage",e=>{if(e.key!==RET_KEY)return;
+  const before=state.retainers.map(retKey).sort().join("|");
+  state.retainers=readRetainers();paintRetainers();
+  if(state.retainers.map(retKey).sort().join("|")!==before)namesChanged();});
+
+document.querySelectorAll("thead th[data-k]").forEach(th=>{
+  th.addEventListener("click",()=>{
+    const k=th.dataset.k;
+    if(state.sortKey===k)state.sortDir*=-1;else{state.sortKey=k;state.sortDir=(k==="name"||k==="ret")?1:-1;}
+    document.querySelectorAll("thead th").forEach(x=>{x.removeAttribute("data-sorted");const s=x.querySelector("span");if(s)s.textContent="";});
+    th.setAttribute("data-sorted","");th.querySelector("span").textContent=state.sortDir<0?"▾":"▴";
+    render();
+  });
+});
+
+(function(){
+  const SKEY="gildesk:undercuts:settings";
+  function collect(){const s={};document.querySelectorAll("select[id],input[id]").forEach(el=>{
+    if(el.id==="search"||el.id==="retIn"||el.type==="button")return;s[el.id]=el.type==="checkbox"?el.checked:el.value;});return s;}
+  document.addEventListener("change",()=>{try{localStorage.setItem(SKEY,JSON.stringify(collect()));}catch(e){}});
+  try{const s=JSON.parse(localStorage.getItem(SKEY)||"{}");
+    for(const[id,v]of Object.entries(s)){const el=document.getElementById(id);if(!el)continue;
+      if(el.type==="checkbox")el.checked=!!v;
+      else if(el.tagName!=="SELECT"||Array.prototype.some.call(el.options,o=>o.value===String(v)))el.value=v;
+      else continue;
+      if(id==="home"){state.home=el.value;syncHomeNames();continue;}
+      el.dispatchEvent(new Event("change"));}
+  }catch(e){}
+})();
+syncStart();
+</script>
+</body>
+</html>
