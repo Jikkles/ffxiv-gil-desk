@@ -9,6 +9,9 @@
 /*__UI_CSS__*/
 /* ---- undercuts only ---- */
 thead th span{display:inline-block;min-width:.8em}
+/* nothing here is bought, so the shopping list stays out of the way; its code still loads,
+   since the 📋 list button borrows its toast */
+#shopPanel{display:none!important}
 /* the retainer list: one chip a name, added from the box above it */
 .rtform{display:flex;gap:6px;margin-bottom:8px}
 .rtform .field{flex:1;margin-bottom:0}
@@ -486,6 +489,11 @@ document.querySelectorAll("thead th[data-k]").forEach(th=>{
   }catch(e){}
 })();
 syncStart();
+/* what the 📋 button hands to a saved list */
+window.__listEntry=id=>{
+  const r=(state.rows||[]).find(x=>x.id===+id);if(!r)return null;
+  return{id:r.id,name:r.name,kind:"misc",group:"misc",q:r.hq?"hq":"nq",note:"Listed by "+r.ret,recipes:{},src:"Undercuts"};
+};
 </script>
 </body>
 </html>

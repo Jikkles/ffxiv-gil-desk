@@ -360,6 +360,11 @@ document.querySelectorAll("thead th[data-k]").forEach(th=>{
 })();
 
 load();
+/* what the 📋 button hands to a saved list; it had none, so the button only ever said it couldn't read the item */
+window.__listEntry=id=>{
+  const r=(state.rows||[]).find(x=>x.id===+id);if(!r)return null;
+  return{id:r.id,name:r.name,kind:catSlug(r.cat),group:catSlug(r.cat),q:"nq",note:r.venture,recipes:{},src:"Retainers"};
+};
 </script>
 </body>
 </html>

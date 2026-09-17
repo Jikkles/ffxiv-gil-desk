@@ -12,6 +12,9 @@ What changed on [Jikky's Gil Factory](README.md), newest first.
 - Undercuts says, under its header and above its results, that it can only show listings Universalis
   has been sent: one you put up since an item was last uploaded appears once someone opens that item
   on the market board with an uploader running.
+- Undercuts no longer shows the shopping list, since nothing there is bought.
+- The 📋 button on Undercuts and on **Retainers** adds the item to a list. On Retainers it had only
+  ever said "Couldn't read that item".
 - The search box now knows every marketable item, about 1,850 more than before, mostly older gear,
   and all of them have icons.
 - The tab bar tightens a little further before it drops its icons, so it still fits on one row
