@@ -36,6 +36,8 @@ thead th span{display:inline-block;min-width:.8em}
 .uc.dim{color:var(--muted);border-color:var(--line)}
 .hqtag{font-family:"JetBrains Mono",monospace;font-size:9px;padding:0 5px;border-radius:99px;border:1px solid var(--gil-line);color:var(--gil);margin-left:6px}
 tr.under td:first-child{box-shadow:inset 3px 0 0 var(--loss)}
+/* no cards until a check has run, so the guide skips them rather than lighting an empty strip */
+.hero .kpis[hidden]{display:none}
 .kpi .v.bad{color:var(--loss)} .kpi .v.good{color:var(--win)}
 </style>
 <script>try{var __t=localStorage.getItem("gildesk:theme:v1");document.documentElement.setAttribute("data-theme",__t==="light"?"light":"dark");}catch(e){document.documentElement.setAttribute("data-theme","dark");}</script>
@@ -95,7 +97,7 @@ tr.under td:first-child{box-shadow:inset 3px 0 0 var(--loss)}
         <h1><b>Undercuts</b></h1>
         <p class="sub">Every listing your retainers have up on <span class="homename">Spriggan</span>, found by reading the whole market board, with the ones someone has <b>undercut</b> first: by how much, and how many listings now sit below yours.</p>
       </div>
-      <div class="kpis" id="kpis"></div>
+      <div class="kpis" id="kpis" hidden></div>
     </div>
 
     <details class="howto" data-howto="undercuts">
@@ -108,10 +110,11 @@ tr.under td:first-child{box-shadow:inset 3px 0 0 var(--loss)}
       <template class="guide">
         <div data-spot="#retGroup" data-side="right" data-title="Your retainers">Type a retainer's name and press Add, or paste all of them with commas between. ✕ removes one.</div>
         <div data-spot="#home" data-side="right" data-title="Sell on">The world your retainers sell on. The whole board there is read each time you check, so the tab waits for <b>Check for Undercuts</b> or Refresh rather than scanning as you open it.</div>
-        <div data-spot="#tbl th[data-k=gap]" data-side="bottom" data-title="Undercut">How far below you the cheapest rival is, and how many listings beat you, or Cheapest when nobody does.</div>
-        <div data-spot="#tbl th[data-k=now]" data-side="bottom" data-title="Sell now">The cheapest listing on your world, yours included, and how old that data is.</div>
+        <div data-only data-spot="#startScanGo" data-side="right" data-title="Check for Undercuts">Reads the board and lists your retainers' listings. It is greyed out until you have added at least one name.</div>
+        <div data-only data-spot="#tbl th[data-k=gap]" data-side="bottom" data-title="Undercut">How far below you the cheapest rival is, and how many listings beat you, or Cheapest when nobody does.</div>
+        <div data-only data-spot="#tbl th[data-k=now]" data-side="bottom" data-title="Sell now">The cheapest listing on your world, yours included, and how old that data is.</div>
         <div data-spot="#onlyUnder, #retFilter" data-side="right" data-title="Filters">Show only the listings that need relisting, or one retainer at a time.</div>
-        <div data-spot="#kpis" data-side="bottom" data-title="The cards">How many lines are undercut, the biggest gap, which retainers turned up, and how old the stalest data is.</div>
+        <div data-only data-spot="#kpis" data-side="bottom" data-title="The cards">How many lines are undercut, the biggest gap, which retainers turned up, and how old the stalest data is.</div>
       </template>
     </details>
 
@@ -318,7 +321,9 @@ function verdict(r){
   if(r.rivals)return`<span class="uc good">Cheapest</span> <span class="q" title="The next rival listing">next ${fmt(r.low)}</span>`;
   return`<span class="uc dim" title="No one else is selling this at this quality">Only seller</span>`;
 }
+function clearKpis(){const k=document.getElementById("kpis");k.innerHTML="";k.hidden=true;}
 function renderKpis(){
+  document.getElementById("kpis").hidden=false;
   const rows=state.rows||[],under=rows.filter(r=>r.under);
   const worst=under.slice().sort((a,b)=>b.gapPct-a.gapPct)[0];
   const seen=new Set(rows.map(r=>retKey(r.ret)));
@@ -376,7 +381,7 @@ function syncStart(){
 /* the names changed: rescan if this visit has already scanned, otherwise just say what the button will do */
 function namesChanged(){
   if(!state.retainers.length){state.rows=null;state.scan=null;document.getElementById("tbl").hidden=true;
-    document.getElementById("kpis").innerHTML="";setStatus("");clearErr();paintRetainers();syncStart();return;}
+    clearKpis();setStatus("");clearErr();paintRetainers();syncStart();return;}
   if(scanning())load();else{paintRetainers();syncStart();}
 }
 /* a scan has run on this visit, or is running now: either way the new names or world need one */
@@ -399,7 +404,7 @@ async function load(){
     /* nothing came back at all: that is Universalis, not the names, so offer the button again */
     if(scan.failed.length&&scan.failed.length>=scan.total){
       state.scan=null;state.rows=null;state.partial=false;
-      document.getElementById("tbl").hidden=true;document.getElementById("kpis").innerHTML="";paintRetainers();
+      document.getElementById("tbl").hidden=true;clearKpis();paintRetainers();
       setStatus("");finishStatus([scan]);return;}
     state.scan=scan.out;state.scanWorld=world;state.hist=null;state.partial=scan.failed.length>0;
     compute();
