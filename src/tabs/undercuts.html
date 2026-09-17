@@ -38,6 +38,8 @@ thead th span{display:inline-block;min-width:.8em}
 tr.under td:first-child{box-shadow:inset 3px 0 0 var(--loss)}
 /* no cards until a check has run, so the guide skips them rather than lighting an empty strip */
 .hero .kpis[hidden]{display:none}
+.forecast{color:var(--muted);font-size:11px;font-family:"JetBrains Mono",monospace}
+.forecast b{color:var(--gil)}
 .kpi .v.bad{color:var(--loss)} .kpi .v.good{color:var(--win)}
 </style>
 <script>try{var __t=localStorage.getItem("gildesk:theme:v1");document.documentElement.setAttribute("data-theme",__t==="light"?"light":"dark");}catch(e){document.documentElement.setAttribute("data-theme","dark");}</script>
@@ -174,6 +176,7 @@ const nameOf=id=>NAMES[id]||("Item #"+id);
 /*__SHARED_XW__*/
 
 const fmt=n=>n==null||!isFinite(n)?"—":Math.round(n).toLocaleString("en-GB");
+const fmtK=n=>{if(n==null||!isFinite(n))return"—";if(Math.abs(n)>=1e6)return(n/1e6).toFixed(2)+"M";if(Math.abs(n)>=1e3)return(n/1e3).toFixed(1)+"k";return Math.round(n).toString();};
 const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 function ageText(ms){if(!ms)return"no uploads";const h=(Date.now()-ms)/3600000;
   return h<1?Math.max(1,Math.round(h*60))+"m":h<48?Math.round(h)+"h":Math.round(h/24)+"d";}
@@ -358,7 +361,7 @@ function render(){
       `<td>${fmt(r.avg)}</td>`+
       `<td>${trendChip(r.trend)}</td>`+
       `<td>${velCell(r.velI)}</td>`+
-      `<td>${fmt(r.daily)}</td>`+
+      `<td class="forecast">${r.daily!=null&&r.daily>0?"<b>"+fmtK(r.daily)+"</b>/day":"—"}</td>`+
     `</tr>`).join("");
   renderKpis();paintRetainers();
   const all=state.rows||[],under=all.filter(r=>r.under).length,where=esc(state.scanWorld||state.home);
