@@ -53,6 +53,8 @@ tr.under td:first-child{box-shadow:inset 3px 0 0 var(--loss)}
 .forecast{color:var(--muted);font-size:11px;font-family:"JetBrains Mono",monospace}
 .forecast b{color:var(--gil)}
 .kpi .v.bad{color:var(--loss)} .kpi .v.good{color:var(--win)}
+/* a line someone has undercut since the check before */
+.uc.new{color:var(--gil);border-color:var(--gil-line);margin-right:5px}
 </style>
 <script>try{var __t=localStorage.getItem("gildesk:theme:v1");document.documentElement.setAttribute("data-theme",__t==="light"?"light":"dark");}catch(e){document.documentElement.setAttribute("data-theme","dark");}</script>
 </head>
@@ -82,6 +84,21 @@ tr.under td:first-child{box-shadow:inset 3px 0 0 var(--loss)}
       <select id="home"></select>
     </div>
       <button class="btn primary wide" id="refresh">&#8635; Refresh</button>
+    </div>
+    <div class="sgroup" id="autoGroup">
+      <div class="slabel">Keep checking</div>
+      <div class="field sel">
+      <label for="autoEvery">Check every</label>
+      <select id="autoEvery">
+        <option value="0" selected>Off</option>
+        <option value="10">10 min</option>
+        <option value="15">15 min</option>
+        <option value="30">30 min</option>
+        <option value="60">1 hour</option>
+      </select>
+    </div>
+      <label class="chk" title="A desktop notification when a check finds a newly undercut listing"><input type="checkbox" id="autoNotify"> Pop-up when undercut</label>
+      <div class="rthint" id="autoHint"></div>
     </div>
     <div class="sgroup">
       <div class="slabel">Filters</div>
@@ -120,6 +137,7 @@ tr.under td:first-child{box-shadow:inset 3px 0 0 var(--loss)}
       <div class="hw-body">
         <div class="hw-sec"><h4>What it works out</h4><p>Add your retainers' names and press <b>Check for Undercuts</b> (or Refresh), and the tab reads every listing on your <b>Sell on</b> world, about seventeen thousand items, and picks out the ones your retainers put up. A listing is <b>undercut</b> when someone else is selling the same item, at the same quality, for less.</p></div>
         <div class="hw-sec"><h4>Reading the table</h4><p><b>Your price</b> is the price per unit your retainer is asking, with the stack size; identical stacks are folded into one line. <b>Undercut</b> says how far the cheapest rival is below you and how many listings are cheaper, or <b>Cheapest</b> when nobody is. <b>Sell now</b> is the cheapest listing of that quality on your world, yours included, with how old that data is. Your own retainers never count as undercutting each other.</p></div>
+        <div class="hw-sec"><h4>Keep checking</h4><p>Set <b>Check every</b> and, after your first check, the tab looks at your listings again on that timer, whichever tab you are on, for as long as the desk stays open. A line undercut since the check before gets a <b>New</b> tag, the Undercuts tab shows how many, and <b>Pop-up when undercut</b> adds a desktop notification (your browser asks first). A timed check re-reads only the items your retainers were already on; once an hour, and whenever you press Refresh, it reads the whole board again to find anything you have listed since.</p></div>
         <div class="hw-sec"><h4>Worth knowing</h4><p>The market board data comes from players whose plugins upload what they see, so a listing is only as fresh as the last time someone looked at that item. Busy items are usually minutes old; quiet ones can be days old, and the age on <b>Sell now</b> says which is which. The game doesn't share who owns a listing, only the retainer's name, so your character name won't find anything. A retainer with a dashed outline has no listings on this world, or its name is spelt differently.</p></div>
       </div>
       <template class="guide">
@@ -128,6 +146,7 @@ tr.under td:first-child{box-shadow:inset 3px 0 0 var(--loss)}
         <div data-only data-spot="#startScanGo" data-side="right" data-title="Check for Undercuts">Reads the board and lists your retainers' listings. It is greyed out until you have added at least one name.</div>
         <div data-only data-spot="#tbl th[data-k=gap]" data-side="bottom" data-title="Undercut">How far below you the cheapest rival is, and how many listings beat you, or Cheapest when nobody does.</div>
         <div data-only data-spot="#tbl th[data-k=now]" data-side="bottom" data-title="Sell now">The cheapest listing on your world, yours included, and how old that data is.</div>
+        <div data-spot="#autoGroup" data-side="right" data-title="Keep checking">Checks your listings again on a timer once you have checked by hand, and marks anything newly undercut. Tick Pop-up for a desktop notification too.</div>
         <div data-spot="#onlyUnder, #retFilter" data-side="right" data-title="Filters">Show only the listings that need relisting, or one retainer at a time.</div>
         <div data-only data-spot="#kpis" data-side="bottom" data-title="The cards">How many lines are undercut, the biggest gap, which retainers turned up, and how old the stalest data is.</div>
       </template>
@@ -175,7 +194,8 @@ const ITEM_INDEX = /*__ITEM_INDEX__*/;
 window.MANUAL_SCAN=true;
 
 let state={home:"Spriggan",homeId:85,dc:"Chaos",dcs:["Chaos"],query:"",tax:0.05,sortKey:"gap",sortDir:-1,
-  retainers:[],onlyUnder:false,retFilter:"all",scan:null,scanWorld:null,partial:false,hist:null,rows:null};
+  retainers:[],onlyUnder:false,retFilter:"all",scan:null,scanWorld:null,scanNames:"",partial:false,hist:null,rows:null,
+  fresh:new Set(),lastCheck:0,fullAt:0};
 
 const NAMES=(function(){const m={};let id=0;
   for(const line of ITEM_INDEX.split("\n")){const sp=line.indexOf(" ");if(sp<0)continue;
@@ -257,7 +277,22 @@ async function scanBoard(world,names,onProgress){
   const hit=Cache.get(ck,NET.CACHE_TTL_MS);
   if(hit){if(onProgress)onProgress(1,1);return{out:hit,failed:[],fromCache:true};}
   const ids=await fetchMarketable();
-  const res=await runBatches(ids,async b=>{
+  const res=await runBatches(ids,boardBatch(world,want),onProgress);
+  if(!res.failed.length)Cache.set(ck,res.out);
+  return res;
+}
+/* A timed check re-reads only the items the retainers were on last time, a request or two
+   rather than a whole board. An item that comes back without them has sold or been taken
+   down, so it goes; one whose batch failed keeps what the last check saw. */
+async function recheckBoard(world,names,prev,onProgress){
+  const want=new Set(names.map(retKey)),ids=Object.keys(prev).map(Number);
+  const res=await runBatches(ids,boardBatch(world,want),onProgress);
+  const bad=new Set(res.failed.flatMap(f=>f.ids.map(String))),out={};
+  for(const k of Object.keys(prev)){const v=bad.has(k)?prev[k]:res.out[k];if(v)out[k]=v;}
+  return{...res,out};
+}
+function boardBatch(world,want){
+  return async b=>{
     await pace();
     const one=b.length===1,fields=LIST_FIELDS.map(f=>one?f:"items."+f).join(",");
     const r=await tfetch(`https://universalis.app/api/v2/${encodeURIComponent(world)}/${b.join(",")}?entries=0&fields=${fields}`);
@@ -267,9 +302,7 @@ async function scanBoard(world,names,onProgress){
     for(const k in src){const it=src[k],ls=(it&&it.listings)||[];
       if(!ls.some(l=>want.has(retKey(l.retainerName||""))))continue;
       m[it.itemID||k]={u:it.lastUploadTime||0,l:ls.map(l=>[l.pricePerUnit,l.quantity,l.hq?1:0,l.retainerName||""])};}
-    return m;},onProgress);
-  if(!res.failed.length)Cache.set(ck,res.out);
-  return res;
+    return m;};
 }
 async function fetchHist(scope,ids,onProgress){
   const ck=`hist:${scope}:${hashIds(ids)}`;const hit=Cache.get(ck,NET.CACHE_TTL_MS);
@@ -331,9 +364,12 @@ function stackText(r){
   if(r.stacks===1)return"&times;"+fmt(r.qty);
   return r.even?`&times;${fmt(r.qty/r.stacks)} &middot; ${r.stacks} stacks`:`${fmt(r.qty)} in ${r.stacks} stacks`;
 }
+/* one listing line, for telling whether it was already undercut at the check before */
+const lineKey=r=>`${r.id}|${retKey(r.ret)}|${r.hq?1:0}|${r.price}`;
+const underKeys=rows=>new Set((rows||[]).filter(r=>r.under).map(lineKey));
 function verdict(r){
   if(r.under){const pct=r.gapPct*100;
-    return`<span class="uc bad" title="The cheapest rival asks ${fmt(r.low)}, ${fmt(r.gap)} gil under you">&minus;${fmt(r.gap)} (${pct<0.1?"&lt;0.1":pct<10?pct.toFixed(1):Math.round(pct)}%)</span> `+
+    return(state.fresh.has(lineKey(r))?`<span class="uc new" title="Undercut since the check before">New</span>`:"")+`<span class="uc bad" title="The cheapest rival asks ${fmt(r.low)}, ${fmt(r.gap)} gil under you">&minus;${fmt(r.gap)} (${pct<0.1?"&lt;0.1":pct<10?pct.toFixed(1):Math.round(pct)}%)</span> `+
       `<span class="q">${r.under} cheaper</span>`;}
   if(r.rivals)return`<span class="uc good">Cheapest</span> <span class="q" title="The next rival listing">next ${fmt(r.low)}</span>`;
   return`<span class="uc dim" title="No one else is selling this at this quality">Only seller</span>`;
@@ -341,14 +377,14 @@ function verdict(r){
 function clearKpis(){const k=document.getElementById("kpis");k.innerHTML="";k.hidden=true;}
 function renderKpis(){
   document.getElementById("kpis").hidden=false;
-  const rows=state.rows||[],under=rows.filter(r=>r.under);
+  const rows=state.rows||[],under=rows.filter(r=>r.under),fresh=under.filter(r=>state.fresh.has(lineKey(r))).length;
   const worst=under.slice().sort((a,b)=>b.gapPct-a.gapPct)[0];
   const seen=new Set(rows.map(r=>retKey(r.ret)));
   const missing=state.retainers.filter(n=>!seen.has(retKey(n)));
   const oldest=rows.filter(r=>r.up).sort((a,b)=>a.up-b.up)[0];
   const card=(ic,k,v,cls,s,tip)=>`<div class="kpi" title="${esc(tip||"")}"><div class="ki">${ic}</div><div class="kbody"><div class="k">${k}</div><div class="v ${cls}">${v}</div><div class="s">${s}</div></div></div>`;
   document.getElementById("kpis").innerHTML=
-    card("&#128308;","Undercut",under.length,under.length?"bad":"good",`of ${rows.length} listing line${rows.length===1?"":"s"}`)+
+    card("&#128308;","Undercut",under.length,under.length?"bad":"good",`of ${rows.length} listing line${rows.length===1?"":"s"}`+(fresh?` · ${fresh} new`:""))+
     card("&#128201;","Biggest gap",worst?Math.round(worst.gapPct*100)+"%":"—",worst?"bad":"",worst?`${esc(worst.name)} · ${esc(worst.ret)}`:"nobody is under you",
       worst?`${worst.name} on ${worst.ret}: ${fmt(worst.price)} against ${fmt(worst.low)}`:"")+
     card("&#129523;","Retainers found",`${state.retainers.length-missing.length}/${state.retainers.length}`,missing.length?"":"cy",
@@ -383,8 +419,9 @@ function render(){
       :`No listings from ${esc(state.retainers.join(", "))} on <b>${where}</b>. Check the names match the game exactly, and the Sell on world is where they sell.`)
     :"Nothing matches these filters.";
   setStatus(rows.length?`Found <b>${all.length}</b> listing line${all.length===1?"":"s"} from your retainers on <b>${where}</b>`+
-    (under?`, <b>${under}</b> of them undercut.`:", and nobody is under any of them."):empty);
+    (under?`, <b>${under}</b> of them undercut${freshCount()?` (<b>${freshCount()}</b> new)`:""}.`:", and nobody is under any of them."):empty);
 }
+function freshCount(){return(state.rows||[]).filter(r=>r.under&&state.fresh.has(lineKey(r))).length;}
 /* Until a scan has run, the table's place holds the start button; with no names yet, it says to add some */
 function syncStart(){
   const box=document.getElementById("startScan"),go=document.getElementById("startScanGo");
@@ -408,24 +445,43 @@ function scanning(){return !!state.scan||document.getElementById("refresh").disa
 function updateScanTime(){const el=document.getElementById("lastScan");if(!el)return;const now=new Date();el._scanTime=now;function tick(){if(!el._scanTime)return;const age=(Date.now()-el._scanTime)/1000;el.textContent=el._scanTime.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit",second:"2-digit"});el.style.color=age<1800?"var(--win)":"var(--loss)";}tick();if(el._ticker)clearInterval(el._ticker);el._ticker=setInterval(tick,30000);}
 /* a name or world changed while a scan ran: that scan is for the old ones, so one more follows it */
 let _again=false;
-async function load(){
+/* a timed check reads the whole board again once an hour, to find listings put up since */
+const FULL_EVERY_MS=60*60*1000;
+async function load(opts){
+  const auto=!!(opts&&opts.auto);
   const btn=document.getElementById("refresh");
-  if(btn.disabled){_again=true;return;}
+  if(btn.disabled){if(!auto)_again=true;return;}
   _again=false;
   if(!state.retainers.length){syncStart();setStatus("Add your retainers' names in the sidebar first.");return;}
+  state.lastCheck=Date.now();
+  const world=state.home,names=state.retainers.slice(),namesKey=names.map(retKey).sort().join("|");
+  const same=!!state.scan&&state.scanWorld===world;
+  const quick=auto&&same&&state.scanNames===namesKey&&Object.keys(state.scan).length>0&&Date.now()-state.fullAt<FULL_EVERY_MS;
+  /* a timed full read skips the cache, as Refresh does */
+  if(auto&&!quick)forceNextScan(btn);
   btn.disabled=true;syncStart();clearErr();
   try{
     setStatus("Fetching world list…");
     await refreshTopology();buildHomeSelect(document.getElementById("home"),state.home);
-    const world=state.home,names=state.retainers.slice();
-    const scan=await scanBoard(world,names,(d,t)=>setStatus(`Reading every listing on ${esc(world)}… ${d}/${t} batches`));
-    /* nothing came back at all: that is Universalis, not the names, so offer the button again */
+    const before=same?underKeys(state.rows):null;
+    const scan=quick
+      ?await recheckBoard(world,names,state.scan,(d,t)=>setStatus(`Checking your listings on ${esc(world)} again… ${d}/${t} batches`))
+      :await scanBoard(world,names,(d,t)=>setStatus(`Reading every listing on ${esc(world)}… ${d}/${t} batches`));
+    /* nothing came back at all: that is Universalis, not the names, so offer the button again.
+       A timed check leaves what is on screen alone and tries again next time. */
     if(scan.failed.length&&scan.failed.length>=scan.total){
+      if(auto){setStatus("");finishStatus([scan]);return;}
       state.scan=null;state.rows=null;state.partial=false;
       document.getElementById("tbl").hidden=true;clearKpis();paintRetainers();
       setStatus("");finishStatus([scan]);return;}
-    state.scan=scan.out;state.scanWorld=world;state.hist=null;state.partial=scan.failed.length>0;
+    if(!quick){state.fullAt=Date.now();state.partial=scan.failed.length>0;}
+    state.scan=scan.out;state.scanWorld=world;state.scanNames=namesKey;state.hist=null;
     compute();
+    /* New marks what has been undercut since the check before. Timed checks add to it, so a
+       line keeps its tag until you check by hand, which is when you are looking at the table. */
+    const added=before?[...underKeys(state.rows)].filter(k=>!before.has(k)):[];
+    const now=underKeys(state.rows);
+    state.fresh=new Set((auto?[...state.fresh,...added]:added).filter(k=>now.has(k)));
     const ids=[...new Set(state.rows.map(r=>r.id))];
     let hist={failed:[]};
     if(ids.length){
@@ -434,8 +490,58 @@ async function load(){
     render();updateScanTime();
     /* "loaded from cache" is about the board scan; the history is often cached when the scan is not */
     finishStatus([scan,{...hist,fromCache:false}]);
-  }catch(e){showErr(e);}finally{btn.disabled=false;syncStart();if(_again)setTimeout(load,0);}
+    if(auto&&added.length){const a=new Set(added);alertUndercuts(state.rows.filter(r=>a.has(lineKey(r))));}
+  }catch(e){if(!auto||!state.rows)showErr(e);}finally{btn.disabled=false;syncStart();syncAuto();if(_again)setTimeout(load,0);}
 }
+
+/* ---- keep checking: a timer, and an alert when a check finds a new undercut ---- */
+function everyMin(){return +document.getElementById("autoEvery").value||0;}
+/* the page's own notifications, asked for through the top window: the tab is a frame inside it */
+function notifyApi(){try{if(window.top&&window.top.Notification)return window.top.Notification;}catch(e){}
+  return typeof Notification!=="undefined"?Notification:null;}
+/* on this tab, with the desk's window showing */
+function onScreen(){try{return!document.hidden&&!!window.frameElement&&window.frameElement.classList.contains("active");}catch(e){return!document.hidden;}}
+function alertUndercuts(list){
+  /* the shell counts them on the tab bar until this tab is looked at */
+  try{if(window.parent&&window.parent!==window)window.parent.postMessage({gildesk:"undercuts",added:list.length},"*");}catch(e){}
+  if(!document.getElementById("autoNotify").checked||onScreen())return;
+  const N=notifyApi();if(!N||N.permission!=="granted")return;
+  const worst=list.slice().sort((a,b)=>b.gapPct-a.gapPct);
+  const body=worst.slice(0,3).map(r=>`${r.name} (${r.ret}): ${fmt(r.low)} against your ${fmt(r.price)}`).join("\n")+
+    (worst.length>3?`\n…and ${worst.length-3} more`:"");
+  try{const n=new N(`${list.length} listing${list.length===1?"":"s"} undercut on ${state.scanWorld}`,{body,tag:"gildesk-undercuts"});
+    n.onclick=()=>{try{window.top.focus();}catch(e){}
+      try{window.parent.postMessage({gildesk:"show",tab:"undercuts"},"*");}catch(e){}
+      n.close();};
+  }catch(e){}
+}
+function syncAuto(){
+  const every=everyMin(),notify=document.getElementById("autoNotify").checked;
+  let t;
+  if(!every)t="Checks your listings again on a timer while the desk is open, and marks any that have just been undercut.";
+  else if(!state.scan)t="Starts after your first check.";
+  else t=`Next check around ${new Date(state.lastCheck+every*60000).toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"})}. It carries on whichever tab you are on, as long as the desk stays open.`;
+  if(notify){const N=notifyApi();
+    if(!N)t+=" This browser can't show pop-ups from this page.";
+    else if(N.permission==="denied")t+=" Your browser is blocking pop-ups from this page: allow notifications for it in the site settings by the address bar.";
+    else if(N.permission==="default")t+=" Untick and tick Pop-up again to let your browser ask whether to allow them.";}
+  document.getElementById("autoHint").textContent=t;
+}
+/* Checked on a short beat rather than one long timer: a browser holds back timers in a
+   tab it isn't showing, and this way a late beat still runs the check that is due. */
+setInterval(()=>{
+  const every=everyMin();
+  if(!every||!state.scan||!state.retainers.length||navigator.onLine===false)return;
+  if(Date.now()>=state.lastCheck+every*60000)load({auto:true});
+},20000);
+document.getElementById("autoEvery").addEventListener("change",syncAuto);
+document.getElementById("autoNotify").addEventListener("change",e=>{
+  const N=notifyApi();
+  /* only a real click may ask; a restored setting just says what is needed */
+  if(e.target.checked&&e.isTrusted&&N&&N.permission==="default"){
+    try{const p=N.requestPermission(syncAuto);if(p&&p.then)p.then(syncAuto,syncAuto);}catch(err){}}
+  syncAuto();
+});
 
 state.retainers=readRetainers();
 paintRetainers();
@@ -488,7 +594,7 @@ document.querySelectorAll("thead th[data-k]").forEach(th=>{
       el.dispatchEvent(new Event("change"));}
   }catch(e){}
 })();
-syncStart();
+syncStart();syncAuto();
 /* what the 📋 button hands to a saved list */
 window.__listEntry=id=>{
   const r=(state.rows||[]).find(x=>x.id===+id);if(!r)return null;

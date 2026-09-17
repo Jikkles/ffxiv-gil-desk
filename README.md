@@ -383,6 +383,17 @@ listing of that quality on your world, yours included, with the age of that data
 the undercut lines, name the biggest gap, say which retainers turned up (a name with no listings
 gets a dashed outline, which usually means a typo), and give the age of the stalest data.
 
+**Keep checking** re-checks on a timer. Set **Check every** to 10, 15 or 30 minutes or an hour, and
+once you have checked by hand the tab looks again on that timer, whichever tab you are on, for as
+long as the desk stays open in the browser. A line that has been undercut since the check before
+gets a **New** tag, which stays until you next check by hand. Until you open Undercuts, its tab on
+the bar shows how many lines are newly undercut, and the browser tab's title starts with that
+count. Tick **Pop-up when undercut** for a desktop notification as well; the browser asks
+permission the first time, and clicking the notification opens the tab. A pop-up is skipped while
+you are looking at the Undercuts tab. A timed check re-reads only the items your retainers were
+listed on, usually a request or two. Once an hour it reads the whole board instead, to find
+anything listed since. The setting is saved; the timer starts again at your first check each visit.
+
 Two limits come from Universalis itself. Listings carry the retainer's name but not the character's,
 so your character name finds nothing. And the data is only as fresh as the last time a player with an
 uploader opened that item on the board: busy items are usually minutes old, quiet ones can be days

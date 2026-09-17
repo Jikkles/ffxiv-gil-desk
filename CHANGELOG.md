@@ -19,6 +19,11 @@ What changed on [Jikky's Gil Factory](README.md), newest first.
   and all of them have icons.
 - The tab bar tightens a little further before it drops its icons, so it still fits on one row
   with the extra tab (with icons at 1920 pixels wide, as before).
+- Undercuts can keep checking by itself. Set **Check every** (10 minutes to an hour) and, after
+  your first check, it looks at your listings again on that timer from any tab while the desk is
+  open. A newly undercut line gets a **New** tag, the Undercuts tab shows a count (and so does the
+  browser tab's title) until you open it, and **Pop-up when undercut** adds a desktop notification.
+  Timed checks re-read only the items you are listed on; once an hour they read the whole board.
 
 ## 16 September 2026
 

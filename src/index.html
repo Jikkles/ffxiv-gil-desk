@@ -99,6 +99,10 @@
   /* ===== v24 tab icons: stroked in currentColor, so each one takes whatever
      its tab is already doing, including the accent on the selected tab ===== */
   .tabic{width:19px;height:19px;flex:none;opacity:.92}
+  /* newly undercut listings, counted until the Undercuts tab is opened */
+  .tabbadge{min-width:18px;height:18px;padding:0 5px;border-radius:99px;background:#e07b74;color:#16110f;
+    font:700 11px/18px "JetBrains Mono",monospace;text-align:center;box-sizing:border-box}
+  :root[data-theme="light"] .tabbadge{background:#b33326;color:#fff}
   .tab[aria-selected="true"] .tabic{color:var(--aether);opacity:1}
   .tab[aria-selected="true"]{background:linear-gradient(180deg,#4de1c122,#4de1c10a);box-shadow:inset 0 -2px 0 var(--aether)}
   :root[data-theme="light"] .tab[aria-selected="true"]{background:linear-gradient(180deg,#0f9b841f,#0f9b8408)}
@@ -310,6 +314,7 @@ let current=null;
 const loaded={};
 function activate(key){
   current=key;
+  if(key==="undercuts"&&Alerts.n)Alerts.set(0);
   /* replace rather than push: a click pushes its own entry (see the tab bar
      below), and a fallback such as a removed list should not add one */
   if(decodeURIComponent(location.hash.slice(1)).toLowerCase()!==slugOf(key))history.replaceState(null,"","#"+slugOf(key));
@@ -446,6 +451,26 @@ fitBar();
 document.getElementById("tourBtn").addEventListener("click",()=>Tour.start());
 /* the Dashboard's Show me asks for the same tour from inside its frame */
 addEventListener("message",e=>{if(e.data&&e.data.gildesk==="tour")Tour.start();});
+/* The Undercuts tab's timed checks: how many lines were newly undercut, counted on its tab
+   and in the window title until that tab is looked at. A pop-up's click opens the tab. */
+const Alerts={n:0,title:document.title,
+  set(n){
+    Alerts.n=n;
+    const b=document.querySelector('.tab[data-tab="undercuts"]');
+    let s=b&&b.querySelector(".tabbadge");
+    if(b&&n){if(!s){s=document.createElement("span");s.className="tabbadge";b.appendChild(s);}
+      s.textContent=n;s.title=n+" listing"+(n===1?"":"s")+" newly undercut";}
+    else if(s)s.remove();
+    document.title=(n?"("+n+") ":"")+Alerts.title;
+    fitBar();
+  }};
+addEventListener("message",e=>{
+  const d=e.data;if(!d)return;
+  if(d.gildesk==="undercuts"&&d.added>0&&!(current==="undercuts"&&!document.hidden))Alerts.set(Alerts.n+d.added);
+  if(d.gildesk==="show"&&d.tab!==current&&document.querySelector('.tab[data-tab="'+d.tab+'"]')){
+    history.pushState(null,"","#"+slugOf(d.tab));activate(d.tab);}
+});
+addEventListener("visibilitychange",()=>{if(!document.hidden&&current==="undercuts"&&Alerts.n)Alerts.set(0);});
 /* "/" pressed inside a tab arrives here, since the key never reaches this document */
 addEventListener("message",e=>{if(e.data&&e.data.gildesk==="focusSearch"&&XW.focusSearch)XW.focusSearch();});
 
