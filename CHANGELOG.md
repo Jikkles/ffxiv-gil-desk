@@ -9,6 +9,9 @@ What changed on [Jikky's Gil Factory](README.md), newest first.
   names, press **Check for Undercuts**, and it reads every listing on your **Sell on** world and
   shows which of yours someone has undercut, by how much, and how many listings sit below you.
   See [Undercuts](README.md#undercuts).
+- Undercuts says, under its header and above its results, that it can only show listings Universalis
+  has been sent: one you put up since an item was last uploaded appears once someone opens that item
+  on the market board with an uploader running.
 - The search box now knows every marketable item, about 1,850 more than before, mostly older gear,
   and all of them have icons.
 - The tab bar tightens a little further before it drops its icons, so it still fits on one row

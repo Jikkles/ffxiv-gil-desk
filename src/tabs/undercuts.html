@@ -38,6 +38,15 @@ thead th span{display:inline-block;min-width:.8em}
 tr.under td:first-child{box-shadow:inset 3px 0 0 var(--loss)}
 /* no cards until a check has run, so the guide skips them rather than lighting an empty strip */
 .hero .kpis[hidden]{display:none}
+/* the reminder that the board is only as new as its last upload */
+.ucnote{display:flex;gap:9px;align-items:flex-start;margin:4px 0 10px;padding:9px 13px;border-radius:10px;
+  border:1px solid color-mix(in srgb,var(--hop) 35%,transparent);background:color-mix(in srgb,var(--hop) 8%,transparent);
+  font-size:12.5px;line-height:1.5;color:var(--muted)}
+.ucnote b{color:var(--ink);font-weight:600}
+.ucnote .ni{color:var(--hop);flex:none}
+.ucnote[hidden]{display:none}
+.hero .sub.hdisc{margin-top:6px;font-size:12px;color:var(--faint)}
+.hero .sub.hdisc .ni{color:var(--hop)}
 .forecast{color:var(--muted);font-size:11px;font-family:"JetBrains Mono",monospace}
 .forecast b{color:var(--gil)}
 .kpi .v.bad{color:var(--loss)} .kpi .v.good{color:var(--win)}
@@ -98,6 +107,7 @@ tr.under td:first-child{box-shadow:inset 3px 0 0 var(--loss)}
       <div>
         <h1><b>Undercuts</b></h1>
         <p class="sub">Every listing your retainers have up on <span class="homename">Spriggan</span>, found by reading the whole market board, with the ones someone has <b>undercut</b> first: by how much, and how many listings now sit below yours.</p>
+        <p class="sub hdisc"><span class="ni">ⓘ</span> Only listings Universalis has been sent show up, so one you put up recently may not appear until that item's board is opened again with an uploader running.</p>
       </div>
       <div class="kpis" id="kpis" hidden></div>
     </div>
@@ -121,6 +131,7 @@ tr.under td:first-child{box-shadow:inset 3px 0 0 var(--loss)}
     </details>
 
     <div class="status" id="status"></div>
+    <div class="ucnote" id="ucNote" hidden><span class="ni">ⓘ</span><span><b>Missing a listing?</b> This only shows what Universalis has seen. Anything you put up since an item was last uploaded won't appear until someone opens that item on the market board with an uploader running (Dalamud's is on by default), so open it yourself and check again. The age on <b>Sell now</b> is how old each item's data is.</span></div>
     <div class="startscan" id="startScan">
       <button class="btn primary" id="startScanGo" type="button">↻ Check for Undercuts</button>
       <div class="startscan-sub" id="startScanSub"></div>
@@ -363,7 +374,7 @@ function render(){
       `<td>${velCell(r.velI)}</td>`+
       `<td class="forecast">${r.daily!=null&&r.daily>0?"<b>"+fmtK(r.daily)+"</b>/day":"—"}</td>`+
     `</tr>`).join("");
-  renderKpis();paintRetainers();
+  renderKpis();paintRetainers();syncStart();
   const all=state.rows||[],under=all.filter(r=>r.under).length,where=esc(state.scanWorld||state.home);
   const empty=!all.length?(state.partial?`No listings from your retainers in the part of <b>${where}</b>'s board that loaded.`
       :`No listings from ${esc(state.retainers.join(", "))} on <b>${where}</b>. Check the names match the game exactly, and the Sell on world is where they sell.`)
@@ -376,6 +387,7 @@ function syncStart(){
   const box=document.getElementById("startScan"),go=document.getElementById("startScanGo");
   const n=state.retainers.length,busy=document.getElementById("refresh").disabled;
   box.hidden=!!state.rows||busy;
+  document.getElementById("ucNote").hidden=!state.scan||busy;
   go.disabled=!n||busy;
   document.getElementById("startScanSub").innerHTML=n
     ?`Reads every listing on <b class="homename">${esc(state.home)}</b> and finds the ones from <b>${esc(state.retainers.join(", "))}</b>. Takes about ten seconds.`
