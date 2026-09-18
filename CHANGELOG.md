@@ -24,6 +24,8 @@ What changed on [Jikky's Gil Factory](README.md), newest first.
   open. A newly undercut line gets a **New** tag, the Undercuts tab shows a count (and so does the
   browser tab's title) until you open it, and **Pop-up when undercut** adds a desktop notification.
   Timed checks re-read only the items you are listed on; once an hour they read the whole board.
+- A pop-up is held back only while you are actually reading the Undercuts tab — on that tab, with
+  the desk's window in front. Left open behind the game, it still pops up.
 
 ## 16 September 2026
 

@@ -499,8 +499,15 @@ function everyMin(){return +document.getElementById("autoEvery").value||0;}
 /* the page's own notifications, asked for through the top window: the tab is a frame inside it */
 function notifyApi(){try{if(window.top&&window.top.Notification)return window.top.Notification;}catch(e){}
   return typeof Notification!=="undefined"?Notification:null;}
-/* on this tab, with the desk's window showing */
-function onScreen(){try{return!document.hidden&&!!window.frameElement&&window.frameElement.classList.contains("active");}catch(e){return!document.hidden;}}
+/* Reading this tab right now: it is the tab on screen, the desk's window is not hidden, and
+   that window has the keyboard. The focus test matters most — with the game up front and the
+   desk left open behind it on this tab, a pop-up is exactly what is wanted. */
+function onScreen(){
+  if(document.hidden)return false;
+  let active=true;try{if(window.frameElement)active=window.frameElement.classList.contains("active");}catch(e){}
+  let focused=false;try{focused=(window.top||window).document.hasFocus();}catch(e){focused=document.hasFocus();}
+  return active&&focused;
+}
 function alertUndercuts(list){
   /* the shell counts them on the tab bar until this tab is looked at */
   try{if(window.parent&&window.parent!==window)window.parent.postMessage({gildesk:"undercuts",added:list.length},"*");}catch(e){}
