@@ -132,6 +132,8 @@ addEventListener("click",e=>{
    until the next scan, so a finished scan reads as finished. A cache hit that
    is over inside the grace period skips the running bar and the label, so it
    does not flicker, and goes straight to the full bar. */
+/* when this tab's latest scan started: what the Best on each tab card dates a row by */
+let SCAN_AT=0;
 const Busy={
   GRACE_MS:150,runs:[],shown:0,btn:null,bar:null,label:"",timer:0,on:false,seen:false,
   track(total){const run={done:0,total};Busy.runs.push(run);Busy.paint();return run;},
@@ -172,7 +174,7 @@ const Busy={
     Busy.bar.appendChild(document.createElement("i"));
     document.body.appendChild(Busy.bar);
     const sync=()=>{
-      if(btn.disabled){Busy.seen=true;if(!Busy.on&&!Busy.timer)Busy.timer=setTimeout(()=>{Busy.timer=0;if(btn.disabled)Busy.start();},Busy.GRACE_MS);}
+      if(btn.disabled){if(!Busy.seen)SCAN_AT=Date.now();Busy.seen=true;if(!Busy.on&&!Busy.timer)Busy.timer=setTimeout(()=>{Busy.timer=0;if(btn.disabled)Busy.start();},Busy.GRACE_MS);}
       else Busy.stop();
     };
     try{new MutationObserver(sync).observe(btn,{attributes:true,attributeFilter:["disabled"]});}catch(e){}
@@ -473,8 +475,8 @@ function finishStatus(results){
   else showWarn(`<b>Partial data:</b> ${failed} of ${total} batch(es) failed &mdash; some prices are missing. Refresh to retry.`);}/* ---- the Dashboard's Best on each tab card ----
    Each earning tab hands over the top row of what it is showing: the highest Gil/day,
    or Profit/day where the item is bought with gil, and never a ⚠ row, the same rule
-   its headline cards follow. They land in one store the Dashboard reads, and the shell
-   tells the Dashboard to redraw. Rows priced but none earning are recorded as just that;
+   its headline cards follow, dated by when the scan behind it started. They land in one
+   store the Dashboard reads, and the shell tells the Dashboard to redraw. Rows priced but none earning are recorded as just that;
    rows with no prices at all (a scan that failed) write nothing, so the last good answer
    stands, with its age. */
 const BEST_KEY="gildesk:best:v1";
@@ -489,10 +491,10 @@ function reportBest(tab,rows,key,metric,opts){
     if(!top||v>top[key])top=r;}
   if(!priced)return;
   const e=top?{v:Math.round(top[key]),metric,name:opts.name?opts.name(top):top.name,id:opts.noId?null:(top.id??null),
-    note:opts.note?(opts.note(top)||""):"",home:state.home,at:Date.now()}:{v:0,metric,home:state.home,at:Date.now()};
+    note:opts.note?(opts.note(top)||""):"",home:state.home,at:SCAN_AT||Date.now()}:{v:0,metric,home:state.home,at:SCAN_AT||Date.now()};
   let all={};try{all=JSON.parse(localStorage.getItem(BEST_KEY)||"{}")||{};}catch(err){}
   const was=all[tab];
-  if(was&&was.v===e.v&&was.name===e.name&&was.note===e.note&&was.home===e.home)return;
+  if(was&&was.v===e.v&&was.name===e.name&&was.note===e.note&&was.home===e.home&&was.at===e.at)return;
   all[tab]=e;
   if(!storeSet(BEST_KEY,JSON.stringify(all)))return;
   try{window.parent.postMessage({gildesk:"best",tab},"*");}catch(err){}

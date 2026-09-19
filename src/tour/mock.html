@@ -29,6 +29,9 @@ body:not(.t-tree) tr.detail{display:none}
 body.t-tree tr.row.first>td{background:var(--row-open)}
 body.t-tree tr.row.first .caret{transform:rotate(90deg);border-left-color:var(--aether)}
 body:not(.t-shop) .sp-full,body.t-shop .sp-empty{display:none}
+/* Best on each tab starts shut, as on the desk; the tour opens it */
+body:not(.t-best) .besttabs .bt-body{display:none}
+body:not(.t-best) .besttabs .bt-car{transform:none}
 .tabnote{position:absolute;z-index:20;display:none;width:182px;padding:8px 11px;border-radius:10px;
   background:var(--panel);border:1px solid var(--aether-line);box-shadow:0 8px 22px #0000004d;
   font:12px/1.35 "Inter",sans-serif;color:var(--muted);text-align:center}
@@ -98,12 +101,13 @@ body.t-tabs .tabnote,body.t-tabs .tabstem,body.t-tabs .tabband{display:block}
     </details>
 
     <details class="besttabs" data-t="besttabs" open>
-      <summary tabindex="-1"><span class="bt-title">Best on each tab</span><span class="bt-hint">the top earner every tab found when it last scanned, best first · click one to open its tab</span><span class="bt-car">▸</span></summary>
+      <summary tabindex="-1"><span class="bt-title">Best on each tab</span><span class="bt-hint">the top earner every tab found when it last scanned, best first · Refresh checks them all · click one to open its tab</span><span class="bt-car">▸</span></summary>
       <div class="bt-body">
-        <div class="bt-row top"><span class="bt-rank">1</span><span class="bt-tab">Flips</span><span class="bt-item"><span class="nmeta"><span class="n">Grade 2 Gemdraught of Strength</span><span class="t">buy on Cerberus</span></span></span><span class="bt-val"><b>2.41M</b> <span class="q">Profit/day</span></span><span class="bt-age">just now</span></div>
-        <div class="bt-row"><span class="bt-rank">2</span><span class="bt-tab">Crafts</span><span class="bt-item"><span class="nmeta"><span class="n">Smaller Water Otter Fountain</span><span class="t">Carpenter · lvl 100</span></span></span><span class="bt-val"><b>1.29M</b> <span class="q">Profit/day</span></span><span class="bt-age">4 min ago</span></div>
-        <div class="bt-row"><span class="bt-rank">3</span><span class="bt-tab">Gathering</span><span class="bt-item"><span class="nmeta"><span class="n">Ra'Kaznar Ore</span><span class="t">Urqopacha</span></span></span><span class="bt-val"><b>868.4k</b> <span class="q">Gil/day</span></span><span class="bt-age">2h ago</span></div>
-        <div class="bt-row none"><span class="bt-rank">&ndash;</span><span class="bt-tab">Vendors</span><span class="bt-item"><span class="nmeta"><span class="t">not checked yet: open the tab and it prices itself</span></span></span><span class="bt-val"></span><span class="bt-age"></span></div>
+        <div class="bt-row"><span class="bt-tab">Crafts</span><span class="bt-item"><span class="nmeta"><span class="n">Smaller Water Otter Fountain</span><span class="t">CRP · lvl 100</span></span></span><span class="bt-val"><b>1.29M</b> <span class="q">Profit/day</span></span><span class="bt-age">4 min ago</span></div>
+        <div class="bt-row"><span class="bt-tab">Gathering</span><span class="bt-item"><span class="nmeta"><span class="n">Ra'Kaznar Ore</span><span class="t">Urqopacha</span></span></span><span class="bt-val"><b>868.4k</b> <span class="q">Gil/day</span></span><span class="bt-age">2h ago</span></div>
+        <div class="bt-row top" title="The best of them"><span class="bt-tab">Duties + Maps</span><span class="bt-item"><span class="nmeta"><span class="n">Yan Horn</span><span class="t">Vault Oneiron · portal chest</span></span></span><span class="bt-val"><b>4.28M</b> <span class="q">Gil/day</span></span><span class="bt-age">3 min ago</span></div>
+        <div class="bt-row"><span class="bt-tab">Flips</span><span class="bt-item"><span class="nmeta"><span class="n">Grade 2 Gemdraught of Strength</span><span class="t">buy on Cerberus</span></span></span><span class="bt-val"><b>2.41M</b> <span class="q">Profit/day</span></span><span class="bt-age">just now</span></div>
+        <div class="bt-row none"><span class="bt-tab">Vendors</span><span class="bt-item"><span class="nmeta"><span class="t">not checked yet: press Refresh here, or open the tab</span></span></span><span class="bt-val"></span><span class="bt-age"></span></div>
       </div>
     </details>
 

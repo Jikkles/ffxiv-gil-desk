@@ -468,11 +468,38 @@ addEventListener("message",e=>{
   const d=e.data;if(!d)return;
   if(d.gildesk==="undercuts"&&d.added>0&&!(current==="undercuts"&&!document.hidden))Alerts.set(Alerts.n+d.added);
   /* a tab found a new best row: the Dashboard's Best on each tab card redraws from the store */
-  if(d.gildesk==="best"){const f=document.querySelector('iframe[data-frame="all"]');
-    if(loaded.all&&f&&f.contentWindow&&e.source!==f.contentWindow)try{f.contentWindow.postMessage({gildesk:"best"},"*");}catch(err){}}
+  if(d.gildesk==="best"){const f=frameOf("all");if(e.source!==(f&&f.contentWindow))tellDash({gildesk:"best"});}
+  if(d.gildesk==="scanTabs")scanTabs();
   if(d.gildesk==="show"&&d.tab!==current&&document.querySelector('.tab[data-tab="'+d.tab+'"]')){
     history.pushState(null,"","#"+slugOf(d.tab));activate(d.tab);}
 });
+/* ---- Refresh on the Dashboard fills its Best on each tab card ----
+   Every earning tab is opened out of sight, or asked to rescan if it is already open, one
+   at a time so there is only ever one other scan beside the Dashboard's own; all of them
+   share the one limit on open requests anyway. A tab is done when its Refresh button,
+   greyed while it scans, comes back; the Dashboard is told which tab is being checked. */
+const BEST_SCAN=["gathering","currencies","duties","flips","retainer","submersible","workshop","vendors"];
+let bestRun=false;
+function frameOf(k){return document.querySelector('iframe[data-frame="'+k+'"]');}
+function tellDash(msg){const f=frameOf("all");if(loaded.all&&f&&f.contentWindow)try{f.contentWindow.postMessage(msg,"*");}catch(err){}}
+function scanOne(k){
+  const f=frameOf(k);if(!f)return Promise.resolve();
+  if(!loaded[k]){loaded[k]=true;f.srcdoc=htmlFor(k);}
+  else try{f.contentWindow.postMessage({gildesk:"rescan"},"*");}catch(err){}
+  return new Promise(done=>{const t0=Date.now();let seen=false;
+    const iv=setInterval(()=>{let b=null;
+      try{const d=f.contentDocument;b=d&&d.readyState!=="loading"?d.getElementById("refresh"):null;}catch(err){}
+      if(b&&b.disabled)seen=true;
+      /* a scan answered from the cache can be over between two looks, hence the second test */
+      const idle=b&&!b.disabled,age=Date.now()-t0;
+      if((seen&&idle)||(idle&&age>4000)||age>240000){clearInterval(iv);done();}},250);});
+}
+async function scanTabs(){
+  if(bestRun)return;bestRun=true;
+  const left=BEST_SCAN.slice();
+  try{while(left.length){const k=left.shift();tellDash({gildesk:"bestScan",now:k,left:left.slice()});await scanOne(k);}}
+  finally{bestRun=false;tellDash({gildesk:"bestScan",now:null,left:[]});}
+}
 addEventListener("visibilitychange",()=>{if(!document.hidden&&current==="undercuts"&&Alerts.n)Alerts.set(0);});
 /* "/" pressed inside a tab arrives here, since the key never reaches this document */
 addEventListener("message",e=>{if(e.data&&e.data.gildesk==="focusSearch"&&XW.focusSearch)XW.focusSearch();});

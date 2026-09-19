@@ -353,6 +353,9 @@ function autoLoad(force){
   try{const r=load();if(r&&r.catch)r.catch(()=>{});}catch(e){}
 }
 addEventListener("message",e=>{if(e.data&&e.data.gildesk==="activate")autoLoad(false);});
+/* Refresh on the Dashboard asks every earning tab to scan, open or not; prices
+   under twelve minutes old come from the cache, so this costs little when fresh */
+addEventListener("message",e=>{if(e.data&&e.data.gildesk==="rescan")autoLoad(true);});
 /* deferred, so the tab's own load() and its wiring exist by the time we call it */
 setTimeout(()=>autoLoad(true),0);
 /* ===== end shared v19 ===== */

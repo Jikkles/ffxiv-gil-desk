@@ -35,8 +35,10 @@ window.Tour=(function(){
       body:"Every tab has its own <b>Show me</b> button. It walks you through that tab’s own controls and columns one at a time, on the real page with live prices. On the Dashboard it brings back this tour."},
     {sec:"Page info",title:"At a glance",spot:"kpis",side:"bottom",zoom:1.4,
       body:"The cards pick out the headlines: the best profit on a single item, the most gil a day everything in view could make, and how many items are profitable. They follow your filters."},
-    {sec:"Page info",title:"Best on each tab",spot:"besttabs",side:"bottom",zoom:1.3,
-      body:"The top earner each tab found the last time it scanned, lined up best first, so you can see where the gil is without opening every tab. Click a row to go to that tab. A tab you haven’t opened yet says so, and opening it prices it."},
+    {sec:"Page info",title:"Best on each tab",spot:"besttabs",side:"bottom",zoom:1.6,
+      body:"Under that, a bar that opens when you click it. It gathers the top earner from every other tab in one place, so you can see where the gil is without opening each one."},
+    {sec:"Page info",title:"Every tab’s best, in one place",spot:"besttabs",state:{best:1},side:"bottom",zoom:1.3,
+      body:"One row per tab, in the same order as the tab bar: its best item (or submarine route), what it makes a day, and how long ago it was checked. The gold row is the best of them. <b>Refresh</b> here checks every tab too, one after another, and each row fills in as its tab finishes. Click a row to go to that tab."},
     {sec:"Item list",title:"The item list",spot:"table",side:"bottom",
       body:"One row per item: what it sells for now, its 30-day average (the middle price of real sales, so one odd sale can’t drag it), which way the price is heading, what the materials cost, the profit, and how many sell a day. Click a column heading to sort by it."},
     {sec:"Item list",title:"⚠ Prices to double-check",spot:"outlier",focus:"outrow",side:"bottom",zoom:1.6,
@@ -287,6 +289,7 @@ window.Tour=(function(){
     const s=STEPS[i],state=s.state||{};
     doc.body.classList.toggle("t-tree",!!state.tree);
     doc.body.classList.toggle("t-shop",!!state.shop);
+    doc.body.classList.toggle("t-best",!!state.best);
     doc.body.classList.toggle("t-tabs",!!state.tabs);
     /* the page is as tall as the screen or its content, whichever is more */
     pageH=Math.max(V.h,doc.body.scrollHeight);
