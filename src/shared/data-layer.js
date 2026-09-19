@@ -470,4 +470,30 @@ function finishStatus(results){
   const got=results.some(r=>r.out&&Object.keys(r.out).length);
   if(!got)showFail(`<b>No prices came back.</b> Every request to Universalis failed &mdash; it may be down or rate-limiting. `+
     `Wait a moment and press Refresh, or check <a href="https://universalis.app" target="_blank" rel="noopener" style="color:inherit">universalis.app</a>.`);
-  else showWarn(`<b>Partial data:</b> ${failed} of ${total} batch(es) failed &mdash; some prices are missing. Refresh to retry.`);}
+  else showWarn(`<b>Partial data:</b> ${failed} of ${total} batch(es) failed &mdash; some prices are missing. Refresh to retry.`);}/* ---- the Dashboard's Best on each tab card ----
+   Each earning tab hands over the top row of what it is showing: the highest Gil/day,
+   or Profit/day where the item is bought with gil, and never a ⚠ row, the same rule
+   its headline cards follow. They land in one store the Dashboard reads, and the shell
+   tells the Dashboard to redraw. Rows priced but none earning are recorded as just that;
+   rows with no prices at all (a scan that failed) write nothing, so the last good answer
+   stands, with its age. */
+const BEST_KEY="gildesk:best:v1";
+function reportBest(tab,rows,key,metric,opts){
+  opts=opts||{};
+  const skip=opts.skip||(r=>r.outlier);
+  let top=null,priced=false;
+  for(const r of rows||[]){const v=r[key];
+    if(v==null||!isFinite(v))continue;
+    priced=true;
+    if(v<=0||skip(r))continue;
+    if(!top||v>top[key])top=r;}
+  if(!priced)return;
+  const e=top?{v:Math.round(top[key]),metric,name:opts.name?opts.name(top):top.name,id:opts.noId?null:(top.id??null),
+    note:opts.note?(opts.note(top)||""):"",home:state.home,at:Date.now()}:{v:0,metric,home:state.home,at:Date.now()};
+  let all={};try{all=JSON.parse(localStorage.getItem(BEST_KEY)||"{}")||{};}catch(err){}
+  const was=all[tab];
+  if(was&&was.v===e.v&&was.name===e.name&&was.note===e.note&&was.home===e.home)return;
+  all[tab]=e;
+  if(!storeSet(BEST_KEY,JSON.stringify(all)))return;
+  try{window.parent.postMessage({gildesk:"best",tab},"*");}catch(err){}
+}

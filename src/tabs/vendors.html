@@ -359,6 +359,7 @@ function render(){
 
   /* headline numbers only ever quote a corroborated price — a 140M "margin" on an item
      nobody has ever bought is exactly the number that should not be at the top of the page */
+  reportBest("vendors",all,"daily","Profit/day",{note:r=>r.npc});
   const solid=profitable.filter(r=>!r.outlier);
   const byDaily=[...solid].sort((a,b)=>b.daily-a.daily);
   const top=byDaily[0];

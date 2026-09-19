@@ -345,6 +345,7 @@ function render(){if(!state.rows)return;const rows=visibleRows();const total=row
   document.getElementById("tbl").hidden=false;
   /* the cards only count what is backed by real sales, so a hopeful listing
      on something that never sells cannot headline the page */
+  reportBest("workshop",rows,"daily","Profit/day");
   const prof=rows.filter(r=>r.profit!=null&&r.profit>0&&!r.outlier).sort((a,b)=>b.profit-a.profit);const best=prof[0];
   document.getElementById("kpiBest").textContent=best?fmtK(best.profit)+" g":"—";
   document.getElementById("kpiBestName").textContent=best?best.name:"nothing profitable in view";

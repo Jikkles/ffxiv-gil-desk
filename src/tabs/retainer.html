@@ -291,6 +291,7 @@ function render(){
       `<td>${fmt(r.daily)}</td>`+
     `</tr>`).join("");
   renderKpis();
+  reportBest("retainer",rows,"daily","Gil/day",{note:r=>r.venture});
   setStatus(rows.length?state.summary:"Nothing matches these filters.");
 }
 

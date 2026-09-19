@@ -428,6 +428,7 @@ function render(){
   document.getElementById("kpiRateName").innerHTML=top
     ?(state.cur==="__all"?`${top.curName} &rarr; ${top.name}`:`per 1 &times; ${curById(state.cur).name} &middot; ${top.name}`)
     :"nothing meets the filters";
+  reportBest("currencies",rows,"gilDay","Gil/day",{note:r=>state.cur==="__all"?r.curName:(curById(state.cur)||{}).name});
   const fast=rows.filter(r=>r.gilDay!=null&&!r.outlier).sort((a,b)=>b.gilDay-a.gilDay)[0];
   document.getElementById("kpiDay").textContent=fast?fmtK(fast.gilDay):"—";
   document.getElementById("kpiDaySub").innerHTML=fast

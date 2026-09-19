@@ -434,6 +434,7 @@ function render(){
 
   document.getElementById("tbl").hidden=false;
 
+  reportBest("flips",rows,"daily","Profit/day",{note:r=>r.buyWorld?"buy on "+r.buyWorld:""});
   const profitable=rows.filter(r=>r.profit!=null&&r.profit>0).sort((a,b)=>b.profit-a.profit);
   /* the headline card never quotes a ⚠ row */
   const best=profitable.find(r=>!r.outlier);

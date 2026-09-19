@@ -51,7 +51,44 @@ tr.detail>td{background:var(--bg2);border-bottom:1px solid var(--line);padding:0
 .st-bar:hover::after{content:attr(title);position:absolute;bottom:calc(100% + 4px);left:50%;transform:translateX(-50%);background:#1a2530;color:#e7eef4;font-size:10px;white-space:nowrap;padding:2px 6px;border-radius:4px;pointer-events:none;z-index:10}
 .st-labels{display:flex;justify-content:space-between;margin-top:3px;font-size:9px;font-family:'JetBrains Mono',monospace;color:var(--faint)}
 .st-note{font-size:10px;color:var(--faint);margin-top:6px;font-family:'JetBrains Mono',monospace}
+/* Best on each tab: the top earner every other tab found, lined up best first */
+.besttabs{margin:0 0 14px;background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow-sm);overflow:hidden}
+.besttabs>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:10px 14px;user-select:none}
+.besttabs>summary::-webkit-details-marker{display:none}
+.besttabs>summary:hover{background:var(--panel2)}
+.besttabs>summary:focus-visible{outline:2px solid var(--aether);outline-offset:-2px}
+.besttabs .bt-title{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gil);white-space:nowrap}
+.besttabs .bt-hint{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.besttabs .bt-car{margin-left:auto;color:var(--faint);font-size:11px;transition:transform .15s}
+.besttabs[open] .bt-car{transform:rotate(90deg)}
+.bt-body{border-top:1px solid var(--line);padding:6px 8px 8px}
+.bt-row{all:unset;box-sizing:border-box;cursor:pointer;width:100%;display:grid;grid-template-columns:26px 118px minmax(0,1fr) 170px 150px;
+  gap:14px;align-items:center;padding:6px 10px;border-radius:9px;border-left:3px solid transparent}
+.bt-row:hover{background:var(--row-hover)}
+.bt-row:focus-visible{outline:2px solid var(--aether);outline-offset:-2px}
+.bt-row.top{box-shadow:inset 0 0 0 1px var(--gil-line);border-left-color:var(--gil)}
+.bt-rank{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--faint);text-align:right}
+.bt-row.top .bt-rank{color:var(--gil);font-weight:500}
+.bt-tab{font-size:13px;font-weight:600;color:var(--ink);white-space:nowrap}
+.bt-item{display:flex;align-items:center;gap:9px;min-width:0}
+.bt-item .iconbox{width:26px;height:26px;flex:none}
+.bt-item .iconbox img{width:26px;height:26px}
+.bt-item .nmeta{display:flex;flex-direction:column;min-width:0}
+.bt-item .n{font-size:13px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bt-item .t{font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bt-val{font-family:"JetBrains Mono",monospace;font-size:13px;text-align:right;white-space:nowrap}
+.bt-val b{color:var(--gil);font-weight:500;font-size:14px}
+.bt-val .q{color:var(--faint);font-size:11px}
+.bt-age{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--faint);text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bt-age .off{color:var(--warn)}
+.bt-row.old .bt-item,.bt-row.old .bt-val{opacity:.55}
+.bt-row.none .bt-tab{color:var(--muted);font-weight:500}
+.bt-row.none .bt-item .t{font-style:italic}
+.bt-foot{margin:4px 10px 0;padding-top:8px;border-top:1px dashed var(--line);font-size:11.5px;line-height:1.5;color:var(--faint)}
+.bt-foot b{color:var(--muted);font-weight:600}
 @media(max-width:1100px){
+  .bt-row{grid-template-columns:22px 96px minmax(0,1fr) 140px}
+  .bt-age{display:none}
   .thead{grid-template-columns:1fr 78px 84px 72px;gap:8px} .thead .hcraft,.node .ncraft{display:none}
   .node{grid-template-columns:1fr 78px 84px 72px;gap:8px}
 }
@@ -126,7 +163,13 @@ tr.detail>td{background:var(--bg2);border-bottom:1px solid var(--line);padding:0
         <div class="hw-sec"><h4>What it works out</h4><p>Profit on 9,400+ things you can craft, precrafts included: what each sells for on your world, less tax, less what its materials cost across the data centres in <b>Mats from</b>. That is thousands of prices, so this tab only scans when you press <b>Refresh</b>. Pick your <b>Class</b> and a level range to see only what you can make, and tick <b>Precrafts only</b> for intermediates, the crafts that go into other recipes.</p></div>
         <div class="hw-sec"><h4>Reading the table</h4><p><b>Mat cost</b> assumes you craft any intermediate that is cheaper to make than to buy (<b>Precraft-optimised</b>); switch to <b>Buy all mats</b> to price everything off the board. Open a row for the whole recipe, buy or craft at every step, and the world to buy each material on. A material an NPC sells for less than the board asks, or that has no listing, is bought from the NPC: the tree says <b>NPC</b> and the zone, and hovering names the vendor. Shards and crystals are costed but left out of each recipe to keep it short; tick <b>Show crystals</b> to list them. <b>Sell</b> prices each item at the quality it usually trades at; plenty of intermediates only really sell NQ, so switch it to <b>NQ</b> to find that market. An open recipe also shows the <b>best time to sell</b>: the hours of the day its sales land in.</p></div>
         <div class="hw-sec"><h4>Getting the most from it</h4><p>Tick <b>Hide no-sales</b> and sort by <b>Profit/unit</b> or <b>Profit/day</b>. Profit/day is your cut &mdash; profit per unit times how fast the item sells &mdash; so it ranks a small margin that shifts constantly above a big one that never moves. It is not the same number as <b>Gil/day</b> on the tabs where nothing is bought with gil &mdash; a dungeon drop, a gathered node, a venture reward &mdash; which is the market's whole turnover, because there no cost comes off. <b>Hide ⚠ outliers</b> starts ticked, so prices far from real sales stay out of the way. <b>Skip dead items</b> leaves out anything unsold for 30 days and checks each one again a week later, for each world on its own; shift-click Refresh to check them all now. <b>Tour</b>, top right, walks through this page.</p></div>
+        <div class="hw-sec"><h4>Best on each tab</h4><p>The card under this panel lines up the top earner every other tab found the last time it scanned, best first: its highest <b>Profit/day</b>, or <b>Gil/day</b> where nothing is bought with gil, never a &#9888; row, and with that tab&rsquo;s filters as you left them. It needs no Refresh here. Click a row to open that tab; a row greyed out is over a day old, and one marked <b>on</b> another world was priced there. Scrips has no daily figure, so it is not ranked.</p></div>
       </div>
+    </details>
+
+    <details class="besttabs" id="bestTabs" open>
+      <summary><span class="bt-title">Best on each tab</span><span class="bt-hint">the top earner every tab found when it last scanned, best first · click one to open its tab</span><span class="bt-car">▸</span></summary>
+      <div class="bt-body" id="bestBody"></div>
     </details>
 
     <div class="status" id="status">Loading…</div>
@@ -409,6 +452,7 @@ function render(){if(!state.rows)return;const shown=visibleRows();let rows=shown
   const ds=prof.reduce((s,r)=>s+(r.daily||0),0);document.getElementById("kpiDaily").textContent=ds?fmtK(ds)+" g":"—";
   document.getElementById("kpiCount").textContent=prof.length+" / "+total;
   document.getElementById("kpiFresh").textContent="freshest data "+ago(Math.max(0,...rows.map(r=>r.upload||0)));
+  reportBest("all",shown,"daily","Profit/day",{note:r=>jobLabel(r)+" · lvl "+r.lvl});renderBest();
   setStatus(`Sell ${state.sellQ==='auto'?'':state.sellQ.toUpperCase()+' '}vs <b>${state.home}</b> · profit on <b>${state.basis==="avg30"?"30-day avg":"current low"}</b> · mats <b>${state.matBasis==="buyall"?"bought whole":"precraft-optimised"}</b>, cheapest on ${dcLabel()} · ${total} match${trunc?` (top ${MAX_ROWS})`:""} · tax ${Math.round(state.tax*100)}% · click an item, then any craftable material to go deeper`);
 }
 
@@ -592,6 +636,58 @@ window.__shopAddItem=fid=>{if(!state.chaos)return Shop.toast("Refresh prices fir
   const into={};for(const g of r.ingredients)shopLeaves(g.id,g.amount,into,[fid]);
   Shop.add(Object.keys(into).map(id=>__shopEntry(+id,Math.max(1,Math.ceil(into[id]-1e-9)))),r.name+(r.yields>1?" \u00d7"+r.yields:""));};
 window.__shopAddMat=s=>{if(!state.chaos)return Shop.toast("Refresh prices first");const i=s.lastIndexOf("|");Shop.add([__shopEntry(s.slice(0,i),s.slice(i+1))],null);};
+
+/* ---- Best on each tab ----
+   Every earning tab leaves its top row in one store as it renders (reportBest, in the
+   shared data layer), and this card lines them up best first, so one look says where
+   the gil is without opening every tab. It only reads that store, so it works before
+   this tab's own Refresh. A tab never opened has nothing to say until it is: opening
+   it from here runs its scan. Scrips has no daily figure to rank, and Undercuts earns
+   nothing, so neither is here. */
+const BEST_TABS=[["all","Crafts"],["gathering","Gathering"],["currencies","Currencies"],["duties","Duties + Maps"],
+  ["flips","Flips"],["retainer","Retainers"],["submersible","Submersibles"],["workshop","Workshop"],["vendors","Vendors"]];
+const BEST_OLD_MS=24*3600*1000;
+function bestAge(ms){const s=(Date.now()-ms)/1000;
+  return s<90?"just now":s<3600?Math.round(s/60)+" min ago":s<86400?Math.round(s/3600)+"h ago":Math.round(s/86400)+"d ago";}
+function renderBest(){
+  const body=document.getElementById("bestBody");if(!body)return;
+  let got={};try{got=JSON.parse(localStorage.getItem(BEST_KEY)||"{}")||{};}catch(e){}
+  const has=([k])=>got[k]&&got[k].v>0;
+  const ranked=BEST_TABS.filter(has).sort((a,b)=>got[b[0]].v-got[a[0]].v);
+  const rows=ranked.map(([k,label],i)=>{const e=got[k],old=Date.now()-e.at>BEST_OLD_MS;
+    const where=e.home&&e.home!==state.home?` · <span class="off" title="Priced against ${xesc(e.home)}, not ${xesc(state.home)}: open the tab to price it on ${xesc(state.home)}">on ${xesc(e.home)}</span>`:"";
+    return `<button type="button" class="bt-row${i===0?" top":""}${old?" old":""}" data-show="${k}" title="${k==="all"?"Scroll to the crafting table":"Open "+label}${old?" · over a day old, so open it for today's prices":""}">`+
+      `<span class="bt-rank">${i+1}</span><span class="bt-tab">${label}</span>`+
+      `<span class="bt-item">${e.id?iconHTML(e.id):""}<span class="nmeta"><span class="n">${xesc(e.name)}</span>${e.note?`<span class="t">${xesc(e.note)}</span>`:""}</span></span>`+
+      `<span class="bt-val"><b>${fmtK(e.v)}</b> <span class="q">${e.metric}</span></span>`+
+      `<span class="bt-age">${bestAge(e.at)}${where}</span></button>`;});
+  /* priced, but nothing in view earned: said so, above the tabs not yet opened */
+  const rest=BEST_TABS.filter(t=>!has(t)).sort((a,b)=>(got[b[0]]?1:0)-(got[a[0]]?1:0));
+  for(const[k,label]of rest){const e=got[k];
+    const why=e?"nothing "+(e.metric==="Profit/day"?"turning a profit":"selling")+" with that tab’s filters at its last scan"
+      :k==="all"?"not scanned yet: press Load live prices below":"not checked yet: open the tab and it prices itself";
+    rows.push(`<button type="button" class="bt-row none" data-show="${k}" title="${k==="all"?"Load live prices below":"Open "+label}">`+
+      `<span class="bt-rank">&ndash;</span><span class="bt-tab">${label}</span>`+
+      `<span class="bt-item"><span class="nmeta"><span class="t">${why}</span></span></span>`+
+      `<span class="bt-val"></span><span class="bt-age">${e&&e.at?bestAge(e.at):""}</span></button>`);}
+  body.innerHTML=rows.join("")+
+    `<div class="bt-foot"><b>Profit/day</b> is your cut once materials or stock are paid for; <b>Gil/day</b> is what the market pays for something that costs no gil to get. `+
+    `Each is the top of that tab as you last left it, filters included, and never a &#9888; row. Scrips has no daily figure, so it is not ranked here.</div>`;
+}
+document.getElementById("bestBody").addEventListener("click",e=>{
+  const b=e.target.closest("[data-show]");if(!b)return;const k=b.dataset.show;
+  if(k==="all"){const t=document.getElementById(document.getElementById("tbl").hidden?"startScan":"tbl");
+    if(t&&!t.hidden)t.scrollIntoView({behavior:"smooth",block:"start"});return;}
+  try{window.parent.postMessage({gildesk:"show",tab:k},"*");}catch(err){}
+});
+(function(){const box=document.getElementById("bestTabs"),key="gildesk:besttabs:v1";
+  try{if(localStorage.getItem(key)==="closed")box.open=false;}catch(e){}
+  box.addEventListener("toggle",()=>{try{localStorage.setItem(key,box.open?"open":"closed");}catch(e){}});})();
+addEventListener("message",e=>{const d=e.data;if(d&&(d.gildesk==="best"||d.gildesk==="activate"))renderBest();});
+/* another copy of the desk scanning a tab */
+addEventListener("storage",e=>{if(e.key===BEST_KEY)renderBest();});
+setInterval(renderBest,60000);
+renderBest();
 </script>
 </body>
 </html>

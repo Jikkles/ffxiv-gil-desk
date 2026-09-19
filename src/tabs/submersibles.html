@@ -488,6 +488,9 @@ function render(){
 function renderKpis(){
   const all=(state.routes||[]).filter(r=>!state.fitOnly||r.fits);
   const best=all.slice().sort((a,b)=>b.day-a.day)[0];
+  /* a route rather than an item, and only once voyage loot has a price */
+  if(state.mkt)reportBest("submersible",all,"day","Profit/day",{skip:()=>false,noId:true,
+    name:r=>r.letters+(r.alias&&r.alias!==r.letters?" ("+r.alias+")":""),note:r=>fmtH(r.hours)+" · fleet a day · rank "+state.rank});
   const oj=all.find(r=>r.alias==="OJ");
   const long=all.filter(r=>r.hours>24).sort((a,b)=>b.day-a.day)[0];
   const st=buildStats();

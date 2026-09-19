@@ -35,6 +35,8 @@ window.Tour=(function(){
       body:"Every tab has its own <b>Show me</b> button. It walks you through that tab’s own controls and columns one at a time, on the real page with live prices. On the Dashboard it brings back this tour."},
     {sec:"Page info",title:"At a glance",spot:"kpis",side:"bottom",zoom:1.4,
       body:"The cards pick out the headlines: the best profit on a single item, the most gil a day everything in view could make, and how many items are profitable. They follow your filters."},
+    {sec:"Page info",title:"Best on each tab",spot:"besttabs",side:"bottom",zoom:1.3,
+      body:"The top earner each tab found the last time it scanned, lined up best first, so you can see where the gil is without opening every tab. Click a row to go to that tab. A tab you haven’t opened yet says so, and opening it prices it."},
     {sec:"Item list",title:"The item list",spot:"table",side:"bottom",
       body:"One row per item: what it sells for now, its 30-day average (the middle price of real sales, so one odd sale can’t drag it), which way the price is heading, what the materials cost, the profit, and how many sell a day. Click a column heading to sort by it."},
     {sec:"Item list",title:"⚠ Prices to double-check",spot:"outlier",focus:"outrow",side:"bottom",zoom:1.6,

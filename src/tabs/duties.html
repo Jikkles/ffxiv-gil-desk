@@ -421,6 +421,7 @@ function render(){
       `<td>${velCell(r.velI)}</td>`+
       `<td>${fmtK(r.gilDay)}</td></tr>`;}).join("");
   renderKpis();
+  reportBest("duties",rows,"gilDay","Gil/day",{skip:r=>r.warn,note:r=>srcText(r.lead)});
   setStatus(rows.length?state.summary+` · ${rows.length} shown`:"Nothing matches these filters — try a lower <b>Min Avg 30d</b>, or untick <b>Only what is actually selling</b>.");
 }
 /* one card a content type: the most valuable thing it drops that has really

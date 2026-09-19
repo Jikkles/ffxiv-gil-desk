@@ -467,6 +467,9 @@ const Alerts={n:0,title:document.title,
 addEventListener("message",e=>{
   const d=e.data;if(!d)return;
   if(d.gildesk==="undercuts"&&d.added>0&&!(current==="undercuts"&&!document.hidden))Alerts.set(Alerts.n+d.added);
+  /* a tab found a new best row: the Dashboard's Best on each tab card redraws from the store */
+  if(d.gildesk==="best"){const f=document.querySelector('iframe[data-frame="all"]');
+    if(loaded.all&&f&&f.contentWindow&&e.source!==f.contentWindow)try{f.contentWindow.postMessage({gildesk:"best"},"*");}catch(err){}}
   if(d.gildesk==="show"&&d.tab!==current&&document.querySelector('.tab[data-tab="'+d.tab+'"]')){
     history.pushState(null,"","#"+slugOf(d.tab));activate(d.tab);}
 });
