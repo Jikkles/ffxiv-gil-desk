@@ -391,7 +391,9 @@ the bar shows how many lines are newly undercut, and the browser tab's title sta
 count. Tick **Pop-up when undercut** for a desktop notification as well; the browser asks
 permission the first time, and clicking the notification opens the tab. A pop-up is skipped only while you are
 actually reading the tab: on Undercuts, with the desk's window in front. Left open behind the game,
-it still pops up. A timed check re-reads only the items your retainers were
+it still pops up. Two copies of the desk open in one browser each check on their own timer,
+but announce a given undercut once between them: whichever gets there first shows the pop-up and
+the count, and both tables still tag the line **New**. A timed check re-reads only the items your retainers were
 listed on, usually a request or two. Once an hour it reads the whole board instead, to find
 anything listed since. The setting is saved; the timer starts again at your first check each visit.
 

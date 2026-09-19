@@ -508,7 +508,32 @@ function onScreen(){
   let focused=false;try{focused=(window.top||window).document.hasFocus();}catch(e){focused=document.hasFocus();}
   return active&&focused;
 }
-function alertUndercuts(list){
+/* Two copies of the desk open in one browser each run their own timer, so the same undercut
+   would be announced twice. The first to reach one writes it down, under the line it belongs
+   to, and the other copy leaves it alone; the write is read back a moment later, so of two
+   copies claiming the same line at the same moment only the one whose write survived says
+   anything. Both still show the New tag on their own table - only the announcing is shared. */
+const ALERT_KEY="gildesk:undercuts:alerted:v1",ALERT_TTL_MS=15*60*1000;
+const ME=Math.random().toString(36).slice(2);
+function readClaims(){let d=null;try{d=JSON.parse(localStorage.getItem(ALERT_KEY)||"{}");}catch(e){}
+  if(!d||typeof d!=="object")d={};
+  const now=Date.now(),out={};
+  for(const k in d)if(Array.isArray(d[k])&&now-d[k][0]<ALERT_TTL_MS)out[k]=d[k];
+  return out;}
+async function claimAlerts(keys){
+  const held=readClaims(),mine=keys.filter(k=>!held[k]);
+  if(!mine.length)return[];
+  const now=Date.now();for(const k of mine)held[k]=[now,ME];
+  try{localStorage.setItem(ALERT_KEY,JSON.stringify(held));}catch(e){return mine;}
+  await sleep(200+Math.floor(Math.random()*200));
+  const back=readClaims();
+  return mine.filter(k=>back[k]&&back[k][1]===ME);
+}
+async function alertUndercuts(list){
+  const claimKey=r=>state.scanWorld+"|"+lineKey(r);
+  const keep=new Set(await claimAlerts(list.map(claimKey)));
+  if(!keep.size)return;
+  list=list.filter(r=>keep.has(claimKey(r)));
   /* the shell counts them on the tab bar until this tab is looked at */
   try{if(window.parent&&window.parent!==window)window.parent.postMessage({gildesk:"undercuts",added:list.length},"*");}catch(e){}
   if(!document.getElementById("autoNotify").checked||onScreen())return;

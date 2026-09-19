@@ -26,6 +26,8 @@ What changed on [Jikky's Gil Factory](README.md), newest first.
   Timed checks re-read only the items you are listed on; once an hour they read the whole board.
 - A pop-up is held back only while you are actually reading the Undercuts tab — on that tab, with
   the desk's window in front. Left open behind the game, it still pops up.
+- Two copies of the desk open in one browser no longer announce the same undercut twice: the first
+  to reach it shows the pop-up and the count, though both still tag the line **New**.
 
 ## 16 September 2026
 
