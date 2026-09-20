@@ -4,627 +4,141 @@ A market-board scanner for Final Fantasy XIV — "the desk" for short.
 
 ### **[→ Open the desk](https://jikkles.github.io/ffxiv-gil-desk/)**
 
-The whole idea is to scan the market board and work out, quickly and efficiently, where the
-most gil is actually available — mainly through crafting, but also through cross-world flips,
-scrip loops and currency spending. Rather than eyeballing prices item by item, the desk pulls
-live listings and 30-day sales history for thousands of items at once, prices out every
-material, subtracts market tax, and ranks everything by what it would genuinely net.
+## What it is
 
-It runs entirely in the browser from a single HTML file. Nothing to install or build to use it,
-no dependencies, no API keys, no accounts, no server. (The file itself is assembled from `src/`
-by one script; see [Architecture](#architecture) if you want to change it.)
+The desk scans the market board and works out where the gil actually is — through crafting,
+cross-world flips, gathering, scrip loops, duty drops and currency spending. It pulls live
+listings and 30-day sales history for thousands of items at once, prices out every material,
+subtracts market tax, and ranks everything by what it would genuinely net.
 
-It works on **every Western and Japanese data centre**: pick your world from the North
-American, European, Japanese and Oceanian list, and tick whichever data centres you want
-materials priced across. The Korean and Chinese services and Square Enix's test data centres
-are separate markets, so they are left out.
+It runs entirely in the browser from one HTML file: nothing to install, no dependencies, no API
+keys, no accounts, no server. It works on every Western, Japanese and Oceanian data centre — pick
+your world, tick the data centres you want materials priced across, and go.
 
----
+## The idea
 
-## Quick start
-
-**[Open the desk](https://jikkles.github.io/ffxiv-gil-desk/)** and pick your world. That's it —
-nothing to install or sign into. Picking a world starts a short guided tour of the desk, which the
-**Tour** button in the top right brings back any time.
-
-Prefer it offline, or want your own copy? Download [index.html](index.html) and open it in a
-browser. It is one self-contained file and behaves identically either way; settings and saved
-lists live in that browser, so the hosted desk and a local copy keep their own.
-
-Each tab scans as soon as you open it, so a tab is never a blank table waiting for a click —
-except the **Dashboard**. The desk opens on it, and its scan is thousands of lookups, so until it
-has prices it shows one big **Load live prices** button rather than rate-limiting whichever tab
-you actually came for. **Undercuts** does the same with **Check for Undercuts**, since it reads a
-whole world's market board. Come back to a tab and it only rescans if its cached prices have gone cold
-(12 minutes), so flipping between tabs costs nothing; **Refresh** in the sidebar skips that cache
-and pulls fresh prices every time, with an *Updating…* label and a progress bar along the top
-while it works.
-
-## The core idea
-
-Every tab answers a variation of one question: **if I do this thing, how much gil do I end up
-with?**
-
-The desk always works from the same profit model:
+Every tab answers one question: **if I do this thing, how much gil do I end up with?**
 
 ```
 profit = (sell price × (1 − tax)) − acquisition cost
 ```
 
-What varies per tab is what "acquisition cost" means — buying materials and crafting, buying
-the finished item on a cheaper world, spending scrips, or spending a currency at a vendor.
+What changes per tab is what "acquisition cost" means. Three things shape every number:
 
-Four deliberate choices run through the whole thing:
+- **Sales history is the anchor, not listings.** `Avg 30d` is the median price of real sales over
+  the past month; a single inflated listing is not a market.
+- **Velocity matters as much as margin.** Tabs count *units* a day, not sales, and show a daily
+  profit ceiling, so a 20k margin that moves 30 a day outranks a 500k one that moves twice a month.
+- **Direction matters too.** `Trend` compares the newer half of the sales history against the
+  older half, and shows nothing rather than a number it can't stand behind.
 
-- **Sales history is the anchor, not listings.** A single inflated listing is not a market.
-  The `Avg 30d` column is the median price of *actual sales* over the past month, weighted by units,
-  and most tabs default to pricing against it rather than the current cheapest listing. Rows
-  whose current listing sits far from that average get a ⚠ so you can spot noise.
-- **Velocity matters as much as margin.** A 500k margin on an item that sells twice a month is
-  worse than a 20k margin on something that moves 30 times a day. Tabs surface units/day and a
-  *daily profit ceiling* (profit per unit × units per day) so you can rank by what actually
-  turns over. That ceiling is a ranking device, not a promise — you capture a slice of the
-  market, not all of it.
-- **Units, not sales.** People buy caramel popcorn 99 at a time, so counting *sales* said the
-  market took four a day when it was taking four hundred. Every velocity on the desk counts
-  units: the number in `Units/day` is what a profit-per-unit is multiplied by, and the `×99`
-  beside it is the stack the item moves in. The sale count still shows next to `Avg 30d`, since
-  how many separate buyers turned up is its own useful number.
-- **Direction matters as well as level.** An average tells you where a price has been,
-  not where it is going. The `Trend` column splits the sales history in half and compares
-  the newer half against the older one, so a margin that is opening up reads differently
-  from one that is closing. It is deliberately quiet: it needs at least two days of
-  history and three sales on each side, measured on the same quality you are pricing on,
-  or it shows nothing rather than a number it cannot stand behind.
+Every tab shares the same columns in the same order — **Item**, **Sell now**, **Avg 30d**,
+**Trend**, **Units/day**, **Gil/day** — with its own extras slotted in around them.
+
+## Quick start
+
+Open the desk and pick your world — that's it. Picking a world starts a short guided tour, which
+the **Tour** button brings back any time. Want it offline? Download [index.html](index.html) and
+open it; it's one self-contained file.
+
+Every tab scans as soon as you open it, except **Dashboard** and **Undercuts**, which wait for a
+button because their scans are huge. **Refresh** in the sidebar pulls fresh prices any time.
 
 ## Tabs
 
-| Tab | What it works out |
-| --- | --- |
-| **Dashboard** | Profit scanner across 9,400+ personal-craft items, precrafts included, filtered to your class and level |
-| **Gathering** | Gil an hour from every Miner and Botanist item, and when timed nodes are up |
-| **Currencies** | Which marketable item each currency buys at the best gil rate |
-| **Scrips** | The two collectible → scrip → materia loops, valued live |
-| **Duties + Maps** | Valuable drops from dungeons, deep dungeons, variant, Eureka, Bozja, Occult Crescent, treasure maps and map portals, with drop rates; what one map is worth opened |
-| **Flips** | Cross-world flips on every tradeable mount, minion, hairstyle, emote and outfit coffer, the pricier orchestrion rolls, facewear and fashion accessories, and Pure White and Jet Black dye |
-| **Retainers** | What the four exploration ventures bring back that is worth selling |
-| **Submersibles** | Which voyage route earns the most for your sub build and resend schedule |
-| **Workshop** | All 162 Free Company workshop projects, costed phase by phase against their sale price |
-| **Vendors** | Every gil-priced NPC item, and what it resells for on your server |
-| **Undercuts** | Which of your own retainers' listings someone has undercut, and by how much |
-| **Lists** | Up to five lists you fill yourself, renameable, kept in your browser |
-
-The tabs share one set of columns, in the same order everywhere: **Item**, **Sell now**,
-**Avg 30d**, **Trend**, **Units/day** and **Gil/day**, with each tab's own extras (a vendor cost,
-a buy price, a profit) slotted in around them. `Sell now` carries a small age pill showing how
-old that listing is. `Gil/day` is net sale price × units a day — how much gil the item moves on
-your world, not your cut of it.
-
-`Trend` is sortable like any other column — sort by it to see what is moving before you commit
-to a craft. Hover a trend for the two averages behind it and the window they cover.
-
-Two things sit outside the tabs and work from all of them: the **search box** in the top right,
-for looking up any item by name, and the **🌐** button on every row, which shows what that item
-costs and how many of it are stocked on each world. Both are described under
-[Shared features](#shared-features).
-
-### Dashboard
-
-The broad sweep: consumables, furniture, precrafts and other materials, gear, tools and dyes.
-
-**Your crafter** narrows the list to what you can make: pick a *Class* and a *Min lvl* / *Max lvl*
-(an item several crafters can make counts for each of them), and tick *Precrafts only* for the
-intermediates, the crafts that go into another recipe. This replaced the old Precrafts tab, and
-`#precrafts` links now open the Dashboard. *Sell* prices each item at the quality it usually trades
-at; switch it to *HQ* or *NQ* to price everything one way (an item no recipe can make HQ always
-sells NQ). Plenty of intermediates only really sell NQ.
-
-**Mat cost** has two bases and defaults to *Precraft-optimised*: every intermediate that is
-cheaper to craft than to buy is costed as crafted, recursively, all the way down the tree —
-which is what actually happens if you precraft. Switch it to *Buy all mats* to price every
-direct material straight off the board instead (craftable intermediates HQ, raw materials NQ).
-The choice flows through profit, margin and the daily ceiling, and the 🛒 button follows it too:
-on the optimised basis the shopping list holds the raw materials you'd buy rather than the
-intermediates you'd craft.
-
-Click any item to open its full crafting tree. Each craftable node inside the tree shows the
-**HQ buy price vs the cost to craft it yourself**, and a *Precraft-optimised* total showing what
-you'd pay if you crafted the intermediates that are cheaper to make than to buy. That's the
-difference between a recipe looking unprofitable and actually being profitable.
-
-An open tree also shows the **best time to sell**: which hours of the day the item's sales over the
-last 30 days landed in, with the three busiest picked out.
-
-Turn on *Hide no-sales* and sort by profit to find what's worth bulk-crafting.
-
-*Skip dead items* (on by default) leaves out anything that has not sold in 30 days, which makes a
-refresh much faster. Each skipped item is checked again a week after it was last found dead, so
-anything that starts selling comes back on its own, and every world keeps its own list.
-**Shift-click Refresh** for a full rescan of every item, dead ones included.
-
-### Gathering
-
-Every marketable item a Miner or Botanist gathers from a node (about 730), ranked by **gil an hour**:
-an estimate of how many you gather in an hour, times its price after tax. The nodes, their levels,
-where they are and when timed ones spawn come from Teamcraft's node data and are rebaked after each
-patch. An item from several nodes is ranked on its best one: a regular node first, then the timed
-node that spawns most often.
-
-**Per hour** comes from *Your gathering* in the sidebar, so set it to what your gear really gets:
-
-- a **regular node** can be worked all hour: *Nodes an hour* × *Swings a node* × *Items a swing*
-  (60 × 6 × 2 = 720 by default)
-- a **timed node** is only up for a short window, so it counts *Swings a node* × *Items a swing* once
-  for every window in a real hour (an Eorzean day is 70 minutes)
-
-**Gil/hour** is Per hour × the price in *Price* (the current cheapest listing, or the 30-day
-average) after tax. Tick *Cap at a day's sales* to count no more an hour than your world buys in a
-whole day, so an item that barely sells cannot top the list. The **Node** column says whether the
-best node is regular or timed, and a timed one says when it is next up or how long it has left, in
-real minutes; *Nodes: Timed, up now* shows only those. Each row names the zone, area and map
-coordinates.
-
-Shards and crystals (their nodes yield far more a swing), spearfishing and the Diadem are left out.
-**Hidden items** only turn up on some visits to a node, and some need a Folklore book or enough
-Perception, so they stay out of the list unless you tick *Include hidden items*, and their Per hour
-is an overestimate.
-
-### Currencies
-
-Pick a currency and it works out which marketable item that currency buys at the best
-gil-per-unit rate, then what that item sells for after tax. Each row's Item cell shows the item's
-own icon and name over its vendor, with the currency icon and what one costs pinned to the right
-of the same cell, so the tab keeps the same columns as the rest of the desk.
-
-Vendor costs are read from the game's `SpecialShop` and `GCScripShopItem` tables, filtered to
-items actually sellable on the market board, and rebaked after each patch (see
-[Keeping it current](#keeping-it-current)). Only prices in a single currency count, and the game's
-developer shops and placeholder rows are left out. Where the same item is sold by multiple vendors
-for the same currency, the cheapest is used. Some shop rows belong to vendors that no longer exist
-in-game, so the vendor name is shown on every row.
-
-Alongside the tomestones, scrips and seals there's a **Variant & Deep Dungeons** group: the four
-variant dungeon potsherds (Sil'dihn, Rokkon, Aloalo, Corvosi), all traded to Trisassant in Old
-Sharlayan for glamour, emotes, hairstyles and orchestrion rolls, plus the two deep dungeon
-potsherds (Gelmorran from Palace of the Dead, Empyrean from Heaven-on-High), which mostly buy
-grade V and VI materia. These drop slowly and their rewards are thin on the market board, so set
-**min units/day** to `Any` to see the whole shop.
-
-### Scrips
-
-Two scrip-flip loops, valued live, over all 224 Rarefied collectables the Collectable Appraiser
-takes for crafters' scrips:
-
-- **Orange** collectibles (lvl 100, 144 scrips) → grade XII materia at 500 scrips
-- **Purple** collectibles (lvl 50–98, 54–198 scrips) → crafter materia from grade IV to XI, at 25–250 scrips
-
-Revenue per craft is what those scrips are worth as materia on your home world; profit subtracts
-the material cost, shards and crystals included. `gil/scrip` uses whichever crafter materia that
-scrip buys sells for the most per scrip, net of tax. Lower-level Purple collectibles give fewer
-scrips but often use much cheaper materials — sorting by profit shows which loop actually wins.
-Filter by *Class* to see only your crafter. The collectables, their scrip rewards and the materia
-costs are read from the game's collectable and scrip shop tables and rebaked after each patch.
-
-In this tab's recipe trees, precrafts are bought NQ wherever they're listed (you'd rather buy
-than precraft here) and only expanded into their own materials when nothing is for sale.
-
-### Duties + Maps
-
-The drops worth chasing in instanced and field content, with how often each one actually drops:
-
-- **Dungeons** — minions, orchestrion rolls and furnishings such as the Verdant Partition. The chance
-  is per run, every chest in the duty added together, and the item still goes to a party loot roll.
-- **Deep dungeons** — what the Palace of the Dead, Heaven-on-High, Eureka Orthos and Pilgrim's
-  Traverse sacks appraise into (the Night Pegasus Whistle, the Pilgrim's Traverse horns and
-  resonator, glamour weapons), plus the Gelmorran and Empyrean potsherd exchanges.
-- **Variant & Criterion** — the Sil'dihn, Rokkon, Aloalo and Corvosi potsherd exchanges, plus the
-  Merchant's Tale (Advanced) chests. Variant route minions are untradable, so they are not here.
-- **Eureka** — lockboxes and bunny coffers per zone, and notorious-monster FATE drops such as the
-  Cassie Earring and Blitzring, which have no recorded rate and say so.
-- **Bozja** — Southern Front and Zadnor lockboxes, and the Bozjan Cluster exchange.
-- **Occult Crescent** — treasure, pot and bunny coffers in both horns (the Occult accessories of
-  Blood and Magic among them), and the Enlightenment silver and gold piece exchanges.
-- **Treasure maps** — the coffer a timeworn map digs up. Coffers are recorded by zone, and most
-  zones dig up two kinds of map (which maps dig where is read from the game's treasure spot tables),
-  so those maps share one loot table: a Loboskin and a Br'aaxskin coffer count together. Elpis and
-  Living Memory only dig up Ophiotauroskin and Gargantuaskin maps, so theirs are exact.
-- **Map portals** — the portal dungeons maps open, from the Aquapolis to Vault Oneiron. Every room's
-  chest is recorded as one, so the chance is per chest opened, and a run opens one for every room you
-  clear.
-
-Switch **Show** to **Maps & portals** for one row a map and one a portal: what one dug-up coffer or
-portal chest is worth (*Per coffer*: every sellable drop's chance × its 30-day average after tax,
-added up), its best drop, and the map's own market price, so you can decide whether to open a map or
-sell it. Click a row for its whole loot table. Portal odds are not recorded, so Per coffer is for
-the coffer you dig up, not the portal it might open.
-
-Only drops that sell for real money are listed. **Expected** is what one run, coffer or sack is worth
-from that item (chance × average after tax), or gil per unit of currency for an exchange. Sell now
-is your world and the rest is measured across your data centre, because rare drops
-sell a handful of times a month on any one world.
-
-### Flips
-
-No crafting involved — pure arbitrage. Scans every tradeable mount, minion, hairstyle, outfit coffer
-and emote (the `Ballroom Etiquette` manuals), plus orchestrion rolls, *The Faces We Wear* facewear,
-fashion accessories such as parasols and wings, and General-purpose Pure White and Jet Black dye:
-about 600 items read from the game's own item data and rebaked after each patch. Rolls, facewear
-and accessories run to hundreds of cheap items, so only those averaging 50k or more in both Europe
-and North America are listed. Everything is scanned across every world on the data centres you have picked. It finds the
-cheapest listing anywhere and compares it with what the item sells for on your home world: the
-30-day average, or your world's cheapest listing when that is lower, since you would have to
-undercut it (**caps** beside *Sell now* marks those rows). The world name is colour-coded: orange
-means a world hop is required, teal means it's already on your world.
-
-Rare, slow-moving items are exactly where current listings lie most, so this tab leans hardest
-on sales history. A row nothing has sold on your world in 30 days carries a ⚠ and never makes the
-headline card.
-
-### Retainers
-
-What the four 18-hour exploration ventures (Field, Highland, Woodland and Waterside) bring back
-that is worth selling: 26 drops, mostly minions plus a few expensive furnishings. Anything worth
-only a few thousand gil is left off, because it is a venture reward but not a reason to send one.
-The drops, their tiers and how often each comes back are read from players' logged ventures in
-Infi's `Ventures.json` and rebaked after each patch; a new drop is listed when it comes back from
-under 10% of ventures and sells for 5,000 gil or more in both Europe and North America.
-
-Ten of the rows are tagged **only from this venture**: they have no other source in the game (not
-craftable, not sold by a vendor, not a quest, duty or gathering drop, and not returned by a
-different venture). The rest can also be had elsewhere, and each row says where; a drop added by a
-rebake names the other sources it found in the desk's own data, or says they are unchecked. The
-**Tier(s)** column gives the venture tiers in Roman numerals, with how often the drop comes back at
-its best tier; a higher tier needs a higher-level retainer.
-
-The headline cards rank the four ventures by their most valuable drop. Filter to one venture, tick
-*Venture-exclusive only*, or tick *Only what is actually selling* to drop anything with no sales
-in 30 days.
-
-As on Duties, Sell now is your world but Avg 30d, Trend, Units/day and Gil/day are measured
-across your data centre, because these items sell a handful of times a month on any one world.
-Gil/day is Avg 30d after tax × units a day.
-
-### Submersibles
-
-Free Company submersibles are sent on voyages of up to five sectors and come back with loot. Nearly
-all of the gil is **salvaged jewellery** (Salvaged and Extravagant Salvaged rings, bracelets, earrings
-and necklaces), which cannot go on the market board but sells to any NPC for a fixed 8,000–34,500. It
-drops in Deep-sea Site sectors J, M, O, R and Z, and in the Sea of Ash's Ascetic's Demise — which is
-why players run **OJ** (the Wreckage of *Discovery I* and the unidentified derelict) once a day, or
-**MROJZ** / **JORZ** on a longer cycle.
-
-Set your subs' **rank** and **parts** (hull, stern, bow, bridge — `S+` is a modified Shark, and so
-on) and the tab works out the build's surveillance, retrieval, speed, range and favor, then ranks
-every route worth sailing:
-
-- **Loot per visit** comes from crowd-sourced voyage records (see [Data](#data)): units per loot roll,
-  times the rolls a visit gives when favor clears the sector's breakpoint. Short of a sector's
-  surveillance breakpoints the build loses that tier's loot; short of its retrieval breakpoint it
-  brings back the smaller quantity band. Both are flagged per sector.
-- **Salvage** is valued at the NPC price; everything else at the lower of its 30-day average and its
-  cheapest listing across your data centre, after tax, so a single troll sale cannot make a sector.
-- **Voyage time** uses the game's own formula — travel and survey time scaled by speed, plus a fixed
-  12 hours — and each route is sailed in the quickest order that fits the build's range.
-- **Repairs** are Magitek Repair Materials at the current price, spread over the voyages a part
-  lasts. Ceruleum tanks cost company credits, not gil, so they are counted but not subtracted.
-- **Profit/day** is what the fleet nets a day on the resend schedule you pick. A 22-hour voyage sent
-  once a day earns every day; a 26-hour one only every other day, which is exactly the trade-off
-  between OJ and the longer routes.
-
-Click a route for what each sector brings back and which breakpoints the build meets. The **Loot**
-view lists every item a voyage can return, with the desk's standard price columns.
-
-### Workshop
-
-All 162 projects a Free Company workshop can build — submersible and airship parts, housing
-exteriors and aetherial wheels — read straight from the game's `CompanyCraftSequence`,
-`CompanyCraftPart`, `CompanyCraftProcess` and `CompanyCraftSupplyItem` tables, so every phase, set
-size and set count is what the workshop really asks for. Columns match the Dashboard: sell now,
-30-day average, trend, material cost, profit, margin, units/day and gil/day.
-
-Click a project for its phases, each turn-in with its set breakdown and crafter level, and the recipe
-under every craftable turn-in, as deep as it goes. **Mat cost** defaults to *Precraft-optimised* (a
-turn-in cheaper to craft than to buy is costed as crafted, crystals included); *Buy turn-ins* prices
-each turn-in straight off the board. Turn-ins accept either quality, so each is bought at whichever of
-NQ and HQ is cheaper. Drafts, company credits and workshop time are not gil, so they are not counted.
-Projects that have not sold in 30 days carry a ⚠ and are kept out of the headline cards.
-
-### Vendors
-
-Every marketable item an NPC will sell you for plain gil — **4,943** of them — priced against
-the market board on the server you pick. Vendor prices are fixed and never move, so unlike the
-crafting tabs the only variable is what the board pays, which makes anything here a repeatable
-run rather than a one-off snipe.
-
-By default the tab shows **only what is turning a profit right now**. That is still around
-1,200 rows on a busy server, so the default sort is **Gil/day** rather than raw margin — a 40M
-margin on something that sells twice a year is worth less than a 5k margin on something that
-shifts thirty a day, and sorting this way sinks the dead stock on its own. The best profit/day
-(profit per unit × units per day) is still shown in the headline cards.
-
-The columns read Item, Bought from, Vendor cost, Sell now, Sell avg 30d, Trend, Profit/unit,
-Margin, Units/day and Gil/day. Sell avg 30d, Trend and Units/day come from 30 days of sales on your
-world, read for every item that could turn a profit on either its listing or Universalis' quick
-average; fetching all 4,943 would take fifty extra batches, so a row that only appears under
-**Show ALL vendor items** fills its numbers in just after the table draws. Tick **Show ALL vendor items** to see the whole 4,943 including the losers;
-it's off by default because most vendor stock never sells for more than it costs.
-
-**Sell price** has three bases. *Realistic* (the default) takes the lower of the cheapest
-current listing and the 30-day average — you have to undercut the board to sell, but a lone
-silly listing is not a real price. *Cheapest listing* and *30-day average* are also available.
-
-A ⚠ chip means the price is not backed by real sales: either nothing has sold on that server in
-30 days, or the listing sits far from the average that did. Most vendor stock hits one of those,
-so the chip is common — the headline figures at the top of the tab ignore those rows entirely,
-and **Hide ⚠ unreliable** drops them from the table. Without this the tab would happily report a
-142M profit on an interior wall that has never once sold.
-
-**Bought from** is joined out of the game's own shop tables: the NPC, the zone and the map
-coordinate. Where several NPCs stock an item, the one shown is a vendor with a map position before
-one without, then a city vendor before one out in the field or in a housing ward. *+n more* counts
-the other NPCs that stock it. Two tags flag stock you may not be able to buy
-today: `locked?` where a quest or achievement gates the shop, and `seasonal` where the shop only
-opens during an event (46 items, mostly Starlight, Valentione's and Heavensturn furnishings).
-
-### Undercuts
-
-Checks your own retainers' listings. Add their names in the sidebar (paste several at once with
-commas between them), press **Check for Undercuts**, and the tab reads every listing on your
-**Sell on** world, all 16,845 marketable items in about ten seconds, and keeps the ones your
-retainers put up. Like the Dashboard, it waits for that button rather than scanning as you open it.
-The names are kept in your browser and shared by every world.
-
-The columns read Item, Retainer, Your price, Undercut, Sell now, Avg 30d, Trend, Units/day and
-Gil/day. Identical stacks from one retainer at one price fold into one line (`×99 · 7 stacks`).
-**Undercut** is how far below you the cheapest rival listing of the same item and quality sits, and
-how many listings are cheaper than yours; **Cheapest** means nobody is, and names the next rival
-price. Your own retainers never count as undercutting each other. **Sell now** is the cheapest
-listing of that quality on your world, yours included, with the age of that data. The cards count
-the undercut lines, name the biggest gap, say which retainers turned up (a name with no listings
-gets a dashed outline, which usually means a typo), and give the age of the stalest data.
-
-**Keep checking** re-checks on a timer. Set **Check every** to 10, 15 or 30 minutes or an hour, and
-once you have checked by hand the tab looks again on that timer, whichever tab you are on, for as
-long as the desk stays open in the browser. A line that has been undercut since the check before
-gets a **New** tag, which stays until you next check by hand. Until you open Undercuts, its tab on
-the bar shows how many lines are newly undercut, and the browser tab's title starts with that
-count. Tick **Pop-up when undercut** for a desktop notification as well; the browser asks
-permission the first time, and clicking the notification opens the tab. A pop-up is skipped only while you are
-actually reading the tab: on Undercuts, with the desk's window in front. Left open behind the game,
-it still pops up. Two copies of the desk open in one browser each check on their own timer,
-but announce a given undercut once between them: whichever gets there first shows the pop-up and
-the count, and both tables still tag the line **New**. A timed check re-reads only the items your retainers were
-listed on, usually a request or two. Once an hour it reads the whole board instead, to find
-anything listed since. The setting is saved; the timer starts again at your first check each visit.
-
-Two limits come from Universalis itself. Listings carry the retainer's name but not the character's,
-so your character name finds nothing. And the data is only as fresh as the last time a player with an
-uploader opened that item on the board: busy items are usually minutes old, quiet ones can be days
-old. The age pill on **Sell now** says which is which. To stay under Universalis' rate limit, the
-scan asks for 20 batches a second at most, and only for the fields it needs.
-
-### Lists
-
-Up to five lists you fill yourself. The 📋 button on any row of any tab, and on any material inside
-a crafting tree, opens a picker with your lists on it; choose one and the item lands there.
-Clicking the same list again takes it back off.
-
-Each tab hands over what it knows: a precraft or a Scrips collectable brings its whole recipe
-tree so the list can price the materials, a flip brings the world it was cheapest on, a vendor
-item brings the NPC and zone, and a currency item brings the currency and shop it came from.
-
-Each list is a full tab: sell now, 30-day average, material cost, profit, margin, units/day and
-gil/day, plus the same recursive crafting tree as the Dashboard. An item saved without a recipe
-(a raw material, say) is still priced — it just shows no crafting cost.
-
-- **＋ List** in the tab bar creates another list, up to five. **New list…** at the bottom of the
-  picker does the same thing and files the item into it in one go.
-- **✎ Rename** calls a list whatever you want — *Consumables*, *Weekly craft*, *Watchlist*. The
-  tab label follows immediately.
-- **Clear list** empties one, and **↩ Undo clear** puts it straight back. The cleared items are
-  parked in `localStorage`, so the undo still works after a reload.
-- **✕ Remove list** drops the tab entirely.
-
-Lists live in your browser's `localStorage` and are never uploaded anywhere. Each saved item
-carries its own recipe tree with it, which is what lets a list price a full craft without
-loading the Dashboard's 9,000-item catalogue.
+**Dashboard.** The broad sweep: every personal craft, 9,400+ items, filtered to your class and
+level. Pick a class and level range and it ranks consumables, furniture, gear, dyes and
+intermediates by profit. Material cost defaults to *Precraft-optimised* — anything cheaper to
+craft than to buy is costed as crafted, all the way down the tree. Click a row for the full
+crafting tree, buy-vs-craft on every node, and the hours of the day the item sells best.
+
+**Gathering.** Every marketable item a Miner or Botanist pulls from a node, about 730 of them,
+ranked by gil an hour. Set your real gathering rate in the sidebar and it works out what an hour
+at each node is worth after tax, naming the zone, coordinates, and when timed nodes are next up.
+
+**Currencies.** Pick a currency — tomestones, scrips, seals, variant and deep dungeon potsherds —
+and it finds which marketable item that currency buys at the best gil-per-unit rate, then what
+that item sells for after tax. Every row names its vendor.
+
+**Scrips.** The two collectable → scrip → materia loops, valued live across all 224 Rarefied
+collectables: orange (lvl 100) into grade XII materia, purple (lvl 50–98) into grades IV to XI.
+Profit subtracts materials and crystals, so you can see which loop actually wins.
+
+**Duties + Maps.** The drops worth chasing in instanced and field content, with real drop rates:
+dungeons, deep dungeons, variant and criterion, Eureka, Bozja, Occult Crescent, treasure maps and
+map portals. Switch to **Maps & portals** for what one dug-up coffer is worth against what the
+map itself sells for — open it or sell it.
+
+**Flips.** Pure arbitrage, no crafting. Scans ~600 tradeable mounts, minions, hairstyles, emotes,
+outfit coffers, pricier orchestrion rolls, facewear, fashion accessories and the two premium dyes
+across every world on your picked data centres, and compares the cheapest listing anywhere with
+what it sells for at home.
+
+**Retainers.** What the four 18-hour exploration ventures bring back that's actually worth
+selling: 26 drops, mostly minions and expensive furnishings, with how often each comes back and
+at which venture tier. Ten are flagged as available from nowhere else in the game.
+
+**Submersibles.** Set your subs' rank and parts and it works out the build's stats, then ranks
+every voyage route by profit a day on the resend schedule you pick. Salvaged jewellery is valued
+at its NPC price and everything else off the board, with voyage time, repairs and each sector's
+surveillance and retrieval breakpoints accounted for.
+
+**Workshop.** All 162 Free Company workshop projects — submersible and airship parts, housing
+exteriors, aetherial wheels — costed phase by phase against their sale price. Click one for every
+turn-in, its set breakdown, crafter level and full recipe tree.
+
+**Vendors.** Every marketable item an NPC sells for plain gil, 4,943 of them, priced against the
+board on your server. Vendor prices never move, so this is repeatable income rather than a snipe.
+It defaults to what's profitable right now, sorted by gil a day, with the NPC, zone and map
+coordinate on every row.
+
+**Undercuts.** Add your retainer names, press **Check for Undercuts**, and it reads every listing
+on your world in about ten seconds and keeps yours. It shows how far below you the cheapest rival
+sits and how many beat you. **Keep checking** re-checks on a timer, tags new undercuts, counts
+them on the tab bar, and can fire a desktop notification.
+
+**Lists.** Up to five lists you fill yourself, renameable, kept in your browser. The 📋 button on
+any row of any tab files an item into one, bringing its recipe tree, world, vendor or currency
+with it. Each list is a full tab with the same columns and crafting trees.
 
 ## Shared features
 
-**Shopping list.** The 🛒 button adds an item's materials to a list shared across every tab. It is
-on the rows of the Dashboard, Scrips and your lists, where it adds the recipe's
-materials; on Workshop, where it adds every turn-in the project needs; and on Flips, Retainers and
-Vendors, where it adds the item itself. Currencies, Duties + Maps, Gathering
-and Submersibles have nothing to buy with gil, so they don't carry one. It groups by world (flagging which need a hop), tracks a running gil total, and tags
-each line with which finished item it's for. Worlds stay in the order they were first added, so
-ticking items off never moves the world you're halfway through buying. Prices are captured at the time of adding, and each
-line is badged against the recent average so you can see whether you're buying into a dip or
-overpaying. Crystals, shards and clusters are excluded — assumed stocked. Anything cheaper from an NPC
-goes under an **NPC shops** group, each line naming the vendor, zone and map position. Each line
-starts with its tick box, a 🌐 button that opens the world-price panel for that item, and the amount:
-− and + move it by one (shift-click for ten), or type an exact number into the box. − stops at 1;
-✕ removes a line.
-
-**NPC shops.** Wherever a crafting tab costs a material, it takes the cheaper of the market board
-and an NPC gil shop, and the NPC wins a tie, since it never sells out. That covers every material
-used in a recipe or a workshop turn-in that an NPC sells all year (526 of them); seasonal shops are
-left out. The recipe tree shows **NPC** and the zone in *Buy on*, with the vendor, map position and
-the board's cheapest price on hover; 🔒 marks the 15 whose shop opens after a quest or achievement.
-NPC stock is NQ, so on the Dashboard's *Buy all mats* basis an NPC can undercut an HQ listing.
-
-**Crystals.** Every crafting cost on the desk includes the shards, crystals and clusters the
-recipe burns, priced off the board. They are left out of the recipe trees to keep them short, with
-their total shown under each tree; tick **Show crystals** in the sidebar of the Dashboard,
-Scrips, Workshop or a list to list them in the tree as well. Each tab remembers it.
-
-**Teamcraft simulator.** Every craftable row on the **Dashboard** and list tabs —
-and every craftable material inside a crafting tree, including the Workshop's — has a Teamcraft button, marked with its TC logo, that opens that exact
-recipe in the [Teamcraft](https://ffxivteamcraft.com) craft simulator, so you can check a
-rotation before you commit. Rows that aren't crafted don't get one.
-
-**Tab links.** Every tab has its own address — `#dashboard`, `#gathering`, `#currencies`,
-`#scrips`, `#duties`, `#flips`, `#retainers`, `#submersibles`, `#workshop`, `#vendors`, and
-`#list1` to `#list5` — so a link or bookmark opens the desk straight on that tab, and the browser's
-Back and Forward buttons step through the tabs you visited. An address for a list you don't have
-opens the Dashboard, and so does the old `#precrafts`.
-
-**Guided tour.** A first visit that picks a world goes straight into a walkthrough of an example
-Dashboard with made-up prices, sized to your window: it dims everything but the part it is
-explaining, zooms in on it, and talks through it in a speech bubble. It covers the side panel,
-the page summary and cards, the item list, ⚠ outliers, how fresh prices are, the crafting tree
-and where to buy materials, each row button, and the other tabs. **Tour** in the top right runs
-it again; the arrow keys step through it and Esc closes it. The example is drawn with the real
-Dashboard's stylesheet and a copy of your tab bar, so it never shows a desk that looks different
-from yours, and it loads and scans nothing.
-
-**How this works.** Every tab has a folded **How this works** panel just under its headline cards:
-what that tab works out, how to read its own columns and controls, and the catch worth knowing
-(why Duties measures prices across your data centre, why a 26-hour submersible route only earns
-every second day, why ⚠ is common on Vendors). Open one and it stays open on that tab next visit.
-**▶ Show me** beside it walks through that tab on the live page, the same dim-and-spotlight as the
-tour: four to six steps lighting up the controls and columns that tab adds, scrolled into view. A
-step whose part isn't on screen yet, rows before prices arrive for instance, is passed over. On the
-Dashboard, Show me starts the full tour.
-
-**Folding sidebar.** The arrow at the top of any tab's filters panel folds it down to a narrow
-rail, giving the table the width. It is one setting for the whole desk: fold it on one tab and
-every tab follows, and it stays folded next visit.
-
-**Tab bar.** When the window narrows, the bar tightens step by step (tab padding, a shorter
-search box, an icon-only theme button, smaller text, and finally no tab icons) before anything
-wraps, so the search box and theme button stay on the right. The list tabs carry on along the
-same row while there is room.
-
-**Item search.** The search box in the top right of the tab bar looks up any item by name and
-opens the cross-world panel for it, from whichever tab you happen to be on. It matches against
-the 13,000+ items the desk carries names for, instantly and offline; anything outside that —
-gear, minions, glamour — is resolved live through XIVAPI and marked `wider`. Press `/` or
-`Ctrl`/`Cmd`+`K` from anywhere to jump into it.
-
-**Prices on other worlds.** The 🌐 button on any row opens the same panel for that item. The
-cheapest listing is only half the story — 50 gil is no use if there are only ten of them — so
-the panel answers the question that actually matters: *where do I get this many, and what does
-it cost?*
-
-Set how many you want, and each world reports its cheapest listing, how many units are actually
-on the board, how many separate lots that is, and the cheapest-first cost of filling your whole
-order from that world alone. Worlds that can fill it sort first, cheapest by real cost rather
-than by headline price. Above the table sit two answers: the cheapest split across worlds
-(`64× Omega + 25× Phantom + 10× Moogle`) and the cheapest single world that can cover the lot,
-with the gil difference between them — so you can decide whether a second trip is worth it.
-
-Click any world to see its individual listings. The scope selector covers every data centre and
-region the desk trades in, so you can look beyond the ones you are pricing materials across,
-and an HQ/NQ filter narrows the maths to one quality. Where a row already implies a quantity — a
-material in a recipe tree — the panel opens prefilled with the amount you need. The panel opens
-on whichever data centre *Mats from* is set to, or on the whole region when that spans several.
-
-**Category tags.** Every row carries a small tag — `Gear`, `Furniture`, `Materials`,
-`Food`, `Medicine`, `Tool`, `Music`, `Minion`, `Dye`, `Misc`. The game's own categories are
-far too fine-grained to scan (`Stone`, `Cloth`, `Wall-mounted` and `Rug` are all real ones),
-so each folds into the word a player would actually use, and the same ten words mean the
-same thing on every tab. The specific game category is kept as the row's subtitle on the
-Dashboard and in the tag's tooltip on Vendors, so the detail is still there. Anything the
-game classes as `Miscellany`, `Other` or `Seasonal Miscellany` lands in `Misc`, and so does
-anything unrecognised — an unknown item is never guessed into a category it might not be in.
-
-**Settings.** Home world (default **Spriggan**), the data centres materials are priced across
-(default **Chaos**), and market tax (default **5%**) are set per tab and persisted. Each tab
-remembers its own filters and sort between sessions.
-
-On a first visit the desk asks which world you play on, and every tab starts on that world and its
-data centre. From then on each tab's world is its own: change it on one tab and the others stay
-where they are.
-
-**Worlds and data centres.** *Sell on* lists every world across North America, Europe, Japan and
-Oceania, grouped by region and data centre. *Mats from* is a checklist rather than a dropdown of fixed combinations — tick any number
-of data centres and materials are priced across all of them, cheapest wins. A shortcut on each
-region ticks the whole region at once (all four of North America, all three of Europe, and so
-on), and picking a world moves the material search to that world's data centre if it isn't
-already selected.
-
-Data-centre travel only works inside your own physical region, so a selection spanning regions is
-flagged in the picker — those prices are worth watching, but you can't go and buy them. Every
-extra data centre is another full pass over the item list, so a wide selection scans noticeably
-slower; the picker says so once you pass four.
-
-The world and data-centre list is baked in as a fallback but refreshed from Universalis on every
-load, so a new data centre appears on its own without this file changing. The cross-world panel
-reads the same list, so it offers every data centre too.
-
-**Freshness.** Every row shows how stale its data is, from `<1h` through to a day-level warning,
-so you know whether you're acting on a live market or yesterday's.
+- **Shopping list.** 🛒 adds an item's materials to a list shared across every tab, grouped by
+  world, with a running gil total and NPC-shop alternatives where they're cheaper.
+- **NPC shops.** Crafting tabs price every material at the cheaper of the board and an NPC gil shop.
+- **Prices on other worlds.** 🌐 on any row answers the question that matters: *where do I get
+  this many, and what does it cost?* — per-world stock, cheapest-first fill cost, best split.
+- **Item search.** The top-right box (or `/`) looks up any item by name and opens that panel.
+- **How this works.** A folded explainer on every tab, plus **▶ Show me**, a walkthrough of that
+  tab on the live page.
+- **Settings.** Home world, the data centres materials are priced across, and market tax are set
+  per tab and remembered, along with each tab's filters, sort and folded sidebar.
 
 ## Data
 
-All market data comes from the [Universalis](https://universalis.app) API — free, keyless and
-CORS-open. Item and recipe metadata is baked into the file.
-
-The **Submersibles**, **Duties** and **Retainers** drop rates come from
-[Infi's FFXIVGachaSpreadsheet](https://github.com/Infiziert90/FFXIVGachaSpreadsheet) exports
-(`Submarines.json`, `DeepDungeonSacks.json`, `EurekaBunnies.json`, `FieldOpLockboxes.json`,
-`OccultTreasuresV2.json`, `ChestDropsV2.json`, `Ventures.json`) — the loot records uploaded by the SubmarineTracker
-and related plugins — baked in by `tools/rebake.js`, which a weekly job reruns after each patch. Sector positions, survey times, tanks and
-part stats come from the game's `SubmarineExploration`, `SubmarinePart` and `SubmarineRank` tables,
-and the stat breakpoints from [SubmarineTracker](https://github.com/Infiziert90/SubmarineTracker). Which treasure maps dig in which zone comes from the game's `TreasureHuntRank` and `TreasureSpot` tables, and the **Gathering** nodes from Teamcraft's `nodes.json`.
-Exchange costs are read from `SpecialShop`, as are the **Currencies** shops
-(`tools/build-currencies.js`). The **Scrips** collectables come from the `CollectablesShop*` tables
-(`tools/build-scrips.js`), and the **Flips** items from `Item` and `ItemAction`: whatever unlocks a
-mount, minion, hairstyle or emote, and every outfit coffer (`tools/build-flips.js`). The **Workshop** projects come from the
-`CompanyCraft*` tables, and the recipes under each turn-in from Teamcraft's public data.
-
-The **Vendors** dataset is built by `tools/build-vendors.js` from the game's own `GilShopItem`,
-`GilShop`, `Item`, `ENpcBase`, `ENpcResident`, `Level`, `Map`, `PlaceName` and `TerritoryType` tables
-(via the public [ffxiv-datamining](https://github.com/xivapi/ffxiv-datamining) CSVs), filtered to
-items that are tradable, listed in a gil shop, and sellable on the market board. Map coordinates are the usual
-`SizeFactor`/offset transform; 2,842 of the 4,943 items resolve to a coordinate and 4,568 to a
-named NPC.
-
-The same script writes the desk's **NPC price index** (`src/data/npc-prices.json`): every item used in a
-Teamcraft recipe or a `CompanyCraftSupplyItem` turn-in that a non-seasonal gil shop sells, marketable
-or not, with one vendor and map position each. Shops no NPC stands at directly are left out, since some
-are unused. The shell hands it to every crafting tab.
-
-The network layer batches 100 item IDs per request, runs 5 requests concurrently, retries twice
-with backoff on rate limits and server errors, and caches responses in `localStorage` for 12
-minutes (world lists for 24 hours). The Dashboard is the exception: a full scan is larger than the
-browser store the desk shares, so it is never cached. **Refresh** always skips that cache and pulls
-fresh prices; it never touches your saved lists, shopping list or settings. When the store is full,
-cached prices are dropped to make room for your own data.
-
-Universalis rate-limits heavy scans, and its rate-limit responses don't carry CORS headers, so a
-large refresh will log some `blocked by CORS policy` errors in the browser console. These are
-absorbed by the retry layer and are harmless — if batches genuinely fail, the tab shows a
-*Partial data* warning instead.
-
-Data is only as good as what players have uploaded. Items nobody has scanned recently will show
-stale or missing prices.
+Market data comes from the [Universalis](https://universalis.app) API — free, keyless, CORS-open.
+Item and recipe metadata is baked into the file, from the public game data dumps, Teamcraft, and
+[Infi's FFXIVGachaSpreadsheet](https://github.com/Infiziert90/FFXIVGachaSpreadsheet) for
+crowd-sourced drop rates. Responses are cached for 12 minutes; **Refresh** skips the cache.
 
 ## Keeping it current
 
-Recipes, currency shops, vendor stock, submersible routes, workshop projects, duty drops, scrip
-collectables, flip items and venture drops are baked into
-the file, so a patch that adds new ones needs them pulled again. That happens on its own: a free GitHub Actions job checks
-every Monday, and from 10 to 38 days after a patch it rebakes, checks the result and pushes it. If a
-patch needs a human, it pushes nothing and opens an issue instead. By hand it is one command — see
-[tools/README.md](tools/README.md):
+The baked datasets rebuild themselves: a free GitHub Actions job checks every Monday and rebakes
+from 10 to 38 days after a patch. By hand it's one command:
 
 ```
 node tools/rebake.js
 ```
 
-It downloads the latest public game data and crowd-sourced loot rates, rebuilds the ten
-datasets and writes them into `src/data/` and `index.html`. It needs only Node.js, and nothing it touches needs a
-key or an account.
-
 ## Architecture
 
-The whole desk ships as one ~4MB `index.html`, so it opens straight from disk. That file is
-**built**, not edited: the source lives in `src/`, and one command puts it back together.
+The desk ships as one ~4MB `index.html` so it opens straight from disk, but that file is
+**built**, not edited — the source lives in `src/`:
 
 ```
 node tools/build.js           # after editing anything in src/
 node tools/build.js --check   # does index.html match src/?
+node tools/smoke.js           # draw every tab in a headless browser
 ```
 
 | In `src/` | What it is |
@@ -632,77 +146,12 @@ node tools/build.js --check   # does index.html match src/?
 | `index.html` | The shell: tab bar, iframes, search box |
 | `tabs/*.html` | One complete page per tab (`list.html` is every saved list) |
 | `shared/*.js`, `shared/ui.css` | The code and styles every tab shares |
-| `tour/tour.js`, `tour/mock.html` | The guided tour: its steps, and the example page it walks through |
-| `data/*.json` | The baked datasets inside the tabs, one record per line |
-| `data/*-index.txt` | The item name, icon and recipe indexes |
+| `tour/` | The guided tour, and the example page it walks through |
+| `data/*` | The baked datasets and the item name, icon and recipe indexes |
 
-Two markers join them: `/*@string path*/""` drops a file in as a string (a tab, shared code, an
-index), and `/*@json path*/null` drops a dataset in. `/*@pack path*/null` does the same for the
-Dashboard's recipe catalogue, but packed into flat lists with a small unpacker in front
-(`tools/lib/dashboard-pack.js`); it was two thirds of the file. The tab gets the same object either
-way, and if a rebake ever gives it data the packer can't reproduce exactly, the build says so and
-puts it in unpacked. Commit `src/` and the rebuilt `index.html`
-together. To have git refuse a commit where they disagree, run this once per clone:
-`git config core.hooksPath .githooks`.
-
-To see a change working, `node tools/smoke.js` opens the desk in a headless browser against
-made-up Universalis prices and checks that every tab draws its table without a script error;
-`node tools/smoke.js --diff` also compares every table with the last commit's, which is how to
-prove a refactor changed nothing. It needs Playwright, which this repo deliberately doesn't
-install; the top of the script says how to point it at a copy. GitHub runs it after every push
-and before the weekly rebake pushes anything.
-
-Inside the built file:
-
-- A thin shell holds the tab bar and one `<iframe>` per tab.
-- `BLOBS` maps each tab key to a complete, standalone HTML document.
-- On first visit to a tab, its document is injected via `srcdoc`. Every tab scans on first open
-  except the Dashboard, which waits for its **Load live prices** button, and Undercuts, which waits
-  for **Check for Undercuts**.
-- Five shared code chunks are spliced into each document at render time via placeholder
-  comments: `SHARED_A` (fetch/retry/cache layer), `SHARED_B` (world topology, the data-centre
-  picker and the multi-DC market helpers), `SHARED_SHOP` (the shopping list), `SHARED_LIST`
-  (the saved lists) and `SHARED_XW` (the cross-world price panel and the search box).
-- `SHARED_XW` is the one chunk the shell runs itself as well, so the search box and its panel
-  work above the iframes. It has no hard dependencies: it borrows `SHARED_A`'s fetch and cache
-  and `SHARED_B`'s world topology when the page has them, and falls back to its own when it
-  doesn't — which is how the same code runs inside a tab and in the shell.
-- `ITEM_INDEX` is the search box's offline name index — every item id the desk knows a name for,
-  delta-encoded as `base36-id-delta name` to keep it compact.
-- Every list tab is the same document: `LIST_TPL` is rendered once per list slot, and the tab
-  bar builds its list tabs from `localStorage` at load.
-
-Isolating each tab in an iframe means they can't collide on globals or CSS, at the cost of
-duplicating some code — which is why the shared chunks exist.
-
-## Caveats
-
-- Profit figures assume you can buy materials at the listed price and sell at the modelled price.
-  Both move, and you're competing with other crafters.
-- The default *Precraft-optimised* mat cost assumes you will actually craft the intermediates it
-  costs as crafted. If you buy them instead, switch **Mat cost** to *Buy all mats* — the optimised
-  figure is the floor, not the price you'd pay walking up to the board.
-- Prices from a data centre in another region are informational: you cannot travel there.
-- Daily ceilings are rankings, not forecasts.
-- Nothing accounts for crafting stats, materia, food, or whether you can actually hit HQ.
-- The Dashboard, Gathering, Currencies, Vendors, Submersibles, Workshop, Duties + Maps, Scrips, Flips and
-  Retainers data are rebaked automatically after each patch, but only from 10 days after it, so a brand-new recipe, shop or vendor
-  can be missing until then.
-- Submersible, duty and venture drop rates are crowd-sourced averages. They describe a lot of voyages and
-  coffers, not your next one, and a rate on a thin sample (a few hundred coffers) can move a long way.
-- The cross-world panel reads the 50 cheapest listings per scope. That is across the scope, not
-  per world, which is what sets the number: a data centre is eight worlds, so 50 leaves roughly
-  six listings each. On a heavily stocked item the units-available figure is therefore a floor,
-  and the panel says so when it hits that wall.
-- Universalis returns at most 200 sales per item, so on a heavily traded item the history
-  reaches back only part of the month — which is also why the `Trend` column compares the
-  window the data actually covers rather than a fixed seven days and says which window it
-  used, and why `Units/day` divides by that window rather than by thirty. For the same reason
-  `Avg 30d` on a busy item is really the average of its last 200 sales, not of a full month.
-- On the **Vendors** tab, a row with a ⚠ has no real sales behind its price. Treat those profits
-  as hypothetical, not as gil you can go and collect.
-- Vendor locations come from the shop tables, which don't record seasonal availability perfectly
-  — an unflagged item can still turn out to be event-only.
+Each tab is a standalone document injected into its own `<iframe>`, with the shared chunks spliced
+in at render time, so tabs can't collide on globals or CSS. Commit `src/` and the rebuilt
+`index.html` together. More detail in [tools/README.md](tools/README.md).
 
 ## Changelog
 
