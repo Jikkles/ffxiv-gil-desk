@@ -5,7 +5,8 @@
    - NPC_PRICES, the NPC price index the shell hands to every crafting tab
    - ICON_INDEX and ITEM_INDEX: any item those tabs show, and any marketable item at all (the
      Undercuts tab can meet any of them on a retainer), that the desk has no icon or searchable
-     name for yet is added (existing entries are left exactly as they are)
+     name for yet is added; icons already in the index are left alone, names are re-read from
+     Item.csv so a renamed item, or one an old bake named after its shop, is put right
    - RECIPE_INDEX: rebuilt whole from Teamcraft's recipes, so new crafts get their
      simulator link
    Nothing else in src/ is touched. */
@@ -74,7 +75,7 @@ const shown = new Set([
 ]);
 const icons = decodeIndex(readSrc("data/icon-index.txt")), names = decodeIndex(readSrc("data/item-index.txt"));
 const teamcraftIcons = readJSON(need("item-icons.json"));
-let addIcons = 0, addNames = 0;
+let addIcons = 0, addNames = 0, fixNames = 0;
 for (const id of shown) {
   if (!icons.has(id)) {
     const m = /(\d{6})(?:_hr1)?\.tex/.exec(teamcraftIcons[id] || "");
@@ -83,9 +84,13 @@ for (const id of shown) {
   }
   if (!names.has(id) && I[id]) { names.set(id, I[id].n); addNames++; }
 }
+/* every name comes from Item.csv, entries from older bakes included: some of those were the
+   shop or category an item came from rather than the item, which the Undercuts tab then showed */
+for (const id of names.keys()) if (I[id] && names.get(id) !== I[id].n) { names.set(id, I[id].n); fixNames++; }
 writeSrc("data/icon-index.txt", encodeIndex(icons));
 writeSrc("data/item-index.txt", encodeIndex(names));
-report.push(`ICON_INDEX   +${addIcons} (${icons.size} items)`, `ITEM_INDEX   +${addNames} (${names.size} items)`);
+report.push(`ICON_INDEX   +${addIcons} (${icons.size} items)`,
+  `ITEM_INDEX   +${addNames}, ${fixNames} renamed (${names.size} items)`);
 
 /* ---- recipe ids for the Teamcraft simulator links: lowest recipe id per item ---- */
 const recipes = new Map();

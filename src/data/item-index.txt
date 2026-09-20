@@ -16,7 +16,7 @@
 1 Earth Cluster
 1 Lightning Cluster
 1 Water Cluster
-1 Grand Company Seals
+1 Storm Seal
 5 Wolf Mark
 2 Allied Seal
 1 Allagan Tomestone of Poetics
@@ -2470,11 +2470,11 @@ n Potion
 1 Black Odoshi Cord
 1 Blue Odoshi Cord
 1 Kabuto Mask
-1 Miscellaneous
-1 Miscellaneous
-1 Miscellaneous
-1 Miscellaneous
-1 Miscellaneous
+1 Grade 1 Dark Matter
+1 Grade 2 Dark Matter
+1 Grade 3 Dark Matter
+1 Grade 4 Dark Matter
+1 Grade 5 Dark Matter
 6 Strength Materia I
 1 Strength Materia II
 1 Strength Materia III
@@ -2504,7 +2504,7 @@ n Potion
 1 Piety Materia II
 1 Piety Materia III
 1 Piety Materia IV
-1 Gelmorran Potsherd Exchange
+1 Piety Materia V
 1 Fire Materia I
 1 Fire Materia II
 1 Fire Materia III
@@ -2539,62 +2539,62 @@ n Potion
 1 Heavens' Eye Materia II
 1 Heavens' Eye Materia III
 1 Heavens' Eye Materia IV
-1 Gelmorran Potsherd Exchange
+1 Heavens' Eye Materia V
 1 Savage Aim Materia I
 1 Savage Aim Materia II
 1 Savage Aim Materia III
 1 Savage Aim Materia IV
-1 Gelmorran Potsherd Exchange
+1 Savage Aim Materia V
 1 Savage Might Materia I
 1 Savage Might Materia II
 1 Savage Might Materia III
 1 Savage Might Materia IV
-1 Gelmorran Potsherd Exchange
+1 Savage Might Materia V
 1 Battledance Materia I
 1 Battledance Materia II
 1 Battledance Materia III
 1 Battledance Materia IV
-1 Gelmorran Potsherd Exchange
-1 Ixali Oaknot Exchange (Materia)
-1 Ixali Oaknot Exchange (Materia)
-1 Ixali Oaknot Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Ixali Oaknot Exchange (Materia)
-1 Ixali Oaknot Exchange (Materia)
-1 Ixali Oaknot Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Ixali Oaknot Exchange (Materia)
-1 Ixali Oaknot Exchange (Materia)
-1 Ixali Oaknot Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Ixali Oaknot Exchange (Materia)
-1 Ixali Oaknot Exchange (Materia)
-1 Ixali Oaknot Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Ixali Oaknot Exchange (Materia)
-1 Ixali Oaknot Exchange (Materia)
-1 Ixali Oaknot Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Ixali Oaknot Exchange (Materia)
-1 Ixali Oaknot Exchange (Materia)
-1 Ixali Oaknot Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
+1 Battledance Materia V
+1 Gatherer's Guerdon Materia I
+1 Gatherer's Guerdon Materia II
+1 Gatherer's Guerdon Materia III
+1 Gatherer's Guerdon Materia IV
+1 Gatherer's Guerdon Materia V
+1 Gatherer's Guile Materia I
+1 Gatherer's Guile Materia II
+1 Gatherer's Guile Materia III
+1 Gatherer's Guile Materia IV
+1 Gatherer's Guile Materia V
+1 Gatherer's Grasp Materia I
+1 Gatherer's Grasp Materia II
+1 Gatherer's Grasp Materia III
+1 Gatherer's Grasp Materia IV
+1 Gatherer's Grasp Materia V
+1 Craftsman's Competence Materia I
+1 Craftsman's Competence Materia II
+1 Craftsman's Competence Materia III
+1 Craftsman's Competence Materia IV
+1 Craftsman's Competence Materia V
+1 Craftsman's Cunning Materia I
+1 Craftsman's Cunning Materia II
+1 Craftsman's Cunning Materia III
+1 Craftsman's Cunning Materia IV
+1 Craftsman's Cunning Materia V
+1 Craftsman's Command Materia I
+1 Craftsman's Command Materia II
+1 Craftsman's Command Materia III
+1 Craftsman's Command Materia IV
+1 Craftsman's Command Materia V
 1 Quickarm Materia I
 1 Quickarm Materia II
 1 Quickarm Materia III
 1 Quickarm Materia IV
-1 Gelmorran Potsherd Exchange
+1 Quickarm Materia V
 1 Quicktongue Materia I
 1 Quicktongue Materia II
 1 Quicktongue Materia III
 1 Quicktongue Materia IV
-1 Gelmorran Potsherd Exchange
+1 Quicktongue Materia V
 5 Terebinth
 2l Raw Urushi
 1 Black Urushi
@@ -2713,7 +2713,7 @@ n Potion
 1 Tiny Rat
 1 Baby Bun
 2 Bluebird
-1 Allagan Tomestones of Poetics (Other)
+1 Wide-eyed Fawn
 1 Infant Imp
 4 Gravel Golem
 1 Wind-up Tonberry
@@ -2721,12 +2721,12 @@ n Potion
 1 Baby Raptor
 1 Baby Bat
 1 Tiny Bulb
-1 Allagan Tomestones of Poetics (Other)
+1 Dust Bunny
 1 Wind-up Dullahan
 1 Gigantpole
 1 Pudgy Puk
 3 Smallshell
-3 Allagan Tomestones of Poetics (Other)
+3 Fledgling Dodo
 1 Coblyn Larva
 1 Wind-up Aldgoat
 3 Bite-sized Pudding
@@ -2889,9 +2889,9 @@ n Potion
 1 Oasis Pendant Lamp
 1 Deluxe Oasis Pendant Lamp
 1 Oasis Chandelier
-1 Grand Company Quartermaster
-1 Grand Company Quartermaster
-1 Grand Company Quartermaster
+1 Storm Ceiling Fan & Lamp
+1 Flame Ceiling Fan & Lamp
+1 Serpent Ceiling Fan & Lamp
 1 Morbol Chandelier
 1 Illumination Module
 1 Moogle Letter Box
@@ -2913,8 +2913,8 @@ n Potion
 1 Crofter's Wain
 1 Stump Stool
 2 Firewood
-1 Sylphic Goldleaf Exchange
-1 Sylphic Goldleaf Exchange
+1 Sylphic Lamp Tree
+1 Sylphic Lamppost
 1 Cragsoul Lamp
 1 Titanic Cragsoul Lamp
 1 Wavesoul Fount
@@ -2944,9 +2944,9 @@ n Potion
 1 Riviera Bench
 1 Glade Bench
 1 Oasis Bench
-1 Grand Company Quartermaster
-1 Grand Company Quartermaster
-1 Grand Company Quartermaster
+1 Storm Storage Bench
+1 Flame Storage Bench
+1 Serpent Storage Bench
 1 Riviera Armchair
 1 Glade Armchair
 1 Oasis Armchair
@@ -2956,27 +2956,27 @@ n Potion
 1 Manor Couch
 1 Vortex Couch
 1 Raging Vortex Couch
-1 Grand Company Quartermaster
-1 Grand Company Quartermaster
-1 Grand Company Quartermaster
+1 Storm Desk
+1 Serpent Desk
+1 Flame Desk
 1 Message Book Stand
 1 Riviera Bed
 1 Glade Bed
 1 Oasis Bed
-1 Grand Company Quartermaster
-1 Grand Company Quartermaster
-1 Grand Company Quartermaster
+1 Storm Utility Cot
+1 Serpent Utility Cot
+1 Flame Utility Cot
 1 Ash Cabinet
 1 Riviera Wardrobe
 1 Glade Wardrobe
 1 Oasis Wardrobe
 1 Manor Wardrobe
-1 Grand Company Quartermaster
-1 Grand Company Quartermaster
-1 Grand Company Quartermaster
-1 Grand Company Quartermaster
-1 Grand Company Quartermaster
-1 Grand Company Quartermaster
+1 Storm Armoire
+1 Serpent Armoire
+1 Flame Armoire
+1 Storm Strongbox
+1 Serpent Strongbox
+1 Flame Strongbox
 1 Company Chest
 1 Riviera Cupboard
 1 Glade Cupboard
@@ -3074,9 +3074,9 @@ n Potion
 1 Stuffed Moogle
 1 Stuffed Chocobo
 1 Drinking Apkallu
-1 Grand Company Quartermaster
-1 Grand Company Quartermaster
-1 Grand Company Quartermaster
+1 Maelstrom Banner
+1 Twin Adder Banner
+1 Immortal Flames Banner
 1 Lominsan Cityscape
 1 Gridanian Cityscape
 1 Ul'dahn Cityscape
@@ -3104,77 +3104,77 @@ n Potion
 1 Goobbue Rug
 1 Moogle Rug
 1 Morbol Rug
-1 Steel Amalj'ok Exchange
-1 Steel Amalj'ok Exchange
+1 Amalj'aa Supply Carriage
+1 Amalj'aa Pavis Shield
 1 Timeworn Leather Map
 1 Timeworn Goatskin Map
 1 Timeworn Toadskin Map
 1 Timeworn Boarskin Map
 1 Timeworn Peisteskin Map
-1b Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-7 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
-1 Wolf Gear
+1b Wolf Winglet
+1 Wolf Claws
+1 Wolf Labrys
+1 Wolf Guisarme
+1 Wolf Bow
+1 Wolf Cane
+1 Wolf Staff
+1 Wolf Grimoire of Casting
+1 Wolf Grimoire of Healing
+1 Wolf Kite Shield
+1 Wolf Celata
+1 Wolf Elmo
+1 Wolf Sallet
+1 Wolf Ranger's Hat
+1 Wolf Cavalier's Hat
+1 Wolf Hat
+1 Wolf Cuirass
+1 Wolf Scale Mail
+1 Wolf Jacket
+1 Wolf Tunic
+1 Wolf Bliaud
+1 Wolf Robe
+1 Wolf Trousers
+1 Wolf Breeches
+1 Wolf Brais
+1 Wolf Kecks
+1 Wolf Gaskins
+1 Wolf Tights
+1 Wolf Gauntlets
+1 Wolf Scale Fingers
+1 Wolf Armguards
+1 Wolf Bracers
+1 Wolf Dress Gloves
+1 Wolf Ringbands
+1 Wolf Sabatons
+1 Wolf Scale Greaves
+1 Wolf Leg Guards
+1 Wolf Moccasins
+1 Wolf Dress Shoes
+1 Wolf Duckbills
+7 Wolf Rubellite Bracelet
+1 Wolf Zircon Bracelet
+1 Wolf Tourmaline Bracelet
+1 Wolf Amber Bracelet
+1 Wolf Spinel Bracelet
+1 Wolf Turquoise Bracelet
+1 Wolf Rubellite Earrings
+1 Wolf Zircon Earrings
+1 Wolf Tourmaline Earrings
+1 Wolf Amber Earrings
+1 Wolf Spinel Earrings
+1 Wolf Turquoise Earrings
+1 Wolf Rubellite Choker
+1 Wolf Zircon Choker
+1 Wolf Tourmaline Choker
+1 Wolf Amber Choker
+1 Wolf Spinel Choker
+1 Wolf Turquoise Choker
+1 Wolf Rubellite Ring
+1 Wolf Zircon Ring
+1 Wolf Tourmaline Ring
+1 Wolf Amber Ring
+1 Wolf Spinel Ring
+1 Wolf Turquoise Ring
 3u Slow Ward Potion
 1 Silence Ward Potion
 1 Blind Ward Potion
@@ -3183,8 +3183,8 @@ n Potion
 1 Sleep Ward Potion
 1 Bind Ward Potion
 1 Heavy Ward Potion
-1 Miscellaneous
-1 Miscellaneous
+1 Icarus Wing
+1 Regain Feather
 1 Red Drop
 1 Blue Drop
 1 Clear Drop
@@ -3278,9 +3278,9 @@ d Prismatic Heart (Left)
 1 Carbuncle Rug
 1 Carbuncle Chronometer
 1 Carbuncle Lantern
-1 Grand Company Quartermaster
-1 Grand Company Quartermaster
-1 Grand Company Quartermaster
+1 Admiral Portrait
+1 Sultana and Flame General Portrait
+1 Elder Seedseer Portrait
 1 Looming Tonberry Screen
 1 Tonberry Square Rug
 1 Projection Module
@@ -3301,24 +3301,24 @@ d Prismatic Heart (Left)
 1 Regal Letter Box
 1 Carbuncle Garden Table
 1 Carbuncle Garden Bench
-1 Allied Seals (Maelstrom)
-1 Allied Seals (Immortal Flames)
-1 Allied Seals (Order of the Twin Adder)
+1 Riviera Striking Dummy
+1 Oasis Striking Dummy
+1 Glade Striking Dummy
 1 Alps Striking Dummy
-1 Rainbowtide Psashp Exchange
-1 Rainbowtide Psashp Exchange
+1 Sahagin Living Lamp
+1 Sahagin Hanging Larder
 1 Ixali Shelter
 1 Ixali Banner
-1 Titan Cobaltpiece Exchange
-1 Titan Cobaltpiece Exchange
+1 Automaton Digger
+1 Kobold Furnace
 1 Round Garden Patch
 1 Oblong Garden Patch
 1 Deluxe Garden Patch
 1 Country Interior Wall
 1 Stone Interior Wall
-1 Grand Company Quartermaster
-1 Grand Company Quartermaster
-1 Grand Company Quartermaster
+1 Storm Interior Wall
+1 Serpent Interior Wall
+1 Flame Interior Wall
 1 Tiled Interior Wall
 1 Metal Interior Wall
 1 Arbor Interior Wall
@@ -3326,16 +3326,16 @@ d Prismatic Heart (Left)
 1 Moogle Interior Wall
 1 Country Flooring
 1 Stone Flooring
-1 Grand Company Quartermaster
-1 Grand Company Quartermaster
-1 Grand Company Quartermaster
+1 Storm Flooring
+1 Serpent Flooring
+1 Flame Flooring
 1 Tiled Flooring
 1 Metal Flooring
 1 Arbor Flooring
 1 Chocobo Flooring
 1 Moogle Flooring
 1 Tonberry Chandelier
-1 Grand Company Quartermaster
+1 Sultana Portrait
 1 Material Supplier Permit
 1 Junkmonger Permit
 2 Mender Permit
@@ -3442,7 +3442,7 @@ k Coronal Straw Hat
 1 Spirits of Salt
 1 Spicy Tomato Relish
 1 Diluted Vitriol
-1 Grand Company Quartermaster
+1 Glamour Dispeller
 1e Clear Prism
 7 Zalera
 1 Beguiler Chub
@@ -3613,7 +3613,7 @@ b Tawny Latex
 1 The Five Ages
 1 Classified Documents
 1 Stuffed Goblin
-1 Allied Seals (Other)
+1 Ultima Weapon Miniature
 2 Enquire Within
 1 Wall Planter
 1 Encyclopedia Eorzea
@@ -4019,7 +4019,7 @@ f Vamper's Knives
 1 Plumes of the Vortex
 1 Tremor Cleavers
 1 Mortal Moggle Mogknives
-5 Wolf Gear
+5 Wolf Pugiones
 e Ninja Garb Augmentation
 r Best Man's Jacket
 1 Best Man's Slacks
@@ -4308,7 +4308,7 @@ d Grade 6 Dark Matter
 1 Tremor Guillotine
 1 Monstrous Moggle Mogsword
 1 Wootz Faussar
-2 Wolf Gear
+2 Wolf Zweihander
 1c Steel-barreled Carbine
 1 Steel-barreled Musketoon
 1 Mythril-barreled Carbine
@@ -4322,7 +4322,7 @@ d Grade 6 Dark Matter
 1 Menacing Moggle Mog Gun
 1 Tremor Culverin
 1 Wootz Revolver
-2 Wolf Gear
+2 Wolf Musketoon
 1c Star Globe
 1 Silver Star Globe
 1 Mythril Star Globe
@@ -4336,7 +4336,7 @@ d Grade 6 Dark Matter
 1 Tremor Star Globe
 1 Moonlit Moggle Moglobe
 1 Platinum Planisphere
-2 Wolf Gear
+2 Wolf Planisphere
 1c Mythrite Katzbalger
 1 Mythrite Flametongue
 1 Titanium Bastard Sword
@@ -5157,11 +5157,11 @@ x Stonefly Nymph
 1 Purse Web Spider
 1 Goblin Jig
 1 Bladed Steel Jig
-1 Bait/Miscellany
-1 Bait/Miscellany
-1 Bait/Miscellany
-1 Bait/Miscellany
-1 Bait/Miscellany
+1 Red Balloon
+1 Magma Worm
+1 Fiend Worm
+1 Brute Leech
+1 Giant Crane Fly
 1 Icepick
 1 Cloud Coral
 1 Ice Faerie
@@ -5171,7 +5171,7 @@ x Stonefly Nymph
 1 Lake Urchin
 1 Whilom Catfish
 1 Blueclaw Shrimp
-1 Vanu Whitebone Exchange
+1 Starflower
 1 Glacier Core
 1 Ogre Horn Snail
 1 Sorcerer Fish
@@ -5183,7 +5183,7 @@ x Stonefly Nymph
 1 Mahu Wai
 1 Rock Mussel
 1 Buoyant Oviform
-1 Vanu Whitebone Exchange
+1 Whiteloom
 1 Blue Cloud Coral
 1 Seema Patrician
 1 Ammonite
@@ -5604,12 +5604,12 @@ k General-purpose Pastel Pink Dye
 1 Sunsail
 1 Goblin Bass
 1 Pterodactyl
-1 Materials
+1 Eurhinosaur
 2 Gem Marimo
-1 Materials
+1 Crown Trout
 1 Retribution Staff
-1 Materials
-1 Materials
+1 Thief Betta
+1 Goldsmith Crab
 2 Steamed Staff
 1 Sesame Cookie
 1 Wind Silk
@@ -5911,7 +5911,7 @@ l Amber Salamander
 1 Thunderer Orchestrion Roll
 1 Rise of the White Raven Orchestrion Roll
 1 From the Ashes Orchestrion Roll
-1 Allagan Tomestones of Poetics (Other)
+1 Contention Orchestrion Roll
 1 Answers Orchestrion Roll
 1 Faded Copy of Another Round
 1 Faded Copy of Painted Foothills
@@ -6226,7 +6226,7 @@ l Sultana Dreaming Orchestrion Roll
 1 On Westerly Winds Orchestrion Roll
 1 Serenity Orchestrion Roll
 3 The Warrens Orchestrion Roll
-1 Allagan Tomestones of Poetics (Other)
+1 Ominous Prognisticks Orchestrion Roll
 1 Ink Long Dry Orchestrion Roll
 1 Unbreakable Orchestrion Roll
 1 Apologies Orchestrion Roll
@@ -6249,8 +6249,8 @@ l Sultana Dreaming Orchestrion Roll
 1 Faded Copy of Revenge of the Horde
 1 Faded Copy of Battle on the Big Bridge
 1 Faded Copy of Engage
-g Grand Company Quartermaster
-1 Grand Company Quartermaster
+g Althyk Lavender Seeds
+1 Voidrake Seeds
 1 Althyk Lavender
 1 Voidrake
 7 Firelight Seeds
@@ -6479,16 +6479,16 @@ n Indirect Wall Lighting
 8 Nobility Sleeps Orchestrion Roll
 1 Night in the Brume Orchestrion Roll
 1 Behind Closed Doors Orchestrion Roll
-1 Allagan Tomestones of Poetics (Other)
+1 Reflections Orchestrion Roll
 1 Close to the Heavens Orchestrion Roll
 1 Unspoken Orchestrion Roll
 1 Where the Heart Is Orchestrion Roll
 1 Homestead Orchestrion Roll
 1 Calamity Unbound Orchestrion Roll
 2 Blackbosom Orchestrion Roll
-1 Gelmorran Potsherd Exchange
-1 Gelmorran Potsherd Exchange
-1 Gelmorran Potsherd Exchange
+1 Fog of Phantom Orchestrion Roll
+1 Blasphemous Experiment Orchestrion Roll
+1 Notice of Death Orchestrion Roll
 1 Slumber Eternal Orchestrion Roll
 1 Silver Tears Orchestrion Roll
 2 Footsteps in the Snow Orchestrion Roll
@@ -6750,7 +6750,7 @@ a Blade of the Fiend
 1 Song of the Fiend
 1 Star of the Fiend
 1 Shield of the Fiend
-5 Allagan Tomestones of Poetics (Other)
+5 Frontiers Within Orchestrion Roll
 1 Fleeting Rays Orchestrion Roll
 1 Saltswept Orchestrion Roll
 1 Thicker than a Knife's Blade Orchestrion Roll
@@ -6765,10 +6765,10 @@ a Blade of the Fiend
 1 Unbending Steel Orchestrion Roll
 1 Infinity Orchestrion Roll
 3 Moebius Orchestrion Roll
-1 Allagan Tomestones of Poetics (Other)
-1 Allagan Tomestones of Poetics (Other)
-1 Allagan Tomestones of Poetics (Other)
-1 Allagan Tomestones of Poetics (Other)
+1 Aetherpause Orchestrion Roll
+1 Six Fulms Under Orchestrion Roll
+1 Teardrops in the Rain Orchestrion Roll
+1 A Thousand Faces Orchestrion Roll
 3 Faded Copy of The Corpse Hall
 1 Faded Copy of Limitless Blue
 1 Faded Copy of Woe That Is Madness
@@ -6795,7 +6795,7 @@ y Near Eastern Antique Component Materials
 1 Hingan Mansion Permit (Kura-zukuri)
 2o Timeworn Gaganaskin Map
 1 Timeworn Gazelleskin Map
-1 Miscellaneous
+1 Grade 7 Dark Matter
 a Ambient Waves Orchestrion Roll
 1 Ambient Birdsong Orchestrion Roll
 1 Ambient Rainfall Orchestrion Roll
@@ -6808,7 +6808,7 @@ a Ambient Waves Orchestrion Roll
 1 The Silent Regard of Stars Orchestrion Roll
 1 Beyond the Wall Orchestrion Roll
 1 Liquid Flame Orchestrion Roll
-1 Centurio Seal Exchange I
+1 Drowning in the Horizon Orchestrion Roll
 1 The Edge Orchestrion Roll
 1 Navigator's Glory - The Theme of Limsa Lominsa Orchestrion Roll
 1 Born of the Boughs - The Theme of Gridania Orchestrion Roll
@@ -6867,25 +6867,25 @@ a Ambient Waves Orchestrion Roll
 1 Dexterity Materia VI
 1 Intelligence Materia VI
 1 Mind Materia VI
-1 Allagan Tomestones of Poetics (Other)
+1 Piety Materia VI
 1 Fire Materia VI
 1 Ice Materia VI
 1 Wind Materia VI
 1 Earth Materia VI
 1 Lightning Materia VI
 1 Water Materia VI
-1 Allagan Tomestones of Poetics (Other)
-1 Allagan Tomestones of Poetics (Other)
-1 Allagan Tomestones of Poetics (Other)
-1 Allagan Tomestones of Poetics (Other)
-1 Purple Scrip Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Allagan Tomestones of Poetics (Other)
-1 Allagan Tomestones of Poetics (Other)
+1 Heavens' Eye Materia VI
+1 Savage Aim Materia VI
+1 Savage Might Materia VI
+1 Battledance Materia VI
+1 Gatherer's Guerdon Materia VI
+1 Gatherer's Guile Materia VI
+1 Gatherer's Grasp Materia VI
+1 Craftsman's Competence Materia VI
+1 Craftsman's Cunning Materia VI
+1 Craftsman's Command Materia VI
+1 Quickarm Materia VI
+1 Quicktongue Materia VI
 3 Stygian Ash
 1 High Steel Katzbalger
 1 High Steel Knuckles
@@ -7062,12 +7062,12 @@ a Ambient Waves Orchestrion Roll
 1 Tigerskin Thighboots of Striking
 2 Tigerskin Tricorne of Aiming
 1 Kudzu Tunic of Aiming
-1 Tigerskin Gloves of Aiming
+1 Tigerskin Wristgloves of Aiming
 1 Kudzu Trousers of Aiming
 1 Tigerskin Thighboots of Aiming
 2 Tigerskin Tricorne of Scouting
 1 Kudzu Tunic of Scouting
-1 Tigerskin Gloves of Scouting
+1 Tigerskin Wristgloves of Scouting
 1 Kudzu Trousers of Scouting
 1 Tigerskin Thighboots of Scouting
 2 Kudzu Hat of Healing
@@ -8085,12 +8085,12 @@ b Reveler's Barding
 1h Salmon Roe
 1 Nightcrawler
 1 Midge Larva
-1 Bait/Miscellany
+1 Silkworm
 1 Live Shrimp
-1 Bait/Miscellany
-1 Bait/Miscellany
-1k Bait/Miscellany
-1 Bait/Miscellany
+1 Bream Lure
+1 Suspending Minnow
+1k Stonefly Larva
+1 Blue Bobbit
 4 Hingan Cottage Roof (Mokuzo)
 1 Hingan Cottage Roof (Nanpu)
 1 Hingan Cottage Roof (Kura-zukuri)
@@ -8164,7 +8164,7 @@ b Reveler's Barding
 1 Fool's Portal
 1 Imitation Stained Crystal Ornament
 1 Shinryu's Wing
-1 Kojin Sango Exchange
+1 Stuffed Kojin
 1 Eggplant Knight Flower Vase
 1 Garlic Jester Flower Vase
 1 Mandragora Queen Flower Vase
@@ -8321,11 +8321,11 @@ d Salt & Pepper Seal
 1v Ambient Insects Orchestrion Roll
 1 Ambient Bonfire Orchestrion Roll
 1 Ambient Kitchen Orchestrion Roll
-1 Miscellaneous
-2 Allagan Tomestones of Poetics (Other)
+1 Birds of Prey Orchestrion Roll
+2 Impact Orchestrion Roll
 1 Crimson Sunrise Orchestrion Roll
-1 Miscellany
-1 Bait/Miscellany
+1 On High Orchestrion Roll
+1 Songs of Salt and Suffering Orchestrion Roll
 1 A Father's Pride Orchestrion Roll
 2 The Open Box Orchestrion Roll
 1 Most Unworthy Orchestrion Roll
@@ -8444,7 +8444,7 @@ k Shark-class Bow
 1 Kitchen Hanger
 1 Hanya Mask
 3 Stage Panel
-1 Ananta Dreamstaff Exchange
+1 Stuffed Ananta
 1 Tier 1 Metal Aquarium
 1 Tier 2 Metal Aquarium
 1 Eorzean Lantern
@@ -8567,11 +8567,11 @@ c Holy Linen
 1 Bustling Boulevard Orchestrion Roll
 1 Temple Bell Orchestrion Roll
 1 Chapel Bell Orchestrion Roll
-5 Miscellaneous
+5 Rival Wings Orchestrion Roll
 1 Crimson Sunset Orchestrion Roll
-1 Allagan Tomestones of Poetics (Other)
+1 Westward Tide Orchestrion Roll
 1 A Mother's Pride Orchestrion Roll
-1 Allagan Tomestones of Poetics (Other)
+1 He Rises Above Orchestrion Roll
 2 Wicked Winds Whisper Orchestrion Roll
 1 No Quarter Orchestrion Roll
 1 Down Where Daemons Dwell Orchestrion Roll
@@ -8793,7 +8793,7 @@ l Celestial Kimono Remnant
 2d Ambient Wind Chime Orchestrion Roll
 1 Ambient Abyss Orchestrion Roll
 1 Victory or Death Orchestrion Roll
-1 Exchange artifacts
+1 Far East of Eorzea Orchestrion Roll
 1 Parting Ways Orchestrion Roll
 2 The Ancient City Orchestrion Roll
 1 Gates of the Moon Orchestrion Roll
@@ -8934,7 +8934,7 @@ b Redoubtable Rolanberry Tart
 1 Bathroom Wall Tiles
 2 Sofa Cushions
 1 Birdbath
-1 Bait/Miscellany
+1 Garden Gravel
 1 Brick Garden Circle
 1 Carpeting
 1 Divine Chandelier
@@ -9124,12 +9124,12 @@ b Faded Copy of Sunrise
 1 Wooden Beam
 1 White Rectangular Partition
 1 Bowl of Oden
-1 Bait/Miscellany
-1 Bait/Miscellany
-1 Miscellany
-1 Bait/Miscellany
-1 Miscellany
-1 Miscellany
+1 Fruit Stall
+1 Vegetable Stall
+1 Pastry Cupboard
+1 Mineral Display
+1 Fabric Rack
+1 Potion Rack
 1 Prism Pouch
 1 Marimo Lamp
 1 Honey Pot
@@ -9261,11 +9261,11 @@ d Blade of the Goddess
 1 Shield of the Demon
 5 From the Dragon's Wake Orchestrion Roll
 1 A Pall Most Murderous Orchestrion Roll
-3 Miscellany
-1 Bait/Miscellany
-1 Bait/Miscellany
-1 Bait/Miscellany
-1 Miscellany
+3 Afterglow Orchestrion Roll
+1 Hope Forgotten Orchestrion Roll
+1 The Stone Remembers Orchestrion Roll
+1 Old Wounds Orchestrion Roll
+1 Harmony Orchestrion Roll
 1 Gates of Paradise - The Garden of Ru'Hmet Orchestrion Roll
 1 Onslaught Orchestrion Roll
 1 Turmoil Orchestrion Roll
@@ -9275,19 +9275,19 @@ d Blade of the Goddess
 1 A Man Consumed Orchestrion Roll
 1 Ultima's Perfection Orchestrion Roll
 9 Faded Copy of From the Dragon's Wake
-2s Exchange Allied Seals
-1 Exchange Allied Seals
-1 Exchange Allied Seals
-1 Exchange Allied Seals
-1 Exchange Allied Seals
-1 Purple Scrip Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Exchange Allied Seals
-1 Exchange Allied Seals
+2s Piety Materia VII
+1 Heavens' Eye Materia VII
+1 Savage Aim Materia VII
+1 Savage Might Materia VII
+1 Battledance Materia VII
+1 Gatherer's Guerdon Materia VII
+1 Gatherer's Guile Materia VII
+1 Gatherer's Grasp Materia VII
+1 Craftsman's Competence Materia VII
+1 Craftsman's Cunning Materia VII
+1 Craftsman's Command Materia VII
+1 Quickarm Materia VII
+1 Quicktongue Materia VII
 a Viera Chestwrap
 1 Viera Armlets
 1 Viera Pantalettes
@@ -9759,19 +9759,19 @@ bh Deepgold Anelace
 1 Pure Titanium Ore
 1 Pure Titanium Plate
 1 Sack of Nuts
-5e Exchange Allied Seals
-1 Exchange Allied Seals
-1 Exchange Allied Seals
-1 Exchange Allied Seals
-1 Exchange Allied Seals
-1 Purple Scrip Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Exchange Allied Seals
-1 Exchange Allied Seals
+5e Piety Materia VIII
+1 Heavens' Eye Materia VIII
+1 Savage Aim Materia VIII
+1 Savage Might Materia VIII
+1 Battledance Materia VIII
+1 Gatherer's Guerdon Materia VIII
+1 Gatherer's Guile Materia VIII
+1 Gatherer's Grasp Materia VIII
+1 Craftsman's Competence Materia VIII
+1 Craftsman's Cunning Materia VIII
+1 Craftsman's Command Materia VIII
+1 Quickarm Materia VIII
+1 Quicktongue Materia VIII
 5 Timeworn Gliderskin Map
 1 Timeworn Zonureskin Map
 11 Magicked Bed
@@ -9970,13 +9970,13 @@ bh Deepgold Anelace
 1 Sandwich Basket
 1 Wooden Handrail
 1 Misplaced Eyeglasses
-1 Bait/Miscellany
+1 Carpet of Flowers
 1 Blades of Innocence
 1 Titania Shadow Box
 c Crystarium Umbrella Stand
 1 Stuffed Clionid
 1 Fallen Tree
-1 Sacks of Nuts Exchange
+1 Crystarium Striking Dummy
 5 Hydrangea Seeds
 1 Red Hydrangeas
 1 Blue Hydrangeas
@@ -10173,11 +10173,11 @@ s High Steel Gunblade
 1 Moyebi Shrimp
 1 Desert Dessert Frog
 1 Marble Nymph
-1 Bait/Miscellany
-1 Bait/Miscellany
-1 Bait/Miscellany
-1 Bait/Miscellany
-1 Bait/Miscellany
+1 Jerked Ovim
+1 Robber Ball
+1 Short Bill Minnow
+1 Baitbugs
+1 Squid Strip
 1 Freshwater Boilie
 1 Saltwater Boilie
 16 Altered Thighboots
@@ -10461,7 +10461,7 @@ s High Steel Gunblade
 1 Fury Orchestrion Roll
 1 Force Your Way Orchestrion Roll
 1 Landslide Orchestrion Roll
-1 Sacks of Nuts Exchange
+1 Rencounter Orchestrion Roll
 1 Insatiable Orchestrion Roll
 3 Faded Copy of What Angel Wakes Me
 1 Faded Copy of Insanity
@@ -10676,7 +10676,7 @@ l Painting of the Rotunda
 1 Sweetmeat Mussel
 1 Mejillones al Ajillo
 1 Arros Negre
-3 Miscellany
+3 Crafter's Delineation
 15 Skybuilders' Yew Log
 1 Skybuilders' Iron Ore
 1 Skybuilders' Fine Sand
@@ -10800,8 +10800,8 @@ l Painting of the Rotunda
 1 Neath Dark Waters Orchestrion Roll
 2 Invincible Orchestrion Roll
 1 The Grand Cosmos Orchestrion Roll
-2 Miscellaneous
-1 Miscellaneous
+2 A Fierce Air Forceth Orchestrion Roll
+1 A Fine Air Forbiddeth Orchestrion Roll
 2 Safety in Numbers Orchestrion Roll
 2 City Ruins (Rays of Light) Orchestrion Roll
 1 The Sound of the End Orchestrion Roll
@@ -10824,10 +10824,10 @@ l Painting of the Rotunda
 1 Fae Rainbow
 1 Black Jet
 1 Ondo Sigh
-1 Bait/Miscellany
-1 Bait/Miscellany
-1 Bait/Miscellany
-1 Bait/Miscellany
+1 Small Angler's Canvas
+1 Medium Angler's Canvas
+1 Large Angler's Canvas
+1 Extra Large Angler's Canvas
 3 Galadion Goby
 1 Galadion Chovy
 1 Rosy Bream
@@ -10980,14 +10980,14 @@ b5 Ruby Plating
 1 Highland Cabbage
 1 Platinum Herring
 1 Silkie Egg
-46 Materials
-1 Materials
-1 Materials
-1 Materials
-1 Materials
-1 Materials
-1 Materials
-1 Materials
+46 Oddly Specific Petrified Log
+1 Oddly Specific Iron Sand
+1 Oddly Specific Iron Ore
+1 Oddly Specific Uncut Gemstone
+1 Oddly Specific Skin
+1 Oddly Specific Cotton
+1 Oddly Specific Quartz
+1 Oddly Specific Seeds
 c Mahogany Aqueduct
 1 Crystallized Coral
 1 White Screen
@@ -11563,14 +11563,14 @@ m Plate of Light
 1 White Cosmos Corsage
 1 Black Cosmos Corsage
 1 Rainbow Cosmos Corsage
-h Materials
-1 Materials
-1 Materials
-1 Materials
-1 Materials
-1 Materials
-1 Materials
-1 Materials
+h Oddly Specific Cedar Log
+1 Oddly Specific Coerthan Iron Ore
+1 Oddly Specific Mythrite Sand
+1 Oddly Specific Silver Ore
+1 Oddly Specific Gagana Skin
+1 Oddly Specific Fleece
+1 Oddly Specific Sap
+1 Oddly Specific Aloe
 b Bozjan Cluster
 2p Approved Grade 3 Skybuilders' Switch
 1 Approved Grade 3 Skybuilders' Hemp
@@ -11679,14 +11679,14 @@ m Rarefied Lignum Vitae Grinding Wheel
 1 End of the Unknown Orchestrion Roll
 1 Torn from the Heavens／The Dark Colossus Destroys All (Medley Version) Orchestrion Roll
 6 Faded Copy of To the Edge
-1z Materials
-1 Materials
-1 Materials
-1 Materials
-1 Materials
-1 Materials
-1 Materials
-1 Materials
+1z Oddly Delicate Pine Log
+1 Oddly Delicate Silvergrace Ore
+1 Oddly Delicate Scheelite
+1 Oddly Delicate Raw Celestine
+1 Oddly Delicate Gazelle Hide
+1 Oddly Delicate Rhea
+1 Oddly Delicate Mistletoe
+1 Oddly Delicate Hammerhead Shark
 1c Exarchic Sword
 1 Exarchic Baghnakhs
 1 Exarchic Axe
@@ -11906,7 +11906,7 @@ m Rarefied Lignum Vitae Grinding Wheel
 1 Extra-stuffed Carbuncle
 1 Carbuncle House Slippers
 1 Iron Torch
-1 Bait/Miscellany
+1 Major-General Cushion
 1 Rose Trellis
 1 Dragon Icon
 1 Royal Lion
@@ -12061,14 +12061,14 @@ a Ornate Exarchic Coat of Fending
 1 Countess Tea Leaves
 1 Dacite
 1 Rhodolite
-x Materials
-1 Materials
-1 Materials
-1 Materials
-1 Materials
-1 Materials
-1 Materials
-1 Materials
+x Resplendent Carpenter's Material A
+1 Resplendent Blacksmith's Material A
+1 Resplendent Armorer's Material A
+1 Resplendent Goldsmith's Material A
+1 Resplendent Leatherworker's Material A
+1 Resplendent Weaver's Material A
+1 Resplendent Alchemist's Material A
+1 Resplendent Culinarian's Material A
 1a Listracanthus
 1 Aquamaton
 1 Cinder Surprise
@@ -12214,7 +12214,7 @@ j Peacelover's Attire Coffer
 1 Kainé (Final Fantasy Main Theme Version) Orchestrion Roll
 3 What Is Love? Orchestrion Roll
 1 By Design Orchestrion Roll
-1 Bait/Miscellany
+1 Freedom Orchestrion Roll
 1 A Better Tomorrow Orchestrion Roll
 j Frontier Cloth
 2 Ancient Bone
@@ -12251,33 +12251,33 @@ j Frontier Cloth
 2 The Sound of the End: 8bit Orchestrion Roll
 6 Purple Crafters' Scrip
 1 Purple Gatherers' Scrip
-2 Miscellaneous
-1 Sacks of Nuts Exchange
-1 Sacks of Nuts Exchange
-1 Sacks of Nuts Exchange
-1 Sacks of Nuts Exchange
-1 Sacks of Nuts Exchange
-1 Purple Scrip Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Sacks of Nuts Exchange
-1 Sacks of Nuts Exchange
-1 Sacks of Nuts Exchange
-1 Sacks of Nuts Exchange
-1 Sacks of Nuts Exchange
-1 Sacks of Nuts Exchange
-1 Sacks of Nuts Exchange
-1 Purple Scrip Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Sacks of Nuts Exchange
-1 Sacks of Nuts Exchange
+2 Grade 8 Dark Matter
+1 Piety Materia IX
+1 Heavens' Eye Materia IX
+1 Savage Aim Materia IX
+1 Savage Might Materia IX
+1 Battledance Materia IX
+1 Gatherer's Guerdon Materia IX
+1 Gatherer's Guile Materia IX
+1 Gatherer's Grasp Materia IX
+1 Craftsman's Competence Materia IX
+1 Craftsman's Cunning Materia IX
+1 Craftsman's Command Materia IX
+1 Quickarm Materia IX
+1 Quicktongue Materia IX
+1 Piety Materia X
+1 Heavens' Eye Materia X
+1 Savage Aim Materia X
+1 Savage Might Materia X
+1 Battledance Materia X
+1 Gatherer's Guerdon Materia X
+1 Gatherer's Guile Materia X
+1 Gatherer's Grasp Materia X
+1 Craftsman's Competence Materia X
+1 Craftsman's Cunning Materia X
+1 Craftsman's Command Materia X
+1 Quickarm Materia X
+1 Quicktongue Materia X
 1 Viera Harness
 1 Viera Armguards
 1 Viera Gaskins
@@ -12986,7 +12986,7 @@ a Rarefied Horse Chestnut Kasa
 1 Trophy of Eternal Darkness
 1 Trophy of Divine Light
 2 New World Burrito Lunch
-8 Sacks of Nuts Exchange
+8 Thavnairian Striking Dummy
 5 Garlean Concrete Inner Wall
 1 Varied Wood Flooring
 1 Leafy Ceiling Lamp
@@ -13246,7 +13246,7 @@ s High Durium Sand
 1 Your Answer Orchestrion Roll
 2 Ancient Shackles Orchestrion Roll
 1 Hic Svnt Leones Orchestrion Roll
-9 Sacks of Nuts Exchange
+9 Unbowed Orchestrion Roll
 1 On Blade's Edge Orchestrion Roll
 1 Finality Orchestrion Roll
 3 Dawnbound Orchestrion Roll
@@ -13436,14 +13436,14 @@ s High Durium Sand
 1 Platinum Hammerhead
 1 Gold Salmon Roe
 1 Leech
-1 Purple Scrip Exchange (Lv. 80 Materials/Bait/Tokens)
-1 Purple Scrip Exchange (Lv. 90 Bait/Tokens)
+1 Sky Spoon Lure
+1 Mayfly
 1 Shrimp Ball
-1 Purple Scrip Exchange (Lv. 90 Bait/Tokens)
+1 Mackerel Strip
 1 Grey Worm
-1 Purple Scrip Exchange (Lv. 90 Bait/Tokens)
-1 Purple Scrip Exchange (Lv. 80 Materials/Bait/Tokens)
-1 Purple Scrip Exchange (Lv. 90 Bait/Tokens)
+1 Chimera Worm
+1 Panic Jig
+1 Stardust
 e Timeworn Saigaskin Map
 1 Timeworn Kumbhiraskin Map
 3 Paladin's Arms of the Round
@@ -13705,9 +13705,9 @@ f Alpine Open-air Bath
 3 Pilgrimage Orchestrion Roll
 1 Radiance Orchestrion Roll
 1 In the Balance Orchestrion Roll
-c Trophy Crystal Exchange (Other)
-1 Trophy Crystal Exchange (Other)
-1 Trophy Crystal Exchange (Other)
+c Warming Up Orchestrion Roll
+1 Festival of the Hunt (Endwalker) Orchestrion Roll
+1 Run! (Endwalker) Orchestrion Roll
 1 Like a Summer Rain Orchestrion Roll
 1 Descent Orchestrion Roll
 1 Aftermath Orchestrion Roll
@@ -13841,11 +13841,11 @@ c Trophy Crystal Exchange (Other)
 1 Argonauta argo
 1 Planetes
 1 Omicron Omnitoken
-a9 Sil'dihn Potsherd Exchange
-1 Sil'dihn Potsherd Exchange
-1 Sil'dihn Potsherd Exchange
-1 Sil'dihn Potsherd Exchange
-1 Sil'dihn Potsherd Exchange
+a9 Noir Hat
+1 Noir Longcoat
+1 Noir Leather Gloves
+1 Noir Slacks
+1 Noir Shoes
 g Lawless Enforcer's Hat
 1 Lawless Enforcer's Jacket
 1 Lawless Enforcer's Gloves
@@ -13964,12 +13964,12 @@ c Windswept Barding
 1 Embers Orchestrion Roll
 1 White Stone Black Orchestrion Roll
 4 Born to Ride Orchestrion Roll
-1 Grand Company Quartermaster
-1 Grand Company Quartermaster
-1 Grand Company Quartermaster
-1 Grand Company Quartermaster
-1 Grand Company Quartermaster
-1 Grand Company Quartermaster
+1 Into the Adder's Den Orchestrion Roll
+1 Maelstrom Command Orchestrion Roll
+1 The Hall of Flames Orchestrion Roll
+1 Dewdrops & Moonbeams Orchestrion Roll
+1 Ripples in the Sea Orchestrion Roll
+1 The Sands' Secrets Orchestrion Roll
 1 Unworthy Orchestrion Roll
 1 Toll of the Bells Orchestrion Roll
 1 Stigma Orchestrion Roll
@@ -13994,15 +13994,15 @@ c Windswept Barding
 9 Weatherproof Cloth
 1 Weathered Pipe
 1 Exciting Leather
-1q Crafters' Scrip Exchange
-1 Crafters' Scrip Exchange
-1 Crafters' Scrip Exchange
-1 Crafters' Scrip Exchange
-1 Crafters' Scrip Exchange
-1 Crafters' Scrip Exchange
-1 Crafters' Scrip Exchange
-1 Crafters' Scrip Exchange
-1h Gatherers' Scrip Exchange
+1q Select Ironwood Lumber
+1 Select Manganese Ingot
+1 Select Titanium Plate
+1 Select Crystal Glass
+1 Select Smilodon Leather
+1 Select Scarlet Moko Cloth
+1 Select Hoptrap Leaf
+1 Select Pixieberry
+1h Select Bait Ball
 m Catastrophizer
 1 Mossgill Salmon
 1 Vidyutvat Wrasse
@@ -14316,14 +14316,14 @@ c Diadochos Sword
 1 Grade 8 Tincture of Vitality
 1 Grade 8 Tincture of Intelligence
 1 Grade 8 Tincture of Mind
-y Crafters' Scrip Exchange
-1 Crafters' Scrip Exchange
-1 Crafters' Scrip Exchange
-1 Crafters' Scrip Exchange
-1 Crafters' Scrip Exchange
-1 Crafters' Scrip Exchange
-1 Crafters' Scrip Exchange
-1 Crafters' Scrip Exchange
+y Select Dark Chestnut Lumber
+1 Select Bismuth Ingot
+1 Select Cobalt Plate
+1 Select Bluespirit Tile
+1 Select Green Glider Leather
+1 Select Waterproof Cloth
+1 Select Rak'tika Seedling
+1 Select Squid Ink
 2k Dragonfruit
 1 Dark Eggplant
 1 Pure Cumin
@@ -14390,13 +14390,13 @@ cd Ballroom Etiquette - Scrupulous Citations
 1 Chocobo Pajama Shirt
 1 Chocobo Pajama Bottoms
 1 Chocobo Pajama Slippers
-q Rokkon Potsherd Exchange
-1 Rokkon Potsherd Exchange
-1 Rokkon Potsherd Exchange
-1 Rokkon Potsherd Exchange
-1 Rokkon Potsherd Exchange
-1 Rokkon Potsherd Exchange
-1 Rokkon Potsherd Exchange
+q Shishu Bujin Eboshi
+1 Shishu Bujin Hitatare
+1 Shishu Bujin Kiribakama
+1 Shishu Obutozori
+1 Shishu Gozen Kanzashi
+1 Shishu Gozen Kochiki
+1 Shishu Gozen Hakama
 22 Pink Shrimp
 1 Sirensong Mussel
 1 Arrowhead
@@ -14508,7 +14508,7 @@ c Ornate Diadochos Jacket of Fending
 1 Imitation Vault
 1 Ivy Pendant Wall Light
 1 Crystarium Pendant Wall Light
-1 Purple Scrip Exchange (Music/Furnishings/Misc.)
+1 Fishing Rod Rack
 1 Far Eastern Indoor Bamboo Fountain
 2 Verdant Pillar
 1 Rattan Partition
@@ -14558,7 +14558,7 @@ c Ornate Diadochos Jacket of Fending
 1 Fleeting Moment Orchestrion Roll
 1 Athena, the Tireless One Orchestrion Roll
 1 Ultima's Perfection (Endwalker) Orchestrion Roll
-2 Rokkon Potsherd Exchange
+2 Looping in the Deepest Fringes Orchestrion Roll
 1 Fracture Orchestrion Roll
 1 Conundrum Orchestrion Roll
 1 Return of the Hero Orchestrion Roll
@@ -14579,7 +14579,7 @@ l Aloalo Potsherd
 4 Fern Interior Wall
 1 Greige Carpet
 1 Seabed Ceiling Lamp
-1 Purple Scrip Exchange (Music/Furnishings/Misc.)
+1 Hanging Lure Display
 1 Abyssal Wings Display
 1 Crystarium Wall Canopy
 1 Nursery Canopy
@@ -14614,7 +14614,7 @@ o Il Mheg Arbor
 1 Bluecap Mushroom Lamp
 1 Imitation Magitek Repair Station (Wall Unit)
 1 Labyrinthos Grape Lamppost
-1 Orange Scrip Exchange (Lv. 100 Materials/Furnishings)
+1 Hingan Rock Garden
 1 Sharlayan Reflecting Pool
 d Lupin Seeds
 1 Red Lupins
@@ -14626,14 +14626,14 @@ d Lupin Seeds
 1 White Lupins
 1 Black Lupins
 1 Rainbow Lupins
-25 Crafters' Scrip Exchange
-1 Crafters' Scrip Exchange
-1 Crafters' Scrip Exchange
-1 Crafters' Scrip Exchange
-1 Crafters' Scrip Exchange
-1 Crafters' Scrip Exchange
-1 Crafters' Scrip Exchange
-1 Crafters' Scrip Exchange
+25 Select Bamboo Stick
+1 Select Duraluminum Ingot
+1 Select Brashgold Plate
+1 Select Marble
+1 Select Chalicotherium Leather
+1 Select Duskcourt Cloth
+1 Select Cudweed
+1 Select Blue Crab
 44 Circuit Tilapia
 1 Durdina Fish
 1 Mayaman
@@ -14662,7 +14662,7 @@ d Lupin Seeds
 1 Aloalo Roselle Hedge
 q Ballroom Etiquette - Humble Triumph
 3 Modern Aesthetics - The Bold and the Braid
-1 Aloalo Potsherd Exchange
+1 Statice's Wings
 1 Giant Leaf Parasol
 4 Uolosapa
 4 Kydonia Strolls
@@ -14684,11 +14684,11 @@ q Ballroom Etiquette - Humble Triumph
 1 Rainbow Lupin Corsage
 1w Island Leaf Headdress
 1 Minmisle Top Hat
-1 Aloalo Potsherd Exchange
-1 Aloalo Potsherd Exchange
-1 Aloalo Potsherd Exchange
-1 Aloalo Potsherd Exchange
-1 Aloalo Potsherd Exchange
+1 Free Spirit's Hat
+1 Free Spirit's Jacket
+1 Free Spirit's Ringbands
+1 Free Spirit's Cropped Slops
+1 Free Spirit's Backless Loafers
 1 Martial Artist's Vest
 1 Martial Artist's Slops
 1 Martial Artist's Pumps
@@ -14724,37 +14724,37 @@ v Island Peerifool Whistle
 2 Fair Winds to Guide Orchestrion Roll
 1 Course Uncharted Orchestrion Roll
 1 Myths of the Realm Orchestrion Roll
-1 Aloalo Potsherd Exchange
+1 O Speaker, Slumber Orchestrion Roll
 1 O Hunter, Rejoice Orchestrion Roll
 1 Pennons Aloft Orchestrion Roll
 1 From Fear to Fortitude Orchestrion Roll
 18 Vegetal Voucher
-1c Sacks of Nuts Exchange
-1 Sacks of Nuts Exchange
-1 Sacks of Nuts Exchange
-1 Sacks of Nuts Exchange
-1 Sacks of Nuts Exchange
-1 Purple Scrip Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Purple Scrip Exchange (Materia)
-1 Sacks of Nuts Exchange
-1 Sacks of Nuts Exchange
-1 Sacks of Nuts Exchange
-1 Sacks of Nuts Exchange
-1 Sacks of Nuts Exchange
-1 Sacks of Nuts Exchange
-1 Sacks of Nuts Exchange
-1 Orange Scrip Exchange (Materia)
-1 Orange Scrip Exchange (Materia)
-1 Orange Scrip Exchange (Materia)
-1 Orange Scrip Exchange (Materia)
-1 Orange Scrip Exchange (Materia)
-1 Orange Scrip Exchange (Materia)
-1 Sacks of Nuts Exchange
-1 Sacks of Nuts Exchange
+1c Piety Materia XI
+1 Heavens' Eye Materia XI
+1 Savage Aim Materia XI
+1 Savage Might Materia XI
+1 Battledance Materia XI
+1 Gatherer's Guerdon Materia XI
+1 Gatherer's Guile Materia XI
+1 Gatherer's Grasp Materia XI
+1 Craftsman's Competence Materia XI
+1 Craftsman's Cunning Materia XI
+1 Craftsman's Command Materia XI
+1 Quickarm Materia XI
+1 Quicktongue Materia XI
+1 Piety Materia XII
+1 Heavens' Eye Materia XII
+1 Savage Aim Materia XII
+1 Savage Might Materia XII
+1 Battledance Materia XII
+1 Gatherer's Guerdon Materia XII
+1 Gatherer's Guile Materia XII
+1 Gatherer's Grasp Materia XII
+1 Craftsman's Competence Materia XII
+1 Craftsman's Cunning Materia XII
+1 Craftsman's Command Materia XII
+1 Quickarm Materia XII
+1 Quicktongue Materia XII
 2 Orange Crafters' Scrip
 1 Orange Gatherers' Scrip
 5 Hrothgar Vest
@@ -14763,7 +14763,7 @@ v Island Peerifool Whistle
 1 Hrothgar Caligae
 c Twilight Gemstone
 1 High-density Fiberboard
-1 Orange Scrip Exchange (Lv. 100 Materials/Bait/Tokens)
+1 Mount Token
 3 Country Cottage Wall
 1 Country House Wall
 1 Country Mansion Wall
@@ -14784,7 +14784,7 @@ c Twilight Gemstone
 1 Empyreum Phasmascape
 1 Twintop Table
 1 Mug of Cocoa
-1 Sacks of Nuts Exchange
+1 Everkeep Striking Dummy
 1 Stargazing Deck
 1 Wooden Garden Gate
 1 Ruinous Plume
@@ -14867,7 +14867,7 @@ c Twilight Gemstone
 1 Lar Ring of Healing
 1 Lar Ring of Casting
 26 Ruthenium Scimitar
-1 Ruthenium Tonfas
+1 Ruthenium Tonfa
 1 Ruthenium War Axe
 1 Ceiba Spear
 1 Ceiba Longbow
@@ -15098,7 +15098,7 @@ c Twilight Gemstone
 1 White Gold Ring of Healing
 1 White Gold Ring of Casting
 26 Ra'Kaznar Katzbalger
-1 Ra'Kaznar Tonfas
+1 Ra'Kaznar Tonfa
 1 Ra'Kaznar Labrys
 1 Claro Walnut Spear
 1 Ra'Kaznar Bow
@@ -15623,12 +15623,12 @@ e Mosquito Fish
 1 Silkmoth Pupa
 1 Honeybee
 1 Cactuar Jig
-1 Purple Scrip Exchange (Lv. 90 Bait/Tokens)
-1 Purple Scrip Exchange (Lv. 90 Bait/Tokens)
-1 Purple Scrip Exchange (Lv. 90 Bait/Tokens)
-1 Purple Scrip Exchange (Lv. 90 Bait/Tokens)
-1 Orange Scrip Exchange (Lv. 100 Materials/Bait/Tokens)
-1 Orange Scrip Exchange (Lv. 100 Materials/Bait/Tokens)
+1 White Worm
+1 Popper Lure
+1 Shucked Clam
+1 Dragonfly
+1 Red Maggots
+1 Ghost Nipper
 2f Ornate Archeo Kingdom Cuirass of Fending
 1 Ornate Archeo Kingdom Cuirass of Maiming
 1 Ornate Archeo Kingdom Jacket of Striking
@@ -15907,7 +15907,7 @@ e Turali Trader's Shirt
 1 Scientist's Boots
 2 Ribboned Parasol
 4 The Faces We Wear - Classic Spectacles
-1 Rokkon Potsherd Exchange
+1 The Faces We Wear - Rose-colored Spectacles
 1 The Faces We Wear - Simple Spectacles
 1 The Faces We Wear - Monocles
 5 Pile of Gold
@@ -15926,7 +15926,7 @@ q Punutiy Crossing Orchestrion Roll
 1 Burning Souls Orchestrion Roll
 1 Give It All Orchestrion Roll
 1 A Risky Bet Orchestrion Roll
-c Sacks of Nuts Exchange
+c Blade's Exaltation Orchestrion Roll
 1 Roads Forsaken Orchestrion Roll
 1 Pathmaker Orchestrion Roll
 3 Subterranean Drop Orchestrion Roll
@@ -16073,9 +16073,9 @@ l Pure White Interior Wall
 1 Wood-fired Range
 1 Holodisplay
 1 Storybook Bench
-1 Orange Scrip Exchange (Lv. 100 Materials/Furnishings)
+1 Sweet Dreamer's Stall
 1 Frilly Curtains
-1 Orange Scrip Exchange (Lv. 100 Materials/Bait/Tokens)
+1 Botanist's Wall Frames
 1 Botanical Loft
 1 Patchwork Sofa
 1 Gleaner's Knapsack
@@ -16311,7 +16311,7 @@ e2 Royal Damask
 2 Far Eastern Odder Otter Seater
 2 La Noscean Orange Tree
 1 Imitation Battlefield
-1 Orange Scrip Exchange (Lv. 100 Materials/Bait/Tokens)
+1 Frosted Topiary
 1 Frozen Garden Pond
 1 Guardian Arkveld's Windward Plains Phasmascape
 1 Rey Dau's Windward Plains Phasmascape
@@ -16337,7 +16337,7 @@ e2 Royal Damask
 2 Civilizations (Pulse 2) Orchestrion Roll
 1 Insatiable (Pulse 2) Orchestrion Roll
 1 Kaleidoscope Orchestrion Roll
-1 Cosmocredit Exchange
+1 Carrots of Passion Orchestrion Roll
 5 Outdoor Hunter's Grill
 1 Wilds Great Sword Stand
 1 Wilds Banner
@@ -16351,8 +16351,8 @@ e2 Royal Damask
 2 Cosmoseat
 1 Cosmokitchen Partition
 1 Portable Exoterminal
-1 Cosmocredit Exchange
-1 Cosmocredit Exchange
+1 Docking Station Cover
+1 Cosmic Circumferbench
 1 Yok Huy Ward
 7 Timeworn Gargantuaskin Map
 3 Goldentail
@@ -16419,8 +16419,8 @@ d Interstellar Dhalmel Whistle
 3 Felyne Support Team Cart Horn
 2 The Faces We Wear - Mythril-edged Eyepatch (Left)
 1 The Faces We Wear - Mythril-edged Eyepatch (Right)
-1 Cosmocredit Exchange
-1 Cosmocredit Exchange
+1 The Faces We Wear - Ornamented Leather Eyepatch (Left)
+1 The Faces We Wear - Ornamented Leather Eyepatch (Right)
 1 The Faces We Wear - Scaevan Headgear
 2 The Faces We Wear - Tactical Goggles
 2 The Faces We Wear - Cat Eye Reading Glasses
@@ -16487,11 +16487,11 @@ b Red Champa Corsage
 1 Summertide Formal Shoes
 1 Summertide Formal Dress
 1 Summertide Formal Dress Shoes
-h Cosmocredit Exchange
-1 Cosmocredit Exchange
-1 Cosmocredit Exchange
-1 Cosmocredit Exchange
-1 Cosmocredit Exchange
+h Star Captain Hat
+1 Star Captain Coat
+1 Star Captain Gloves
+1 Star Captain Trousers
+1 Star Captain Boots
 1 Star Pilot Helm
 1 Star Pilot Suit
 1 Star Pilot Gloves
@@ -16534,10 +16534,10 @@ a Neon Street Cap
 1 Bouncer's Slacks
 1 Bouncer's Dress Shoes
 5 Bouncer's Holster Slacks
-1 Cosmocredit Exchange
-1 Cosmocredit Exchange
-1 Cosmocredit Exchange
-1 Cosmocredit Exchange
+1 Star Crew Jacket
+1 Star Crew Gloves
+1 Star Crew Trousers
+1 Star Crew Boots
 1 Cosmosuit Helm
 1 Cosmosuit Top
 1 Cosmosuit Gloves
@@ -16596,7 +16596,7 @@ c Fortune Carrot
 1 Hedge-trimmed Flower Bed
 1 Chocobo Chick Fountain
 1 Occult Epitaph
-1 Prize Exchange (Music/Furnishings)
+1 No-entry Door Partition
 1 Hingan Dresser
 1 Hingan Event Partition
 1 Decorative Hingan Window
@@ -16625,7 +16625,7 @@ d Mantelshelf
 4 The Faces We Wear - Tinted Goggles
 1 The Faces We Wear - Eyepatch (Left)
 2 The Faces We Wear - Coeurl Eyeglasses
-1 Cosmocredit Exchange
+1 The Faces We Wear - Reading Glasses
 1 The Faces We Wear - Tinted Sunglasses
 2 The Faces We Wear - Rectangular Glasses
 1 Magicked Prism (Ribbons)
@@ -16669,8 +16669,8 @@ b Bastard Sword of Sanctifying Light
 1 Exdeath's Castle (Dawntrail) Orchestrion Roll
 1 FINAL FANTASY V: Battle 1 (Dawntrail) Orchestrion Roll
 1 Stargazers Orchestrion Roll
-1 Cosmocredit Exchange
-2 Cosmocredit Exchange
+1 Hey, Cid! Orchestrion Roll
+2 The Airship Orchestrion Roll
 1 Find the Princess (Dawntrail) Orchestrion Roll
 1 Ride the Rhythm Orchestrion Roll
 1 Back to the Drawing Board Orchestrion Roll
@@ -16749,10 +16749,10 @@ o Cosmotized Mushroom Oil
 2 Cosmotized Yeast
 2o The Faces We Wear - Eyepatch (Right)
 2 Outsized Crystal Glass
-1 Cosmocredit Exchange
+1 Cosmochair
 1 Cosmotable
 1 Cosmolamp
-1 Cosmocredit Exchange
+1 Stellar Lamppost
 g Reinforcement Supplies I
 1 Reinforcement Supplies II
 1 Reinforcement Supplies III
@@ -16954,8 +16954,8 @@ j Gallant Shepherd
 1 Occult Bracelet of Magic
 1 Occult Ring of Magic
 1 Occult Ring of Deep Magic
-1 Cosmocredit Exchange
-1 Cosmocredit Exchange
+1 Cosmomodule Inner Wall
+1 Cosmomodule Flooring
 6 Doom-engine Levinbox
 3 Everkeep Mixing Booth
 1 Unfriendly Yan Neon Wall Light
@@ -16963,17 +16963,17 @@ j Gallant Shepherd
 1 Imitation Cosmoportal
 1 Cosmomodule Floor Panel
 1 Steaming Stew Bowl
-1 Orange Scrip Exchange (Lv. 100 Materials/Furnishings)
+1 Sampler Board
 1 Peeling Wallpaper Sticker
 1 Fortune-teller's Table
-1 Orange Scrip Exchange (Lv. 100 Materials/Bait/Tokens)
+1 Adventurer's Effects
 1 Lakeland Planter
 1 Eulmore Planter
 1 Il Mheg Planter
 1 Minishroom Lamp
-b Cosmocredit Exchange
-1 Cosmocredit Exchange
-1 Cosmocredit Exchange
+b Cosmic Safety Lamp
+1 Cosmic Antenna
+1 Shady Cosmoshelter
 4 Oizys Essentials
 1 Oizys Curios
 1 Oizys Rarities
@@ -17002,23 +17002,23 @@ a Survey Dried Ether
 1 Wristwraps of Legend
 1 Loincloth of Legend
 1 Caligae of Legend
-z Corvosi Potsherd Exchange
-1 Corvosi Potsherd Exchange
-1 Corvosi Potsherd Exchange
-1 Corvosi Potsherd Exchange
-1 Corvosi Potsherd Exchange
-1 Corvosi Potsherd Exchange
-1 Corvosi Potsherd Exchange
-1 Corvosi Potsherd Exchange
-1 Corvosi Potsherd Exchange
-1 Corvosi Potsherd Exchange
+z Story-lover's Bandana
+1 Story-lover's Top
+1 Story-lover's Armlets
+1 Story-lover's Sarouel
+1 Story-lover's Sandals
+1 Story-spinner's Headdress
+1 Story-spinner's Chestwrap
+1 Story-spinner's Chaplets
+1 Story-spinner's Sarouel
+1 Story-spinner's Sandals
 1 Powersuit Helm
 1 Powersuit
-1 Cosmocredit Exchange
-1 Cosmocredit Exchange
-1 Cosmocredit Exchange
-1 Cosmocredit Exchange
-1 Cosmocredit Exchange
+1 Star Admiral's Helm
+1 Star Admiral's Coat
+1 Star Admiral's Gloves
+1 Star Admiral's Trousers
+1 Star Admiral's Boots
 d Mistic Condor
 1 Little Mermaid
 1 Magic Lamp
@@ -17048,8 +17048,8 @@ d Mistic Condor
 1 Genie Lamp
 3 Volatile Gravity Vacuum Suit Identification Key
 1 Cosmic Armored Weapon Identification Key
-3 Cosmocredit Exchange
-1 Cosmocredit Exchange
+3 Rapid-fab Vacuum Suit Identification Key
+1 Alert Red Warp Loader Identification Key
 1 Royal Magicked Carpet
 2 Runaway Barding
 1 Cosmic Barding
@@ -17071,7 +17071,7 @@ d Mistic Condor
 1 Fall into Forever Orchestrion Roll
 1 Blade Unbroken Orchestrion Roll
 6 The Uncharted Road Orchestrion Roll
-1 Corvosi Potsherd Exchange
+1 Worthy Pursuits Orchestrion Roll
 1 What Moves the Heart Orchestrion Roll
 j Soothing Sea-beast
 2 Corvosi Parasol
@@ -17166,8 +17166,8 @@ j Soothing Sea-beast
 5 Cosmic Metal Shelf
 1 Cosmic Steps
 1 Cosmic Partition
-1 Cosmocredit Exchange
-1 Cosmocredit Exchange
+1 Auxesian Waygate
+1 Auxesian Waylight
 1 Winged Scalekin Fossil
 1 Crescent Stone Pillar
 1 Crescent Wall Rack
@@ -17206,15 +17206,15 @@ y Ole Ole Ole
 28 Auxesia Token Booklet
 1 Auxesia Exploration Token
 4i Standard Spectrum Dye
-1 Cosmocredit Exchange (Materials/Materia/Items)
-1 Cosmocredit Exchange (Materials/Materia/Items)
+1 Wide Spectrum #1 Dye
+1 Wide Spectrum #2 Dye
 1 Interstellar Leafkin Whistle
 7 Colibri Callado Whistle
 2 Duck-billed Porter Whistle
 1 Cosmic Armored Weapon Beta Identification Key
 1 Cosmic Predator Identification Key
-3 Cosmocredit Exchange
-1 Cosmocredit Exchange
+3 Excavating Vacuum Suit Identification Key
+1 Carbide Grey Warp Loader Identification Key
 3 Lite-loader
 1 Caprino
 2 Puny Mage
@@ -17250,12 +17250,12 @@ z FINAL FANTASY V: The Final Battle (Dawntrail) Orchestrion Roll
 7 Dungeon (Dawntrail) Orchestrion Roll
 1 Sealed Away (Dawntrail) Orchestrion Roll
 1 To the North Mountain (Dawntrail) Orchestrion Roll
-1e Cosmocredit Exchange
-1 Cosmocredit Exchange
-1 Cosmocredit Exchange
-1 Cosmocredit Exchange
-1 Cosmocredit Exchange
-1 Cosmocredit Exchange
+1e Cosmic Explorer's Cap
+1 Cosmic Explorer's Jacket
+1 Cosmic Explorer's Halfgloves
+1 Cosmic Explorer's Slops
+1 Cosmic Explorer's Boots
+1 Cosmic Explorer's Tights
 1 Cosmic Operator's Cap
 1 Cosmic Operator's Coveralls
 1 Cosmic Operator's Gloves

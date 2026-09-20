@@ -2,6 +2,16 @@
 
 What changed on [Jikky's Gil Factory](README.md), newest first.
 
+## 20 September 2026
+
+**Fixes**
+- The search names baked into the desk had 493 items named after the shop or category they came
+  from rather than the item — "Purple Scrip Exchange (Materia)", "Wolf Gear", "Miscellaneous" —
+  which **Undercuts** then showed as the item name, since it is the one tab that can meet any
+  marketable item. Every name now comes from the game's own item table.
+- The rebake re-reads all of those names from the game table each run instead of only filling in
+  new ones, so an item the game renames is put right on the next bake.
+
 ## 17 September 2026
 
 **New Undercuts tab**
