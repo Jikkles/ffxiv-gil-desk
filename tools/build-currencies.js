@@ -33,6 +33,7 @@ const CURRENCIES = [
   [37549, "Seafarer's Cowrie", "Exploration & Events"],
   [37550, "Islander's Cowrie", "Exploration & Events"],
   [45690, "Cosmocredit", "Exploration & Events"],
+  [51734, "Faded Remnant of Resilience", "Exploration & Events"],
   [38533, "Sil'dihn Potsherd", "Variant & Deep Dungeons"],
   [39884, "Rokkon Potsherd", "Variant & Deep Dungeons"],
   [41078, "Aloalo Potsherd", "Variant & Deep Dungeons"],

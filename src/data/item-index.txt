@@ -17176,7 +17176,8 @@ j Soothing Sea-beast
 1 Yellow Crescent Cube
 1 Red Crescent Crystal
 b3 Junior Jinbei
-1l Pitchfork
+1b Faded Remnant of Resilience
+a Pitchfork
 3 Modern Aesthetics - Loosened Locks
 5p Tule Tunic
 1 Tule Halfgloves

@@ -1302,6 +1302,16 @@
       "ic": 65112
     },
     {
+      "id": 51734,
+      "name": "Faded Remnant of Resilience",
+      "group": "Exploration & Events",
+      "items": [
+        {"i":51744,"c":100,"q":1,"s":"Faded Remnants of Resilience"},
+        {"i":51747,"c":500,"q":1,"s":"Faded Remnants of Resilience"}
+      ],
+      "ic": 20217
+    },
+    {
       "id": 38533,
       "name": "Sil'dihn Potsherd",
       "group": "Variant & Deep Dungeons",
@@ -2878,6 +2888,8 @@
     "50804": {"n":"Worthy Pursuits Orchestrion Roll","cat":94,"st":999},
     "51280": {"n":"Auxesian Waygate","cat":76,"st":1},
     "51281": {"n":"Auxesian Waylight","cat":76,"st":1},
+    "51744": {"n":"Pitchfork","cat":61,"st":1},
+    "51747": {"n":"Modern Aesthetics - Loosened Locks","cat":61,"st":999},
     "52254": {"n":"Standard Spectrum Dye","cat":55,"st":999},
     "52255": {"n":"Wide Spectrum #1 Dye","cat":55,"st":999},
     "52256": {"n":"Wide Spectrum #2 Dye","cat":55,"st":999},

@@ -2,6 +2,19 @@
 
 What changed on [Jikky's Gil Factory](README.md), newest first.
 
+## 23 September 2026
+
+**Beastmaster's Faded Remnants of Resilience on Currencies**
+- Patch 7.56's Beastmaster currency, earned in the Crucible of the Unbroken, is now a currency
+  tile on **Currencies**, under Exploration & Events. Two of the Kornago Merchant's wares sell
+  on the market board — **Modern Aesthetics - Loosened Locks** at 500 remnants and the
+  **Pitchfork** at 100 — so the tab shows what each is worth and the gil per remnant.
+- The rest of that shop, and the whole Bright Remnants shop (gourds, the +1 to +4 Beastmaster
+  gear, the orchestrion rolls, the framer's kit and the two Faces We Wear glasses), is untradable,
+  so none of it can be listed. Bright Remnants buys nothing sellable at all and gets no tile.
+- Both items are brand new, so they may sit under the default **Min units/day** until they start
+  selling regularly; set it to **Any** to see them whatever their pace.
+
 ## 20 September 2026
 
 **Fixes**
