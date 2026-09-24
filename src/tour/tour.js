@@ -12,61 +12,60 @@ window.Tour=(function(){
      are filled in), spot (the data-t name to light up, none for a centred bubble),
      focus (a wider data-t name to frame, when the spot alone is too small to read
      in context), side (where the bubble would rather sit), zoom (the most it may
-     magnify), state (which of the page's staged changes are showing). */
+     magnify), state (which of the page's staged changes are showing), preview (show
+     the whole example page undimmed, with the bubble underneath it). */
   const STEPS=[
-    {sec:"Welcome",title:"Welcome to Jikky’s Gil Factory",
-      body:"Here’s a one-minute tour of an example Dashboard, priced for <b>{home}</b>. Every tab is laid out the same way, so what you learn here works everywhere. The prices on it are made up.",
-      next:"Start the tour"},
-    {sec:"Side panel",title:"The side panel",spot:"side",side:"right",
-      body:"Everything that changes what the table shows lives down this side: your server, Refresh, and the filters. The arrow at the top folds it away when you want more room."},
-    {sec:"Side panel",title:"Your server",spot:"server",focus:"side",side:"right",
-      body:"<b>Sell on</b> is the world you sell on, set to {home} on the welcome page. <b>Mats from</b> is where materials are priced: tick more data centres and the cheapest listing across all of them wins."},
-    {sec:"Side panel",title:"Refresh",spot:"refresh",focus:"side",side:"right",
-      body:"Pulls live prices from Universalis. Other tabs load on their own, but the Dashboard checks over 9,000 items, so it waits for you to press this. <b>Skip dead items</b> leaves out anything unsold in 30 days and checks each one again a week later; <b>shift-click</b> rescans everything now."},
-    {sec:"Side panel",title:"Filters",spot:"filters",focus:"side",side:"right",
-      body:"Hide items that don’t sell or have suspect prices, list shards and crystals in each recipe with <b>Show crystals</b> (they’re costed either way), measure profit against the cheapest listing or the 30-day average, set the market tax, and narrow the list to one category. Each tab remembers its own."},
-    {sec:"Side panel",title:"Your crafter",spot:"crafter",focus:"side",side:"right",
-      body:"Pick your <b>Class</b> and a level range and the list keeps only what you can make. <b>Precrafts only</b> narrows it to intermediates, the crafts that go into other recipes. <b>Sell</b> prices each item at the quality it usually trades at; switch it to HQ or NQ to price everything one way."},
-    {sec:"Page info",title:"What this tab does",spot:"hero",side:"bottom",zoom:1.5,
-      body:"Every tab opens with a short summary of what it works out."},
-    {sec:"Page info",title:"How this works",spot:"howto",side:"bottom",zoom:1.6,
-      body:"Just under the cards on every tab. Click the bar to open it: what the tab calculates, how to read its columns, and what to watch out for."},
-    {sec:"Page info",title:"▶ Show me",spot:"showme",focus:"howto",side:"bottom",zoom:2.2,
-      body:"Every tab has its own <b>Show me</b> button. It walks you through that tab’s own controls and columns one at a time, on the real page with live prices. On the Dashboard it brings back this tour."},
-    {sec:"Page info",title:"At a glance",spot:"kpis",side:"bottom",zoom:1.4,
-      body:"The cards pick out the headlines: the best profit on a single item, the most gil a day everything in view could make, and how many items are profitable. They follow your filters."},
-    {sec:"Page info",title:"Best on each tab",spot:"besttabs",side:"bottom",zoom:1.6,
-      body:"Under that, a bar that opens when you click it. It gathers the top earner from every other tab in one place, so you can see where the gil is without opening each one."},
-    {sec:"Page info",title:"Every tab’s best, in one place",spot:"besttabs",state:{best:1},side:"bottom",zoom:1.3,
-      body:"One row per tab, in the same order as the tab bar: its best item (or submarine route), what it makes a day, and how long ago it was checked. The gold row is the best of them. <b>Refresh</b> here checks every tab too, one after another, and each row fills in as its tab finishes. Click a row to go to that tab."},
+    {sec:"Welcome",title:"Welcome to Jikky’s Gil Factory",preview:true,
+      body:"This is an example Dashboard, priced for <b>{home}</b> with made-up prices. Every tab looks like this, so once you know this page you know them all. Next, we’ll go through it one part at a time.",
+      next:"Show me around"},
+    {sec:"Tabs",title:"The tabs",spot:"tabs",state:{tabs:1},side:"bottom",
+      body:"Each tab is a different way to make gil: crafting, gathering, currencies, scrips, duties and maps, flips, retainers, submersibles, the workshop and vendors. <b>Undercuts</b> checks whether anyone has beaten your own listings."},
+    {sec:"Top of the page",title:"What this tab does",spot:"hero",side:"bottom",zoom:1.5,
+      body:"A one-line summary of what the tab works out."},
+    {sec:"Top of the page",title:"At a glance",spot:"kpis",side:"bottom",zoom:1.4,
+      body:"The headlines: the best profit on one item, the most gil a day you could make, and how many items make a profit. They follow your filters."},
+    {sec:"Top of the page",title:"How this works",spot:"howto",side:"bottom",zoom:1.6,
+      body:"Click this bar on any tab to read what it works out, what each column means, and what to watch out for."},
+    {sec:"Top of the page",title:"▶ Show me",spot:"showme",focus:"howto",side:"bottom",zoom:2.2,
+      body:"Walks you through that tab’s own buttons and columns on the real page. On the Dashboard it brings back this tour."},
+    {sec:"Top of the page",title:"Best on each tab",spot:"besttabs",state:{best:1},side:"bottom",zoom:1.3,
+      body:"The top earner from every tab in one place, with what it makes a day. The gold row is the best of all. Click a row to jump to that tab."},
     {sec:"Item list",title:"The item list",spot:"table",side:"bottom",
-      body:"One row per item: what it sells for now, its 30-day average (the middle price of real sales, so one odd sale can’t drag it), which way the price is heading, what the materials cost, the profit, and how many sell a day. Click a column heading to sort by it."},
+      body:"One row per item: its price now, its usual price over 30 days, which way it’s heading, what it costs to make, the profit, and how many sell a day. Click a column heading to sort by it."},
     {sec:"Item list",title:"⚠ Prices to double-check",spot:"outlier",focus:"outrow",side:"bottom",zoom:1.6,
-      body:"A <b>⚠</b> means the price can’t be trusted. Here one listing at 1,150,000 sits against a 30-day average of 12,000 from just two sales, so the profit is fantasy. It also shows when there’s no listing and the average rests on a sale or two, which is easy to rig. Hover it for the reason. You only see rows like this with <b>Hide ⚠ outliers</b> unticked, as it is in this example; on the desk it starts ticked, so they stay out of your way."},
-    {sec:"Freshness",title:"How fresh a price is",spot:"age",side:"right",zoom:1.8,
-      body:"The pill beside each price says how long ago that item’s listings were last uploaded to Universalis: <b>green</b> under an hour, <b>orange</b> a few hours, <b>red</b> a day or more. An old price may already have sold or been undercut, so check it in game before you commit."},
-    {sec:"Freshness",title:"Last scan",spot:"scan",focus:"side",side:"right",
-      body:"When this tab last pulled prices. The time turns red once it’s half an hour old, a nudge to press <b>Refresh</b> before you buy or list anything."},
-    {sec:"Item list",title:"Open a row for the details",spot:"tree",state:{tree:1},side:"top",
-      body:"Click a row to open it. For a craft, that’s the whole recipe: every material, what it costs to buy, and whether crafting it yourself is cheaper. Click a craftable material to go a level deeper. On tabs like Vendors, Currencies and Duties, the row itself shows where the item comes from."},
-    {sec:"Item list",title:"Where to buy the materials",spot:"buyon",focus:"tree",state:{tree:1},side:"top",
-      body:"<b>Buy</b> is the cheapest listing across {dc}, and <b>Buy on</b> is the world it’s on. Green is your own world; orange <b>hop</b> means it’s cheaper to travel. A green <b>▼</b> badge flags a material selling well under its average."},
+      body:"A <b>⚠</b> means the price looks wrong, like one listing at 1,150,000 on an item that usually sells for 12,000. Don’t trust the profit on these. Hover it to see why. They’re hidden by default."},
+    {sec:"Item list",title:"How fresh a price is",spot:"age",side:"right",zoom:1.8,
+      body:"How long ago this price was seen: <b>green</b> under an hour, <b>orange</b> a few hours, <b>red</b> a day or more. Older prices may have changed, so check in game first."},
+    {sec:"Item list",title:"Open a row",spot:"tree",state:{tree:1},side:"top",
+      body:"Click a row to see the full recipe: every material, what it costs, and whether it’s cheaper to craft it yourself. On tabs like Vendors and Currencies, the row shows where the item comes from instead."},
+    {sec:"Item list",title:"Where to buy materials",spot:"buyon",focus:"tree",state:{tree:1},side:"top",
+      body:"<b>Buy</b> is the cheapest price across {dc}, and <b>Buy on</b> is the world to buy it on. Green is your own world; orange <b>hop</b> means it’s cheaper to travel."},
     {sec:"Item list",title:"Bought from an NPC",spot:"npc",focus:"tree",state:{tree:1},side:"top",zoom:1.8,
-      body:"Where an NPC shop sells a material for less than the board, or the board has none, the recipe buys it there: <b>NPC</b> and the zone, with the vendor’s name and map spot when you hover. NPC stock never runs out, and it’s the same price on every world."},
-    {sec:"Row buttons",title:"🛒 Add to shopping list",spot:"b-shop",focus:"rowhead",state:{tree:1},side:"bottom",zoom:2.3,
-      body:"Adds every material this craft needs to your shopping list. Inside a recipe, the <b>+</b> button adds just that one material."},
+      body:"When an NPC sells a material for less, the recipe buys it there. Hover to see the vendor and where they stand."},
+    {sec:"Row buttons",title:"🛒 Shopping list",spot:"b-shop",focus:"rowhead",state:{tree:1},side:"bottom",zoom:2.3,
+      body:"Adds everything this craft needs to your shopping list. The <b>+</b> inside a recipe adds just that one material."},
     {sec:"Row buttons",title:"Your shopping list",spot:"shop",state:{tree:1,shop:1},side:"bottom",zoom:1.4,
-      body:"Materials land here, grouped by the world to buy them on, with anything from an NPC under <b>NPC shops</b>, and a running gil total. Tick lines off as you buy. It’s the same list on every tab."},
-    {sec:"Row buttons",title:"📋 Add to a list",spot:"b-list",focus:"rowhead",state:{tree:1,shop:1},side:"bottom",zoom:2.3,
-      body:"Saves the item to one of your own lists, which sit as tabs at the end of the bar: a weekly craft, say, or a watchlist. Pick the same list again to take it off."},
+      body:"Grouped by the world to buy on, with a gil total. Tick things off as you buy. It’s the same list on every tab."},
+    {sec:"Row buttons",title:"📋 Your lists",spot:"b-list",focus:"rowhead",state:{tree:1,shop:1},side:"bottom",zoom:2.3,
+      body:"Saves the item to a list of your own, like a weekly craft or a watchlist. Your lists appear as tabs at the end of the bar."},
     {sec:"Row buttons",title:"🌐 Compare worlds",spot:"b-xw",focus:"rowhead",state:{tree:1,shop:1},side:"bottom",zoom:2.3,
-      body:"Shows this item’s price and stock on every world, and the cheapest way to buy as many as you need, even if that means splitting the order across worlds."},
+      body:"This item’s price and stock on every world, and the cheapest way to buy as many as you need."},
     {sec:"Row buttons",title:"Open in Teamcraft",spot:"b-tc",focus:"rowhead",state:{tree:1,shop:1},side:"bottom",zoom:2.3,
-      body:"Opens this exact recipe in the Teamcraft craft simulator, so you can check a rotation before you commit. Only items you craft have one."},
-    {sec:"Tabs",title:"The other tabs",spot:"tabs",state:{tabs:1},side:"bottom",
-      body:"Each tab is its own way of making gil, laid out like this one: gathering, currencies, scrips, duties and treasure maps, flips, retainers, submersibles, the workshop and vendors, plus <b>Undercuts</b>, which checks your own retainers' listings. Pick any of them from the bar."},
-    {sec:"Tabs",title:"Search, and this tour",spot:"tabright",side:"bottom",zoom:1.8,next:"Finish",
-      body:"Search for any item by name from any tab (press <b>/</b> to jump in). <b>Tour</b> brings this walkthrough back whenever you want it."}
+      body:"Opens the recipe in Teamcraft’s craft simulator so you can test a rotation first."},
+    {sec:"Side panel",title:"The side panel",spot:"side",side:"right",
+      body:"Your settings live down here. They change what the list shows. The arrow at the top folds it away for more room."},
+    {sec:"Side panel",title:"Your server",spot:"server",focus:"side",side:"right",
+      body:"<b>Sell on</b> is the world you sell on ({home}). <b>Mats from</b> is where materials are priced; tick more data centres to find cheaper ones."},
+    {sec:"Side panel",title:"Refresh",spot:"refresh",focus:"side",side:"right",
+      body:"Gets live prices. Other tabs do this on their own, but the Dashboard checks over 9,000 items, so it waits for you to press it."},
+    {sec:"Side panel",title:"Filters",spot:"filters",focus:"side",side:"right",
+      body:"Hide items that don’t sell or look wrong, pick a category, and set the market tax. Each tab remembers its own."},
+    {sec:"Side panel",title:"Your crafter",spot:"crafter",focus:"side",side:"right",
+      body:"Pick your <b>Class</b> and level range to see only what you can make."},
+    {sec:"Side panel",title:"Last scan",spot:"scan",focus:"side",side:"right",
+      body:"When prices were last fetched. It turns red after half an hour, a hint to press <b>Refresh</b>."},
+    {sec:"Finish",title:"Search, and this tour",spot:"tabright",side:"bottom",zoom:1.8,next:"Finish",
+      body:"Search for any item from any tab (press <b>/</b> to jump in). <b>Tour</b> brings this back any time."}
   ];
   /* one line under each tab on the "other tabs" step */
   const TAB_NOTES={all:"Profit on 9,400+ crafts and precrafts",gathering:"Gil from Miner, Botanist and Fisher",
@@ -93,11 +92,13 @@ window.Tour=(function(){
       transition:left .6s cubic-bezier(.22,.7,.2,1),top .6s cubic-bezier(.22,.7,.2,1),width .6s cubic-bezier(.22,.7,.2,1),height .6s cubic-bezier(.22,.7,.2,1)}
     :root[data-theme="light"] .tour-spot{box-shadow:0 0 0 2px var(--aether),0 0 22px 2px #0a736155,0 0 0 200vmax rgba(10,18,28,.62)}
     .tour-spot.off{box-shadow:0 0 0 200vmax rgba(3,6,10,.6)}
+    .tour-spot.whole{border-radius:10px;box-shadow:0 0 0 1px var(--line2),0 24px 70px #00000080}
     .tour-bub{position:absolute;left:0;top:0;width:350px;background:var(--panel);border:1px solid var(--line2);border-radius:14px;
       padding:15px 17px 13px;box-shadow:0 20px 60px #00000080;font-family:"Inter",sans-serif;color:var(--ink);
       opacity:0;transform:translateY(4px);transition:opacity .2s ease,transform .2s ease}
     .tour-bub.show{opacity:1;transform:none}
     .tour-bub.wide{width:420px}
+    .tour-bub.big{width:520px}
     .tour-bub .tour-top{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-family:"JetBrains Mono",monospace;
       font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--aether)}
     .tour-bub .tour-n{margin-left:auto;color:var(--faint);letter-spacing:.06em}
@@ -296,6 +297,7 @@ window.Tour=(function(){
     frame.style.height=pageH+"px";
     bubble.classList.remove("show");
     bubble.classList.toggle("wide",!s.spot);
+    bubble.classList.toggle("big",!!s.preview);
     bubble.querySelector(".tour-sec").textContent=s.sec;
     bubble.querySelector(".tour-n").textContent=(i+1)+" / "+STEPS.length;
     bubble.querySelector("h3").textContent=s.title;
@@ -324,6 +326,21 @@ window.Tour=(function(){
     const s=STEPS[at],SW=innerWidth,SH=innerHeight;
     const bw=bubble.offsetWidth,bh=bubble.offsetHeight;
     const target=s.spot?rectOf(s.spot,6):null;
+    if(s.preview){
+      /* the whole example, as big as fits above the bubble, cut off at one screen */
+      const A={x:M,y:M,w:SW-2*M,h:SH-2*M-bh-GAP};
+      const ph=Math.min(pageH,V.h),sc=Math.min(A.w/V.w,A.h/ph);
+      const tx=(SW-V.w*sc)/2,ty=A.y+(A.h-ph*sc)/2;
+      move(tx,ty,sc);
+      frame.style.clipPath="inset(0 0 "+(pageH-ph)+"px 0)";
+      Object.assign(spot.style,{left:tx+"px",top:ty+"px",width:V.w*sc+"px",height:ph*sc+"px"});
+      spot.classList.remove("off");spot.classList.add("whole");
+      place(Math.round((SW-bw)/2),Math.round(ty+ph*sc+GAP),"none");
+      root.querySelector(".tour-badge").style.opacity="0";
+      return;
+    }
+    frame.style.clipPath="";
+    spot.classList.remove("whole");
     if(!target){
       /* the whole page, a little back from the edges, with the bubble in the middle */
       const sc=Math.min((SW-2*M)/V.w,(SH-2*M)/V.h)*.92;
