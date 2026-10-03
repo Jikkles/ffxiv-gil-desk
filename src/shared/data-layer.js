@@ -306,7 +306,7 @@ let _trCss=false;
 function trendCss(){if(_trCss)return;_trCss=true;
   const s=document.createElement("style");s.id="trendcss";
   s.textContent=".tr{font-family:'JetBrains Mono',monospace;font-size:13px;white-space:nowrap}"+
-    ".tr.up{color:var(--win,var(--win))}.tr.dn{color:var(--loss,var(--loss))}.tr.dip{color:var(--win,var(--win))}.tr.flat{color:var(--faint,var(--faint))}";
+    ".tr.up{color:var(--loss)}.tr.dn{color:var(--win)}.tr.flat{color:var(--faint)}";
   (document.head||document.documentElement).appendChild(s);}
 /* ⚠ on a row means its price is not backed by what has actually sold. Every tab
    had grown its own copy of the same 2.5x / 0.4x band, and three different rules
@@ -353,9 +353,9 @@ function trendWin(w){const h=w/2/3600;return h<48?Math.round(h)+"h":Math.round(h
 function trendChip(t,why){trendCss();
   const g=v=>Math.round(v).toLocaleString("en-GB");
   if(!t)return'<span class="tr flat" title="'+(why||"Not enough sales history either side of the midpoint to compare")+'">·</span>';
-  /* A fall of 30% or more is a genuine dip rather than a slide, and reads
-   green like the craft-tree price badges do at the same depth. */
-  const p=t.pct,cls=Math.abs(p)<5?"flat":(p>0?"up":(p<=-30?"dip":"dn")),k=trendWin(t.win);
+  /* Read as a buyer: cheaper is good news and reads green, dearer reads red,
+     so the arrow and the colour always agree. */
+  const p=t.pct,cls=Math.abs(p)<5?"flat":(p>0?"up":"dn"),k=trendWin(t.win);
   const arrow=cls==="flat"?'→':(p>0?'▲':'▼');
   const txt=(p>0?"+":"")+(Math.abs(p)>=10?Math.round(p):p.toFixed(1))+"%";
   return`<span class="tr ${cls}" title="Last ${k} sold at a median of ${g(t.recent)} gil against ${g(t.prior)} over the ${k} before, on ${t.n} recent sale(s)">${arrow} ${txt}</span>`;}
