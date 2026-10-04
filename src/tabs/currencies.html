@@ -98,6 +98,9 @@
 .ricon{width:19px;height:19px;flex:none;margin-right:7px;border-radius:3px;vertical-align:middle}
 .ricon.gone{display:none}
 .cursel b{color:var(--aether);font-weight:500}
+.hidnote td{font-family:"Inter",sans-serif;font-size:12.5px;color:var(--ink2);padding:10px 12px!important}
+.hidnote button{margin-left:10px;padding:3px 10px;border-radius:6px;border:1px solid var(--line);background:var(--panel2);color:var(--aether);font:inherit;cursor:pointer}
+.hidnote button:hover{border-color:var(--aether)}
 
 </style>
 <script>try{var __t=localStorage.getItem("gildesk:theme:v1");document.documentElement.setAttribute("data-theme",__t==="light"?"light":"dark");}catch(e){document.documentElement.setAttribute("data-theme","dark");}</script>
@@ -360,7 +363,9 @@ function compute(){
 function visibleRows(){
   let r=state.rows||[];
   if(state.cur!=="__all"){
-    r=r.filter(x=>x.gpc!=null&&x.vel>=state.minVel&&!(state.hideOutlier&&x.outlier));
+    /* Any, with outliers shown, is the whole shop - even an item nobody has sold or listed */
+    const whole=!state.minVel&&!state.hideOutlier;
+    r=r.filter(x=>whole||(x.gpc!=null&&x.vel>=state.minVel&&!(state.hideOutlier&&x.outlier)));
     if(state.query){const q=state.query.toLowerCase();r=r.filter(x=>x.name.toLowerCase().includes(q)||(x.shop||"").toLowerCase().includes(q));}
   } else if(state.query){const q=state.query.toLowerCase();
     r=r.filter(x=>x.curName.toLowerCase().includes(q)||(x.name||"").toLowerCase().includes(q));}
@@ -410,7 +415,22 @@ function render(){
   const bestRow=rows.filter(r=>r.gpc!=null&&!r.outlier).sort((a,b)=>b.gpc-a.gpc)[0];
   const tb=document.getElementById("rows");
   const tbl=document.getElementById("tbl");
-  tbl.hidden=!rows.length;
+  /* a single shop's rows the filters took out, counted so they never just vanish:
+     an item the game sells for this currency but which barely trades, or whose
+     price looks wrong, is still in the shop */
+  let hid=null;
+  if(state.cur!=="__all"&&state.rows){
+    const q=state.query.toLowerCase(),shown=new Set(rows);
+    const gone=state.rows.filter(x=>!shown.has(x)&&(!q||x.name.toLowerCase().includes(q)||(x.shop||"").toLowerCase().includes(q)));
+    if(gone.length){
+      const slow=gone.filter(x=>x.gpc!=null&&x.vel<state.minVel).length;
+      const odd=gone.filter(x=>x.gpc!=null&&x.vel>=state.minVel).length;
+      const bits=[];
+      if(slow)bits.push(`${slow} sell${slow===1?"s":""} under ${state.minVel}/day`);
+      if(odd)bits.push(`${odd} ${odd===1?"is a":"are"} ⚠ outlier${odd===1?"":"s"}`);
+      if(gone.length-slow-odd)bits.push(`${gone.length-slow-odd} ${gone.length-slow-odd===1?"has":"have"} no sales or listings yet`);
+      hid={n:gone.length,why:bits.join(", ")};}}
+  tbl.hidden=!rows.length&&!hid;
   tb.innerHTML=rows.map(r=>{
     /* in the all-currencies view the row stands for the best item that currency buys,
        and there is no item at all when nothing met the sales filter */
@@ -430,7 +450,12 @@ function render(){
       `<td>${trendChip(r.trendT)}</td>`+
       `<td>${velCell(r.velI)}</td>`+
       `<td>${fmtK(r.gilDay)}</td>`+
-      `<td class="gpc${r===bestRow?" top":""}">${fmt2(r.gpc)}</td></tr>`;}).join("");
+      `<td class="gpc${r===bestRow?" top":""}">${fmt2(r.gpc)}</td></tr>`;}).join("")+
+    (hid?`<tr class="hidnote"><td colspan="${COLS.length}">${hid.n} more item${hid.n===1?"":"s"} in this shop ${hid.n===1?"is":"are"} hidden by the filters: ${hid.why}.<button id="showHidden">Show them</button></td></tr>`:"");
+  const sh=document.getElementById("showHidden");
+  if(sh)sh.addEventListener("click",()=>{
+    for(const[id,v]of[["minVel","0"],["hideOutlier",false]]){const el=document.getElementById(id);
+      if(el.type==="checkbox")el.checked=v;else el.value=v;el.dispatchEvent(new Event("change",{bubbles:true}));}});
 
 
   const top=bestRow;
