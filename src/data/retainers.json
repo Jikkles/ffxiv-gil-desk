@@ -5,7 +5,7 @@
     "v": "Field Exploration",
     "t": "XXXI",
     "c": "Wall-mounted",
-    "p": 0.003,
+    "p": 0.0031,
     "o": "Occult Crescent overworld coffers"
   },
   {
@@ -26,14 +26,14 @@
     "p": 0.0031,
     "o": "Occult Crescent overworld coffers"
   },
-  {"i":35970,"n":"Flag","v":"Field Exploration","t":"XXVI-XXVIII","c":"Minion","p":0.015,"x":1},
+  {"i":35970,"n":"Flag","v":"Field Exploration","t":"XXVI-XXVIII","c":"Minion","p":0.0146,"x":1},
   {
     "i": 36856,
     "n": "Clockwork Novus D",
     "v": "Field Exploration",
     "t": "XXVIII-XXIX",
     "c": "Minion",
-    "p": 0.0091,
+    "p": 0.0092,
     "x": 1
   },
   {
@@ -42,26 +42,18 @@
     "v": "Field Exploration",
     "t": "XIV-XV, XIX, XXIV",
     "c": "Minion",
-    "p": 0.0169,
+    "p": 0.0167,
     "x": 1
   },
+  {"i":5669,"n":"Savage Aim Materia I","v":"Field Exploration","t":"IV-VI","c":"Materia","p":0.0478},
   {
     "i": 28627,
     "n": "Wind-up Hobgoblin",
     "v": "Highland Exploration",
     "t": "XXV, XXX",
     "c": "Minion",
-    "p": 0.0108,
+    "p": 0.011,
     "o": "the Itinerant Moogle, when that event is running"
-  },
-  {
-    "i": 35987,
-    "n": "Wind-up Grebuloff",
-    "v": "Highland Exploration",
-    "t": "XXVI-XXVIII",
-    "c": "Minion",
-    "p": 0.0133,
-    "x": 1
   },
   {
     "i": 43582,
@@ -73,12 +65,21 @@
     "x": 1
   },
   {
+    "i": 35987,
+    "n": "Wind-up Grebuloff",
+    "v": "Highland Exploration",
+    "t": "XXVI-XXVIII",
+    "c": "Minion",
+    "p": 0.013,
+    "x": 1
+  },
+  {
     "i": 36852,
     "n": "Wind-up Kangaroo",
     "v": "Highland Exploration",
     "t": "XXVIII-XXIX",
     "c": "Minion",
-    "p": 0.0102,
+    "p": 0.0103,
     "o": "Sack of Silvered Light"
   },
   {
@@ -87,7 +88,7 @@
     "v": "Highland Exploration",
     "t": "XVI-XVIII",
     "c": "Minion",
-    "p": 0.0248,
+    "p": 0.0246,
     "o": "haloed sacks, Grand Company seal containers"
   },
   {
@@ -105,7 +106,7 @@
     "v": "Woodland Exploration",
     "t": "XXVIII-XXIX",
     "c": "Minion",
-    "p": 0.0095,
+    "p": 0.0098,
     "o": "Sack of Silvered Light"
   },
   {
@@ -114,7 +115,7 @@
     "v": "Woodland Exploration",
     "t": "XXXI",
     "c": "Minion",
-    "p": 0.005,
+    "p": 0.0051,
     "o": "Sack of Silvered Light"
   },
   {
@@ -123,7 +124,7 @@
     "v": "Woodland Exploration",
     "t": "XXVI-XXVIII",
     "c": "Minion",
-    "p": 0.014,
+    "p": 0.0138,
     "o": "Sack of Gilded Light"
   },
   {
@@ -132,7 +133,7 @@
     "v": "Woodland Exploration",
     "t": "XXV, XXX",
     "c": "Minion",
-    "p": 0.0118,
+    "p": 0.0115,
     "o": "the Itinerant Moogle, Light sacks"
   },
   {
@@ -146,21 +147,21 @@
   },
   {"i":7733,"n":"Honey Lemon Seeds","v":"Woodland Exploration","t":"XVI","c":"Gardening","p":0.0455},
   {
-    "i": 36860,
-    "n": "Blue-footed Booby",
-    "v": "Waterside Exploration",
-    "t": "XXVIII-XXIX",
-    "c": "Minion",
-    "p": 0.0105,
-    "x": 1
-  },
-  {
     "i": 35980,
     "n": "Crabe de la Crabe",
     "v": "Waterside Exploration",
     "t": "XXVI-XXVIII",
     "c": "Minion",
-    "p": 0.0118,
+    "p": 0.0115,
+    "x": 1
+  },
+  {
+    "i": 36860,
+    "n": "Blue-footed Booby",
+    "v": "Waterside Exploration",
+    "t": "XXVIII-XXIX",
+    "c": "Minion",
+    "p": 0.0104,
     "x": 1
   },
   {"i":43575,"n":"Quetzal","v":"Waterside Exploration","t":"XXXI","c":"Minion","p":0.0049,"x":1},
@@ -170,7 +171,7 @@
     "v": "Waterside Exploration",
     "t": "XIV-XVI",
     "c": "Reagent",
-    "p": 0.0848,
+    "p": 0.0861,
     "x": 1
   },
   {
@@ -179,7 +180,7 @@
     "v": "Waterside Exploration",
     "t": "XIV-XIX, XXIV-XXV",
     "c": "Minion",
-    "p": 0.0276,
+    "p": 0.0266,
     "o": "Grand Company seal containers, the Itinerant Moogle"
   },
   {
@@ -188,7 +189,7 @@
     "v": "Waterside Exploration",
     "t": "XXV, XXX",
     "c": "Minion",
-    "p": 0.0109,
+    "p": 0.0112,
     "o": "quick exploration, the Itinerant Moogle"
   },
   {
@@ -197,7 +198,7 @@
     "v": "Waterside Exploration",
     "t": "XVIII-XIX, XXIII",
     "c": "Minion",
-    "p": 0.0135,
+    "p": 0.0131,
     "o": "haloed sacks, Grand Company seal containers"
   },
   {
@@ -206,7 +207,7 @@
     "v": "All four",
     "t": "XIII",
     "c": "Metal",
-    "p": 0.0769,
+    "p": 0.0758,
     "x": 1,
     "vl": ["Field Exploration","Highland Exploration","Woodland Exploration","Waterside Exploration"]
   },
@@ -216,7 +217,7 @@
     "v": "Three ventures",
     "t": "XIII, XXIII",
     "c": "Minion",
-    "p": 0.0202,
+    "p": 0.02,
     "o": "Palace of the Dead sacks, Grand Company seal containers",
     "vl": ["Field Exploration","Highland Exploration","Waterside Exploration"]
   }
